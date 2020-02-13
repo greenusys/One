@@ -1,12 +1,17 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Test extends CI_Controller {
+class Test extends MY_Controller {
 	function __construct(){
 		parent::__construct();
 		$this->load->model('TestModel','Test');
 				$this->load->model('FriendsModel','FRND');
 	}
+
+	public function index(){
+		$this->checkFunction();
+	}
+
 	public function changeProfilePic(){
 		if(isset($_POST['android'])){
 			$user_id=$this->input->post('user_id');
@@ -189,6 +194,75 @@ class Test extends CI_Controller {
 		}else{
 			die(json_encode(array("code"=>0)));
 		}
+	}
+	public function AddJobPost()
+	{
+	    if(!empty($_FILES['userfile']['name']))
+	    	{   
+	       // 	$ext = pathinfo($_FILES['userfile']['name'], PATHINFO_EXTENSION);
+	       // 	$_FILES['file']['name'] = "country_image-".date("Y-m-d-H-i-s").$ext;
+                $configg['upload_path'] = 'assets/jobpost/';
+                $configg['allowed_types'] = 'jpg|jpeg|png|gif';
+                $configg['file_name'] = $_FILES['userfile']['name'];
+                
+                //Load upload library and initialize configuration
+                $this->load->library('upload',$configg);
+                $this->upload->initialize($configg);
+                
+                    if($this->upload->do_upload('userfile'))
+                    {
+                        $uploadData = $this->upload->data();
+                        $jobpostpicture =$uploadData['file_name'];
+                    }
+                    else
+                    {
+                        $jobpostpicture = '';
+                    }
+                }
+                else{
+                	echo"single error";
+                }
+                    if(!empty($uploadData))
+		         {
+     	 	 	 	 	 	 	 	 
+	             $data=array("jobpost_title"=>$this->input->post('jobpost_title'),
+	             			"jobpost_description"=>$this->input->post('jobpost_description'),
+	             			"jobpost_countries"=>$this->input->post('jobpost_countries'),
+	             			"jobpost_states"=>$this->input->post('jobpost_states'),
+				 		    "jobpost_cities"=>$this->input->post('jobpost_cities'),
+				 		    "jobpost_salary"=>$this->input->post('jobpost_salary'),
+				 		    "jobpost_salarytype"=>$this->input->post('jobpost_salarytype'),
+				 		    "jobpost_jobtype"=>$this->input->post('jobpost_jobtype'),
+				 		    "jobpost_image"=>$jobpostpicture,);
+
+        	    $results=$this->Test->insert_JobPostData($data);
+        	  
+
+         	  switch($results) 
+				{
+					case 0:$this->session->set_flashdata('msg','Error');
+						break;
+					case 1:$this->session->set_flashdata('msg','Post Add Successfully');
+						break;
+					case 2:$this->session->set_flashdata('msg','Already exist');
+						break;
+					
+					default:$this->session->set_flashdata('msg','Error Try again');
+						break;
+				}
+
+				//  redirect('Country/CountrySection');
+
+		        }
+
+		        else
+		        {
+		        	echo"error";
+		        }
+                
+	    
+	    
+	    
 	}
 	
 }
