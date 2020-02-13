@@ -53,5 +53,10 @@
     		$myFriends=array_merge($result_,$result);
 			return $myFriends;
 		}
+
+		public function search_friends($name){
+			$result=$this->db->select('*')->from('users')->where("full_name LIKE '%$name%'")->get()->result_array();
+			return $result;
+		}
 	}
 ?>

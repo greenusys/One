@@ -5,6 +5,7 @@ class Test extends CI_Controller {
 	function __construct(){
 		parent::__construct();
 		$this->load->model('TestModel','Test');
+				$this->load->model('FriendsModel','FRND');
 	}
 	public function changeProfilePic(){
 		if(isset($_POST['android'])){
@@ -129,6 +130,17 @@ class Test extends CI_Controller {
 		$this->load->view('web/template/footer');
 	}
 
+	public function searchResults(){
+		$tag=$_POST['search-tag'];
+				$session=$this->session->userdata('logged_in');
+		$user_Id=$session[0]->user_id;
+		$data['MyFriends']=$this->FRND->getMyFriends($user_Id);
+		$data['search_friends'] = $this->Test->search_friends($tag);
+		$this->load->view('web/template/header');
+		$this->load->view('web/searchFriends',$data);
+		$this->load->view('web/template/footer');
+	}
+
 	public function ActivityLogs(){
 		$this->db->join('users','users.user_id=recent_activity.user_id');
 		$data['myNotifications']=$this->db->get('recent_activity')->result();
@@ -139,6 +151,9 @@ class Test extends CI_Controller {
 
 	public function group(){
 		$this->load->view('web/template/header');
+		$session=$this->session->userdata('logged_in');
+		$user_Id=$session[0]->user_id;
+		$data['MyFriends']=$this->FRND->getMyFriends($user_Id);
 		$data['allGroups']=$this->db->get('user_groups')->result();
 		$this->load->view('web/groupPage',$data);
 		$this->load->view('web/template/footer');

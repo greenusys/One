@@ -493,8 +493,8 @@ a:hover {
         	<span class="navbar-toggler-icon"></span>
       	</button>
       	<div class="collapse navbar-collapse" id="navbarTogglerDemo02">
-    	    <form class="form-inline my-2 my-lg-0"> 
-    	        <input type="search" placeholder="Search" name="" id="search-frnd">
+    	    <form class="form-inline my-2 my-lg-0" method="POST" action="<?=base_url()?>Test/searchResults"> 
+    	        <input type="search" placeholder="Search" name="search-tag" id="search-frnd">
     	    </form>
           <div class="row hintDiv " style="display:none">
             <div class="col">
