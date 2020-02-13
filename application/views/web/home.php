@@ -47,8 +47,11 @@
             <i class="fa fa-star ranUse mt-3 col-md-1" aria-hidden="true"></i><a class=" menu_botttom col-md-9" href="<?=base_url('Test/favourite')?>">Favourites</a>
           </li>
           <li class="row">
-             <i class="fa fa-bookmark ranUse mt-3 col-md-1" aria-hidden="true"></i><a class=" menu_botttom col-md-9" href="#">Bookmark</a>
+             <i class="fa fa-bookmark ranUse mt-3 col-md-1" aria-hidden="true"></i><a class=" menu_botttom col-md-9" href="#">Post Job</a>
           </li>
+          <!-- <li class="row">
+             <i class="fa fa-bookmark ranUse mt-3 col-md-1" aria-hidden="true"></i><a class=" menu_botttom col-md-9" href="#">Bookmark</a>
+          </li> -->
           <li class="row">
              <i class="fa fa-users ranUse mt-3 col-md-1" aria-hidden="true"></i><a class=" menu_botttom col-md-9" href="<?=base_url('Test/group')?>">Group</a>
           </li>
