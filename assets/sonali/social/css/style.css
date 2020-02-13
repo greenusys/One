@@ -1,0 +1,133 @@
+.profile-div
+    {
+	    height:75px;
+		width:100px;
+    }
+	.comment-profile
+	{
+		height:42px;
+		width:100px;
+	}
+	.bg
+	{
+		background-color:white;
+		padding:5px;
+	}
+	.bg:hover
+	{
+		background-color: #645f5f;
+		color:white;
+	}
+	.mt
+	{
+		margin-top:-40px;
+	}
+	.fs
+	{
+		font-size:13px;
+	}
+	.dropdown-item:focus, .dropdown-item:hover 
+	{
+       color: #16181b;
+       text-decoration: none;
+       color: white;
+       background-color: #606162;
+    }
+	.content-div
+	{
+		position: absolute;
+        will-change: transform;
+        top: -20px;
+        left: -95px;
+        transform: translate3d(9px, 44px, 0px)
+	}
+	.emoji
+	{
+	   width:100%;
+	   background-color:#d7d6d6;;
+	   margin:0px auto;
+	}
+	.reply
+	{
+	   width:100%;
+	   background-color:#d7d6d663;
+	   margin:0px auto;
+	}
+	.comnt
+	{
+	   width:100%;
+	   background-color:#d7d6d663;
+	}
+	.gif
+	{
+		height:46px;
+	}
+	.comment-size
+	{
+		height:120px;
+	}
+	.view-section
+	{
+        height:610px;
+        overflow: auto;
+    }
+	.bottom-section
+	{
+		width: 100%;
+		background-color: #f4efefe6;
+		margin: 0px auto;
+	}
+	.icon1
+	{
+		font-size: 15px;
+        color: blue;
+        margin-top: 25px;
+        border-radius: 50%;
+        padding: 5px;
+        margin-left: -22px;
+        background-color: #80808033;
+	}
+	.icon2
+	{
+		font-size: 15px;
+        color: red;
+        margin-top: 25px;
+        border-radius: 50%;
+        padding: 5px;
+        margin-left: -22px;
+        background-color: #80808033;
+	}
+	.icon3
+	{
+		font-size: 15px;
+        color: orange;
+        margin-top: 25px;
+        border-radius: 50%;
+        padding: 5px;
+        margin-left: -22px;
+        background-color: #80808033;
+	}
+	.navbar-expand-lg .navbar-nav .nav-link 
+	{
+       padding-right: 2.5rem;
+       padding-left: .5rem;
+   }
+	.people-profile 
+	{
+		height: 75px;
+		width: 80px;
+		margin-top: -30px;
+		margin-left: 15px;
+		border: 4px solid white;
+		position: relative;
+	}
+	.profile-info-div
+	{
+		background-color:white;
+		border:1px solid #80808042;
+		border-radius:3px;
+	}
+	.mt-send
+	{
+	   margin-top:-55px;
+	}

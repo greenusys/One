@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <style>
+    body {font-family: Arial;}
+    
+    .tab {
+     overflow: hidden;
+     border: 1px solid #ccc;
+     background-color: #f1f1f1;
+     margin-top:10px;
+     border-top-left-radius: 8px;
+     border-top-right-radius: 8px;
+    }
+/* Style the buttons inside the tab */
+ .tab button {
+     background-color: inherit;
+     float: left;
+     border: none;
+     outline: none;
+     cursor: pointer;
+     padding: 14px 16px;
+     transition: 0.3s;
+     font-size: 17px;
+     border-bottom: 8px;
+
+}
+/* Change background color of buttons on hover */
+ .tab button:hover {
+     background-color: #ddd;
+}
+/* Create an active/current tablink class */
+ .tab button.active {
+     background-color: #ccc;
+}
+/* Style the tab content */
+ .tabcontent {
+     display: none;
+     padding: 6px 25px;
+     border: 1px solid #ccc;
+     border-top: none;
+     -webkit-animation: fadeEffect 1s;
+     animation: fadeEffect 1s;
+     border-bottom-left-radius: 8px;
+     border-bottom-right-radius: 8px;
+     background-color: white;
+}
+            .jobs-panel {
+            display: table;
+            max-height: 100%;
+            width: 85%;
+            background-color: #b7bcbe;
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 25px;
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            padding-top: 20px;
+            }   
+            .tabwidth{
+            width:85%;
+            margin:0 auto;
+            }
+            </style>
+    <link rel="shortcut icon" href="//#" />
+     <script type="text/javascript" src="https://html2canvas.hertzen.com/dist/html2canvas.js"></script>
+    <script type="text/javascript" src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+</head>
+
+<body>
+    <div  id="capture">
+        <h1>Hello My man</h1>
+<img alt="😍" class="emojioneemoji" src="https://cdn.jsdelivr.net/emojione/assets/3.1/png/32/1f60d.png">
+</div>
+    <div id="match-button" onclick="sendData();">capture</div>
+    <a id="test" href="#"></a>
+</body>
+</html>
+
+<script>
+    function sendData() {
+        html2canvas(document.getElementById('capture'),{
+            allowTaint:false,
+            useCORS :true
+        }).then(function (canvas) {
+                $('#test').attr('href', canvas.toDataURL('image/png'));
+                $('#test').attr('download', 'Test.png');
+                $('#test')[0].click();
+            });
+        }
+
+
+    function openCity(evt, cityName) {
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
+        tablinks = document.getElementsByClassName("tablinks");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+        document.getElementById(cityName).style.display = "block";
+        evt.currentTarget.className += " active";
+    }
+
+    document.getElementById("defaultOpen").click();
+
+
+
+
+    </script>
