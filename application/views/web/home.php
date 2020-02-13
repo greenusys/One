@@ -935,7 +935,7 @@
                   <div class="carousel-item active">
                     <div class="">
                       <div class="">
-                        <img src="http://localhost/BrainT/newLaneOne/assets/uploads/images/Post-image-2020-01-31-08-37-181.jpg" class="d-block w-100" alt="...">
+                        <img src="<?=base_url()?>assets/uploads/images/Post-image-2020-01-31-08-37-181.jpg" class="d-block w-100" alt="...">
                       </div>
                       <div class="row m-0">
                           <div class="col-md-8 p-0">
@@ -953,7 +953,7 @@
                   <div class="carousel-item">
                     <div class="">
                       <div class="">
-                        <img src="http://localhost/BrainT/newLaneOne/assets/uploads/images/Post-image-2020-01-31-08-37-180.jpg" class="d-block w-100" alt="...">
+                        <img src="<?=base_url()?>assets/uploads/images/Post-image-2020-01-31-08-37-180.jpg" class="d-block w-100" alt="...">
                       </div>
                       <div class="row m-0">
                           <div class="col-md-8 p-0">
@@ -971,7 +971,7 @@
                   <div class="carousel-item">
                     <div class="">
                       <div class="">
-                        <img src="http://localhost/BrainT/newLaneOne/assets/uploads/images/Post-image-2020-01-31-08-37-181.jpg" class="d-block w-100" alt="...">
+                        <img src="<?=base_url()?>assets/uploads/images/Post-image-2020-01-31-08-37-181.jpg" class="d-block w-100" alt="...">
                       </div>
                       <div class="row m-0">
                           <div class="col-md-8 p-0">
