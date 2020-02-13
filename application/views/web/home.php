@@ -47,7 +47,7 @@
             <i class="fa fa-star ranUse mt-3 col-md-1" aria-hidden="true"></i><a class=" menu_botttom col-md-9" href="<?=base_url('Test/favourite')?>">Favourites</a>
           </li>
           <li class="row">
-             <i class="fa fa-bookmark ranUse mt-3 col-md-1" aria-hidden="true"></i><a class=" menu_botttom col-md-9" href="#">Post Job</a>
+             <i class="fa fa-bookmark ranUse mt-3 col-md-1" aria-hidden="true"></i><a class=" menu_botttom col-md-9" href="#"  data-toggle="modal" data-target="#addJobsModal">Post Job</a>
           </li>
           <!-- <li class="row">
              <i class="fa fa-bookmark ranUse mt-3 col-md-1" aria-hidden="true"></i><a class=" menu_botttom col-md-9" href="#">Bookmark</a>
@@ -55,9 +55,9 @@
           <li class="row">
              <i class="fa fa-users ranUse mt-3 col-md-1" aria-hidden="true"></i><a class=" menu_botttom col-md-9" href="<?=base_url('Test/group')?>">Group</a>
           </li>
-          <li class="row" >
-             <i class="fa fa-users ranUse mt-3 col-md-1" aria-hidden="true"></i><a class=" menu_botttom col-md-9" href="<?=base_url('Test/group')?>" data-toggle="modal" data-target="#addJobsModal">Add Jobs</a>
-          </li>
+    <!--       <li class="row" >
+             <i class="fa fa-users ranUse mt-3 col-md-1" aria-hidden="true"></i><a class=" menu_botttom col-md-9" href="<?=base_url('Test/group')?>">Add Jobs</a>
+          </li> -->
 
 <!--           <li class="row">
             <i class="fa fa-file-text ranUse mt-3 col-md-1" aria-hidden="true"></i>
@@ -285,7 +285,7 @@
       </div>
 	  <div class="" id="pst_shw_">
 	  <?php
-    // print_r($AllPosts);
+     // print_r($AllPosts);
     if( count($AllPosts)>0){
         foreach($AllPosts as $p_ost){
        if($p_ost['post_type']==0){
@@ -415,7 +415,7 @@
                 <?php for($i=0; $i < count($p_ost['total_comments']); $i++){ ?>
               <div class="row mt-2 px-2">
                   <div class="col-md-1">
-                      <span> <img class="rounded-circle like_img" src="<?=base_url()?>assets/img/Profile_Pic/<?=$MyDetails[0]->profile_picture?>"></span>  
+                      <span> <img class="rounded-circle like_img" src="<?=base_url()?>assets/img/Profile_Pic/<?=$p_ost['total_comments'][$i]->profile_picture?>"></span>  
                   </div> 
                   <div class="col-md-10 comnt_text border-bottom">
                       <h6 class="font-weight-bold m-0" > <?=$p_ost['total_comments'][$i]->full_name?><small class="ml-3"><time class="timeago" datetime=" <?=$p_ost['total_comments'][$i]->commented_on?>"></time></small></h6>
@@ -679,7 +679,7 @@
                 <?php for($i=0; $i < count($p_ost['total_comments']); $i++){ ?>
               <div class="row mt-2 px-2">
                   <div class="col-md-1">
-                      <span> <img class="rounded-circle like_img" src="<?=base_url()?>assets/img/Profile_Pic/<?=$MyDetails[0]->profile_picture?>"></span>  
+                      <span> <img class="rounded-circle like_img" src="<?=base_url()?>assets/img/Profile_Pic/<?=$p_ost['total_comments'][$i]->profile_picture?>"></span>  
                   </div>
                   <div class="col-md-10 comnt_text border-bottom">
                       <h6 class="font-weight-bold m-0" > <?=$p_ost['total_comments'][$i]->full_name?><small class="ml-3">
@@ -863,7 +863,7 @@
                 for($i=0; $i < count($p_ost['total_comments']); $i++){ ?>
                   <div class="row mt-2 px-2">
                       <div class="col-md-1">
-                          <span> <img class="rounded-circle like_img" src="<?=base_url()?>assets/img/Profile_Pic/<?=$MyDetails[0]->profile_picture?>"></span>  
+                          <span> <img class="rounded-circle like_img" src="<?=base_url()?>assets/img/Profile_Pic/<?=$p_ost['total_comments'][$i]->profile_picture?>"></span>  
                       </div>
                       <div class="col-md-10 comnt_text border-bottom">
                           <h6 class="font-weight-bold m-0" > <?=$p_ost['total_comments'][$i]->full_name?><small class="ml-3">
@@ -2056,7 +2056,69 @@ function myFunction() {
       <div class="modal-body">
         <div class="">
           <form class="" method="" action="">
-            
+             <div class="row px-3">
+              <label class="form-group w-100">Job Title
+                <input type="text" class="form-control" name="job_title" placeholder="Job Title" required="">
+              </label>
+            </div>
+             <div class="row px-3">
+              <label class="form-group w-100">Job Description<br>
+                <textarea name="job_desc" class="form-control"  placeholder="Job Description" required=""></textarea>
+              </label>
+              </div>
+            <div class="row px-3">
+              <label class="form-group w-100">Location<br>
+                <textarea name="job_location"  class="form-control" placeholder="Location" required=""></textarea>
+              </label>
+            </div>
+             
+              <div class="row">
+                <div class="col-md-6">
+                  <label class="form-group w-100">Salary
+                    <input type="number" class="form-control" name="salary" placeholder="Salary" required=""> 
+                  </label>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-group w-100">Salary Type
+                    <select name="salary_type" class="form-control" required="">
+                      <option selected="" disabled="">Select Type</option>
+                      <option value="">per hour</option>
+                      <option value="">per day</option>
+                      <option value="">per week</option>
+                      <option value="">per two weeks</option>
+                      <option value="">per month</option>
+                      <option value="">per year</option>
+                      <option value="">one time</option>
+                    </select>
+                  </label>
+                </div>
+              </div>
+              <div class="row px-3">
+                <label class="form-group w-100">Job Type
+                  <select name="job_type" class="form-control" required="">
+                    <option selected="" disabled="">Select Type</option>
+                    <option value="">Full-time</option>
+                    <option value="">Part-time</option>
+                    <option value="">Internship</option>
+                    <option value="">Volunteer</option>
+                    <option value="">Contract</option>
+                
+                  </select>
+                </label>
+              </div>  
+              <div class="row px-3">
+              <label class="form-group w-100">Receive Applications by Email
+                <input type="text" class="form-control" name="rec_application" placeholder="Receive Applications by Email" > 
+              </label> 
+              </div>  
+              <div class="row px-3"> 
+              <label class="form-group w-100">Receive Applications by Email
+                <input type="file" name="img" > 
+              </label>  
+              </div>
+              <div class="text-center">
+                <button class="btn btn-success">Post</button>
+              </div>
           </form>
         </div>
       </div>
