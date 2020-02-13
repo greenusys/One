@@ -52,6 +52,10 @@
           <li class="row">
              <i class="fa fa-users ranUse mt-3 col-md-1" aria-hidden="true"></i><a class=" menu_botttom col-md-9" href="<?=base_url('Test/group')?>">Group</a>
           </li>
+          <li class="row" >
+             <i class="fa fa-users ranUse mt-3 col-md-1" aria-hidden="true"></i><a class=" menu_botttom col-md-9" href="<?=base_url('Test/group')?>" data-toggle="modal" data-target="#addJobsModal">Add Jobs</a>
+          </li>
+
 <!--           <li class="row">
             <i class="fa fa-file-text ranUse mt-3 col-md-1" aria-hidden="true"></i>
             <a href="#other-fruits" class="nav-link w-100 menu_botttom col-md-9" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="other-fruits">
@@ -924,7 +928,7 @@
         <div class="card mt-2">
           <div class="p-3">
             <h4 class="widget-title">Jobs</h4>
-            <div class="">
+            <div class="mt-4">
               <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
              <!--    <ol class="carousel-indicators">
                   <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
@@ -2036,16 +2040,40 @@ function myFunction() {
   </div>
 </div>
 
+          <!-- addJobsModal -->
+<div class="modal fade" id="addJobsModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Add Jobs</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="">
+          <form class="" method="" action="">
+            
+          </form>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
 
  <script type="text/javascript">
-              $(document).on("click",".favrt",function(){
-                var cls = $(this).attr("class");
-                if(cls=='favrt'){
-                  $(this).html('<i class="fas fa-star text-gold"></i>');
-                  $(this).addClass("star");
-                }else{
-                  $(this).html('<i class="far fa-star"></i>');
-                  $(this).removeClass("star");
-                }
-              })
-            </script>
+    $(document).on("click",".favrt",function(){
+      var cls = $(this).attr("class");
+      if(cls=='favrt'){
+        $(this).html('<i class="fas fa-star text-gold"></i>');
+        $(this).addClass("star");
+      }else{
+        $(this).html('<i class="far fa-star"></i>');
+        $(this).removeClass("star");
+      }
+    })
+  </script>
