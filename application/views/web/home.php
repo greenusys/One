@@ -1,7 +1,8 @@
   <?php 
 //print_r($_SESSION['logged_in']); 
    $session=$this->session->userdata('logged_in');
-      $user_bio=$session[0]->bio_graphy;
+   $user_Id=$session[0]->user_id;
+   $user_bio=$session[0]->bio_graphy;
   ?>
 
   <script>
@@ -313,8 +314,19 @@
                
                     <div class="float-right d-flex mt-2">
                       <div class="">
-                        <span class="favrt" title="favourite"><i class="far fa-star"></i></span>
-                        <!-- <span><i class="fas fa-star"></i></span> -->
+                        <?php
+                        $user_id;
+                        $post_id=$p_ost['post_id'];
+                        $this->db->where(array('user_id'=>$user_id,'post_id'=>$post_id));
+                        $re=$this->db->get('user_fav_section')->result();
+                        if(count($re)==0){
+                        ?>
+                        <span class="favrt" post_id="<?=$p_ost['post_id']?>" title="favourite"><i class="far fa-star"></i></span>
+                        <?php
+                        }else{?>
+                        <span class="favrt star" post_id="<?=$p_ost['post_id']?>" title="favourite"><i class="fas fa-star text-gold"></i></span>
+                        <?php }
+                        ?>
                       </div>
                       <?php if($_SESSION['logged_in'][0]->user_id==$p_ost['user_id']){ ?>
                           <div class="dropdown ml-3">
@@ -482,7 +494,19 @@
               
                     <div class="float-right d-flex mt-2">
                       <div class="">  
-                         <span class="favrt" title="favourite"><i class="far fa-star"></i></span>
+                        <?php
+                        $user_id;
+                        $post_id=$p_ost['post_id'];
+                        $this->db->where(array('user_id'=>$user_id,'post_id'=>$post_id));
+                        $re=$this->db->get('user_fav_section')->result();
+                        if(count($re)==0){
+                        ?>
+                        <span class="favrt" post_id="<?=$p_ost['post_id']?>" title="favourite"><i class="far fa-star"></i></span>
+                        <?php
+                        }else{?>
+                        <span class="favrt star" post_id="<?=$p_ost['post_id']?>" title="favourite"><i class="fas fa-star text-gold"></i></span>
+                        <?php }
+                        ?>
                       </div>
                       <?php if($_SESSION['logged_in'][0]->user_id==$p_ost['user_id']){ ?>
                           <div class="dropdown ml-3">
@@ -750,7 +774,19 @@
                
                     <div class="float-right d-flex mt-2">
                       <div class="">  
-                         <span class="favrt" title="favourite"><i class="far fa-star"></i></span>
+                        <?php
+                        $user_id;
+                        $post_id=$p_ost['post_id'];
+                        $this->db->where(array('user_id'=>$user_id,'post_id'=>$post_id));
+                        $re=$this->db->get('user_fav_section')->result();
+                        if(count($re)==0){
+                        ?>
+                        <span class="favrt" post_id="<?=$p_ost['post_id']?>" title="favourite"><i class="far fa-star"></i></span>
+                        <?php
+                        }else{?>
+                        <span class="favrt star" post_id="<?=$p_ost['post_id']?>" title="favourite"><i class="fas fa-star text-gold"></i></span>
+                        <?php }
+                        ?>
                       </div>
                        <?php 
                           if($_SESSION['logged_in'][0]->user_id==$p_ost['user_id'])
@@ -2132,13 +2168,38 @@ function myFunction() {
 
  <script type="text/javascript">
     $(document).on("click",".favrt",function(){
-      var cls = $(this).attr("class");
-      if(cls=='favrt'){
-        $(this).html('<i class="fas fa-star text-gold"></i>');
-        $(this).addClass("star");
-      }else{
-        $(this).html('<i class="far fa-star"></i>');
-        $(this).removeClass("star");
-      }
+      var el= $(this);
+      var cls = el.attr("class");
+      var post_id = el.attr('post_id');
+      var fvrt = 1;
+      $.ajax({
+        type:'POST',
+        data:{
+          post_id:post_id,
+          fvrt:fvrt
+        },
+        url:'<?=base_url()?>Test/makefavrt',
+        success:function(response){
+          var response = JSON.parse(response);
+          if(response.status==1){
+            el.html('<i class="fas fa-star text-gold"></i>');
+            el.addClass("star");
+          }
+          else if(response.status==2){
+            el.html('<i class="far fa-star"></i>');
+            el.removeClass("star");
+          }
+          else{
+            alert('Something went wrong');
+          }
+        }
+      })
+      // if(cls=='favrt'){
+      //   $(this).html('<i class="fas fa-star text-gold"></i>');
+      //   $(this).addClass("star");
+      // }else{
+      //   $(this).html('<i class="far fa-star"></i>');
+      //   $(this).removeClass("star");
+      // }
     })
   </script>

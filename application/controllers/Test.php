@@ -264,6 +264,94 @@ class Test extends MY_Controller {
 	    
 	    
 	}
+
+		 public function makefavrt()
+        {
+			$session=$this->session->userdata('logged_in');
+			$user_Id=$session[0]->user_id;
+           	if(isset($_POST['fvrt'])==1)
+			{
+				$post=1;
+			}
+			else
+			{
+				$post=0;
+			}
+			if(isset($_POST['fvrt'])==2)
+			{
+				$photos=2;
+			}
+			else
+			{
+				$photos=0;
+			}
+			if(isset($_POST['fvrt'])==3)
+			{
+				$chat=3;
+			}
+			else
+			{
+				$chat=0;
+			}
+			if($post==1)
+			{
+			    $data=array('post_id'=>$this->input->post('post_id'),
+		            'user_id'=>$user_Id,
+		            'contentType'=>$post);
+		      $results=$this->Test->makefvrtData($data);
+		      switch($results) 
+				{
+					case 0:die(json_encode(array('status'=>'0','msg'=>'Error')));
+						break;
+					case 1:die(json_encode(array('status'=>'1','msg'=>'add To fvrt Post')));
+						break;
+					case 2:die(json_encode(array('status'=>'2','msg'=>'Already exist')));
+						break;
+					default:die(json_encode(array('status'=>'3','msg'=>'Error')));
+						break;
+				}
+			    
+			}
+			elseif($photos==2)
+			{
+			     $data=array('album_id'=>$this->input->post('album_id'),
+		                     'user_id'=>$this->input->post('user_id'),
+		                      'contentType'=>$photos);
+		      $results=$this->Test->makefvrtData($data);
+		      switch($results) 
+				{
+					case 0:$this->session->set_flashdata('msg','Error');
+						break;
+					case 1:$this->session->set_flashdata('msg','add photos as fvrt');
+						break;
+					case 2:$this->session->set_flashdata('msg','Already exist');
+						break;
+					
+					default:$this->session->set_flashdata('msg','Error');
+						break;
+				}
+			}
+			else
+			{
+			     $data=array('conversation_id'=>$this->input->post('conversation_id'),
+		                     'user_id'=>$this->input->post('user_id'),
+		                      'contentType'=>$chat);
+		      $results=$this->Test->makefvrtData($data);
+		      switch($results) 
+				{
+					case 0:$this->session->set_flashdata('msg','Error');
+						break;
+					case 1:$this->session->set_flashdata('msg','add Chat as fvrt');
+						break;
+					case 2:$this->session->set_flashdata('msg','Already exist');
+						break;
+					
+					default:$this->session->set_flashdata('msg','Error');
+						break;
+				}
+			}
+	    
+        }
 	
 }
 ?>

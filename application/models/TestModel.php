@@ -58,5 +58,31 @@
 			$result=$this->db->select('*')->from('users')->where("full_name LIKE '%$name%'")->get()->result_array();
 			return $result;
 		}
+
+		public function makefvrtData($data)
+	    {
+	        $this->db->where($data);
+    		$re=$this->db->get('user_fav_section')->result();
+    		if(count($re)==0)
+    		{
+    			$results=$this->db->insert('user_fav_section',$data);
+    			if($results)
+    			{
+    				return 1;
+    			}
+    			else
+    			{
+    				return 0;
+    			}
+    
+    		}
+    		else
+    		{
+    			$this->db->where($data);
+  				$res = $this->db->delete('user_fav_section'); 
+    			return 2;
+    	    }
+	        
+	    }
 	}
 ?>
