@@ -230,6 +230,24 @@ class APIController extends CI_Controller
 				}
 			}
    	}
+   	
+   	// To send Notification
+   	
+   	public function sendNotification($to, $message,$by){
+   	    $table="notifications_";
+   	    $condition=array("notification_"=>$message,"notify_by"=>$by,"notify_to"=>$to);
+   	    $this->db->where($condition);
+   	    if(count($this->db->get($table)->result())==0){
+   	        if($this->db->insert($table,$condition)){
+   	            return true;
+   	        }else{
+   	            // die(json_encode(array("code"=>1)));
+   	            return false;
+   	        }
+   	    }else{
+   	        return false;
+   	    }
+   	}
 	//To Add Post
 	public function addPost()
 	{
@@ -497,7 +515,14 @@ class APIController extends CI_Controller
 					);
 		if(count($this->APIM->getAllDetails('friend_request',$condition))==0){
 			if($this->APIM->addData('friend_request',$data)){
-				die(json_encode(array("code"=>1,"data"=>"Request Sent.")));
+			    //send notification
+			    if($this->sendNotification($this->input->post('sent_by'),"Sent Friend Request",$this->input->post('sent_by'))){
+			        die(json_encode(array("code"=>1,"data"=>"Request Sent.")));    
+			    }else{
+			        die(json_encode(array("code"=>0,"data"=>"Failed to Send Notification")));
+			    }
+			    
+				
 			}else{
 				die(json_encode(array("code"=>0,"data"=>"Failed To Send Request.")));
 			}

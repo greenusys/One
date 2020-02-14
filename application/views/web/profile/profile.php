@@ -19,7 +19,9 @@
       padding: 0px 9px !important;
     }
 </style>
+<style>
 
+</style>
 <script>
 $( document ).ready(function(e) {
   $('.profile').addClass('active');
@@ -764,250 +766,161 @@ $( document ).ready(function(e) {
 </div>
     <!-- end center panel -->
 
-    <style>
-     
-    </style>
-     <!--right sidepanel -->
-    <div class="col-md-3 border-left p-0 mt-3">
-      <div class="bg-white">
-        
-        <nav>
-          <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
-              <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Intro</a>
-              <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-active" role="tab" aria-controls="nav-profile" aria-selected="false">Friends</a>
-              <a class="nav-item nav-link" id="nav-profile-photo" data-toggle="tab" href="#nav-photos" role="tab" aria-controls="nav-profile" aria-selected="false">Photos</a>
-          </div>
-        </nav>
-        <script>
-          $(document).on('submit','#addBio',function(e){
-            e.preventDefault();
-            var bio_graphy=$('#bio_graphy').val();
-            var formData=new FormData($(this)[0]);
-            $.ajax({
-              url:"<?=base_url('Profile/addBio')?>",
-              type:"post",
-              cache:false,
-              data:formData,
-              contentType:false,
-              processData:false,
-              success:function(response){
-                      response=JSON.parse(response);
-                      if(response.code==1){
-                        $('.bio_bl').show();
-                        $('#b_io').html(bio_graphy);
-                        $('.shw_bio_bl').hide();
-                        $('#bio_graphy').val(bio_graphy);
-                        // swal('Success!',  response.msg, 'success');
-                      }else{
-                        swal('Oops!',  response.msg, 'warning');
-                      }
-                    }
-            });
-          });
-        </script>
-        <div class="tab-content" id="nav-tabContent">
-          <div class="tab-pane fade show active p-2 font14" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">    
-                <div class="text-center border-bottom">
-                  <span><i class="fa fa-comment-o" aria-hidden="true"></i></span>
-                  <div class="bio_bl">
-                    <p id="b_io">
-                    <?php
-                        if($MyDetails[0]->bio_graphy!=""){
-                          $bio=$MyDetails[0]->bio_graphy;
-                        }else{
-                          $bio="No Bio Added Yet.";
-                        }
-
-                    ?>
-                    <?=$bio?>
-                  
-                    </p>
-                    <?php
-                      if($myId==1){
-                        ?>
-                           <a href="javascript:void(0)" id="ad_bio">Add Bio</a>
-                        <?php
-                      }
-                    ?>
-                   
-                  </div>
-                  <div class="shw_bio_bl" style="display: none">
-                    <form id="addBio">
-                      <textarea name="bio_graphy" id="bio_graphy"  class="form-control bio_text" rows="3"></textarea>
-                      <div class="text-right"><label class="btn btn-primary bio_btn cncl_btn_ m-0 mr-2" >Cancel</label><button class="mr-2 btn btn-success bio_btn">Save</button></div>
-                    </form>
-                  </div>
-                  <br>
-                </div>
-                <script>
-                  $(document).on("click","#ad_bio",function(){
-                      $(".shw_bio_bl").show();
-                      $(".bio_bl").hide();
-
-                  })
-                   $(document).on("click",".cncl_btn_",function(){
-                      $(".shw_bio_bl").hide();
-                      $(".bio_bl").show();
-
-                  })
-
-                </script>
-                <div class="p-2">
-                  <ul>
-                    <li class="row">
-                      <div class="col-md-1 "><span><i class="fa fa-briefcase" aria-hidden="true"></i> </span></div>
-                      <div class="col-md-10 pl-2">
-                        
-                        <?php
-                          if(count($WorkDetails)>0){
-                            echo $WorkDetails[0]->position;
-                            echo '<a href=""> '.$WorkDetails[0]->company_name.'</a>';
-                          }else{
-                            echo '<a href="">Unemployed</a>';
-                          }
-                        ?>
-                      </div>
-                    </li>
-                    <li class="row">
-                      <div class="col-md-1 "><span><i class="fa fa-briefcase" aria-hidden="true"></i> </span></div>
-                      <div class="col-md-10 pl-2">
-                        Worked at 
-                        <a href="">Student</a></div>
-                    </li>
-                    <li class="row">
-                      <div class="col-md-1 "><span><i class="fa fa-graduation-cap" aria-hidden="true"></i> </span></div>
-                      <div class="col-md-10 pl-2">
-                        Studied College at 
-                        <?php
-                          if(count($UniversityDetails)>0){
-                            echo '<a href="">'.$UniversityDetails[0]->university.'</a>';
-                          }else{
-                            echo '<a href="">Student</a>';
-                          }
-                        ?>
-                        <!-- <a href="">Uttranchal University</a></div> -->
-                    </li>
-                    <li class="row">
-                      <div class="col-md-1 "><span><i class="fa fa-graduation-cap" aria-hidden="true"></i> </span></div>
-                      <div class="col-md-10 pl-2">
-                        Studied at 
-                        <?php
-                          if(count($SchoolDetails)>0){
-                            echo '<a href="">'.$SchoolDetails[0]->school.'</a>';
-                          }else{
-                            echo '<a href="">Student</a>';
-                          }
-                        ?>
-                        </div>
-                    </li>
-                    <li class="row">
-                      <div class="col-md-1 "><span><i class="fa fa-home" aria-hidden="true"></i> </span></div>
-                      <div class="col-md-10 pl-2">
-                        Lives in 
-                        <a href="">Jaipur, India</a></div>
-                    </li>
-                    <li class="row">
-                      <div class="col-md-1 "><span><i class="fa fa-map-marker" aria-hidden="true"></i> </span></div>
-                      <div class="col-md-10 pl-2">
-                        From 
-                        <a href="">Jaipur</a></div>
-                    </li>
-                    <li class="row">
-                      <div class="col-md-1 "><span><i class="fa fa-heart" aria-hidden="true"></i> </span></div>
-                      <div class="col-md-10 pl-2">Single </div>
-                    </li>
-
-                    
-                  </ul>
-                </div>
-          </div>
-          <div class="tab-pane fade pt-3 font14" id="nav-active" role="tabpanel" aria-labelledby="nav-profile-tab">
-           <!--  <h5>Diana Katherine <i class="fa fa-circle" aria-hidden="true" style="font-size: 12px"></i>
-              </h5> -->
-
-            <ul class="list-group">
+    <!-------------activity  start---->
+    <div class="col-md-3 p-0 mt-3">
+      <div class="card ">
+        <div class="p-3">
+          <h4 class="widget-title">Recent Activity</h4>
+        </div>
+        <div class="card-body ">
+          <div class="">
+            <ul class="list-unstyled">
               <?php
-                foreach ($MyFriends as $frnd) {
+                foreach ($FriendsActivity as $activity) {
                   # code...
                   ?>
-                      <li class="list-group-item d-flex justify-content-between align-items-center">
-                        <a href="javascript:void(0)" class="chatFriend" d-name="<?=$frnd->full_name?>" d-fNd="<?=$frnd->user_id?>">
-                          <img class="rounded-circle " src="<?=base_url()?>assets/img/Profile_Pic/<?=$frnd->profile_picture?>" onerror="this.src='<?=base_url()?>assets/img/Profile_Pic/default.png';" width="40px" height="40px"><?=$frnd->full_name?>
-                          <!-- <i class="fa fa-circle ml-auto" aria-hidden="true"></i> --> <i class="pl-3 fa fa-angle-right" aria-hidden="true"></i>
-                        </a>
-                      </li>
+                    <li><a href="<?=base_url('Profile/').$activity->user_id?>" class="activi"><strong><?=$activity->full_name?></strong> <small><?=$activity->activity_?></small></a></li>
                   <?php
                 }
               ?>
+              
+              <!-- <li><span><i class="far fa-sticky-note"></i>   </span><strong>Deepak</strong> <small>update his picture</small></li>
+              <li><span><i class="fas fa-pen-alt"></i>  </span><strong>Rahul</strong> <small>update his picture</small></li>
+              <li><span><i class="fas fa-edit"></i>  </span><strong>Umesh</strong> <small>update his picture</small></li> -->
             </ul>
           </div>
-          <div class="tab-pane fade pt-3" id="nav-photos" role="tabpanel" aria-labelledby="nav-profile-photo">
-		    	<div class="card border-0">
-		 			<div class="card-body p-1">
-		        	 <h4>Photos</h4>
-		        	 <hr>	
-			          <div class="row page_st m-0">
-					  <?php
-						foreach($AllPosts as $post){
-							if($post['post_type']==1){
-								?>
-									<div class="col-md-4 mt-2  px-1">
-										<img src="<?=base_url('assets/uploads/images/').$post['post_files']?>" class="">
-									</div>
-								<?php
-							}
-						}
-					  ?>
-			          	
-			          	
-			          	
-			          </div>
-			        </div>
-			        <div class="card-body p-1">
-		        	 	<h4>Videos</h4>
-		        	 	<hr>
-			          <div class="row page_st m-0">
-			          	<?php
-						foreach($AllPosts as $post){
-							if($post['post_type']==2){
-								?>
-									<div class="col-md-4 mt-2  px-1">
-										<video width="50" height="50" controls>
-										  <source src="<?=base_url('assets/uploads/videos/').$post['post_files']?>" type="video/mp4">
-										  <source src="<?=base_url('assets/uploads/videos/').$post['post_files'] ?>" type="video/ogg">
-										  Your browser does not support the video tag.
-										</video>
-										
-									</div>
-								<?php
-							}
-						}
-					  ?>
-			          </div>
-			        </div>
-			    </div>
+          <div class="text-center">
+            <a href="<?=base_url()?>Test/ActivityLogs"> <span>See More <i class="fas fa-angle-double-down"></i></span></a>
           </div>
         </div>
-         <div class="trend bg-white p-3 mt-3">
-          <h6>TRENDING</h6>
-            <ul class="list-group">
-              <?php
-              foreach ($Trending as $trending) {
-              ?>
-              <li class="list-group-item d-flex justify-content-between align-items-center px-1">
-                <img class="img-fluid w-25" src="<?=base_url()?>assets/img/Profile_Pic/<?=$trending->profile_picture?>">
-                <small><?=$trending->post?></small>
-                <i class="fa fa-angle-right pl-1" aria-hidden="true"></i>
-              </li>
-              <?php
+      </div>
+      <div class="card mt-3">
+        <div class="p-3">
+          <h4 class="widget-title">Who to follow?</h4>
+        </div>
+        <div class="card-body">
+          <ul class="list-unstyled">
+            <?php
+              // print_r($RandomPeople);
+             
+              foreach ($RandomPeople as $user) {
+                $nameArrI=explode(" ",$user->full_name);
+                ?>
+                  <li class="row folow_rw ">
+                    <div class="col-md-3 pt-1">
+                      <a href="<?=base_url('Profile/').$user->user_id?>">
+                        <img class="rounded-circle " src="<?=base_url()?>assets/img/Profile_Pic/<?=$user->profile_picture?>" onerror="this.src='<?=base_url()?>assets/img/Profile_Pic/default.png';" width="40px" height="40px">
+                      </a>
+                    </div>
+                    <div class="col-md-9 p-0">
+                      <span class=" author"><?=$user->full_name?></span>
+                      <div class="">
+                        <label class="randflow"><small class="text-white">Follow</small></label> 
+                        
+                      </div>
+                    </div>
+                  </li>
+                <?php
               }
-              ?>
-            </ul>
+            ?>
+          </ul>
+          <div class="text-center">
+             <a href="<?=base_url()?>test/SuggestionFriends" ><span>See More <i class="fas fa-angle-double-down"></i></span></a>
+          </div>
+        </div>
+      </div>
+      <div class="card mt-3">
+        <!--   <div class="p-3">
+            <h4 class="widget-title">Birthday</h4>
+          </div> -->
+        <div class="card-body p-0">
+            <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                      <div class=" " style="background: url('<?=base_url()?>assets/img/birthday.jpg');background-size: cover;">
+                          <div class="p-4">
+                            <div class="text-center"><img src="<?=base_url()?>assets/img/cake.svg" style="width:44px;" ><br></div>
+
+                             <div class="p-4">
+                              <span class=" text-white">Today is</span>
+                             <h4 class="ml-2 text-white">Ravish Beg's Birthday</h4>
+                             <p class="text-white">Leave her a message with your best wishes on her profile page!</p>
+                           </div>
+                           
+                          </div>
+                      </div>
+                    </div>
+                </div>
+                <a class="carousel-control-prev carousel_arrow_set" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                  <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next carousel_arrow_set" href="#carouselExampleIndicators" role="button" data-slide="next">
+                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                  <span class="sr-only">Next</span>
+                </a>
+              </div>  
+        </div>
+      </div>
+
+      <div class="card mt-3">
+        <!--   <div class="p-3">
+            <h4 class="widget-title">Weather</h4>
+          </div> -->
+        <div class="card-body p-0">
+          <div class="m-0 ">
+            <div class="bg-color py-4">
+             <div class="d-flex  px-4 text-white p-2">
+                  <div class="">
+                    <span class="text-white font32" ><span class="current_temp"></span><sup class="temp_we">o</sup>C</span>
+                  </div>
+                    <div class="m-2">
+                      <span class="high_temp"></span><sup>o</sup>C <sub>H</sub><br>
+                      <span class="low_temp"></span><sup>o</sup>C <sub>L</sub>
+                    </div>
+                    <div class="text-right  ml-4">
+                      <img src="" class="w-100 temp_icon">
+                    </div>
+              </div>
+              <div class=" px-4 text-center m-auto">
+                 
+                     <h5 class="text-white mt-3 temp_desc" ></h5>
+                
+              </div>
+                <div class="d-flex  px-4 justify-content-center">
+                    <div  class="">
+                     <span class="text-white font_12">Humadity: <span class="humadity">67</span><sup>o</sup></span>
+                    </div>
+                    <div class="ml-3">
+                      <span class="text-white font_12">Chance Of Rain: <span class="rain_chance">49</span>%</span>
+                    </div>
+                </div>
+                <div class="mt-3 mb-3" style="background: #2486eab3">
+                    <div class="">
+                        <ul  class="forecast-container list-unstyled days_wea m-0 d-flex text-white justify-content-center">
+                          
+                          
+                        </ul>
+                    </div>
+                </div>
+                <div class="text-center text-white">
+                  <h5 class="mb-0 "><?=date('l, F d')?><sup>th</sup></h5>
+                  <span class="font_12 city_name"></span>
+                </div>
+
+            </div>
+          </div>  
         </div>
       </div>
     </div>
+    <!-------------activity end---->
+    </div>
 	</div>
 </section>
+
+<style type="text/css">
+
+</style>
 <script type="text/javascript">
   var user_id=<?=$_SESSION['logged_in'][0]->user_id?>;
   getMyPost(user_id);

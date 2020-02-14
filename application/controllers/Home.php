@@ -10,6 +10,7 @@ class Home extends CI_Controller {
 		$this->load->model('FriendsModel','FRND');
 		$this->load->model('APIModel','APIM');
 		$this->load->model('PostModel','POST');
+			$this->load->model('TestModel','Test');
 	}
 	public function getAllMyPost(){
 		$my_Id_=$_SESSION['logged_in'][0]->user_id;
@@ -25,7 +26,7 @@ class Home extends CI_Controller {
 	{	
 
 		//$this->getAllPostLikes();
-
+       
 		$id=$_SESSION['logged_in'][0]->user_id;
 		$offset=0;
 		$limit=5;
@@ -57,6 +58,8 @@ class Home extends CI_Controller {
 		}else{
 			$data['AllPosts']=array();
 		}
+		 $data['fetchCountries']=$this->Test->fetchCountries();
+		 $data['fetchjobpost']=$this->Test->fetchJobPostData();
 		$data['user_id']=$id;
 		$data['ReqStatus']=$this->FRND->checkFriendRequestStatus($id);
 		$data['RandomPeople']=$this->FRND->getRandomUser($id);
@@ -311,5 +314,150 @@ class Home extends CI_Controller {
 				}
 			}
 	}
+
+public function weatherDetails(){
+
+
+
+$getdata = http_build_query(
+array(
+    'app_id' => '84vAQ9EjzfMfNKouKeB1',
+    'app_code' => '6xRmnAWLRtmjmhDusj6Mbw',
+  'product'=>'forecast_hourly',
+// 'name'=>$_POST['get_city'],
+'latitude'=>$_POST['lat'],
+'longitude'=>$_POST['long']
+
+    // 'jsoncallback'=>'myCallbackFunction'
+ )
+);
+
+
+
+// https://weather.cit.api.here.com/weather/1.0/report.json?product=forecast_astronomy&=30.3165&longitude=78.0322&app_id=devportal-demo-20180625&app_code=9v2BkviRwi9Ot26kp2IysQ
+$opts = array('http' =>
+ array(
+  'header' => "Content-Type: application/x-www-form-urlencoded\r\n".
+                    "Content-Length: ".strlen($getdata)."\r\n".
+                    "User-Agent:MyAgent/1.0\r\n",
+    'method'  => 'GET',
+    'content' => $getdata
+)
+);
+
+$context  = stream_context_create($opts);    
+ $result = file_get_contents('https://weather.api.here.com/weather/1.0/report.json?'.$getdata, false, $context);
+ $response=json_decode($result);
+ 
+    foreach($response as $res){
+        // ->forecastLocation
+      //  print_r($res);
+        $forecastArray=$res->forecastLocation->forecast;
+        $state=$res->forecastLocation->state;
+        $city=$res->forecastLocation->city;
+        foreach($forecastArray as $forecast){
+           //print_r($forecast);
+           // die();
+            $today=date('d');
+            $nowHour=date('H');
+            $localTime=$forecast->localTime;
+            // echo '|| Real localtime: '.$localTime='1102112020';
+            $utcTime=$forecast->utcTime;
+            $daylight=$forecast->daylight;
+            $temperature=$forecast->temperature;
+            // if($daylight=='D'){
+                $skyInfo=$forecast->skyInfo;
+                $description=$forecast->description;
+                $skyDescription=$forecast->skyDescription;
+                $temperatureDesc=$forecast->temperatureDesc;
+                $comfort=$forecast->comfort;
+                $humidity=$forecast->humidity;
+                $dewPoint=$forecast->dewPoint;
+                $precipitationProbability=$forecast->precipitationProbability;
+                $rainFall=$forecast->rainFall;
+                $snowFall=$forecast->snowFall;
+                $airInfo=$forecast->airInfo;
+                $windSpeed=$forecast->windSpeed;
+                $windDirection=$forecast->windDirection;
+                $windDesc=$forecast->windDesc;
+                $windDescShort=$forecast->windDescShort;
+                $visibility=$forecast->visibility;
+                $icon=$forecast->icon;
+                $iconName=$forecast->iconName;
+                $iconLink=$forecast->iconLink;
+                $dayOfWeek=$forecast->dayOfWeek;
+                $weekday=$forecast->weekday;
+                $utc=$forecast->utcTime;
+                $hour=(int)($localTime/100000000);
+                $ho_temp=$localTime%100000000;
+                $minutes=(int)(($ho_temp)/1000000);
+                $min_temp=$ho_temp%1000000;
+                $day=(int)(($min_temp)/10000);
+                $min_temp%10000;
+                $time = strtotime($localTime);
+                $dateInLocal = date("Y-m-d", $time);
+                // echo ' Hour : '.$hour=$localTime%10000000000;
+                // echo ', Minute : '.$minute=$localTime%100000000;
+                // echo ', Day : '.$day=$localTime%1000000;
+                // echo ',Year : '.$year=$localTime%10000;
+                // echo $time."<br>";
+                $localTimes=explode('-',$utc);
+                $localTimes=$localTimes[2];
+                $days=substr($localTimes,0,2);
+                if($days == $today){
+                   
+                        $data[]=array(
+                            "daylight"=>$daylight,
+                            "utc"=>$utc,
+                            "time"=>$hour.'.'.$minutes,
+                            "skyInfo"=>$skyInfo,
+                            "description"=>$description,
+                            "skyDescription"=>$skyDescription,
+                            "temperature"=>(int)$temperature,
+                            "temperatureDesc"=>(int)$temperatureDesc,
+                            "comfort"=>$comfort,
+                            "humidity"=>$humidity,
+                            "dewPoint"=>$dewPoint,
+                            "precipitationProbability"=>$precipitationProbability,
+                            "rainFall"=>$rainFall,
+                            "snowFall"=>$snowFall,
+                            "airInfo"=>$airInfo,
+                            "windSpeed"=>$windSpeed,
+                            "visibility"=>$visibility,
+                            "icon"=>$icon,
+                            "iconLink"=>$iconLink,
+                            "state"=>$state,
+                            "city"=>$city,
+                            "weekday"=>$weekday
+                    //         // ""=>,
+                            );
+                    
+                    
+                            
+                    // echo 'Value Of Day: '.$day_.' Value Of Today : '.$today;
+                    // echo ' Date : '.$day.'-'.$min_temp.', Hour : '.$hour.', Minute: '.$minutes.' Temperature: '.$temperature.'</br>';
+                }else{
+                    // echo 'Other Day';
+                    // die( json_encode(array("code"=>0,'data'=>'A')));
+                }
+                // print_r($data);
+                // die( json_encode(array("code"=>0,'data'=>'A')));
+                
+            // }else{
+            //     // die( json_encode(array("code"=>0,'data'=>'B')));
+            // }
+            
+        }
+ die( json_encode($data));
+    }
+//  foreach(){
+     
+//  }
+
+
+}
+
+
+
 }
 ?>

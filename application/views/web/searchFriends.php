@@ -84,9 +84,9 @@
 				<div class="row profile-info-div bg-white shadow-sm p-2 w-75 m-auto">
 				    <div class="col-sm-4">
 					    <div>
-						    <img src="<?=base_url()?>assets/img/Cover_Photo/<?=$friends['cover_photo']?>"  class="rounded-sm img-fluid">
+						    <img src="<?=base_url()?>assets/img/Cover_Photo/<?=$friends['cover_photo']?>"  class="rounded-sm img-fluid" onerror="this.src='<?=base_url()?>assets/img/Cover_Photo/default.jpg';">
 						</div>
-						 <img src="<?=base_url()?>assets/img/Profile_pic/<?=$friends['profile_picture']?>" class="rounded-circle img-fluid people-profile">
+						 <img src="<?=base_url()?>assets/img/Profile_pic/<?=$friends['profile_picture']?>" class="rounded-circle img-fluid people-profile" onerror="this.src='<?=base_url()?>assets/img/Profile_Pic/default.png';">
 					</div>
 					<div class="col-sm-5">
 					    <a href="#"><h6 class="font-weight-bold text-info mt-2"><?=$friends['full_name']?></h6></a>

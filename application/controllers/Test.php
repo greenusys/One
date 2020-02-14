@@ -171,7 +171,10 @@ class Test extends MY_Controller {
 	}
 	public function page(){
 		$this->load->view('web/template/header');
-		$this->load->view('web/createPage');
+			$session=$this->session->userdata('logged_in');
+		$user_Id=$session[0]->user_id;
+		$data['MyFriends']=$this->FRND->getMyFriends($user_Id);
+		$this->load->view('web/createPage',$data);
 		$this->load->view('web/template/footer');
 	}
 	public function createPage(){
@@ -195,6 +198,35 @@ class Test extends MY_Controller {
 			die(json_encode(array("code"=>0)));
 		}
 	}
+		public function get_States()
+    {
+        $data=$this->Test->fetchState_Byid($this->input->post('countryid'));
+        
+        // print_r($data);
+        if(count($data)>0)
+        {
+            die(json_encode(array('code'=>1,"data"=>$data)));
+        }
+        else
+        {
+             die(json_encode(array('code'=>0,"data"=>"No data Found ")));
+        }
+    }
+     public function get_Cities()
+    {
+        $data=$this->Test->fetchCities_Byid($this->input->post('stateId'));
+        
+        // print_r($data);
+        if(count($data)>0)
+        {
+            die(json_encode(array('code'=>1,"data"=>$data)));
+        }
+        else
+        {
+             die(json_encode(array('code'=>0,"data"=>"No data Found ")));
+        }
+    }
+	
 	public function AddJobPost()
 	{
 	    if(!empty($_FILES['userfile']['name']))
@@ -227,9 +259,9 @@ class Test extends MY_Controller {
      	 	 	 	 	 	 	 	 
 	             $data=array("jobpost_title"=>$this->input->post('jobpost_title'),
 	             			"jobpost_description"=>$this->input->post('jobpost_description'),
-	             			"jobpost_countries"=>$this->input->post('jobpost_countries'),
-	             			"jobpost_states"=>$this->input->post('jobpost_states'),
-				 		    "jobpost_cities"=>$this->input->post('jobpost_cities'),
+	             			"jobpost_countries"=>$this->input->post('country'),
+	             			"jobpost_states"=>$this->input->post('state'),
+				 		    "jobpost_cities"=>$this->input->post('city'),
 				 		    "jobpost_salary"=>$this->input->post('jobpost_salary'),
 				 		    "jobpost_salarytype"=>$this->input->post('jobpost_salarytype'),
 				 		    "jobpost_jobtype"=>$this->input->post('jobpost_jobtype'),
@@ -237,32 +269,27 @@ class Test extends MY_Controller {
 
         	    $results=$this->Test->insert_JobPostData($data);
         	  
-
-         	  switch($results) 
-				{
-					case 0:$this->session->set_flashdata('msg','Error');
-						break;
-					case 1:$this->session->set_flashdata('msg','Post Add Successfully');
-						break;
-					case 2:$this->session->set_flashdata('msg','Already exist');
-						break;
-					
-					default:$this->session->set_flashdata('msg','Error Try again');
-						break;
-				}
-
-				//  redirect('Country/CountrySection');
-
-		        }
-
-		        else
-		        {
-		        	echo"error";
-		        }
+                if($results==1)
+                {
+                    die(json_encode(array("status"=>1,'message'=>"Post Add Successfully")));
+                    
+    	        }
+    	        elseif($result==2)
+    	        {
+    	            die(json_encode(array("status"=>2,'message'=>"Already Exist"))); 
+    	        }
+    	        else
+    	        {
+    	           die(json_encode(array("status"=>0,'message'=>"Try Again Server Error")));  
+    	        }
                 
-	    
-	    
-	    
+            }
+         	  
+             else
+		        {
+		         die(json_encode(array("status"=>0,'message'=>"Try Again Server Error")));  
+		        }
+    
 	}
 	
 }

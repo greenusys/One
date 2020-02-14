@@ -256,10 +256,10 @@ img.hover-shadow {
                             <div class="content-details fadeIn-bottom fadeIn-right">
                               <div class="">
 
-                                <div class="float-left"><p><span>100</span>  <i class="fa fa-heart " aria-hidden="true"></i></p></div>
-                                <div class="float-right"><p><span>12</span> <i class="fa fa-comment-o" aria-hidden="true"></i></p></div>
+                                <div class="float-left"><p><span><?=count($post['likes_data'])?></span>  <i class="fa fa-heart " aria-hidden="true"></i></p></div>
+                               
 
-                                <div class="float-left"><p><span><?=count($post['likes_data'])?></span> <i class="fa fa-thumbs-o-up" aria-hidden="true"></i></p></div>
+                                
                                 <div class="float-right"><p><span><?=count($post['total_comments'])?></span> <i class="fa fa-comment-o" aria-hidden="true"></i></p></div>
 
                               </div>
@@ -326,7 +326,7 @@ img.hover-shadow {
                                 <label class="" for="drag_img"></label>
                                 <input type="file" name="videos_name" id="drag_img" class="form-control d-none">
                               </div>
-                              <button class="btn btn-success" type="submit">Submit</button>
+                              <button class="btn btn-success p-0 px-2" id="sub_btn" style="display: none;" type="submit">Submit</button><span class="slct_file"></span>
                           </form>
                         </div>
                       <?php
@@ -352,6 +352,13 @@ img.hover-shadow {
           </div>
         </div>
 <script type="text/javascript">
+    $(document).on("change","#drag_img",function(){
+      $("#sub_btn").show();
+      var ct  = $(this)[0].files.length;
+      $(".slct_file").html('  '+ct+' File Selected');
+    })
+
+
   $(document).ready(function(){
 
     $(".filter-button").click(function(){

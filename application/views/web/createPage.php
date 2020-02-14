@@ -18,7 +18,7 @@
 
 	<div class="container mt-5">
 		<div class="row">
-			<div class="col-md-5 offset-md-3" >
+			<div class="col-md-6" >
 			    <div class="card bg-light border border-secondary shadow p-5">
 				    <div class="row">
                         <div class="col p-2" align="center">
@@ -35,10 +35,14 @@
 					</div>
 				</div>
 			</div>
-			<!-- <div class="col-md-6">
+			 <div class="col-md-6">
 			    <div class="card bg-light border border-secondary shadow p-5">
-				    <div class="row">
-				        <img src="image/img5.jpg"  class="rounded-circle img-fluid create-profile">
+				    <div class="row" >
+				        <div class="col p-2" align="center">
+                            <img src="<?=base_url('assets/img/')?>onlineCom.jpg" width="60%" class="rounded-circle img-fluid create-profile">
+                        </div>
+				        
+				        
 					</div>
 					<div class="row mt-4">
 					    <h5 class="font-weight-bold m-auto">Community or public figure</h5>
@@ -48,7 +52,7 @@
 					    <button type="button" class="btn btn-secondary m-auto font-weight-bold" id="started2">Get Started</button>
 					</div>
 				</div>
-			</div> -->
+			</div> 
 		</div>
 	</div>
     <script>

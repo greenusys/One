@@ -3,6 +3,48 @@ small {
     font-weight: 600;
     font-size: 11px;
 }
+/*calendar bithday*/
+.temp_we{
+        font-size: 18px;
+    top: -21px;
+  }
+.font_12{
+    font-size: 12px;
+  }
+.days_wea li {
+    justify-content: center;
+  padding: 5px;
+  font-size: 11px;
+}
+.days_wea li div{
+  text-align: center; 
+}
+.bg-color
+{
+   background: linear-gradient(to bottom, #0000cc 0%,#0000cc 0%, #3399ff 100%);
+}
+
+.dot {
+  height: 3px;
+  width: 3px;
+  background-color:white;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.pad_days
+{
+  padding:10px;
+}
+@media only screen and (max-width: 600px)
+{
+    .pad_days
+    {
+     padding:8px;
+    }
+}
+
+/*calendar bithday*/
 ._use_n{
       position: absolute;
     top: 18px;
@@ -10,7 +52,9 @@ small {
 .line_het{
       line-height: 9px;
 }
-
+.font32{
+  font-size: 32px;
+}
 .carousel_arrow_set{
   height: 20px !important;
     top: 40% !important; 
@@ -181,20 +225,22 @@ background:transparent;
 
 .dropdown-content {
   display: none;
-  position: absolute;
-    min-width: 55px;
+   position: absolute;
+    min-width: 97px;
     z-index: 1;
     right: -4px;
     top: 15px;
     border-radius: 5px;
+    box-shadow: 0px 0px 7px 2px #0000002e;
 }
 
 .dropdown-content a {
-    color: #797777;
+       color: #797777;
     padding: 3px 11px;
     text-decoration: none;
-  display: block;
-  font-size: 12px;
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
 }
 
 .dropdown-content a:hover {background-color: #ddd;}
@@ -349,6 +395,10 @@ width: 32px;
  
   background: #ff441a !important; 
 }
+.text_ora{
+  color:  #ff441ad1;
+  font-size: 16px;
+}
 .widget-title {
     font-size: 18px;
     font-weight: 700;
@@ -432,3 +482,5 @@ width: 32px;
 [contentEditable]:empty:not(:focus):before{
         content:attr(data-text)
     }
+
+

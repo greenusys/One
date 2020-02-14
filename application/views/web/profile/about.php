@@ -11,6 +11,12 @@
 .font14{
   font-size: 14px
 }
+.skils{
+        color: rgba(0,0,0,.5) !important;
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: capitalize;
+}
 </style>
 
 <script>
@@ -18,8 +24,8 @@ $( document ).ready(function(e) {
   $('.profile').addClass('active');
 })
 </script>
-<link href="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/css/select2.min.css" rel="stylesheet" />
-<script src="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/js/select2.min.js"></script>
+<!-- <link href="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/js/select2.min.js"></script> -->
 <script type="text/javascript" src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
     <script src="https://files.codepedia.info/files/uploads/iScripts/html2canvas.js"></script>
  <!-- center panel -->
@@ -33,25 +39,26 @@ $( document ).ready(function(e) {
     <div class="border border-2 mt-4 bg-white rounded p-2">
         <div class="" id="work">
             <div class="col-md-12">
-                <h6 class="text-secondary pb-2  author mt-3 mb-0">WORK</h6>
-                
-                <?php
-                    if($myAccount==1){
-                        echo '<h6  class="text-info mt-0 "><a href="javascript:void(0)" id="add">Add a Workplace &nbsp; <span class="text-primary"> <i class="fas fa-arrow-alt-circle-down" style="font-size:24px"></i></span></a></h6> 
-                        <hr>';
-                    }
-                ?>
-                
+                <h6 class="text-secondary pb-2  author mt-3 mb-0"><u>WORK</u></h6>
+                    
                 <?php
                     // print_r();
                     if(count($WorkDetails)>0){
-                        echo '<ul>';
+                        echo '<ul class="mb-1">';
                         foreach($WorkDetails as $detail){
-                            echo '<li><a href="javascript:void(0)">'.$detail->company_name.'</a></li>';
+                            echo '<li><a href="javascript:void(0)" class="skils">'.$detail->company_name.'</a></li>';
                         }
                         echo '</ul>';
                     }
                 ?>
+                <?php
+                    if($myAccount==1){
+                        echo '<h6  class="text-info mt-0 "><a href="javascript:void(0)" id="add">Add a Workplace &nbsp; <span class="text-primary"> <i class="fas fa-arrow-alt-circle-down" style="font-size:18px"></i></span></a></h6> 
+                        <hr>';
+                    }
+                ?>
+                
+          
             </div>
         </div>
         <script>
@@ -71,9 +78,11 @@ $( document ).ready(function(e) {
                         response=JSON.parse(response);
                         if(response.code==1){
                             swal("Good job!", "Word Details Added Successfully.", "success");
+                            $('#addWorkplace').hide();
                         }else{
                              swal("Oop!", response.msg, "info");
                         }
+
                     }
                 });
             });
@@ -108,7 +117,9 @@ $( document ).ready(function(e) {
                                 <label for="exampleInputEmail1">Country </label>
                             </div>
                             <div class="col-sm-6">
-                                <input type="text" class="form-control" name="country" aria-describedby="emailHelp">
+                                <select name="country" class="countries form-control" id="countryId">
+                                    <option value="">Select Country</option>
+                                </select>
                             </div>
                         </div>
                     </div>
@@ -118,7 +129,9 @@ $( document ).ready(function(e) {
                                 <label for="exampleInputEmail1">State </label>
                             </div>
                             <div class="col-sm-6">
-                                <input type="text" class="form-control" name="state" aria-describedby="emailHelp">
+                                <select name="state" class="states form-control" id="stateId">
+                                    <option value="">Select State</option>
+                                </select>
                             </div>
                         </div>
                     </div>
@@ -128,7 +141,9 @@ $( document ).ready(function(e) {
                                 <label for="exampleInputEmail1">City/Town </label>
                             </div>
                             <div class="col-sm-6">
-                                <input type="text" class="form-control" name="city" aria-describedby="emailHelp">
+                                <select name="city" class="cities form-control" id="cityId">
+                                    <option value="">Select City</option>
+                                </select>                              
                             </div>
                         </div>
                     </div>
@@ -234,23 +249,25 @@ $( document ).ready(function(e) {
             <div class="col-md-12">
                 <h6 class="text-secondary pb-2 author mt-3 mb-0">PROFESSIONAL SKILLS</h6>
             
+                         <?php
+                    // print_r();
+                    if(count($SkillDetails)>0){
+                        echo '<ul class="mb-1">';
+                        foreach($SkillDetails as $detail){
+                            echo '<li><a href="javascript:void(0)" class="skils" >'.$detail->user_skill.'</a></li>';
+                        }
+                        echo '</ul>';
+                    }
+                ?> 
+
                 <?php
                     if($myAccount==1){
-                        echo '<h6 class="text-info mt-0"><a href="javascript:void(0)" id="skill">Add a Professional Skill &nbsp; <span class="text-primary"> <i class="fas fa-arrow-alt-circle-down" style="font-size:24px"></i></span></a></h6> 
+                        echo '<h6 class="text-info mt-0"><a href="javascript:void(0)" id="skill">Add a Professional Skill &nbsp; <span class="text-primary"> <i class="fas fa-arrow-alt-circle-down" style="font-size:18px"></i></span></a></h6> 
                         <hr>';
                     }
                 ?>
                 
-                <?php
-                    // print_r();
-                    if(count($SkillDetails)>0){
-                        echo '<ul>';
-                        foreach($SkillDetails as $detail){
-                            echo '<li><a href="javascript:void(0)">'.$detail->user_skill.'</a></li>';
-                        }
-                        echo '</ul>';
-                    }
-                ?>
+          
             </div>
         </div>
         
@@ -293,24 +310,25 @@ $( document ).ready(function(e) {
         <div class="" id="university">
             <div class="col-md-12">
                 <h6 class="text-secondary pb-2 author mt-3 mb-0">UNIVERSITY</h6>
-             
-                <?php
-                    if($myAccount==1){
-                        echo '<h6 class="text-info mt-0"><a href="javascript:void(0)"  id="univ">Add a University&nbsp; <span class="text-primary"> <i class="fas fa-arrow-alt-circle-down" style="font-size:24px"></i></span></a></h6> 
-                        <hr>';
-                    }
-                ?>
-                
                 <?php
                     // print_r();
                     if(count($UniversityDetails)>0){
-                        echo '<ul>';
+                        echo '<ul class="mb-1">';
                         foreach($UniversityDetails as $detail){
-                            echo '<li><a href="javascript:void(0)">'.$detail->university.'</a></li>';
+                            echo '<li><a href="javascript:void(0)" class="skills" >'.$detail->university.'</a></li>';
                         }
                         echo '</ul>';
                     }
                 ?>
+
+                <?php
+                    if($myAccount==1){
+                        echo '<h6 class="text-info mt-0"><a href="javascript:void(0)"  id="univ">Add a University&nbsp; <span class="text-primary"> <i class="fas fa-arrow-alt-circle-down" style="font-size:18px"></i></span></a></h6> 
+                        <hr>';
+                    }
+                ?>
+                
+                
             </div>
         </div>
         <script>
@@ -527,23 +545,25 @@ $( document ).ready(function(e) {
             <div class="col-md-12">
                 <h6 class="text-secondary pb-2 author mt-3 mb-0">HIGH SCHOOL</h6>
                
-                <?php
-                    if($myAccount==1){
-                        echo '<h6 class="text-info mt-0"><a href="javascript:void(0)"  id="high">Add a High School &nbsp; <span class="text-primary"> <i class="fas fa-arrow-alt-circle-down" style="font-size:24px"></i></span></a></h6> 
-                        <hr>';
-                    }
-                ?>
-                
-                <?php
+                 <?php
                     // print_r();
                     if(count($SchoolDetails)>0){
-                        echo '<ul>';
+                        echo '<ul class="mb-1">';
                         foreach($SchoolDetails as $detail){
-                            echo '<li><a href="javascript:void(0)">'.$detail->school .'</a></li>';
+                            echo '<li><a href="javascript:void(0)" class="skills">'.$detail->school .'</a></li>';
                         }
                         echo '</ul>';
                     }
                 ?>
+
+                <?php
+                    if($myAccount==1){
+                        echo '<h6 class="text-info mt-0"><a href="javascript:void(0)"  id="high">Add a High School &nbsp; <span class="text-primary"> <i class="fas fa-arrow-alt-circle-down" style="font-size:18px"></i></span></a></h6> 
+                        <hr>';
+                    }
+                ?>
+                
+               
             </div>
         </div>
         

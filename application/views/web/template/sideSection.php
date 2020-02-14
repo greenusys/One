@@ -7,79 +7,173 @@
   .activi:hover{
     color: orange;
   }
- 
+ .z_leftba{
+  z-index: -1;
+ }
+
 </style>
 <section class="container">
   <div class="row">
-    <!-------------activity  start---->
-    <div class="col-md-3 p-0 mar_t100">
-      <div class="card ">
-        <div class="p-3">
-          <h4 class="widget-title">Recent Activity</h4>
-        </div>
-        <div class="card-body ">
-          <div class="">
-            <ul class="list-unstyled">
-              <?php
-                foreach ($FriendsActivity as $activity) {
-                  # code...
-                  ?>
-                    <li><a href="<?=base_url('Profile/').$activity->user_id?>" class="activi"><strong><?=$activity->full_name?></strong> <small><?=$activity->activity_?></small></a></li>
-                  <?php
-                }
-              ?>
-              
-              <!-- <li><span><i class="far fa-sticky-note"></i>   </span><strong>Deepak</strong> <small>update his picture</small></li>
-              <li><span><i class="fas fa-pen-alt"></i>  </span><strong>Rahul</strong> <small>update his picture</small></li>
-              <li><span><i class="fas fa-edit"></i>  </span><strong>Umesh</strong> <small>update his picture</small></li> -->
-            </ul>
-          </div>
-          <div class="text-center">
-            <a href="<?=base_url()?>Test/ActivityLogs"> <span>See More <i class="fas fa-angle-double-down"></i></span></a>
-          </div>
-        </div>
-      </div>
-      <div class="card mt-3">
-        <div class="p-3">
-          <h4 class="widget-title">Who to follow?</h4>
-        </div>
-        <div class="card-body">
-          <ul class="list-unstyled">
-            <?php
-              // print_r($RandomPeople);
-             
-              foreach ($RandomPeople as $user) {
-                $nameArrI=explode(" ",$user->full_name);
-                ?>
-                  <li class="row folow_rw ">
-                    <div class="col-md-3 pt-1">
-                      <a href="<?=base_url('Profile/').$user->user_id?>">
-                        <img class="rounded-circle " src="<?=base_url()?>assets/img/Profile_Pic/<?=$user->profile_picture?>" onerror="this.src='<?=base_url()?>assets/img/Profile_Pic/default.png';" width="40px" height="40px">
-                      </a>
-                    </div>
-                    <div class="col-md-9 p-0">
-                      <span class=" author"><?=$user->full_name?></span>
-                      <div class="">
-                        <label class="randflow"><small class="text-white">Follow</small></label> 
-                        
+           <script>
+          $(document).on('submit','#addBio',function(e){
+            e.preventDefault();
+            var bio_graphy=$('#bio_graphy').val();
+            var formData=new FormData($(this)[0]);
+            $.ajax({
+              url:"<?=base_url('Profile/addBio')?>",
+              type:"post",
+              cache:false,
+              data:formData,
+              contentType:false,
+              processData:false,
+              success:function(response){
+                      response=JSON.parse(response);
+                      if(response.code==1){
+                        $('.bio_bl').show();
+                        $('#b_io').html(bio_graphy);
+                        $('.shw_bio_bl').hide();
+                        $('#bio_graphy').val(bio_graphy);
+                        // swal('Success!',  response.msg, 'success');
+                      }else{
+                        swal('Oops!',  response.msg, 'warning');
+                      }
+                    }
+            });
+          });
+        </script>
+     <!--right sidepanel -->
+    <div class="col-md-3 p-0 z_leftba mt-3">
+     
+            <div class="card p-2 font14" id="nav-home">    
+                <div class="text-center border-bottom mar_t70">
+                  <span class="text_ora"><i class="fa fa-comment-o" aria-hidden="true"></i></span>
+                  <div class="bio_bl">
+                    <p id="b_io">
+                    <?php
+                        if($MyDetails[0]->bio_graphy!=""){
+                          $bio=$MyDetails[0]->bio_graphy;
+                        }else{
+                          $bio="No Bio Added Yet.";
+                        }
+
+                    ?>
+                    <?=$bio?>
+                  
+                    </p>
+                    <?php
+                      if($myId==1){
+                        ?>
+                           <a href="javascript:void(0)" id="ad_bio">Add Bio</a>
+                        <?php
+                      }
+                    ?>
+                   
+                  </div>
+                  <div class="shw_bio_bl" style="display: none">
+                    <form id="addBio">
+                      <textarea name="bio_graphy" id="bio_graphy"  class="form-control bio_text" rows="3"></textarea>
+                      <div class="text-right"><label class="btn btn-primary bio_btn cncl_btn_ m-0 mr-2" >Cancel</label><button class="mr-2 btn btn-success bio_btn">Save</button></div>
+                    </form>
+                  </div>
+                  <br>
+                </div>
+                <script>
+                  $(document).on("click","#ad_bio",function(){
+                      $(".shw_bio_bl").show();
+                      $(".bio_bl").hide();
+
+                  })
+                   $(document).on("click",".cncl_btn_",function(){
+                      $(".shw_bio_bl").hide();
+                      $(".bio_bl").show();
+
+                  })
+
+                </script>
+                <div class="p-2">
+                  <ul>
+                    <li class="row">
+                      <div class="col-md-1 ">
+                        <span class="text_ora"><i class="fa fa-briefcase" aria-hidden="true"></i> </span>
                       </div>
-                    </div>
-                  </li>
-                <?php
-              }
-            ?>
-          </ul>
-          <div class="text-center">
-             <a href="<?=base_url()?>test/SuggestionFriends" ><span>See More <i class="fas fa-angle-double-down"></i></span></a>
+                      <div class="col-md-10 pl-2">
+                        
+                        <?php
+                          if(count($WorkDetails)>0){
+                            echo ucwords($WorkDetails[0]->position);
+                            echo '<a href="" class="text-capitalize"> '.$WorkDetails[0]->company_name.'</a>';
+                          }else{
+                            echo '<a href="">Unemployed</a>';
+                          }
+                        ?>
+                      </div>
+                    </li>
+            <!--         <li class="row">
+                      <div class="col-md-1 "><span><i class="fa fa-briefcase" aria-hidden="true"></i> </span></div>
+                      <div class="col-md-10 pl-2">
+                        Worked at 
+                        <a href="">Student</a></div>
+                    </li> -->
+                    <li class="row">
+                      <div class="col-md-1 "><span class="text_ora"><i class="fa fa-graduation-cap" aria-hidden="true"></i> </span></div>
+                      <div class="col-md-10 pl-2">
+                        Studied College at 
+                        <?php
+                          if(count($UniversityDetails)>0){
+                            echo '<a href="">'.$UniversityDetails[0]->university.'</a>';
+                          }else{
+                            echo '<a href="">Student</a>';
+                          }
+                        ?>
+                        <!-- <a href="">Uttranchal University</a></div> -->
+                    </li>
+                    <li class="row">
+                      <div class="col-md-1 ">
+                        <span class="text_ora"><i class="fa fa-graduation-cap" aria-hidden="true"></i> </span>
+                      </div>
+                      <div class="col-md-10 pl-2">
+                        Studied at 
+                        <?php
+                          if(count($SchoolDetails)>0){
+                            echo '<a href="">'.$SchoolDetails[0]->school.'</a>';
+                          }else{
+                            echo '<a href="">Student</a>';
+                          }
+                        ?>
+                        </div>
+                    </li>
+                    <li class="row">
+                      <div class="col-md-1 ">
+                        <span class="text_ora"><i class="fa fa-home" aria-hidden="true"></i> </span>
+                      </div>
+                      <div class="col-md-10 pl-2">
+                        Lives in 
+                        <a href="">Jaipur, India</a></div>
+                    </li>
+                  <!--   <li class="row">
+                      <div class="col-md-1 "><span><i class="fa fa-map-marker" aria-hidden="true"></i> </span></div>
+                      <div class="col-md-10 pl-2">
+                        From 
+                        <a href="">Jaipur</a></div>
+                    </li> -->
+                    <li class="row">
+                      <div class="col-md-1 "><span class="text_ora"><i class="fa fa-heart" aria-hidden="true"></i> </span></div>
+                      <div class="col-md-10 pl-2">Single </div>
+                    </li>
+
+                    
+                  </ul>
+                </div>
           </div>
-        </div>
-      </div>
-      <div class="card mt-3">
+    
+        
+       
+              <div class="card mt-3">
           <div class="p-3">
             <h4 class="widget-title">Page Feed</h4>
           </div>
-        <div class="card-body">
-           <div class="row page_st">
+        <div class="card-body pt-0">
+           <div class="row page_st m-0 p-2">
               <?php
                // print_r($AllPosts);
                // die;
@@ -90,11 +184,11 @@
                // die;
                   if($post['post_type']==1){
                     ?>
-                    <a href="<?=base_url('Post/viewPost/').$post['post_id']?>">
-                      <div class="col-md-4 mt-2 px-1">
-                        <img src="assets/uploads/images/<?=$post['post_files']?>" class="">
-                      </div>
-                    </a>
+                     <div class="col-md-4 mt-2 px-1">
+                        <a href="<?=base_url('Post/viewPost/').$post['post_id']?>" class="d-block">
+                          <img src="assets/uploads/images/<?=$post['post_files']?>" class="">
+                        </a>
+                     </div>
                     <?php
                   }else if($post['post_type']==2){
                     ?>
@@ -116,5 +210,4 @@
             </div>
         </div>
       </div>
-    </div>
-    <!-------------activity end---->
+      </div>

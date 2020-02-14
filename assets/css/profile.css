@@ -39,6 +39,9 @@
   .mar_t100{
     margin-top: 100px;
   }
+  .mar_t70{
+     margin-top: 70px;
+  }
   	.mar_t110{
   		 margin-top: -110px;
   	}
@@ -132,7 +135,7 @@
   .page_st div img{
   	height: 64px;
       width: 72px;
-      border-radius: 3px;
+      border-radius: 6px;
   }
 	    .underline {
        text-decoration: none; 

@@ -3,10 +3,20 @@
    $session=$this->session->userdata('logged_in');
       $user_bio=$session[0]->bio_graphy;
   ?>
-
+<style>
+    .randflow:hover{
+        cursor:pointer;
+        background:#ffbc00;
+    }
+</style>
   <script>
   $(document).ready(function() {
     $('.home').addClass('active');
+  });
+  $(document).on('click','.follow_user_',function(){
+      var full_name=$(this).attr('d-name');
+      swal("Good job!", "Now you follow "+full_name, "success");
+      $("#folllw").load(" #folllw > *");
   });
 </script>
 <script type="text/javascript" src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
@@ -24,10 +34,10 @@
         <div class="usr_back back_cover">
           <figure class="profile-banner-small">
               <!-- <a href="profile.html"> -->
-                  <img src="<?=base_url()?>assets/img/Cover_Photo/<?=$MyDetails[0]->cover_photo?>" class="w-100 "> 
+                  <img src="<?=base_url()?>assets/img/Cover_Photo/<?=$MyDetails[0]->cover_photo?>" class="w-100 " onerror="this.src='<?=base_url()?>assets/img/Cover_Photo/default.jpg';"> 
 
               <!-- </a> -->
-            <!-- <img src="<?=base_url()?>assets/img/Cover_Photo/<?=$MyDetails[0]->cover_photo?>" class="w-100 "> -->
+            <!-- <img src="<?=base_url()?>assets/img/Cover_Photo/<?=$MyDetails[0]->cover_photo?>"  class="w-100 "> -->
          </figure>
         </div>
         <div class="usr_pro"><img class="img img-fluid w-50" src="<?=base_url()?>assets/img/Profile_Pic/<?=$MyDetails[0]->profile_picture?>" onerror="this.src='<?=base_url()?>assets/img/Profile_Pic/default.png';" style="border-radius: 50%;height: 124px;width: 124px !important;"></div>
@@ -41,7 +51,7 @@
           </li>
           <li class="row">
 
-            <i class="fa fa-user-plus ranUse mt-3 col-md-1" aria-hidden="true"></i><a class=" menu_botttom col-md-9" href="<?=base_url()?>test/SuggestionFriends">Find Friend</a>
+            <!--<i class="fa fa-user-plus ranUse mt-3 col-md-1" aria-hidden="true"></i><a class=" menu_botttom col-md-9" href="<?=base_url()?>test/SuggestionFriends">Find Friend</a>-->
           </li>
           <li class="row">
             <i class="fa fa-star ranUse mt-3 col-md-1" aria-hidden="true"></i><a class=" menu_botttom col-md-9" href="<?=base_url('Test/favourite')?>">Favourites</a>
@@ -59,7 +69,7 @@
              <i class="fa fa-users ranUse mt-3 col-md-1" aria-hidden="true"></i><a class=" menu_botttom col-md-9" href="<?=base_url('Test/group')?>">Add Jobs</a>
           </li> -->
 
-<!--           <li class="row">
+           <li class="row">
             <i class="fa fa-file-text ranUse mt-3 col-md-1" aria-hidden="true"></i>
             <a href="#other-fruits" class="nav-link w-100 menu_botttom col-md-9" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="other-fruits">
                 
@@ -68,18 +78,18 @@
 
               <ul id="other-fruits" class="flex-column collapse">
                 <li class="nav-item">
-                  <a href="<?=base_url('Test/page')?>" class="nav-link"> -->
-                    <!-- <i class="fa fa-pencil" aria-hidden="true"></i> -->
-        <!--             Create Page
+                  <a href="<?=base_url('Test/page')?>" class="nav-link"> 
+                     <i class="fa fa-pencil" aria-hidden="true"></i> 
+                     Create Page
                   </a>
                 </li>
                 <li class="nav-item ">
-                  <a href="#" class="nav-link"> -->
-                    <!-- <i class="fa fa-pencil" aria-hidden="true"></i> -->
-               <!--      View Page
+                  <a href="#" class="nav-link">
+                     <i class="fa fa-pencil" aria-hidden="true"></i> 
+                     View Page
                   </a>
                 </li>
-              </ul> -->
+              </ul> 
               <!-- /Sub Nav -->
              <!-- <i class="fa fa-file-text ranUse mt-3 col-md-1" aria-hidden="true"></i><a class=" menu_botttom col-md-9" href="<?=base_url('Test/page')?>">Page</a> -->
           <!-- </li> -->
@@ -91,8 +101,59 @@
           </li> -->
         </ul>
       </div>
+
+      <div class="card mt-3">
+        <!--   <div class="p-3">
+            <h4 class="widget-title">Weather</h4>
+          </div> -->
+        <div class="card-body p-0">
+          <div class="m-0 ">
+            <div class="bg-color py-4">
+             <div class="d-flex  px-4 text-white p-2">
+                  <div class="">
+                    <span class="text-white font32" ><span class="current_temp"></span><sup class="temp_we">o</sup>C</span>
+                  </div>
+                    <div class="m-2">
+                      <span class="high_temp"></span><sup>o</sup>C <sub>H</sub><br>
+                      <span class="low_temp"></span><sup>o</sup>C <sub>L</sub>
+                    </div>
+                    <div class="text-right  ml-4">
+                      <img src="" class="w-100 temp_icon">
+                    </div>
+              </div>
+              <div class=" px-4 text-center m-auto">
+                 
+                     <h5 class="text-white mt-3 temp_desc" ></h5>
+                
+              </div>
+                <div class="d-flex  px-4 justify-content-center">
+                    <div  class="">
+                     <span class="text-white font_12">Humadity: <span class="humadity">67</span><sup>o</sup></span>
+                    </div>
+                    <div class="ml-3">
+                      <span class="text-white font_12">Chance Of Rain: <span class="rain_chance">49</span>%</span>
+                    </div>
+                </div>
+                <div class="mt-3 mb-3" style="background: #2486eab3">
+                    <div class="">
+                        <ul  class="forecast-container list-unstyled days_wea m-0 d-flex text-white justify-content-center">
+                          
+                          
+                        </ul>
+                    </div>
+                </div>
+                <div class="text-center text-white">
+                  <h5 class="mb-0 "><?=date('l, F d')?><sup>th</sup></h5>
+                  <span class="font_12 city_name"></span>
+                </div>
+
+            </div>
+          </div>  
+        </div>
+      </div>
+
       <!-- id="w_t_follow" -->
-      <div class="card mt-3" id="">
+      <div class="card mt-3" id="folllw">
         <div class="p-3">
           <h4 class="widget-title">Who to follow?</h4>
         </div>
@@ -113,7 +174,7 @@
                     <div class="col-md-9 p-0">
                       <span class=" author"><?=$user->full_name?></span>
                       <div class="">
-                        <label class="randflow"><small class="text-white">Follow</small></label> 
+                        <a href="javascript:void(0)" d-id="<?=$user->user_id?>" d-name="<?=$user->full_name?>" class="follow_user_"><label class="randflow"><small class="text-white">Follow</small></label></a> 
                         
                       </div>
                     </div>
@@ -939,60 +1000,86 @@
                   <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
                 </ol> -->
                 <div class="carousel-inner">
-                  <div class="carousel-item active">
-                    <div class="">
-                      <div class="">
-                        <img src="<?=base_url()?>assets/uploads/images/Post-image-2020-01-31-08-37-181.jpg" class="d-block w-100" alt="...">
-                      </div>
-                      <div class="row m-0">
-                          <div class="col-md-8 p-0">
-                            <ul class="unstyled m-0">
-                             <li><small>Uttrakhand -Greenusys</small></li>
-                             <li class="line_het"><span class="author">Web Content Writer</span></li>
-                             <li><small>Dehradun - Full Time</small></li>
-                          </div>
-                          <div class="col-md-4 p-0">
-                            <button class="btn btn-primary p-1 mt-3 fy" data-toggle="modal" data-target="#jobsModal">Apply Now</button>
-                          </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="carousel-item">
-                    <div class="">
-                      <div class="">
-                        <img src="<?=base_url()?>assets/uploads/images/Post-image-2020-01-31-08-37-180.jpg" class="d-block w-100" alt="...">
-                      </div>
-                      <div class="row m-0">
-                          <div class="col-md-8 p-0">
-                            <ul class="unstyled m-0">
-                             <li><small>Uttrakhand -Greenusys</small></li>
-                             <li class="line_het"><span class="author">Web Content Writer</span></li>
-                             <li><small>Dehradun - Full Time</small></li>
-                          </div>
-                          <div class="col-md-4 p-0">
-                            <button class="btn btn-primary p-1 mt-3 fy" data-toggle="modal" data-target="#jobsModal">Apply Now</button>
-                          </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="carousel-item">
-                    <div class="">
-                      <div class="">
-                        <img src="<?=base_url()?>assets/uploads/images/Post-image-2020-01-31-08-37-181.jpg" class="d-block w-100" alt="...">
-                      </div>
-                      <div class="row m-0">
-                          <div class="col-md-8 p-0">
-                            <ul class="unstyled m-0">
-                             <li><small>Uttrakhand -Greenusys</small></li>
-                             <li class="line_het"><span class="author">Web Content Writer</span></li>
-                             <li><small>Dehradun - Full Time</small></li>
-                          </div>
-                          <div class="col-md-4 p-0">
-                            <button class="btn btn-primary p-1 mt-3 fy" data-toggle="modal" data-target="#JobsModal">Apply Now</button>
-                          </div>
-                      </div>
-                    </div>
-                  </div>
+                    <?php 
+                         $i=0;
+                          foreach($fetchjobpost as $FJB)
+                          {
+                              
+                            // print_r($FJB);
+                            $img=$FJB->jobpost_image;
+                            //   $myImages=explode(',',$FJB->jobpost_image);
+                            if($i==0)
+                            {
+                                $st="active";
+                            }
+                            else{
+                                $st="";
+                            }
+                            
+                            ?>
+                            <div class="carousel-item <?=$st?>">
+                                <div class="">
+                                  <div class="">
+                                      
+                                    <img src="<?=base_url().'assets/jobpost/'.$img?>" class="d-block w-100" alt="...">
+                                  </div>
+                                  <div class="row m-0">
+                                      <div class="col-md-8 p-0">
+                                        <ul class="unstyled m-0">
+                                         <li><small><?=$FJB->jobpost_title?></small></li>
+                                         <li class="line_het"><span class="author"><?=$FJB->jobpost_description?></span></li>
+                                         <li><small>Dehradun - Full Time</small></li>
+                                      </div>
+                                      
+                                      <div class="col-md-4 p-0">
+                                        <button class="btn btn-primary p-1 mt-3 fy" data-toggle="modal" data-target="#jobsModal">Apply Now</button>
+                                      </div>
+                                  </div>
+                                </div>
+                              </div>
+                            <?php
+                            $i++;
+                             
+                          }
+                          ?>
+                  
+                  <!--<div class="carousel-item">-->
+                  <!--  <div class="">-->
+                  <!--    <div class="">-->
+                  <!--      <img src="<?=base_url()?>assets/uploads/images/Post-image-2020-01-31-08-37-180.jpg" class="d-block w-100" alt="...">-->
+                  <!--    </div>-->
+                  <!--    <div class="row m-0">-->
+                  <!--        <div class="col-md-8 p-0">-->
+                  <!--          <ul class="unstyled m-0">-->
+                  <!--           <li><small>Uttrakhand -Greenusys</small></li>-->
+                  <!--           <li class="line_het"><span class="author">Web Content Writer</span></li>-->
+                  <!--           <li><small>Dehradun - Full Time</small></li>-->
+                  <!--        </div>-->
+                  <!--        <div class="col-md-4 p-0">-->
+                  <!--          <button class="btn btn-primary p-1 mt-3 fy" data-toggle="modal" data-target="#jobsModal">Apply Now</button>-->
+                  <!--        </div>-->
+                  <!--    </div>-->
+                  <!--  </div>-->
+                  <!--</div>-->
+                  <!--<div class="carousel-item">-->
+                  <!--  <div class="">-->
+                  <!--    <div class="">-->
+                  <!--      <img src="<?=base_url()?>assets/uploads/images/Post-image-2020-01-31-08-37-181.jpg" class="d-block w-100" alt="...">-->
+                  <!--    </div>-->
+                  <!--    <div class="row m-0">-->
+                  <!--        <div class="col-md-8 p-0">-->
+                  <!--          <ul class="unstyled m-0">-->
+                  <!--           <li><small>Uttrakhand -Greenusys</small></li>-->
+                  <!--           <li class="line_het"><span class="author">Web Content Writer</span></li>-->
+                  <!--           <li><small>Dehradun - Full Time</small></li>-->
+                  <!--        </div>-->
+                  <!--        <div class="col-md-4 p-0">-->
+                  <!--          <button class="btn btn-primary p-1 mt-3 fy" data-toggle="modal" data-target="#JobsModal">Apply Now</button>-->
+                  <!--        </div>-->
+                  <!--    </div>-->
+                  <!--  </div>-->
+                  <!--</div>-->
+                  
                 </div>
                 <a class="carousel-control-prev carousel_arrow_set" href="#carouselExampleIndicators" role="button" data-slide="prev">
                   <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -1039,6 +1126,39 @@
               }
             ?>
           </ul>
+        </div>
+      </div>
+       <div class="card mt-3">
+        <!--   <div class="p-3">
+            <h4 class="widget-title">Birthday</h4>
+          </div> -->
+        <div class="card-body p-0">
+            <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                      <div class=" " style="background: url('<?=base_url()?>assets/img/birthday.jpg');background-size: cover;">
+                          <div class="p-4">
+                            <div class="text-center"><img src="<?=base_url()?>assets/img/cake.svg" style="width:44px;" ><br></div>
+
+                             <div class="p-4">
+                              <span class=" text-white">Today is</span>
+                             <h4 class="ml-2 text-white">Ravish Beg's Birthday</h4>
+                             <p class="text-white">Leave her a message with your best wishes on her profile page!</p>
+                           </div>
+                           
+                          </div>
+                      </div>
+                    </div>
+                </div>
+                <a class="carousel-control-prev carousel_arrow_set" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                  <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next carousel_arrow_set" href="#carouselExampleIndicators" role="button" data-slide="next">
+                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                  <span class="sr-only">Next</span>
+                </a>
+              </div>  
         </div>
       </div>
       <div class="card mt-3" id="">
@@ -2055,69 +2175,88 @@ function myFunction() {
       </div>
       <div class="modal-body">
         <div class="">
-          <form class="" method="" action="">
+          <form class="" id="jobpost" method="" action="">
              <div class="row px-3">
               <label class="form-group w-100">Job Title
-                <input type="text" class="form-control" name="job_title" placeholder="Job Title" required="">
+                <input type="text" class="form-control" name="jobpost_title" placeholder="Job Title" required="">
               </label>
             </div>
              <div class="row px-3">
               <label class="form-group w-100">Job Description<br>
-                <textarea name="job_desc" class="form-control"  placeholder="Job Description" required=""></textarea>
+                <textarea name="jobpost_description" class="form-control"  placeholder="Job Description" required=""></textarea>
               </label>
               </div>
-            <div class="row px-3">
-              <label class="form-group w-100">Location<br>
-                <textarea name="job_location"  class="form-control" placeholder="Location" required=""></textarea>
-              </label>
+            <div class="row">
+                <div class="col-md-4">
+               <label><strong>Country </strong>:</label>
+                  	<select  class="countries order-alpha input-style form-control " autocomplete="false" required name="country" id="countryId">
+						<option value="">Select Country</option>
+						<?php
+                      foreach ($fetchCountries as $FC) 
+                      {
+                        echo '<option value="'.$FC->country_id.'">'.$FC->name.'</option>';
+            
+                      }
+                      ?>  
+					</select></div>
+					  <div class="col-md-4">
+                      <label><strong>State </strong>:</label>
+                	<select name="state" class="states order-alpha input-style form-control " autocomplete="false" required id="stateId">
+						<option value="0">Select State</option>
+					
+					</select>
+              </div>
+              <div class="col-md-3">
+                    <label><strong>City </strong>:</label>
+                	<select name="city" class="cities order-alpha cit input-style form-control " autocomplete="false" required id="cityId">
+						<option value="0">Select City</option>
+					</select>
+              </div>
+					
             </div>
              
               <div class="row">
                 <div class="col-md-6">
                   <label class="form-group w-100">Salary
-                    <input type="number" class="form-control" name="salary" placeholder="Salary" required=""> 
+                    <input type="number" class="form-control" name="jobpost_salary" placeholder="Salary" required=""> 
                   </label>
                 </div>
                 <div class="col-md-6">
                   <label class="form-group w-100">Salary Type
-                    <select name="salary_type" class="form-control" required="">
+                    <select name="jobpost_salarytype" class="form-control" required="">
                       <option selected="" disabled="">Select Type</option>
-                      <option value="">per hour</option>
-                      <option value="">per day</option>
-                      <option value="">per week</option>
-                      <option value="">per two weeks</option>
-                      <option value="">per month</option>
-                      <option value="">per year</option>
-                      <option value="">one time</option>
+                      <option value="1">per hour</option>
+                      <option value="2">per day</option>
+                      <option value="3">per week</option>
+                      <option value="4">per two weeks</option>
+                      <option value="5">per month</option>
+                      <option value="6">per year</option>
+                      <option value="7">one time</option>
                     </select>
                   </label>
                 </div>
               </div>
               <div class="row px-3">
                 <label class="form-group w-100">Job Type
-                  <select name="job_type" class="form-control" required="">
+                  <select name="jobpost_jobtype" class="form-control" required="">
                     <option selected="" disabled="">Select Type</option>
-                    <option value="">Full-time</option>
-                    <option value="">Part-time</option>
-                    <option value="">Internship</option>
-                    <option value="">Volunteer</option>
-                    <option value="">Contract</option>
+                    <option value="1">Full-time</option>
+                    <option value="2">Part-time</option>
+                    <option value="3">Internship</option>
+                    <option value="4">Volunteer</option>
+                    <option value="5">Contract</option>
                 
                   </select>
                 </label>
               </div>  
-              <div class="row px-3">
-              <label class="form-group w-100">Receive Applications by Email
-                <input type="text" class="form-control" name="rec_application" placeholder="Receive Applications by Email" > 
-              </label> 
-              </div>  
+             
               <div class="row px-3"> 
-              <label class="form-group w-100">Receive Applications by Email
-                <input type="file" name="img" > 
+              <label class="form-group w-100">Image
+                <input type="file" name="userfile" > 
               </label>  
               </div>
               <div class="text-center">
-                <button class="btn btn-success">Post</button>
+                <button type="submit" class="btn btn-success">Post</button>
               </div>
           </form>
         </div>
@@ -2129,6 +2268,128 @@ function myFunction() {
     </div>
   </div>
 </div>
+<script>
+      
+
+       $(document).ready(function(){
+            $("#jobpost").submit(function(e){
+                e.preventDefault();
+                var formData= new FormData($(this)[0]);
+                
+                $.ajax({
+                    url:"<?=base_url('Test/AddJobPost')?>",
+                     type:"post",
+                     data:formData,
+                     enctype:"multipart/form-data",
+                     contentType:false,
+                     processData:false,
+                     cache:false,
+                    success:function(response)
+                    {
+                     var obj=JSON.parse(response);
+                     console.log(obj.status);
+                     if(obj.status==0)
+                     {
+                      alert(obj.message);
+                     }
+                     if(obj.status==1)
+                     {
+                      alert(obj.message);
+                     }
+                     if(obj.status==2)
+                     {
+                      alert(obj.message);
+                     }
+                     location.reload();
+                    }
+                });
+            });
+
+        });
+
+    </script>
+     <script>
+        $(document).ready(function(){
+          $('#countryId').on('change',function(){
+            var countryid=$(this).val();
+            // alert(countryid);
+            $.ajax({
+              url:"<?=base_url('Test/get_States')?>",
+              type:"post",
+              data:{countryid:countryid},
+              success:function(response)
+              {
+                //   console.log(response.data);
+                  response=JSON.parse(response);
+                    // console.log(response);
+                  if(response.code==1)
+                  {
+                    
+                    for (var i = 0; i <response.data.length; i++) 
+                    {
+                        var html;
+                        // console.log(response.data[i].name);
+                        html+='<option value="'+response.data[i].states_id+'">'+response.data[i].name+'</option>';
+                        // html+="<option value="'+response.data[i].id+'">" + response.data[i].name + "</option>";
+                       
+                        $('#stateId').append(html);
+                    }
+                }
+                else
+                  {
+                      
+                  }
+                  
+              }
+                  
+              });
+            })
+          })
+       
+      </script>
+       <script>
+        $(document).ready(function(){
+          $('#stateId').on('change',function(){
+            var stateId=$(this).val();
+            // alert(stateId);
+            $.ajax({
+              url:"<?=base_url('Test/get_Cities')?>",
+              type:"post",
+              data:{stateId:stateId},
+              success:function(response)
+              {
+                //   console.log(response.data);
+                  response=JSON.parse(response);
+                    // console.log(response);
+                  if(response.code==1)
+                  {
+                    
+                   for (var i = 0; i <response.data.length; i++) 
+                    {
+                        var html;
+                        
+                        html+='<option value="'+response.data[i].cities_id+'">'+response.data[i].name+'</option>';
+                       
+                       
+                        $('#cityId').append(html);
+                    }
+                }
+                else
+                  {
+                    //   html+="<option>" + response.data[i].name + "</option>";
+                       
+                    //     $('#stateId').append(html);
+                  }
+                  
+              }
+                  
+              });
+            })
+          })
+       
+      </script>
+    
+
 
  <script type="text/javascript">
     $(document).on("click",".favrt",function(){
@@ -2142,3 +2403,4 @@ function myFunction() {
       }
     })
   </script>
+

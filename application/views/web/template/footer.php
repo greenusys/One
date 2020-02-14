@@ -895,5 +895,106 @@ a.article:hover {
     }
 }
 </style>
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function(){
+      if ("geolocation" in navigator){ //check geolocation available 
+  //try to get user current location using getCurrentPosition() method
+  navigator.geolocation.getCurrentPosition(function(position){ 
+      console.log("Found your location \nLat : "+position.coords.latitude+" \nLang :"+ position.coords.longitude);
+   var lat = position.coords.latitude;
+   var long = position.coords.longitude;
+   $.ajax({
+        url: 'https://weather.cit.api.here.com/weather/1.0/report.json',
+        type: 'GET',
+        dataType: 'jsonp',
+        jsonp: 'jsonpcallback',
+        data: {
+          product: 'forecast_7days_simple',
+          // name: 'Dehradun',
+          latitude:lat,
+          longitude:long,
+          app_id: '2VjNgfEaoOiJn6uaUBfW',
+          app_code: '56TgYuCSqZewXbfLEYf6yQ'
+        },
+        success: function (data) {
+          // alert(JSON.stringify(data));
+        //  console.log(data);
+          $(".city_name").html(data.dailyForecasts.forecastLocation.city+', '+data.dailyForecasts.forecastLocation.state);
+
+           for(var i=1;i<=6;i++)
+              {
+                var hightemp = data.dailyForecasts.forecastLocation.forecast[i].highTemperature;
+                hightemp=parseInt(hightemp);
+                var lowtemp = data.dailyForecasts.forecastLocation.forecast[i].lowTemperature;
+                var iconLink = data.dailyForecasts.forecastLocation.forecast[i].iconLink;
+                var skyDescription = data.dailyForecasts.forecastLocation.forecast[i].skyDescription;
+                var description = data.dailyForecasts.forecastLocation.forecast[i].description;
+                var day = data.dailyForecasts.forecastLocation.forecast[i].weekday;
+                var utctime = data.dailyForecasts.forecastLocation.forecast[i].utcTime;
+                var windSpeed = data.dailyForecasts.forecastLocation.forecast[i].windSpeed;
+                var windDesc = data.dailyForecasts.forecastLocation.forecast[i].windDesc;
+                var city = data.dailyForecasts.forecastLocation.city;
+              //  var state = data.dailyForecasts.forecastLocation.state;
+            
+            var html = '   <li>'+
+                            '<div class="text-uppercase">'+day.slice(0, 3)+'</div>'+
+                             '<div><span><img class="newimg" src='+iconLink+' alt="" width="20"></span></div>'+
+                            '<span>'+parseInt(hightemp)+'<sup>o</sup> H</span><br>'+
+                            '<span>'+parseInt(lowtemp)+'<sup>o</sup> L</span>'+
+                          '</li>';
+
+                $('.forecast-container').append(html);
+
+              }
+        }
+      });
+  $.ajax({
+        url: 'https://weather.cit.api.here.com/weather/1.0/report.json',
+        type: 'GET',
+        dataType: 'jsonp',
+        jsonp: 'jsonpcallback',
+        data: {
+          product: 'observation',
+          // name: 'Dehradun',
+          latitude:lat,
+          longitude:long,
+          app_id: '2VjNgfEaoOiJn6uaUBfW',
+          app_code: '56TgYuCSqZewXbfLEYf6yQ'
+        },
+        success: function (data) {
+          //console.log(data);
+          var high  =data.observations.location[0].observation[0].highTemperature;
+          var low  =data.observations.location[0].observation[0].lowTemperature;
+          var current  =data.observations.location[0].observation[0].temperature;
+          var rain  =data.observations.location[0].observation[0].precipitation3H;
+          var humadity  =data.observations.location[0].observation[0].humidity;
+          var icon  =data.observations.location[0].observation[0].iconLink;
+          var desc  =data.observations.location[0].observation[0].skyDescription;
+          //alert(high);
+          if(rain=='*'){
+            rain = 0;
+          }
+          $(".current_temp").html(parseInt(current));
+          $(".high_temp").html(parseInt(high));    
+          $(".low_temp").html(parseInt(low));
+          $(".temp_icon").attr("src",icon);
+          $(".temp_desc").html(desc);
+          $(".humadity").html(humadity);
+          $(".rain_chance").html(rain);
+          
+        }
+      });
+
+
+     
+    });
+}else{
+  console.log("Browser doesn't support geolocation!");
+}
+    })
+  </script>
 </body>
 </html>
