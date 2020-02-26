@@ -817,6 +817,11 @@ public function getPostLikes($post_id){
 	//To get Comments
 	public function getComment($post_id){
 		return $this->APIM->getAllDetails('post_comments_', $condition=array("post_id"=>$post_id));
+	}//
+	public function getModifyComment($post_id){
+		$this->db->select('post_comments_.comment as comment, post_comments_.commented_on as commented_on, users.full_name as full_name,  post_comments_.id as comment_id');
+		$this->db->join('users','users.user_id=post_comments_.commented_by_');
+		return $this->db->where('post_comments_.post_id',$post_id)->get('post_comments_')->result();
 	}
 	// Like Count
 	public function getLikeCount($post_id){
@@ -1155,7 +1160,8 @@ public function getPostLikes($post_id){
 				// $p_Data['']=;
 				$p_Data['total_likes']=$this->getLikeCount($value->post_id);
 				$p_Data['total_dislikes']=$this->getDislikeCount($value->post_id);
-				$p_Data['total_comments']=$this->getComment($value->post_id);
+				$p_Data['total_comments']=$this->getModifyComment($value->post_id);
+				// print_r($p_Data['total_comments']);
 				$p_Data['total_share']=$this->getShareCount($value->post_id);
 				$posts[]=$p_Data;
 			}	

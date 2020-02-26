@@ -127,6 +127,21 @@
     	    }
 	        
 	    }
+	    public function favphoto()
+	    {
+    		$this->db->join('users','users.user_id=user_fav_section.user_id');
+        	$this->db->join('album_','album_.album_id=user_fav_section.album_id');
+        	$re=$this->db->get('user_fav_section')->result();
+	        return $re;
+	        
+	    }
+	    public function favchat()
+	    {
+        	$this->db->join('users','users.user_id=user_fav_section.user_id');
+        	$this->db->join('messages_','messages_.msg_id=user_fav_section.conversation_id');
+    		$re=$this->db->get('user_fav_section')->result();
+	        return $re;
+	    }
 	}
 ?>
 
