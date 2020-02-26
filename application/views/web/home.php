@@ -1020,8 +1020,7 @@
                             <div class="carousel-item <?=$st?>">
                                 <div class="">
                                   <div class="">
-                                      
-                                    <img src="<?=base_url().'assets/jobpost/'.$img?>" class="d-block w-100" alt="...">
+                                     <img src="<?=base_url().'assets/jobpost/'.$img?>" class="d-block w-100" alt="..."  onerror="this.src='<?=base_url()?>assets/img/jobs.jpg';">
                                   </div>
                                   <div class="row m-0">
                                       <div class="col-md-8 p-0">
