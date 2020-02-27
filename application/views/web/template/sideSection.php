@@ -42,7 +42,7 @@
           });
         </script>
      <!--right sidepanel -->
-    <div class="col-md-3 p-0 z_leftba mt-3">
+    <div class="col-md-3 p-0  mt-3">
      
             <div class="card p-2 font14" id="nav-home">    
                 <div class="text-center border-bottom mar_t70">
@@ -72,13 +72,14 @@
                   <div class="shw_bio_bl" style="display: none">
                     <form id="addBio">
                       <textarea name="bio_graphy" id="bio_graphy"  class="form-control bio_text" rows="3"></textarea>
-                      <div class="text-right"><label class="btn btn-primary bio_btn cncl_btn_ m-0 mr-2" >Cancel</label><button class="mr-2 btn btn-success bio_btn">Save</button></div>
+                      <div class="text-right"><label class="btn p-1 btn-primary bio_btn cncl_btn_ m-0 mr-2" >Cancel</label><button class="mr-2 btn btn-success p-1 bio_btn">Save</button></div>
                     </form>
                   </div>
                   <br>
                 </div>
                 <script>
                   $(document).on("click","#ad_bio",function(){
+                    
                       $(".shw_bio_bl").show();
                       $(".bio_bl").hide();
 

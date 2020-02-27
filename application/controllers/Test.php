@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+=======
+
+>>>>>>> a65123228a1fa316074791b385c2367401d31ac3
 <?php
 // defined('BASEPATH') OR exit('No direct script access allowed');
 
@@ -293,8 +297,12 @@
 // 	}
 	
 // }
+<<<<<<< HEAD
 ?>
 <?php
+=======
+
+>>>>>>> a65123228a1fa316074791b385c2367401d31ac3
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Test extends MY_Controller {
@@ -452,9 +460,6 @@ class Test extends MY_Controller {
 
 	public function group(){
 		$this->load->view('web/template/header');
-		$session=$this->session->userdata('logged_in');
-		$user_Id=$session[0]->user_id;
-		$data['MyFriends']=$this->FRND->getMyFriends($user_Id);
 		$data['allGroups']=$this->db->get('user_groups')->result();
 		$this->load->view('web/groupPage',$data);
 		$this->load->view('web/template/footer');
@@ -465,9 +470,38 @@ class Test extends MY_Controller {
 		$data['MyFriends']=$this->FRND->getMyFriends($user_Id);
 		$this->load->view('web/template/header');
 		$data['allGroups']=$this->db->get('user_groups')->result();
+		$this->db->join('users','users.user_id=user_fav_section.user_id');
+		$this->db->join('post_','post_.post_id=user_fav_section.post_id');
+		$data['favpost']=$this->db->get('user_fav_section')->result();
+		$data['favphoto']=$this->Test->favphoto();
+		$data['favchat']=$this->Test->favchat();
 		$this->load->view('web/fav',$data);
 		$this->load->view('web/template/footer');
 	}
+	public function favposts(){
+		$this->load->view('web/template/header');
+		$data['allGroups']=$this->db->get('user_groups')->result();
+		$this->db->join('users','users.user_id=user_fav_section.user_id');
+		$this->db->join('post_','post_.post_id=user_fav_section.post_id');
+		$data['favpost']=$this->db->get('user_fav_section')->result();
+		$this->load->view('web/favpost',$data);
+		$this->load->view('web/template/footer');
+	}
+	public function favphotos(){
+		$this->load->view('web/template/header');
+		$data['allGroups']=$this->db->get('user_groups')->result();
+		$data['favphoto']=$this->Test->favphoto();
+		$this->load->view('web/favphoto',$data);
+		$this->load->view('web/template/footer');
+	}
+	public function favchat(){
+		$this->load->view('web/template/header');
+		$data['allGroups']=$this->db->get('user_groups')->result();
+		$data['favchat']=$this->Test->favchat();
+		$this->load->view('web/favchats',$data);
+		$this->load->view('web/template/footer');
+	}
+	
 	public function page(){
 		$this->load->view('web/template/header');
 		$this->load->view('web/createPage');
@@ -654,3 +688,7 @@ class Test extends MY_Controller {
 	
 }
 ?>
+<<<<<<< HEAD
+=======
+
+>>>>>>> a65123228a1fa316074791b385c2367401d31ac3

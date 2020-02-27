@@ -20,11 +20,16 @@ $profile_picture = $session[0]->profile_picture;
 *, *:before, *:after {
   box-sizing: border-box;
 }
+
+#sidebar{
+  display: none
+}
+
 .name{
   color: #424242;
 }
 .name:hover{
-  color: orange;
+  color: #dc4734;
 }
 body {
   background: #C5DDEB;
@@ -86,7 +91,7 @@ body {
 }
 .people-list .about {
   float: left;
-  margin-top: 8px;
+  /*margin-top: 8px;*/
 }
 .people-list .about {
   padding-left: 8px;
@@ -164,7 +169,7 @@ body {
     pointer-events: none;
     border-bottom-color: #86BB71;
     border-width: 10px;
-    margin-left: -12px;
+    margin-left: -11px;
     transform: rotate(-84deg);
 }
 .chat .chat-history li {
@@ -446,7 +451,7 @@ background:transparent;
                           # code...?>
                           <a href="javascript:void(0)" class="My-Friend" d-Store="<?=$msg->sent_by?>" act="<?=$msg->msg_id?>">
                             <li class="clearfix px-2">
-                              <img src="assets/img/Profile_Pic/<?=$msg->profile_picture?>" width="50px" height="50px" alt="avatar" this.src="'assets/img/Profile_Pic/default.png';" style="border-radius: 50%" >
+                              <img src="assets/img/Profile_Pic/<?=$msg->profile_picture?>" width="40px" height="40px" alt="avatar" this.src="'assets/img/Profile_Pic/default.png';" style="border-radius: 50%" >
                               <div class="about">
                                   <div class="name"><?=$msg->full_name?></div>
                                   <div class="status">

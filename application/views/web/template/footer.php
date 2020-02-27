@@ -517,15 +517,18 @@ $(document).on('click','.seFnd',function(){
 <script type="text/javascript">
    $(document).ready(function () {
   $('.cmnt_').keyup(function (e) {
+
     if (e.which == 13) {
+    	 e.preventDefault();
       // console.log("dsadnsajnda");
-      var text = $(this).closest(".emoji-wysiwyg-editor").html();
- 
+        var text1 = $(this).closest(".emoji-wysiwyg-editor").html();
+    var text =  text1.slice(0, -15);
+
 //console.log(text);
       // $(".ad_cmnt").submit(function (ev) {
       //     ev.preventDefault();
         var form = $('.ad_cmnt')[0];
-        console.log(form);
+       // console.log(form);
          var formdata = new FormData(form);
          formdata.append("comment",text);
           // for (var value of formdata.values()) {

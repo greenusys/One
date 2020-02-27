@@ -127,6 +127,44 @@
     	    }
 	        
 	    }
+	    public function favphoto()
+	    {
+    		$this->db->join('users','users.user_id=user_fav_section.user_id');
+        	$this->db->join('album_','album_.album_id=user_fav_section.album_id');
+        	$re=$this->db->get('user_fav_section')->result();
+	        return $re;
+	        
+	    }
+	    public function favchat()
+	    {
+        	$this->db->join('users','users.user_id=user_fav_section.user_id');
+        	$this->db->join('messages_','messages_.msg_id=user_fav_section.conversation_id');
+    		$re=$this->db->get('user_fav_section')->result();
+	        return $re;
+	    }
+	    public function followUser($data){
+	    	 // `follow_user`(`id`, `user_id`, `follow_to`, `followed_on`)
+	    	 if(count($this->db->where($data)->get('follow_user')->result())==0){
+	    	 	if($this->db->insert('follow_user',$data)){
+	    	 		return 1;
+	    	 	}else{
+	    	 		return 0;
+	    	 	}
+	    	 }else{
+	    	 	return 2;
+	    	 }
+
+	    }
+	    public function UpComingBirthdays(){
+	    	// date_of_birth
+	    	if(count($data=$this->db->where($data)->get('users')->result())==0){
+	    	 	foreach ($data as $value) {
+	    	 		# code...
+	    	 	}
+	    	 }else{
+	    	 	return 2;
+	    	 }
+	    }
 	}
 ?>
 
