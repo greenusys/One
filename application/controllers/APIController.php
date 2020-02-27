@@ -355,6 +355,7 @@ class APIController extends CI_Controller
 			}
 			elseif ($post_type==2 && !isset($_POST['imgageData']))
 			{
+				
 				$data = array();
 		        // If file upload form submitted
 		        if($this->input->post() && !empty($_FILES['files']['name'])){
