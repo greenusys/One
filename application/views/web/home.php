@@ -1168,7 +1168,7 @@
             <h4 class="widget-title">Birthday</h4>
           </div> -->
         <div class="card-body p-0">
-            <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+            <div id="carouselExampleIndicators1" class="carousel slide" data-ride="carousel">
                 <div class="carousel-inner">
                     <div class="carousel-item active">
                       <div class=" " style="background: url('<?=base_url()?>assets/img/birthday.jpg');background-size: cover;">
@@ -1185,11 +1185,11 @@
                       </div>
                     </div>
                 </div>
-                <a class="carousel-control-prev carousel_arrow_set" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                <a class="carousel-control-prev carousel_arrow_set" href="#carouselExampleIndicators1" role="button" data-slide="prev">
                   <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                   <span class="sr-only">Previous</span>
                 </a>
-                <a class="carousel-control-next carousel_arrow_set" href="#carouselExampleIndicators" role="button" data-slide="next">
+                <a class="carousel-control-next carousel_arrow_set" href="#carouselExampleIndicators1" role="button" data-slide="next">
                   <span class="carousel-control-next-icon" aria-hidden="true"></span>
                   <span class="sr-only">Next</span>
                 </a>

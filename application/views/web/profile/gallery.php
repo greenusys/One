@@ -179,7 +179,11 @@ img.hover-shadow {
   color: #ff441a;
 }
 </style>
-
+<script type="text/javascript">
+  $(document).ready(function(){
+    $(".m_photos").addClass("active");
+  })
+</script>
 
 
 

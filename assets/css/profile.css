@@ -30,11 +30,15 @@
       text-transform: capitalize;
       padding-bottom: 0px;
       font-weight: 600;
-      color: #444444 !important;
+      color: #444444;
       vertical-align: middle;
   }
+.timeline-info ul li .active{
+  color: #ff441a !important;
+}
+
   .timeline-info ul li a:hover {
-  	color: #088dcd;
+  	color: #ff441a !important;
   }
   .mar_t100{
     margin-top: 100px;
