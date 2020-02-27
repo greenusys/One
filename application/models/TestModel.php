@@ -98,7 +98,7 @@
 	    }
     	public function fetchJobPostData()
     	{
-    	   return $this->db->get('Jobpost_')->result();
+    	   return $this->db->get('jobpost_')->result();
     	}
 
 
