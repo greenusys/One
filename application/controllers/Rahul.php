@@ -23,12 +23,16 @@
 			}
 		}
 		public function UpComingBirthdays(){
-			if($data= $this->Demo->UpComingBirthdays())
-				die(json_encode(array("code"=>1,"data"=>$data)));
+			$result=$this->Demo->UpComingBirthdays();
+			if(count($result)>0){
+				die(json_encode(array("code"=>1,"data"=>$result)));
 			}else{
-				die(json_encode(array("code"=>0,"data"=>"No Data Found")));
+				die(json_encode(array("code"=>0,"data"=>"No Data Found.")));
 			}
 		}
+		public function addAdvertisement(){
+	    	
+	    }
 	}
 
 ?>

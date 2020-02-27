@@ -9,6 +9,13 @@
         	$this->db->where('user_id',$id);
         	return $this->db->get('album_')->result();
         }
+
+        public function GetRecentActivity()
+        {          
+            $this->db->select('*');
+            $this->db->from('recent_activity');
+            $this->db->where('done_on >DATE_SUB(CURDATE(),INTERVAL 1 DAY)');
+            return $this->db->get()->result();  
+        }
         
     }
-?>
