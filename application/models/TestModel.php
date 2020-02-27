@@ -142,6 +142,29 @@
     		$re=$this->db->get('user_fav_section')->result();
 	        return $re;
 	    }
+	    public function followUser($data){
+	    	 // `follow_user`(`id`, `user_id`, `follow_to`, `followed_on`)
+	    	 if(count($this->db->where($data)->get('follow_user')->result())==0){
+	    	 	if($this->db->insert('follow_user',$data)){
+	    	 		return 1;
+	    	 	}else{
+	    	 		return 0;
+	    	 	}
+	    	 }else{
+	    	 	return 2;
+	    	 }
+
+	    }
+	    public function UpComingBirthdays(){
+	    	// date_of_birth
+	    	if(count($data=$this->db->where($data)->get('users')->result())==0){
+	    	 	foreach ($data as $value) {
+	    	 		# code...
+	    	 	}
+	    	 }else{
+	    	 	return 2;
+	    	 }
+	    }
 	}
 ?>
 
