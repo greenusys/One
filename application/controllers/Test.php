@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-=======
-
->>>>>>> a65123228a1fa316074791b385c2367401d31ac3
 <?php
 // defined('BASEPATH') OR exit('No direct script access allowed');
 
@@ -297,12 +293,8 @@
 // 	}
 	
 // }
-<<<<<<< HEAD
 ?>
 <?php
-=======
-
->>>>>>> a65123228a1fa316074791b385c2367401d31ac3
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Test extends MY_Controller {
@@ -688,7 +680,3 @@ class Test extends MY_Controller {
 	
 }
 ?>
-<<<<<<< HEAD
-=======
-
->>>>>>> a65123228a1fa316074791b385c2367401d31ac3
