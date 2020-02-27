@@ -1,4 +1,3 @@
-
 <?php
 // defined('BASEPATH') OR exit('No direct script access allowed');
 
@@ -294,7 +293,8 @@
 // 	}
 	
 // }
-
+?>
+<?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Test extends MY_Controller {
@@ -456,7 +456,10 @@ class Test extends MY_Controller {
 		$this->load->view('web/groupPage',$data);
 		$this->load->view('web/template/footer');
 	}
-		public function favourite(){
+	public function favourite(){
+		$session=$this->session->userdata('logged_in');
+		$user_Id=$session[0]->user_id;
+		$data['MyFriends']=$this->FRND->getMyFriends($user_Id);
 		$this->load->view('web/template/header');
 		$data['allGroups']=$this->db->get('user_groups')->result();
 		$this->db->join('users','users.user_id=user_fav_section.user_id');
@@ -677,4 +680,3 @@ class Test extends MY_Controller {
 	
 }
 ?>
-

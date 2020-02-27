@@ -2,6 +2,36 @@
 //print_r($_SESSION['logged_in']); 
    $session=$this->session->userdata('logged_in');
       $user_bio=$session[0]->bio_graphy;
+
+
+      function time_elapsed_string($datetime, $full = false) {
+    $now = new DateTime;
+    $ago = new DateTime($datetime);
+    $diff = $now->diff($ago);
+
+    $diff->w = floor($diff->d / 7);
+    $diff->d -= $diff->w * 7;
+
+    $string = array(
+        'y' => 'year',
+        'm' => 'month',
+        'w' => 'week',
+        'd' => 'day',
+        'h' => 'hour',
+        'i' => 'minute',
+        's' => 'second',
+    );
+    foreach ($string as $k => &$v) {
+        if ($diff->$k) {
+            $v = $diff->$k . ' ' . $v . ($diff->$k > 1 ? 's' : '');
+        } else {
+            unset($string[$k]);
+        }
+    }
+
+    if (!$full) $string = array_slice($string, 0, 1);
+    return $string ? implode(', ', $string) . ' ago' : 'just now';
+}
   ?>
 <style>
     .randflow:hover{
@@ -297,6 +327,55 @@
           <style>
            
           </style>
+          <script type="text/javascript">
+            window.onload = function(){
+        
+    //Check File API support
+    if(window.File && window.FileList && window.FileReader)
+    {
+        var filesInput = document.getElementById("img_video");
+        
+        filesInput.addEventListener("change", function(event){
+            
+            var files = event.target.files; //FileList object
+            var output = document.getElementById("result");
+            
+            for(var i = 0; i< files.length; i++)
+            {
+                var file = files[i];
+                
+                //Only pics
+                // if(!file.type.match('image'))
+                //   continue;
+                
+                var picReader = new FileReader();
+                
+                picReader.addEventListener("load",function(event){
+                    
+                    var picFile = event.target;
+                    var checker = '<?=base_url()?>assets/img/default_video.png';
+                    var div = document.createElement("div");
+                    div.setAttribute("class","col-md-2 mt-2");
+                    div.innerHTML = '<img class="thumbnail " height="80px" width="80px" onerror="this.onerror=null;this.src=\''+checker+'\';" src=\'' + picFile.result + '\'' +
+                            '/>';
+                    
+                    output.insertBefore(div,null);            
+                
+                });
+                
+                 //Read the image
+                picReader.readAsDataURL(file);
+            }                               
+           
+        });
+    }
+    else
+    {
+        console.log("Your browser does not support File API");
+    }
+}
+    
+          </script>
           <div class="row mx-0 my-1 ">
             <div class="col-md-2 ">
               <div class="  text-center">
@@ -337,6 +416,8 @@
               </label>
             </div>
           </div> -->
+
+            <output id="result" class="row m-0"  > </output>         
 <div id="previewImage">
     </div>
           <div class="text-right pr-2">
@@ -826,7 +907,8 @@
               </a>
               <br>
                 <small>
-                  <time class="timeago" datetime=" <?=$p_ost['posted_on']?>"></time>
+                  <?php echo time_elapsed_string($p_ost['posted_on']);?>
+                  <!-- <time class="timeago" datetime=" <?=$p_ost['posted_on']?>"></time> -->
 
                 </small>
             </div>
@@ -1654,6 +1736,37 @@ $(document).ready(function(){
        offset = offset + 5;
   });
 })
+// Timestamp JQUERY CONVERTER
+function time2TimeAgo(ts) {
+    // This function computes the delta between the
+    // provided timestamp and the current time, then test
+    // the delta for predefined ranges.
+
+    var d=new Date();  // Gets the current time
+    var nowTs = Math.floor(d.getTime()/1000); // getTime() returns milliseconds, and we need seconds, hence the Math.floor and division by 1000
+    var seconds = nowTs-ts;
+
+    // more that two days
+    if (seconds > 2*24*3600) {
+       return "a few days ago";
+    }
+    // a day
+    if (seconds > 24*3600) {
+       return "yesterday";
+    }
+
+    if (seconds > 3600) {
+       return "a few hours ago";
+    }
+    if (seconds > 1800) {
+       return "Half an hour ago";
+    }
+    if (seconds > 60) {
+       return Math.floor(seconds/60) + " minutes ago";
+    }
+}
+
+
 function getAjaxData(offset)
 {
   console.log(offset);

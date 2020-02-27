@@ -98,7 +98,7 @@
 	    }
     	public function fetchJobPostData()
     	{
-    	   return $this->db->get('Jobpost_')->result();
+    	   return $this->db->get('jobpost_')->result();
     	}
 
 
@@ -127,20 +127,60 @@
     	    }
 	        
 	    }
-	    public function favphoto()
-	    {
+	    public function favphoto(){
     		$this->db->join('users','users.user_id=user_fav_section.user_id');
         	$this->db->join('album_','album_.album_id=user_fav_section.album_id');
         	$re=$this->db->get('user_fav_section')->result();
 	        return $re;
 	        
 	    }
-	    public function favchat()
-	    {
+	    public function favchat(){
         	$this->db->join('users','users.user_id=user_fav_section.user_id');
         	$this->db->join('messages_','messages_.msg_id=user_fav_section.conversation_id');
     		$re=$this->db->get('user_fav_section')->result();
 	        return $re;
+	    }
+	    public function followUser($data){
+	    	 // `follow_user`(`id`, `user_id`, `follow_to`, `followed_on`)
+	    	 if(count($this->db->where($data)->get('follow_user')->result())==0){
+	    	 	if($this->db->insert('follow_user',$data)){
+	    	 		return 1;
+	    	 	}else{
+	    	 		return 0;
+	    	 	}
+	    	 }else{
+	    	 	return 2;
+	    	 }
+
+	    }
+	    public function UpComingBirthdays(){
+	    	$id=$_SESSION['logged_in'][0]->user_id ;
+	    	// $id=10;
+	    	$FrdsArr=$this->getMyFriends($id);
+			$myFrndUpcomingBdy=array();
+			if(count($FrdsArr)>0){
+				foreach ($FrdsArr as $each) {
+					$friends[]=$each->user_id;
+				}
+				$ids = join("','",$friends);   
+				$sql = "SELECT users.full_name, users.profile_picture, users.date_of_birth, users.user_id, users.cover_photo FROM users  WHERE users.user_id IN ('$ids') group by users.date_of_birth";
+				if(count($data=$this->db->query($sql)->result())>=0){
+	    	 	foreach ($data as $value) {
+	    	 		$d_o_b=date('d-m-Y', strtotime($value->date_of_birth));
+	    	 		$month=date('m', strtotime($value->date_of_birth));
+	    	 		$this_month=date('m');
+	    	 		$effectiveMonth = date('m', strtotime("+3 months"));
+	    	 		$effectiveMonth;
+	    	 		if(($month < $effectiveMonth)&& ($month>=$this_month)){
+	    	 			$myFrndUpcomingBdy[]=$value;
+	    	 		}	
+	    	 	}
+	    	 }
+			}
+			return $myFrndUpcomingBdy;
+	    }
+	    public function addAdvertisement(){
+	    	
 	    }
 	}
 ?>
