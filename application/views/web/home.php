@@ -1250,28 +1250,33 @@
             <h4 class="widget-title">Birthday</h4>
           </div> -->
         <div class="card-body p-0">
-            <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+            <div id="carouselExampleIndicators1" class="carousel slide" data-ride="carousel">
                 <div class="carousel-inner">
-                    <div class="carousel-item active">
+                  <?php
+                  $counter=1;
+                  foreach ($birthdays as $birth) {
+                  ?>
+                    <div class="carousel-item <?php if($counter==1)echo "active"?>">
                       <div class=" " style="background: url('<?=base_url()?>assets/img/birthday.jpg');background-size: cover;">
                           <div class="p-4">
                             <div class="text-center"><img src="<?=base_url()?>assets/img/cake.svg" style="width:44px;" ><br></div>
 
                              <div class="p-4">
-                              <span class=" text-white">Today is</span>
-                             <h4 class="ml-2 text-white">Ravish Beg's Birthday</h4>
-                             <p class="text-white">Leave her a message with your best wishes on her profile page!</p>
+                             <h4 class="ml-2 text-white"><?=$birth->full_name?>'s Birthday</h4>
+                             <span class=" text-white">is on <?=date('d-m-Y',strtotime($birth->date_of_birth))?></span>
+                             <p class="text-white">Leave a message with your best wishes on his/her profile page!</p>
                            </div>
                            
                           </div>
                       </div>
                     </div>
+                  <?php $counter=2; } ?>
                 </div>
-                <a class="carousel-control-prev carousel_arrow_set" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                <a class="carousel-control-prev carousel_arrow_set" href="#carouselExampleIndicators1" role="button" data-slide="prev">
                   <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                   <span class="sr-only">Previous</span>
                 </a>
-                <a class="carousel-control-next carousel_arrow_set" href="#carouselExampleIndicators" role="button" data-slide="next">
+                <a class="carousel-control-next carousel_arrow_set" href="#carouselExampleIndicators1" role="button" data-slide="next">
                   <span class="carousel-control-next-icon" aria-hidden="true"></span>
                   <span class="sr-only">Next</span>
                 </a>
@@ -1725,15 +1730,16 @@ $(document).ready(function(){
   var offset = 5;
   $(window).scroll(function() 
   {
-    // if($(window).scrollTop() == $(document).height() - $(window).height()) {
-    //   // limit=limit+5;
-    //   // offset = limit + offset;
+    // console.log($(document).height() - $(window).height());
+    if(parseInt($(window).scrollTop()) == $(document).height() - $(window).height()) {
+      // limit=limit+5;
+      // offset = limit + offset;
      
-    //   getAjaxData(offset);
-    //    offset = offset + 5;
-    //   }
       getAjaxData(offset);
        offset = offset + 5;
+      }
+      // getAjaxData(offset);
+      //  offset = offset + 5;
   });
 })
 // Timestamp JQUERY CONVERTER
