@@ -23,6 +23,9 @@
 $( document ).ready(function(e) {
   $('.profile').addClass('active');
 })
+$(document).ready(function(){
+    $(".m_about").addClass("active");
+  })
 </script>
 <!-- <link href="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/css/select2.min.css" rel="stylesheet" />
 <script src="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/js/select2.min.js"></script> -->
@@ -53,7 +56,7 @@ $( document ).ready(function(e) {
                 ?>
                 <?php
                     if($myAccount==1){
-                        echo '<h6  class="text-info mt-0 "><a href="javascript:void(0)" id="add">Add a Workplace &nbsp; <span class="text-primary"> <i class="fas fa-arrow-alt-circle-down" style="font-size:18px"></i></span></a></h6> 
+                        echo '<h6  class="text-info mt-0 fy "><a href="javascript:void(0)" id="add">Add a Workplace &nbsp; <span class="text-primary"> <i class="fas fa-arrow-alt-circle-down" style="font-size:18px"></i></span></a></h6> 
                         <hr>';
                     }
                 ?>
@@ -262,7 +265,7 @@ $( document ).ready(function(e) {
 
                 <?php
                     if($myAccount==1){
-                        echo '<h6 class="text-info mt-0"><a href="javascript:void(0)" id="skill">Add a Professional Skill &nbsp; <span class="text-primary"> <i class="fas fa-arrow-alt-circle-down" style="font-size:18px"></i></span></a></h6> 
+                        echo '<h6 class="text-info mt-0 fy"><a href="javascript:void(0)" id="skill">Add a Professional Skill &nbsp; <span class="text-primary"> <i class="fas fa-arrow-alt-circle-down" style="font-size:18px"></i></span></a></h6> 
                         <hr>';
                     }
                 ?>
@@ -315,7 +318,7 @@ $( document ).ready(function(e) {
                     if(count($UniversityDetails)>0){
                         echo '<ul class="mb-1">';
                         foreach($UniversityDetails as $detail){
-                            echo '<li><a href="javascript:void(0)" class="skills" >'.$detail->university.'</a></li>';
+                            echo '<li><a href="javascript:void(0)" class="skils" >'.$detail->university.'</a></li>';
                         }
                         echo '</ul>';
                     }
@@ -323,7 +326,7 @@ $( document ).ready(function(e) {
 
                 <?php
                     if($myAccount==1){
-                        echo '<h6 class="text-info mt-0"><a href="javascript:void(0)"  id="univ">Add a University&nbsp; <span class="text-primary"> <i class="fas fa-arrow-alt-circle-down" style="font-size:18px"></i></span></a></h6> 
+                        echo '<h6 class="text-info mt-0 fy"><a href="javascript:void(0)"  id="univ">Add a University&nbsp; <span class="text-primary"> <i class="fas fa-arrow-alt-circle-down" style="font-size:18px"></i></span></a></h6> 
                         <hr>';
                     }
                 ?>
@@ -550,7 +553,7 @@ $( document ).ready(function(e) {
                     if(count($SchoolDetails)>0){
                         echo '<ul class="mb-1">';
                         foreach($SchoolDetails as $detail){
-                            echo '<li><a href="javascript:void(0)" class="skills">'.$detail->school .'</a></li>';
+                            echo '<li><a href="javascript:void(0)" class="skils">'.$detail->school .'</a></li>';
                         }
                         echo '</ul>';
                     }
@@ -558,7 +561,7 @@ $( document ).ready(function(e) {
 
                 <?php
                     if($myAccount==1){
-                        echo '<h6 class="text-info mt-0"><a href="javascript:void(0)"  id="high">Add a High School &nbsp; <span class="text-primary"> <i class="fas fa-arrow-alt-circle-down" style="font-size:18px"></i></span></a></h6> 
+                        echo '<h6 class="text-info mt-0 fy"><a href="javascript:void(0)"  id="high">Add a High School &nbsp; <span class="text-primary"> <i class="fas fa-arrow-alt-circle-down" style="font-size:18px"></i></span></a></h6> 
                         <hr>';
                     }
                 ?>

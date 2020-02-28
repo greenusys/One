@@ -60,7 +60,11 @@
   color: #ff441a;
 }
 </style>
-
+<script type="text/javascript">
+  $(document).ready(function(){
+    $(".m_friends").addClass("active");
+  })
+</script>
     <!-- center panel -->
     <div class="col-md-9">
          <div class=" mt-4 ">
@@ -96,7 +100,7 @@
             </div>
            
          <!--    <button class="btn btn-default filter-button" data-filter="spray">Spray Nozzle</button>
-            <button class="btn btn-default filter-button" data-filter="irrigation">Irrigation Pipes</button> -->
+            <button class="btn btn-default filter-button" data-filter="irrigation">Irrigation Pipes</button>    -->
         </div>
         <br/>
 

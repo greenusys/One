@@ -22,7 +22,7 @@
   </style>
   
 
-    <div class="container-fluid  bg-white border-bottom border-top" style="margin-top:80px; !important">
+<!--     <div class="container-fluid  bg-white border-bottom border-top" style="margin-top:80px; !important">
 	    <div class="container">
 			<div class="row">
 				<nav class="navbar navbar-expand-lg navbar-light">
@@ -48,7 +48,7 @@
 			</div>
 		</div>
     </div>
-	<div class="container card mt-1 shadow-sm p-4">
+ -->	<div class="container card shadow-sm p-4 " style="margin-top:80px; !important">
 		<div class="row">
 			<div class="col-md-11">
 				<h5 class="font-weight-bold text-dark">Suggested for you</h5>

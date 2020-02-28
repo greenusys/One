@@ -164,5 +164,11 @@ class Profile extends CI_Controller
 			die(json_encode(array("code"=>0,"msg"=>"Failed To Add Bio.")));
 		}
 	}
+	public function FetchRecentActivity()
+	{
+		$data=$this->Profile->GetRecentActivity();
+		// print_r($data);
+		die(json_encode($data));
+	}
 
 }

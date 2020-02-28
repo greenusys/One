@@ -2,6 +2,36 @@
 //print_r($_SESSION['logged_in']); 
    $session=$this->session->userdata('logged_in');
       $user_bio=$session[0]->bio_graphy;
+
+
+      function time_elapsed_string($datetime, $full = false) {
+    $now = new DateTime;
+    $ago = new DateTime($datetime);
+    $diff = $now->diff($ago);
+
+    $diff->w = floor($diff->d / 7);
+    $diff->d -= $diff->w * 7;
+
+    $string = array(
+        'y' => 'year',
+        'm' => 'month',
+        'w' => 'week',
+        'd' => 'day',
+        'h' => 'hour',
+        'i' => 'minute',
+        's' => 'second',
+    );
+    foreach ($string as $k => &$v) {
+        if ($diff->$k) {
+            $v = $diff->$k . ' ' . $v . ($diff->$k > 1 ? 's' : '');
+        } else {
+            unset($string[$k]);
+        }
+    }
+
+    if (!$full) $string = array_slice($string, 0, 1);
+    return $string ? implode(', ', $string) . ' ago' : 'just now';
+}
   ?>
 <style>
     .randflow:hover{
@@ -297,6 +327,55 @@
           <style>
            
           </style>
+          <script type="text/javascript">
+            window.onload = function(){
+        
+    //Check File API support
+    if(window.File && window.FileList && window.FileReader)
+    {
+        var filesInput = document.getElementById("img_video");
+        
+        filesInput.addEventListener("change", function(event){
+            
+            var files = event.target.files; //FileList object
+            var output = document.getElementById("result");
+            
+            for(var i = 0; i< files.length; i++)
+            {
+                var file = files[i];
+                
+                //Only pics
+                // if(!file.type.match('image'))
+                //   continue;
+                
+                var picReader = new FileReader();
+                
+                picReader.addEventListener("load",function(event){
+                    
+                    var picFile = event.target;
+                    var checker = '<?=base_url()?>assets/img/default_video.png';
+                    var div = document.createElement("div");
+                    div.setAttribute("class","col-md-2 mt-2");
+                    div.innerHTML = '<img class="thumbnail " height="80px" width="80px" onerror="this.onerror=null;this.src=\''+checker+'\';" src=\'' + picFile.result + '\'' +
+                            '/>';
+                    
+                    output.insertBefore(div,null);            
+                
+                });
+                
+                 //Read the image
+                picReader.readAsDataURL(file);
+            }                               
+           
+        });
+    }
+    else
+    {
+        console.log("Your browser does not support File API");
+    }
+}
+    
+          </script>
           <div class="row mx-0 my-1 ">
             <div class="col-md-2 ">
               <div class="  text-center">
@@ -337,6 +416,8 @@
               </label>
             </div>
           </div> -->
+
+            <output id="result" class="row m-0"  > </output>         
 <div id="previewImage">
     </div>
           <div class="text-right pr-2">
@@ -513,9 +594,11 @@
                     <span> <img class="rounded-circle like_img" src="<?=base_url()?>assets/img/Profile_Pic/<?=$MyDetails[0]->profile_picture?>"></span>
                     <form method="POST" class="w-100 ad_cmnt" >
                       <div class="pl-2 w-100 _input">
-                        <p class="lead emoji-picker-container">
+                     <p class="lead emoji-picker-container">
                           <textarea class="input-field cmnt_" data-emojiable="true" type="text" name="comment"  placeholder="Add a Message">  </textarea>
-                        </p>
+                            <!-- <input type="text" class="form-control" name="comment" data-emojiable="true"> -->
+                        </p> 
+
                               <input type="hidden" name="post_id" value="<?=$p_ost['post_id']?>">
                       </div>
                       <!------contenteditable  data-text="Write a comment"------>
@@ -826,7 +909,8 @@
               </a>
               <br>
                 <small>
-                  <time class="timeago" datetime=" <?=$p_ost['posted_on']?>"></time>
+                  <?php echo time_elapsed_string($p_ost['posted_on']);?>
+                  <!-- <time class="timeago" datetime=" <?=$p_ost['posted_on']?>"></time> -->
 
                 </small>
             </div>
@@ -1168,28 +1252,33 @@
             <h4 class="widget-title">Birthday</h4>
           </div> -->
         <div class="card-body p-0">
-            <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+            <div id="carouselExampleIndicators1" class="carousel slide" data-ride="carousel">
                 <div class="carousel-inner">
-                    <div class="carousel-item active">
+                  <?php
+                  $counter=1;
+                  foreach ($birthdays as $birth) {
+                  ?>
+                    <div class="carousel-item <?php if($counter==1)echo "active"?>">
                       <div class=" " style="background: url('<?=base_url()?>assets/img/birthday.jpg');background-size: cover;">
                           <div class="p-4">
                             <div class="text-center"><img src="<?=base_url()?>assets/img/cake.svg" style="width:44px;" ><br></div>
 
                              <div class="p-4">
-                              <span class=" text-white">Today is</span>
-                             <h4 class="ml-2 text-white">Ravish Beg's Birthday</h4>
-                             <p class="text-white">Leave her a message with your best wishes on her profile page!</p>
+                             <h4 class="ml-2 text-white"><?=$birth->full_name?>'s Birthday</h4>
+                             <span class=" text-white">is on <?=date('d-m-Y',strtotime($birth->date_of_birth))?></span>
+                             <p class="text-white">Leave a message with your best wishes on his/her profile page!</p>
                            </div>
                            
                           </div>
                       </div>
                     </div>
+                  <?php $counter=2; } ?>
                 </div>
-                <a class="carousel-control-prev carousel_arrow_set" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                <a class="carousel-control-prev carousel_arrow_set" href="#carouselExampleIndicators1" role="button" data-slide="prev">
                   <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                   <span class="sr-only">Previous</span>
                 </a>
-                <a class="carousel-control-next carousel_arrow_set" href="#carouselExampleIndicators" role="button" data-slide="next">
+                <a class="carousel-control-next carousel_arrow_set" href="#carouselExampleIndicators1" role="button" data-slide="next">
                   <span class="carousel-control-next-icon" aria-hidden="true"></span>
                   <span class="sr-only">Next</span>
                 </a>
@@ -1643,17 +1732,49 @@ $(document).ready(function(){
   var offset = 5;
   $(window).scroll(function() 
   {
-    // if($(window).scrollTop() == $(document).height() - $(window).height()) {
-    //   // limit=limit+5;
-    //   // offset = limit + offset;
+    // console.log($(document).height() - $(window).height());
+    if(parseInt($(window).scrollTop()) == $(document).height() - $(window).height()) {
+      // limit=limit+5;
+      // offset = limit + offset;
      
-    //   getAjaxData(offset);
-    //    offset = offset + 5;
-    //   }
       getAjaxData(offset);
        offset = offset + 5;
+      }
+      // getAjaxData(offset);
+      //  offset = offset + 5;
   });
 })
+// Timestamp JQUERY CONVERTER
+function time2TimeAgo(ts) {
+    // This function computes the delta between the
+    // provided timestamp and the current time, then test
+    // the delta for predefined ranges.
+
+    var d=new Date();  // Gets the current time
+    var nowTs = Math.floor(d.getTime()/1000); // getTime() returns milliseconds, and we need seconds, hence the Math.floor and division by 1000
+    var seconds = nowTs-ts;
+
+    // more that two days
+    if (seconds > 2*24*3600) {
+       return "a few days ago";
+    }
+    // a day
+    if (seconds > 24*3600) {
+       return "yesterday";
+    }
+
+    if (seconds > 3600) {
+       return "a few hours ago";
+    }
+    if (seconds > 1800) {
+       return "Half an hour ago";
+    }
+    if (seconds > 60) {
+       return Math.floor(seconds/60) + " minutes ago";
+    }
+}
+
+
 function getAjaxData(offset)
 {
   console.log(offset);

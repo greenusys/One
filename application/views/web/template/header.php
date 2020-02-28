@@ -62,6 +62,9 @@ body {
   box-shadow: 0px 1px 15px 0px rgba(51, 51, 51, 0.2);
 
 }
+.emoji-picker-icon{
+  z-index: 0 !important;
+}
 
 .full-width {
   width: 100%;
@@ -387,7 +390,7 @@ position: absolute;
     font-weight: 600;
     /*line-height: 1;*/
     text-transform: capitalize;
-      color: #444444 !important
+      color: #444444 ;
 }
 .author a {
     color: #333333;

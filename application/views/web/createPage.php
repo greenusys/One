@@ -14,6 +14,9 @@
         .modal-backdrop{
             opacity: 0 ;
         }
+        .modal_max{
+        	max-width: 700px !important
+        }
     </style>
 
 	<div class="container mt-5">
@@ -86,48 +89,85 @@
     </script>
 <!-- Modal -->
 <div class="modal" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal_max" role="document">
 	
 		<div class="modal-content p-3" id="get1">
 		    <div class="modal-header">
-			    <div class="row">
-					<!-- <h5 class="modal-title" id="exampleModalLabel">Business or brand</h5>
-					<p>Connect with customers, grow your audience and showcase your products with a free business Page.</p> -->
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-					  <span aria-hidden="true">&times;</span>
-					</button>
-				</div>
+			    
+				<h5 class="modal-title" id="">Business or brand</h5>
+				<!-- <p>Connect with customers, grow your audience and showcase your products with a free business Page.</p> -->
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				  <span aria-hidden="true">&times;</span>
+				</button>
+				
 		    </div>
 		    <div class="modal-body">
 				<div class="row">
 				    <div class="col-md-12">
 						<form id="createPage">
+							<div class="row form-group">
+								<div class="col-md-6">
+									<label class="w-100">Page Name
+										<input type="text" class="form-control" name="page_name" aria-describedby="emailHelp" placeholder="Name Your Page">
+									</label>
+								</div>
+								<div class="col-md-6">
+									<label class="w-100">Category
+										<select class="form-control" name="category">
+		                                    <option value="0"> Select </option>
+		                                    <option value="1"> Entertainment </option>
+		                                    <option value="2"> Travel </option>
+		                                    <option value="3"> World </option>
+		                                </select>
+	                                </label>
+											<!-- <input type="text" class="form-control" id="category" aria-describedby="emailHelp" placeholder="Add a category to describe your page"> -->
+								</div>
+							</div>
+
+							<div class="row form-group">
+								<div class="col-md-6">
+									<label class="w-100">Address
+										<input type="text" class="form-control" name="" placeholder="Enter Address">
+									</label>
+								</div>
+
+								<div class="col-md-6">	
+									<label class="w-100">City, State
+										<input type="text" class="form-control" name="" placeholder="Enter City, State">
+									</label>
+								</div>
+							</div>
+							
 							<div class="form-group">
 								<div class="row">
-									<div class="col-sm-4">
-										<label for="exampleInputEmail1">Page name</label>
+									<div class="col-md-6">
+										<label >Mobile
+											<input type="text" class="form-control" name="" placeholder="Enter Mobile">
+										</label>
 									</div>
-									<div class="col-sm-8">
-										<input type="text" class="form-control" name="page_name" aria-describedby="emailHelp" placeholder="Name Your Page">
+									<div class="col-md-6">
+										<label >Zipcode
+											<input type="text" class="form-control" name="" placeholder="Enter Address">
+										</label>
 									</div>
 								</div>
 							</div>
 							<div class="form-group">
 								<div class="row">
-									<div class=" col-sm-4">
-										<label for="exampleInputEmail1">Category</label>
+									<div class="col-md-6">
+										<label >Page Image
+											<input type="file" class="form-control" name="">
+										</label>
 									</div>
-									<div class="col-sm-8">
-                                        <select class="form-control" name="category">
-                                            <option value="0"> Select </option>
-                                            <option value="1"> Entertainment </option>
-                                            <option value="2"> Travel </option>
-                                            <option value="3"> World </option>
-                                        </select>
-										<!-- <input type="text" class="form-control" id="category" aria-describedby="emailHelp" placeholder="Add a category to describe your page"> -->
+									<div class="col-md-6">
+										<label >Page Cover Image
+											<input type="file" class="form-control" name="">
+										</label>
 									</div>
 								</div>
-                            </div>
+							</div>
+
+
                             <div class="modal-footer bg-light">
                                 <button type="submit" class="btn btn-primary" id="getStatrted">Create</button>
                             </div>
@@ -155,7 +195,7 @@
 							<div class="form-group">
 								<div class="row">
 									<div class="col-sm-3">
-										<label for="exampleInputEmail1">Page name</label>
+										<label >Page name</label>
 									</div>
 									<div class="col-sm-9">
 										<input type="text" class="form-control" id="first_name" aria-describedby="emailHelp" placeholder="Name Your Page">
@@ -165,7 +205,7 @@
 							<div class="form-group">
 								<div class="row">
 									<div class=" col-sm-3">
-										<label for="exampleInputEmail1">Category</label>
+										<label >Category</label>
 									</div>
 									<div class="col-sm-9">
 										<input type="text" class="form-control" id="middle_name" aria-describedby="emailHelp" placeholder="Add a category to describe your page">
