@@ -55,7 +55,7 @@
 	display: table;
 	float: left;
 	margin-left: 2px;
-
+left: 80px;
 	width: 20rem;
 	height: 22rem;
 	background-color: white;
@@ -516,15 +516,15 @@ $(document).on('click','.seFnd',function(){
 
 <script type="text/javascript">
    $(document).ready(function () {
-  $('.cmnt_').keyup(function (e) {
-
-    if (e.which == 13) {
+  $(document).on("keypress",'.cmnt_',function (e) {
+var keyCode = e.keyCode || e.which;
+    if (keyCode === 13) {
     	 e.preventDefault();
-      // console.log("dsadnsajnda");
-        var text1 = $(this).closest(".emoji-wysiwyg-editor").html();
-    var text =  text1.slice(0, -15);
+//alert($(this).html());
+        var text = $(this).html();
+   // var text =  text1.slice(0, -15);
 
-//console.log(text);
+//alert(text);
       // $(".ad_cmnt").submit(function (ev) {
       //     ev.preventDefault();
         var form = $('.ad_cmnt')[0];
@@ -560,7 +560,7 @@ $(document).on('click','.seFnd',function(){
                          //alert(response.msg);
                             // swal("Success", "Story Successfully", "success");
                            // $('.ad_cmnt').trigger("reset");
-                          location.reload();
+                        //  location.reload();
                             
                           }
                          

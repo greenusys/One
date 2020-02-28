@@ -594,9 +594,11 @@
                     <span> <img class="rounded-circle like_img" src="<?=base_url()?>assets/img/Profile_Pic/<?=$MyDetails[0]->profile_picture?>"></span>
                     <form method="POST" class="w-100 ad_cmnt" >
                       <div class="pl-2 w-100 _input">
-                        <p class="lead emoji-picker-container">
+                     <p class="lead emoji-picker-container">
                           <textarea class="input-field cmnt_" data-emojiable="true" type="text" name="comment"  placeholder="Add a Message">  </textarea>
-                        </p>
+                            <!-- <input type="text" class="form-control" name="comment" data-emojiable="true"> -->
+                        </p> 
+
                               <input type="hidden" name="post_id" value="<?=$p_ost['post_id']?>">
                       </div>
                       <!------contenteditable  data-text="Write a comment"------>
