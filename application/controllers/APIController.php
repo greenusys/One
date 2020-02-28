@@ -890,8 +890,9 @@ public function getPostLikes($post_id){
 			$data=array("post_id"=>$this->input->post('post_id'),"commented_by_"=>$user_id=$_SESSION['logged_in'][0]->user_id,"comment"=>$this->input->post('comment'),"commented_on"=>date('d-m-Y h:i:s'));
 		}
 		if(!empty($this->input->post('comment')) && !empty($this->input->post('post_id'))){
-			if($this->APIM->addData('post_comments_',$data)){
-				die(json_encode(array("code"=>1,"data"=>"Comment Added Successfully.")));
+			$result=$this->APIM->addData('post_comments_',$data);
+			if($result){
+				die(json_encode(array("code"=>1,"data"=>"Comment Added Successfully.","id"=>$result)));
 			}else{
 				die(json_encode(array("code"=>0,"data"=>"Failed To Post Comment.")));
 			}

@@ -30,7 +30,8 @@
 		}
 		public function addData($table_name,$data){
 			if($this->db->insert($table_name,$data)){
-				return true;
+				$insert_id = $this->db->insert_id();
+   				return  $insert_id;
 			}else{
 				return false;
 			}

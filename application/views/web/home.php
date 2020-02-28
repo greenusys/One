@@ -1732,8 +1732,8 @@ $(document).ready(function(){
   var offset = 5;
   $(window).scroll(function() 
   {
-    // console.log($(document).height() - $(window).height());
-    if(parseInt($(window).scrollTop()) == $(document).height() - $(window).height()) {
+    //console.log($(document).height() - $(window).height());
+    if($(window).scrollTop() +1 >= $(document).height() - $(window).height()) {
       // limit=limit+5;
       // offset = limit + offset;
      
