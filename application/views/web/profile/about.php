@@ -42,14 +42,18 @@ $(document).ready(function(){
     <div class="border border-2 mt-4 bg-white rounded p-2">
         <div class="" id="work">
             <div class="col-md-12">
-                <h6 class="text-secondary pb-2  author mt-3 mb-0"><u>WORK</u></h6>
+                <h6 class="text-secondary pb-2  author mt-3 mb-0">WORK</h6>
                     
                 <?php
                     // print_r();
                     if(count($WorkDetails)>0){
                         echo '<ul class="mb-1">';
                         foreach($WorkDetails as $detail){
-                            echo '<li><a href="javascript:void(0)" class="skils">'.$detail->company_name.'</a></li>';
+                            echo '<li><a href="javascript:void(0)" class="skils">'.$detail->company_name.'</a>
+                                    <span class="text-primary ml-2 pointer p-1 editable" title="Edit"><i class="fas fa-pencil-alt"></i></span>
+                                    <span class="text-success ml-2 pointer d-none p-1 save__" title="Save"><i class="fab fa-telegram-plane"></i></span>
+                                    <span class="text-danger ml-2 delt_bn d-none pointer p-1" title="Delete"><i class="fas fa-trash-alt" ></i></span>
+                                </li>';
                         }
                         echo '</ul>';
                     }
@@ -257,7 +261,11 @@ $(document).ready(function(){
                     if(count($SkillDetails)>0){
                         echo '<ul class="mb-1">';
                         foreach($SkillDetails as $detail){
-                            echo '<li><a href="javascript:void(0)" class="skils" >'.$detail->user_skill.'</a></li>';
+                            echo '<li><a href="javascript:void(0)" class="skils" >'.$detail->user_skill.'</a>
+                                    <span class="text-primary ml-2 pointer p-1 editable" title="Edit"><i class="fas fa-pencil-alt"></i></span>
+                                    <span class="text-success ml-2 pointer d-none p-1 save__" title="Save"><i class="fab fa-telegram-plane"></i></span>
+                                    <span class="text-danger ml-2 delt_bn d-none pointer p-1" title="Delete"><i class="fas fa-trash-alt" ></i></span>
+                                </li>';
                         }
                         echo '</ul>';
                     }
@@ -318,7 +326,11 @@ $(document).ready(function(){
                     if(count($UniversityDetails)>0){
                         echo '<ul class="mb-1">';
                         foreach($UniversityDetails as $detail){
-                            echo '<li><a href="javascript:void(0)" class="skils" >'.$detail->university.'</a></li>';
+                            echo '<li><a href="javascript:void(0)" class="skils" >'.$detail->university.'</a>
+                                    <span class="text-primary ml-2 pointer p-1 editable" title="Edit"><i class="fas fa-pencil-alt"></i></span>
+                                    <span class="text-success ml-2 pointer d-none p-1 save__" title="Save"><i class="fab fa-telegram-plane"></i></span>
+                                    <span class="text-danger ml-2 delt_bn d-none pointer p-1" title="Delete"><i class="fas fa-trash-alt" ></i></span>
+                                </li>';
                         }
                         echo '</ul>';
                     }
@@ -553,7 +565,11 @@ $(document).ready(function(){
                     if(count($SchoolDetails)>0){
                         echo '<ul class="mb-1">';
                         foreach($SchoolDetails as $detail){
-                            echo '<li><a href="javascript:void(0)" class="skils">'.$detail->school .'</a></li>';
+                            echo '<li><a href="javascript:void(0)" class="skils">'.$detail->school .'</a>
+                                    <span class="text-primary ml-2 pointer p-1 editable" title="Edit"><i class="fas fa-pencil-alt"></i></span>
+                                    <span class="text-success ml-2 pointer d-none p-1 save__" title="Save"><i class="fab fa-telegram-plane"></i></span>
+                                    <span class="text-danger ml-2 delt_bn d-none pointer p-1" title="Delete"><i class="fas fa-trash-alt" ></i></span>
+                                    </li>';
                         }
                         echo '</ul>';
                     }
@@ -569,7 +585,34 @@ $(document).ready(function(){
                
             </div>
         </div>
+        <script type="text/javascript">
+           
+$(document).on('click','.editable',function() {
         
+  var t = $(this).parent().find("a");          
+  var input = $('<input>').attr('class', 'savable').val( t.text() );
+  t.replaceWith( input ); 
+  input.focus();
+  var c = $(this).parent().find(".delt_bn").removeClass("d-none");
+  $(this).parent().find(".save__").removeClass("d-none");
+  $(this).addClass("d-none");
+});
+
+// $(document).on('blur','.savable',function() {
+
+//   var input = $(this);      
+//   var t = $('<a>').attr({href:"javascript:void(0)",class:"skils"}).text( input.val() );
+//   input.replaceWith( t ); 
+//   $(".delt_bn").addClass("d-none");
+//    $(".save__").addClass("d-none");
+//    $(".editable").removeClass("d-none");
+//   // alert(c);
+
+// });
+$(document).on("click",".delt_bn",function(){
+    alert("sdadsasda");
+})
+        </script>
         <div class="row card bg-light pb-2" id="form4" style="display:none">
             <div class="offset-1 col-sm-11 mt-4">
                 <form id="addSchool">

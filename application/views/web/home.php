@@ -185,7 +185,7 @@
       <!-- id="w_t_follow" -->
       <div class="card mt-3" id="folllw">
         <div class="p-3">
-          <h4 class="widget-title">Who to follow?</h4>
+          <h4 class="widget-title">Whom to follow?</h4>
         </div>
         <div class="card-body p-0">
           <ul class="list-unstyled">
@@ -474,7 +474,7 @@
                           <div class="dropdown ml-3">
                             <button class="dropbtn"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></button>
                             <div class="dropdown-content bg-white">
-                              <a href="#">Edit</a>
+                              <a href="javascript:void(0)">Edit</a>
                               <a href="javascript:void(0)" class="dlt_post_" p_d=<?=$p_ost['post_id']?> >Delete</a>
                               
                             </div>
@@ -580,7 +580,7 @@
                           <div class="dropdown">
                             <button class="dropbtn"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></button>
                             <div class="dropdown-content bg-white">
-                              <a href="#">Edit</a>
+                              <a href="javascript:void(0)"  data-toggle="modal" data-target="#commntModal">Edit</a>
                               <a href="javascript:void(0)" class="dlt_comnt_" c_d="<?=$p_ost['total_comments'][$i]->id?>">Delete</a>
                             </div>
                           </div>
@@ -860,7 +860,7 @@
                       <div class="dropdown">
                         <button class="dropbtn"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></button>
                         <div class="dropdown-content bg-white">
-                          <a href="#">Edit</a>
+                             <a href="javascript:void(0)"  data-toggle="modal" data-target="#commntModal">Edit</a>
                           <a href="javascript:void(0)" class="dlt_comnt_" c_d="<?=$p_ost['total_comments'][$i]->id?>">Delete</a>
                           
                         </div>
@@ -1057,7 +1057,7 @@
                             <div class="dropdown">
                               <button class="dropbtn"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></button>
                               <div class="dropdown-content bg-white">
-                                <a href="#">Edit</a>
+                                   <a href="javascript:void(0)"  data-toggle="modal" data-target="#commntModal">Edit</a>
                                 <a href="javascript:void(0)" class="dlt_comnt_" c_d="<?=$p_ost['total_comments'][$i]->id?>">Delete</a>
                                 
                               </div>
@@ -1871,7 +1871,7 @@ function getAjaxData(offset)
                   html+='<div class="col-md-1">';
                   if(user_id==res.data[i].user_id)
                   {
-                    html+='<div class="dropdown"><button class="dropbtn"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></button><div class="dropdown-content bg-white"><a href="#">Edit</a><a href="javascript:void(0)" class="dlt_comnt_" c_d="'+res.data[i].total_comments[k].id+'">Delete</a></div></div>';
+                    html+='<div class="dropdown"><button class="dropbtn"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></button><div class="dropdown-content bg-white">     <a href="javascript:void(0)"  data-toggle="modal" data-target="#commntModal">Edit</a><a href="javascript:void(0)" class="dlt_comnt_" c_d="'+res.data[i].total_comments[k].id+'">Delete</a></div></div>';
                   }
                   html+='</div></div>';
                 } 
@@ -2054,7 +2054,7 @@ function getAjaxData(offset)
                   html+='<div class="col-md-1">';
                   if(user_id==res.data[i].user_id)
                   {
-                    html+='<div class="dropdown"><button class="dropbtn"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></button><div class="dropdown-content bg-white"><a href="#">Edit</a><a href="javascript:void(0)" class="dlt_comnt_" c_d="'+res.data[i].total_comments[k].id+'">Delete</a></div></div>';
+                    html+='<div class="dropdown"><button class="dropbtn"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></button><div class="dropdown-content bg-white">     <a href="javascript:void(0)"  data-toggle="modal" data-target="#commntModal">Edit</a><a href="javascript:void(0)" class="dlt_comnt_" c_d="'+res.data[i].total_comments[k].id+'">Delete</a></div></div>';
                   }
                   html+='</div></div>';
                 } 
@@ -2170,7 +2170,7 @@ function getAjaxData(offset)
                   html+='<div class="col-md-1">';
                   if(user_id==res.data[i].user_id)
                   {
-                    html+='<div class="dropdown"><button class="dropbtn"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></button><div class="dropdown-content bg-white"><a href="#">Edit</a><a href="javascript:void(0)" class="dlt_comnt_" c_d="'+res.data[i].total_comments[k].id+'">Delete</a></div></div>';
+                    html+='<div class="dropdown"><button class="dropbtn"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></button><div class="dropdown-content bg-white">     <a href="javascript:void(0)"  data-toggle="modal" data-target="#commntModal">Edit</a><a href="javascript:void(0)" class="dlt_comnt_" c_d="'+res.data[i].total_comments[k].id+'">Delete</a></div></div>';
                   }
                   html+='</div></div>';
                 } 
@@ -2598,3 +2598,152 @@ function myFunction() {
     // })
   </script>
 
+<!--Comment Modal -->
+<div class="modal fade" id="commntModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Update Comment</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+         <form method="POST" class="w-100 ad_cmnt" >
+            <div class="pl-2 w-100 _input d-flex">
+               <span> <img class="rounded-circle like_img" src="<?=base_url()?>assets/img/Profile_Pic/<?=$MyDetails[0]->profile_picture?>"></span>
+              <p class="ml-1 lead w-100 emoji-picker-container">
+                <textarea class="input-field cmnt_" data-emojiable="true" type="text" name="comment"  placeholder="Add a Message">  </textarea>
+                  <!-- <input type="text" class="form-control" name="comment" data-emojiable="true"> -->
+              </p> 
+
+                    <input type="hidden" name="comnt_id" value="">
+            </div>
+            <div class="float-right">
+              <button class="btn btn-success p-1 fy">Update</button>
+              <button class="btn btn-info ml-2 fy p-1">Cancel</button>
+            </div>
+          </form>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<!--Post Edit Modal -->
+<div class="modal fade" id="commntModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Update Post</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <div class="container-fluid">
+            <div class="">
+              <div class="card mt-4 p-2">
+          <div class="card-header ">
+            <div class="d-flex float-left">
+             <div> 
+              <a class="font-weight-bold" href="#">
+                 <img class="rounded-circle mr-2" src="<?=base_url()?>assets/img/Profile_Pic/<?=$MyDetails[0]->profile_picture?>" width="40"  height="40">
+               </a>
+             </div>
+            <div>
+              <a class="font-weight-bold _use_n" href="#">  
+               Name
+              </a>
+              <br>
+                <small>
+                  
+                 <time class="timeago" datetime=" ">date</time>
+                </small>
+            </div>
+           
+           </div>
+               
+                    <div class="float-right d-flex mt-2">
+                      <div class="">
+                         <?php
+                        $user_id;
+                        $post_id=$p_ost['post_id'];
+                        $this->db->where(array('user_id'=>$user_id,'post_id'=>$post_id));
+                        $re=$this->db->get('user_fav_section')->result();
+                        if(count($re)==0){
+                        ?>
+                        <span class="favrt" post_id="<?=$p_ost['post_id']?>" title="favourite"><i class="far fa-star"></i></span>
+                        <?php
+                        }else{?>
+                        <span class="favrt star" post_id="<?=$p_ost['post_id']?>" title="favourite"><i class="fas fa-star text-gold"></i></span>
+                        <?php }
+                        ?>
+                        <!-- <span><i class="fas fa-star"></i></span> -->
+                      </div>
+                      <?php if($_SESSION['logged_in'][0]->user_id==$p_ost['user_id']){ ?>
+                          <div class="dropdown ml-3">
+                            <button class="dropbtn"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></button>
+                            <div class="dropdown-content bg-white">
+                              <a href="javascript:void(0)">Edit</a>
+                              <a href="javascript:void(0)" class="dlt_post_" p_d=<?=$p_ost['post_id']?> >Delete</a>
+                              
+                            </div>
+                          </div>
+                          <?php } ?>
+                    </div> 
+                
+          </div>
+          <div class="card-body text-justify">
+            <p>
+              <textarea name="" class="w-100"> desciption</textarea>>
+            
+            </p>
+            
+      
+          </div>
+        </div>
+
+
+
+
+              <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                  <ol class="carousel-indicators">
+                    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                    <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                    <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+                  </ol>
+                  <div class="carousel-inner">
+                    <div class="carousel-item active">
+                      <img class="d-block w-100" src="..." alt="First slide">
+                    </div>
+                    <div class="carousel-item">
+                      <img class="d-block w-100" src="..." alt="Second slide">
+                    </div>
+                    <div class="carousel-item">
+                      <img class="d-block w-100" src="..." alt="Third slide">
+                    </div>
+                  </div>
+                  <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                  </a>
+                  <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                  </a>
+                </div>
+            </div>
+          </div> 
+
+
+              <div class="float-right">
+              <button class="btn btn-success p-1 fy">Update</button>
+              <button class="btn btn-info ml-2 fy p-1">Cancel</button>
+            </div>
+      </div>
+
+    </div>
+  </div>
+</div>
