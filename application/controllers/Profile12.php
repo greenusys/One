@@ -148,8 +148,6 @@ class Profile extends CI_Controller
 	}
 	public function getComment($post_id){
 		$this->db->where($condition=array("post_id"=>$post_id));
-		$this->db->order_by('id','DESC');
-		$this->db->limit(3);
 		$this->db->join('users','users.user_id=post_comments_.commented_by_');
 		return $this->db->get('post_comments_')->result();
 	}
@@ -165,6 +163,12 @@ class Profile extends CI_Controller
 		}else{
 			die(json_encode(array("code"=>0,"msg"=>"Failed To Add Bio.")));
 		}
+	}
+	public function FetchRecentActivity()
+	{
+		$data=$this->Profile->GetRecentActivity();
+		// print_r($data);
+		die(json_encode($data));
 	}
 
 }
