@@ -8,14 +8,14 @@
     color: orange;
   }
  .z_leftba{
-  z-index: -1;
+    z-index: -1;
  }
 
 </style>
 <section class="container">
   <div class="row">
            <script>
-          $(document).on('submit','#addBio',function(e){
+           $(document).on('submit','#addBio',function(e){
             e.preventDefault();
             var bio_graphy=$('#bio_graphy').val();
             var formData=new FormData($(this)[0]);
@@ -71,8 +71,8 @@
                   </div>
                   <div class="shw_bio_bl" style="display: none">
                     <form id="addBio">
-                      <textarea name="bio_graphy" id="bio_graphy"  class="form-control bio_text" rows="3"></textarea>
-                      <div class="text-right"><label class="btn p-1 btn-primary bio_btn cncl_btn_ m-0 mr-2" >Cancel</label><button class="mr-2 btn btn-success p-1 bio_btn">Save</button></div>
+                      <textarea name="bio_graphy" id="bio_graphy"  class="form-control bio_text" rows="3"><?=$bio?></textarea>
+                      <div class="text-right"><label class="btn p-1 btn-primary bio_btn cncl_btn_ m-0 mr-2 ranUse">Cancel</label><button class="mr-2 btn btn-success p-1 bio_btn ranUse">Save</button></div>
                     </form>
                   </div>
                   <br>

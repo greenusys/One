@@ -387,7 +387,7 @@ position: absolute;
     font-weight: 600;
     /*line-height: 1;*/
     text-transform: capitalize;
-      color: #444444 !important
+      color: #444444 ;
 }
 .author a {
     color: #333333;

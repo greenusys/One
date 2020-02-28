@@ -151,22 +151,23 @@
             <?php
             if($MyDetails[0]->user_id!=$_SESSION['logged_in'][0]->user_id){
               ?>
-                <a class="" href="<?=base_url('Profile/').$MyDetails[0]->user_id?>" title="" data-ripple="">Timeline</a>
-                <a class="" href="<?=base_url('Gallery/').$MyDetails[0]->user_id?>" title="" data-ripple="">Photos</a>
-                <a class="" href="<?=base_url('Gallery/').$MyDetails[0]->user_id?>" title="" data-ripple="">Videos</a>
-                <a class="" href="<?=base_url('Friends/').$MyDetails[0]->user_id?>" title="" data-ripple="">Friends</a>
-                <a class="" href="<?=base_url('About/').$MyDetails[0]->user_id?>" title="" data-ripple="">About</a>
+                <a class="m_timeline" href="<?=base_url('Profile/').$MyDetails[0]->user_id?>" title="" data-ripple="">Timeline</a>
+                <a class="m_photos" href="<?=base_url('Gallery/').$MyDetails[0]->user_id?>" title="" data-ripple="">Photos</a>
+                <!-- <a class="m_videos" href="<?=base_url('Gallery/').$MyDetails[0]->user_id?>" title="" data-ripple="">Videos</a> -->
+                <a class="m_friends" href="<?=base_url('Friends/').$MyDetails[0]->user_id?>" title="" data-ripple="">Friends</a>
+                <a class="m_about" href="<?=base_url('About/').$MyDetails[0]->user_id?>" title="" data-ripple="">About</a>
                 <!-- <a class="" href="groups.html" title="" data-ripple="">Groups</a> -->
                 <!-- <a class="" href="about.html" title="" data-ripple="">about</a> -->
                 <!-- <a class="active" href="#" title="" data-ripple="">more</a> -->
               <?php
             }else{
               ?>
-              <a class="" href="<?=base_url('Profile')?>" title="" data-ripple="">Timeline</a>
-               <a class="" href="<?=base_url('About')?>" title="" data-ripple="">About</a>
-              <a class="" href="<?=base_url('Gallery')?>" title="" data-ripple="">Photos</a>
-              <a class="" href="<?=base_url('Gallery')?>" title="" data-ripple="">Videos</a> 
-              <a class="" href="<?=base_url('Friends')?>" title="" data-ripple="">Friends</a>
+              <a class="m_timeline" href="<?=base_url('Profile')?>" title="" data-ripple="">Timeline</a>
+               
+              <a class="m_photos" href="<?=base_url('Gallery')?>" title="" data-ripple="">Photos</a>
+              <!-- <a class="m_videos" href="<?=base_url('Gallery')?>" title="" data-ripple="">Videos</a>  -->
+              <a class="m_friends" href="<?=base_url('Friends')?>" title="" data-ripple="">Friends</a>
+              <a class="m_about" href="<?=base_url('About')?>" title="" data-ripple="">About</a>
               <?php
             }
             ?>
