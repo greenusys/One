@@ -26,6 +26,9 @@
 $( document ).ready(function(e) {
   $('.profile').addClass('active');
 })
+ $(document).ready(function(){
+    $(".m_timeline").addClass("active");
+  })
 </script>
 <link href="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/css/select2.min.css" rel="stylesheet" />
 <script src="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/js/select2.min.js"></script>
@@ -761,8 +764,8 @@ $( document ).ready(function(e) {
       
 
       </div>
-   <div id="postViews">
-      </div>
+ <!--  <div id="postViews">
+      </div> -->
 </div>
     <!-- end center panel -->
 
@@ -964,7 +967,7 @@ $( document ).ready(function(e) {
                               '<div class="btn-like" ><a href="javascript:void(0)" class="likePost" d-Post='+response.data[i].post_id+'><i class="fa fa-thumbs-o-up" aria-hidden="true"></i>Like</a> <span class="font-weight-bold"> '+response.data[i].total_likes+'</span></div>'+
                             '</div>'+
                             '<div class="col-md-4 manage  py-2">'+
-                              '<div class="btn-comment"><a href=""><i class="fa fa-comment-o" aria-hidden="true"></i>Comment</a> <span class="font-weight-bold">'+response.data[i].total_comments.length+'</span></div>'+
+                              '<div class="btn-comment"><a href=""><i class="fa fa-comment-o" aria-hidden="true"></i>Comment</a> <span class="font-weight-bold">'+response.data[i].total_comments+'</span></div>'+
                             '</div>'+
                             '<div class="col-md-4 manage  py-2">'+
                               '<div class="btn-share"><a href=""><i class="fa fa-share-square-o" aria-hidden="true"></i> Share</a><span class="font-weight-bold">'+response.data[i].total_share+'</span></div>'+
@@ -973,12 +976,7 @@ $( document ).ready(function(e) {
                         '</div>'+
                       '</div>';
                   }else if(response.data[i].post_type==1){
-					  // console.log("Image Post comments are ..........",response.data[i].total_comments.length);
-					  var postImages=response.data[i].post_files.split(',');
-					  var postImageasStr=''
-					  $(postImages).each(function (imageindex,imageval) {
-                            postImageasStr+='<img class="img img-fluid d-block" src="<?=base_url('assets/uploads/images/')?>'+imageval+'"><br>'
-                      })
+					  console.log("Image Post");
                     var post='<div class="card mt-4">'+
                           '<div class="card-header">'+
                           '<a class="font-weight-bold" href="<?=base_url('Profile/')?>'+response.data[i].user_id+'"><img class="rounded-circle  postProfile-pic" src="<?=base_url()?>assets/img/Profile_Pic/'+response.data[i].profile_pic+'" >'+response.data[i].posted_by+'</a>'+
@@ -987,9 +985,7 @@ $( document ).ready(function(e) {
                           '</div>'+
                           '<div class="card-body text-center">'+
 						              '<p>'+response.data[i].post+'</p>'+
-                          '<div class="post_img"><a class="" href="#">' +
-                        postImageasStr +
-                        '</a>'+
+                          '<div class="post_img"><a class="" href="#"><img class="img img-fluid d-block" src="<?=base_url('assets/uploads/images/')?>'+response.data[i].post_files+'"></a>'+
                           '</div>'+
                           '</div>'+
                           '<div class="total row px-2 text-right">'+
@@ -1000,9 +996,7 @@ $( document ).ready(function(e) {
                               '<div class="btn-like" ><a href="javascript:void(0)" class="likePost" d-Post='+response.data[i].post_id+'><i class="fa fa-thumbs-o-up" aria-hidden="true"></i>Like</a> <span class="font-weight-bold"> '+response.data[i].total_likes+'</span></div>'+
                             '</div>'+
                             '<div class="col-md-4 manage  py-2">'+
-                              '<div class="btn-comment"><a href=""><i class="fa fa-comment-o" aria-hidden="true"></i>Comment</a> ' +
-                                '<span class="font-weight-bold">'+response.data[i].total_comments.length+'</span>' +
-                            '</div>'+
+                              '<div class="btn-comment"><a href=""><i class="fa fa-comment-o" aria-hidden="true"></i>Comment</a> <span class="font-weight-bold">'+response.data[i].total_comments+'</span></div>'+
                             '</div>'+
                             '<div class="col-md-4 manage  py-2">'+
                               '<div class="btn-share"><a href=""><i class="fa fa-share-square-o" aria-hidden="true"></i> Share</a><span class="font-weight-bold">'+response.data[i].total_share+'</span></div>'+
@@ -1012,11 +1006,6 @@ $( document ).ready(function(e) {
                       '</div>';
                   }else{
 					  console.log("Video Post");
-                        var postvideos=response.data[i].post_files.split(',');
-                        var postvideosStr=''
-                        $(postvideos).each(function (imageindex,imageval) {
-                            postvideosStr+='<source src="<?=base_url()?>assets/uploads/videos/'+imageval+'" type="video/mp4"><br>'
-                        })
                     var post='<div class="card mt-4">'+
                           '<div class="card-header">'+
                           '<a class="font-weight-bold" href="<?=base_url('Profile/')?>'+response.data[i].user_id+'"><img class="rounded-circle postProfile-pic" src="<?=base_url()?>assets/img/Profile_Pic/'+response.data[i].profile_pic+'" >'+response.data[i].posted_by+'</a>'+
@@ -1026,7 +1015,7 @@ $( document ).ready(function(e) {
                           '<div class="card-body">'+
 						              '<p>'+response.data[i].post+'</p>'+
                           '<video controls class="w-100">'+
-                          postvideosStr+
+                          '<source src="<?=base_url()?>assets/uploads/videos/'+response.data[i].post_files+'" type="video/mp4">'+
                           'Your browser does not support the video tag.'+
                         '</video>'+
                         '</div> '+ 
@@ -1038,7 +1027,7 @@ $( document ).ready(function(e) {
                               '<div class="btn-like" ><a href="javascript:void(0)" class="likePost" d-Post='+response.data[i].post_id+'><i class="fa fa-thumbs-o-up" aria-hidden="true"></i>Like</a> <span class="font-weight-bold"> '+response.data[i].total_likes+'</span></div>'+
                             '</div>'+
                             '<div class="col-md-4 manage  py-2">'+
-                              '<div class="btn-comment"><a href=""><i class="fa fa-comment-o" aria-hidden="true"></i>Comment</a> <span class="font-weight-bold">'+response.data[i].total_comments.length+'</span></div>'+
+                              '<div class="btn-comment"><a href=""><i class="fa fa-comment-o" aria-hidden="true"></i>Comment</a> <span class="font-weight-bold">'+response.data[i].total_comments+'</span></div>'+
                             '</div>'+
                             '<div class="col-md-4 manage  py-2">'+
                               '<div class="btn-share"><a href=""><i class="fa fa-share-square-o" aria-hidden="true"></i> Share</a><span class="font-weight-bold">'+response.data[i].total_share+'</span></div>'+

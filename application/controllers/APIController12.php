@@ -355,6 +355,7 @@ class APIController extends CI_Controller
 			}
 			elseif ($post_type==2 && !isset($_POST['imgageData']))
 			{
+				
 				$data = array();
 		        // If file upload form submitted
 		        if($this->input->post() && !empty($_FILES['files']['name'])){
@@ -412,43 +413,128 @@ class APIController extends CI_Controller
 		        }
 			}
 			else{
-				$configVideo['upload_path'] = 'assets/uploads/videos'; # check path is correct
-				$configVideo['max_size'] = '102400';
-				$configVideo['allowed_types'] = 'mp4'; # add video extenstion on here
-				$configVideo['overwrite'] = FALSE;
-				$configVideo['remove_spaces'] = TRUE;
-				$video_name = random_string('numeric', 5);
-				$configVideo['file_name'] = $video_name;
-
-				$this->load->library('upload', $configVideo);
-				$this->upload->initialize($configVideo);
-
-				if (!$this->upload->do_upload('files')) # form input field attribute
-				{
-					$this->upload->display_errors();
-				    die(json_encode(array('status' =>'0' ,'msg'=>'Error')));
-				}
-				else
-				{
-				    # Upload Successfull
-				    $name = $video_name.".mp4";
-				    $data = array(
+				//print_r($_FILES);
+				$data = array();
+		        if($this->input->post() && !empty($_FILES['files']['name'])){
+	            	$filesCount = count($_FILES['files']['name']);
+		            for($i = 0; $i < $filesCount; $i++){
+		            	$ext = pathinfo($_FILES['files']['name'][$i], PATHINFO_EXTENSION);
+		            	if ($ext=="mp4") {
+		                $_FILES['file']['name']     = "Post-video-".date("Y-m-d-H-i-s").$i.".".$ext;
+		                $_FILES['file']['type']     = $_FILES['files']['type'][$i];
+		                $_FILES['file']['tmp_name'] = $_FILES['files']['tmp_name'][$i];
+		                $_FILES['file']['error']     = $_FILES['files']['error'][$i];
+		                $_FILES['file']['size']     = $_FILES['files']['size'][$i];
+		                
+		                // File upload configuration
+		                $uploadPath = 'assets/uploads/videos/';
+		                $config['upload_path'] = $uploadPath;
+		                $config['allowed_types'] = 'mp4';
+		                
+		                // Load and initialize upload library
+		                $this->load->library('upload', $config);
+		                $this->upload->initialize($config);
+		                
+		                // Upload file to server
+		                if($this->upload->do_upload('file')){
+		                    // Uploaded file data
+		                    $fileData = $this->upload->data();
+		                    //$this->resizeImage($_FILES['file']['name'] );
+		                    $uploadData[$i]['file_name'] = $fileData['file_name'];
+		                    $uploadData[$i]['uploaded_on'] = date("Y-m-d H:i:s");
+		                }
+		                //$this->resizeImage($_FILES['file']['name'] );
+		                $images[]=$_FILES['file']['name'];
+		            	}
+		            	else
+		            	{
+		                $_FILES['file']['name']     = "Post-image-".date("Y-m-d-H-i-s").$i.".".$ext;
+		                $_FILES['file']['type']     = $_FILES['files']['type'][$i];
+		                $_FILES['file']['tmp_name'] = $_FILES['files']['tmp_name'][$i];
+		                $_FILES['file']['error']     = $_FILES['files']['error'][$i];
+		                $_FILES['file']['size']     = $_FILES['files']['size'][$i];
+		                
+		                // File upload configuration
+		                $uploadPath = 'assets/uploads/images/';
+		                $config['upload_path'] = $uploadPath;
+		                $config['max_size'] = '*';
+		                $config['allowed_types'] = 'jpg|jpeg|png|gif';
+		                
+		                // Load and initialize upload library
+		                $this->load->library('upload', $config);
+		                $this->upload->initialize($config);
+		                
+		                // Upload file to server
+		                if($this->upload->do_upload('file')){
+		                    // Uploaded file data
+		                    $fileData = $this->upload->data();
+		                    //$this->resizeImage($_FILES['file']['name'] );
+		                    $uploadData[$i]['file_name'] = $fileData['file_name'];
+		                    $uploadData[$i]['uploaded_on'] = date("Y-m-d H:i:s");
+		                }
+		                $this->resizeImage($_FILES['file']['name'] );
+		                $images[]=$_FILES['file']['name'];
+		            	}
+		            }
+		            $pics=implode(",",$images);
+		            if(!empty($uploadData)){
+		                // Insert files data into the database
+		                $data = array(
 		                	'post'=>$post_text,
-		                	'post_files'=>$name,
+		                	'post_files'=>$pics,
 		                	'owner_id'=>$owner_id,
-		                	'post_type'=>2,
+		                	'post_type'=>3,
 		                	'posted_by'=>$user_id,
 		                	'initially_posted_by'=>$user_id,
 		                	'posted_on'=>$timenow
 		                );
 		                $result=$this->APIM->insert_post($data);
 						if($result){
-							die(json_encode(array('status' =>'1' ,'msg'=>'Post only video Inserted Successfully')));
+							die(json_encode(array('status' =>'1' ,'msg'=>'Image and videos Inserted Successfully')));
 						}
 						else{
 							die(json_encode(array('status' =>'0' ,'msg'=>'Error')));
 						}
-				}
+
+		            }
+		        }
+				// $configVideo['upload_path'] = 'assets/uploads/videos'; # check path is correct
+				// $configVideo['max_size'] = '102400';
+				// $configVideo['allowed_types'] = 'mp4'; # add video extenstion on here
+				// $configVideo['overwrite'] = FALSE;
+				// $configVideo['remove_spaces'] = TRUE;
+				// $video_name = random_string('numeric', 5);
+				// $configVideo['file_name'] = $video_name;
+
+				// $this->load->library('upload', $configVideo);
+				// $this->upload->initialize($configVideo);
+
+				// if (!$this->upload->do_upload('files')) # form input field attribute
+				// {
+				// 	$this->upload->display_errors();
+				//     die(json_encode(array('status' =>'0' ,'msg'=>'Error')));
+				// }
+				// else
+				// {
+				//     # Upload Successfull
+				//     $name = $video_name.".mp4";
+				//     $data = array(
+		  //               	'post'=>$post_text,
+		  //               	'post_files'=>$name,
+		  //               	'owner_id'=>$owner_id,
+		  //               	'post_type'=>2,
+		  //               	'posted_by'=>$user_id,
+		  //               	'initially_posted_by'=>$user_id,
+		  //               	'posted_on'=>$timenow
+		  //               );
+		  //               $result=$this->APIM->insert_post($data);
+				// 		if($result){
+				// 			die(json_encode(array('status' =>'1' ,'msg'=>'Post only video Inserted Successfully')));
+				// 		}
+				// 		else{
+				// 			die(json_encode(array('status' =>'0' ,'msg'=>'Error')));
+				// 		}
+				// }
 			}
 	}
 	//To Get All Post
@@ -463,8 +549,7 @@ class APIController extends CI_Controller
 			if($data=$this->APIM->getAllPostDetails($condition)){
 			foreach ($data as $key => $value) {
 				//  n print_r($value);
-//                echo '<pre>';
-//				 print_r($value);die();
+				// print_r($value);
 				// if($value->initially_posted_by!=$value->posted_by){
 				// 	$p_Data['shared_by']=
 				// }
@@ -805,9 +890,8 @@ public function getPostLikes($post_id){
 			$data=array("post_id"=>$this->input->post('post_id'),"commented_by_"=>$user_id=$_SESSION['logged_in'][0]->user_id,"comment"=>$this->input->post('comment'),"commented_on"=>date('d-m-Y h:i:s'));
 		}
 		if(!empty($this->input->post('comment')) && !empty($this->input->post('post_id'))){
-			$result=$this->APIM->addData('post_comments_',$data);
-			if($result){
-				die(json_encode(array("code"=>1,"data"=>"Comment Added Successfully.","id"=>$result)));
+			if($this->APIM->addData('post_comments_',$data)){
+				die(json_encode(array("code"=>1,"data"=>"Comment Added Successfully.")));
 			}else{
 				die(json_encode(array("code"=>0,"data"=>"Failed To Post Comment.")));
 			}

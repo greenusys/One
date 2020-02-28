@@ -522,8 +522,10 @@ var keyCode = e.keyCode || e.which;
     	 e.preventDefault();
 //alert($(this).html());
         var text = $(this).html();
+        var el=$(this);
    // var text =  text1.slice(0, -15);
-
+   		var pic='<?=$_SESSION['logged_in'][0]->profile_picture?>';
+   		var name='<?=$_SESSION['logged_in'][0]->full_name?>';
 //alert(text);
       // $(".ad_cmnt").submit(function (ev) {
       //     ev.preventDefault();
@@ -553,10 +555,29 @@ var keyCode = e.keyCode || e.which;
 
                         success:function(response)
                         {
-                          console.log(response);
+                          //console.log(response);
                           response=JSON.parse(response);
                           if(response.code==1){
-                            
+                            var html='';
+                            html+='<div class="row mt-2 px-2">'+
+				                  '<div class="col-md-1">'+
+				                      '<span> <img class="rounded-circle like_img" src="<?=base_url()?>assets/img/Profile_Pic/'+pic+'"></span>'+  
+				                  '</div>'+ 
+				                  '<div class="col-md-10 comnt_text border-bottom">'+
+				                      '<h6 class="font-weight-bold m-0" >'+name+'<small class="ml-3"></small></h6>'+
+				                      '<p class="">'+text+'</p>'+
+				                  '</div>'+
+				                  '<div class="col-md-1">'+
+				                          '<div class="dropdown">'+
+				                            '<button class="dropbtn"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></button>'+
+				                            '<div class="dropdown-content bg-white">'+
+				                              '<a href="#">Edit</a>'+
+				                              '<a href="javascript:void(0)" class="dlt_comnt_" c_d="'+response.id+'">Delete</a>'+
+				                            '</div>'+
+				                          '</div>'+
+				                  '</div>'+
+				              '</div>';
+				              el.parent().parent().parent().parent().parent().parent().prepend(html);
                          //alert(response.msg);
                             // swal("Success", "Story Successfully", "success");
                            // $('.ad_cmnt').trigger("reset");
