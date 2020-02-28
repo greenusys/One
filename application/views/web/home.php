@@ -427,7 +427,7 @@
       </div>
 	  <div class="" id="pst_shw_">
 	  <?php
-     // print_r($AllPosts);
+    // print_r($AllPosts);
     if( count($AllPosts)>0){
         foreach($AllPosts as $p_ost){
        if($p_ost['post_type']==0){
@@ -437,7 +437,7 @@
             <div class="d-flex float-left">
              <div> 
               <a class="font-weight-bold" href="#">
-                 <img class="rounded-circle mr-2" src="<?=base_url()?>assets/img/Profile_Pic/<?=$MyDetails[0]->profile_picture?>" width="40"  height="40">
+                 <img class="rounded-circle mr-2" src="<?=base_url()?>assets/img/Profile_Pic/<?=$p_ost['profile_pic']?>" width="40"  height="40">
                </a>
              </div>
             <div>
@@ -474,7 +474,7 @@
                           <div class="dropdown ml-3">
                             <button class="dropbtn"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></button>
                             <div class="dropdown-content bg-white">
-                              <a href="javascript:void(0)">Edit</a>
+                              <a href="javascript:void(0)"  data-toggle="modal" data-target="#postEditModal">Edit</a>
                               <a href="javascript:void(0)" class="dlt_post_" p_d=<?=$p_ost['post_id']?> >Delete</a>
                               
                             </div>
@@ -491,7 +491,7 @@
       
           </div>
           <div class="mb-2 p-0">
-            <div class="row ">
+            <div class="row m-0 ">
             <div class="col-md-4 manage ">
               <div class="text-center px-3 py-1">
                 <div class="btn-like d-flex" ><a href="javascript:void(0)" class="text-danger likePost" d-Post="<?=$p_ost['post_id']?>">
@@ -562,7 +562,7 @@
                 <?php 
                 //echo"hello";
 
-                  //print_r($p_ost['total_comments']);
+               // print_r($p_ost['total_comments']);
                 if(count($p_ost['total_comments'])>0){
                 ?>
 
@@ -576,11 +576,16 @@
                       <p class=""><?=$p_ost['total_comments'][$i]->comment?></p>
                   </div>
                   <div class="col-md-1">
-                      <?php if($_SESSION['logged_in'][0]->user_id==$p_ost['user_id']){ ?>
+                      <?php
+                      
+                       if(($_SESSION['logged_in'][0]->user_id==$p_ost['total_comments'][$i]->user_id) OR ($_SESSION['logged_in'][0]->user_id==$p_ost['user_id']) ){ ?>
                           <div class="dropdown">
                             <button class="dropbtn"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></button>
                             <div class="dropdown-content bg-white">
-                              <a href="javascript:void(0)"  data-toggle="modal" data-target="#commntModal">Edit</a>
+                            <?php  if($_SESSION['logged_in'][0]->user_id ==$p_ost['total_comments'][$i]->user_id ){   ?>
+                                      <a href="javascript:void(0)"  data-toggle="modal" data-target="#commntModal">Edit</a>
+                            <?php }  ?>
+                              
                               <a href="javascript:void(0)" class="dlt_comnt_" c_d="<?=$p_ost['total_comments'][$i]->id?>">Delete</a>
                             </div>
                           </div>
@@ -621,7 +626,7 @@
             <div class="d-flex float-left">
              <div> 
               <a class="font-weight-bold" href="#">
-                 <img class="rounded-circle mr-2" src="<?=base_url()?>assets/img/Profile_Pic/<?=$MyDetails[0]->profile_picture?>" width="40"  height="40">
+                 <img class="rounded-circle mr-2" src="<?=base_url()?>assets/img/Profile_Pic/<?=$p_ost['profile_pic']?>" width="40"  height="40">
                </a>
              </div>
             <div>
@@ -656,7 +661,7 @@
                           <div class="dropdown ml-3">
                             <button class="dropbtn"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></button>
                             <div class="dropdown-content bg-white">
-                              <a href="#">Edit</a>
+                              <a href="javascript:void(0)"  data-toggle="modal" data-target="#postEditModal">Edit</a>
                               <a href="javascript:void(0)" class="dlt_post_" p_d=<?=$p_ost['post_id']?> >Delete</a>
                               
                             </div>
@@ -856,11 +861,13 @@
                       <p class=""><?=$p_ost['total_comments'][$i]->comment?></p>
                   </div>
                   <div class="col-md-1">
-                    <?php if($_SESSION['logged_in'][0]->user_id==$p_ost['user_id']){ ?>
+                   <?php if(($_SESSION['logged_in'][0]->user_id==$p_ost['total_comments'][$i]->user_id) OR ($_SESSION['logged_in'][0]->user_id==$p_ost['user_id']) ){ ?>
                       <div class="dropdown">
                         <button class="dropbtn"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></button>
                         <div class="dropdown-content bg-white">
-                             <a href="javascript:void(0)"  data-toggle="modal" data-target="#commntModal">Edit</a>
+                             <?php  if($_SESSION['logged_in'][0]->user_id ==$p_ost['total_comments'][$i]->user_id ){   ?>
+                                <a href="javascript:void(0)"  data-toggle="modal" data-target="#commntModal">Edit</a>
+                            <?php }  ?>
                           <a href="javascript:void(0)" class="dlt_comnt_" c_d="<?=$p_ost['total_comments'][$i]->id?>">Delete</a>
                           
                         </div>
@@ -900,7 +907,7 @@
             <div class="d-flex float-left">
              <div> 
               <a class="font-weight-bold" href="#">
-                 <img class="rounded-circle mr-2" src="<?=base_url()?>assets/img/Profile_Pic/<?=$MyDetails[0]->profile_picture?>" width="40"  height="40">
+                 <img class="rounded-circle mr-2" src="<?=base_url()?>assets/img/Profile_Pic/<?=$p_ost['profile_pic']?>" width="40"  height="40">
                </a>
              </div>
             <div>
@@ -940,7 +947,7 @@
                           <div class="dropdown ml-3">
                             <button class="dropbtn"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></button>
                             <div class="dropdown-content bg-white">
-                              <a href="#">Edit</a>
+                              <a href="javascript:void(0)"  data-toggle="modal" data-target="#postEditModal">Edit</a>
                               <a href="javascript:void(0)" class="dlt_post_" p_d=<?=$p_ost['post_id']?> >Delete</a>
                               
                             </div>
@@ -1053,11 +1060,13 @@
                           <p class=""><?=$p_ost['total_comments'][$i]->comment?></p>
                       </div>
                       <div class="col-md-1">
-                        <?php if($_SESSION['logged_in'][0]->user_id==$p_ost['user_id']){ ?>
+                         <?php if(($_SESSION['logged_in'][0]->user_id==$p_ost['total_comments'][$i]->user_id) OR ($_SESSION['logged_in'][0]->user_id==$p_ost['user_id']) ){ ?>
                             <div class="dropdown">
                               <button class="dropbtn"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></button>
                               <div class="dropdown-content bg-white">
-                                   <a href="javascript:void(0)"  data-toggle="modal" data-target="#commntModal">Edit</a>
+                                   <?php  if($_SESSION['logged_in'][0]->user_id ==$p_ost['total_comments'][$i]->user_id ){   ?>
+                                        <a href="javascript:void(0)"  data-toggle="modal" data-target="#commntModal">Edit</a>
+                                  <?php }  ?>
                                 <a href="javascript:void(0)" class="dlt_comnt_" c_d="<?=$p_ost['total_comments'][$i]->id?>">Delete</a>
                                 
                               </div>
@@ -2621,7 +2630,7 @@ function myFunction() {
             </div>
             <div class="float-right">
               <button class="btn btn-success p-1 fy">Update</button>
-              <button class="btn btn-info ml-2 fy p-1">Cancel</button>
+              <button type="button" class="btn btn-info ml-2 fy p-1">Cancel</button>
             </div>
           </form>
       </div>
@@ -2632,8 +2641,8 @@ function myFunction() {
 
 
 <!--Post Edit Modal -->
-<div class="modal fade" id="commntModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
+<div class="modal fade" id="postEditModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal_width" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">Update Post</h5>
@@ -2641,7 +2650,7 @@ function myFunction() {
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body">
+      <div class="modal-body p-0">
           <div class="container-fluid">
             <div class="">
               <div class="card mt-4 p-2">
@@ -2686,7 +2695,7 @@ function myFunction() {
                           <div class="dropdown ml-3">
                             <button class="dropbtn"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></button>
                             <div class="dropdown-content bg-white">
-                              <a href="javascript:void(0)">Edit</a>
+                       
                               <a href="javascript:void(0)" class="dlt_post_" p_d=<?=$p_ost['post_id']?> >Delete</a>
                               
                             </div>
@@ -2695,53 +2704,53 @@ function myFunction() {
                     </div> 
                 
           </div>
-          <div class="card-body text-justify">
-            <p>
-              <textarea name="" class="w-100"> desciption</textarea>>
-            
-            </p>
-            
-      
-          </div>
-        </div>
-
-
-
-
-              <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+          <div class="card-body row text-justify">
+            <div class="col-md-6">
+               <div id="carouselExampleIndicators_post" class="carousel slide" data-ride="carousel">
                   <ol class="carousel-indicators">
-                    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-                    <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-                    <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+                    <li data-target="#carouselExampleIndicators_post" data-slide-to="0" class="active"></li>
+                    <li data-target="#carouselExampleIndicators_post" data-slide-to="1"></li>
+                    <li data-target="#carouselExampleIndicators_post" data-slide-to="2"></li>
                   </ol>
                   <div class="carousel-inner">
                     <div class="carousel-item active">
-                      <img class="d-block w-100" src="..." alt="First slide">
+                      <img class="d-block w-100 post_ht" src="<?=base_url()?>assets/img/Profile_Pic/profile1.jpg" alt="First slide">
                     </div>
                     <div class="carousel-item">
-                      <img class="d-block w-100" src="..." alt="Second slide">
+                      <img class="d-block w-100 post_ht" src="<?=base_url()?>assets/img/Profile_Pic/profile3.jpg" alt="Second slide">
                     </div>
                     <div class="carousel-item">
-                      <img class="d-block w-100" src="..." alt="Third slide">
+                      <img class="d-block w-100 post_ht" src="<?=base_url()?>assets/img/Profile_Pic/profile2.jpg" alt="Third slide">
                     </div>
                   </div>
-                  <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                  <a class="carousel-control-prev" href="#carouselExampleIndicators_post" role="button" data-slide="prev">
                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                     <span class="sr-only">Previous</span>
                   </a>
-                  <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                  <a class="carousel-control-next" href="#carouselExampleIndicators_post" role="button" data-slide="next">
                     <span class="carousel-control-next-icon" aria-hidden="true"></span>
                     <span class="sr-only">Next</span>
                   </a>
                 </div>
+              </div>
+            <div class="col-md-6">
+              <form method="" action="">
+              <p>
+                <textarea name="" class="w-100" > desciption</textarea>
+              </p> 
+              <div class="float-right">
+                <button class="btn btn-success p-1 fy">Update</button>
+                <button type="button" class="btn btn-info ml-2 fy p-1">Cancel</button>
+              </div>
+            </form>
+            </div>
+      
+          </div>
+        </div>
+
             </div>
           </div> 
-
-
-              <div class="float-right">
-              <button class="btn btn-success p-1 fy">Update</button>
-              <button class="btn btn-info ml-2 fy p-1">Cancel</button>
-            </div>
+            
       </div>
 
     </div>

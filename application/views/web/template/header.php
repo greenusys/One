@@ -364,6 +364,12 @@ position: absolute;
       padding: 2px;
 
     }
+    .modal_width{
+      max-width: 800px !important;
+    }
+    .post_ht{
+      height: 345px ;
+    }
 	</style>
 <style type="text/css">
 /*  .fa-address-card
