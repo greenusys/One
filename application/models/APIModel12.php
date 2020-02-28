@@ -18,13 +18,14 @@
 		}
 
 
+		// public function getAllPostDetails( $condition="",$offset){
 			public function getAllPostDetails( $condition=""){
-                $this->db->select("users.user_id,users.full_name,users.profile_picture,post_.*");
-                $this->db->order_by('post_id','Desc');
-                if($condition!=""){
+			$this->db->order_by('post_id','Desc');
+			if($condition!=""){
 				$this->db->join('users','users.user_id=post_.posted_by');
 				$this->db->where($condition);	
 			}
+			// $this->db->limit(1, $offset);
 			return $this->db->get('post_')->result();
 		}
 		public function addData($table_name,$data){

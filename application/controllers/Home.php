@@ -77,6 +77,7 @@ class Home extends CI_Controller {
 	public function getComment($post_id){
 		$this->db->where($condition=array("post_id"=>$post_id));
 		$this->db->order_by('id','DESC');
+		$this->db->limit(3);
 		$this->db->join('users','users.user_id=post_comments_.commented_by_');
 		return $this->db->get('post_comments_')->result();
 	}
