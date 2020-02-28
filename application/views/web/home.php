@@ -185,7 +185,7 @@
       <!-- id="w_t_follow" -->
       <div class="card mt-3" id="folllw">
         <div class="p-3">
-          <h4 class="widget-title">Who to follow?</h4>
+          <h4 class="widget-title">Whom to follow?</h4>
         </div>
         <div class="card-body p-0">
           <ul class="list-unstyled">
