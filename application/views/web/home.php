@@ -560,13 +560,11 @@
           <hr>
            <div class=" comments_list border-top">
                 <?php 
-                //echo"hello";
-
-               // print_r($p_ost['total_comments']);
                 if(count($p_ost['total_comments'])>0){
                 ?>
 
                 <?php for($i=0; $i < count($p_ost['total_comments']); $i++){ ?>
+
               <div class="row mt-2 px-2">
                   <div class="col-md-1">
                       <span> <img class="rounded-circle like_img" src="<?=base_url()?>assets/img/Profile_Pic/<?=$p_ost['total_comments'][$i]->profile_picture?>"></span>  
@@ -577,13 +575,12 @@
                   </div>
                   <div class="col-md-1">
                       <?php
-                      
                        if(($_SESSION['logged_in'][0]->user_id==$p_ost['total_comments'][$i]->user_id) OR ($_SESSION['logged_in'][0]->user_id==$p_ost['user_id']) ){ ?>
                           <div class="dropdown">
                             <button class="dropbtn"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></button>
                             <div class="dropdown-content bg-white">
                             <?php  if($_SESSION['logged_in'][0]->user_id ==$p_ost['total_comments'][$i]->user_id ){   ?>
-                                      <a href="javascript:void(0)"  data-toggle="modal" data-target="#commntModal">Edit</a>
+                              <a href="javascript:void(0)" class="edit_comment" c_d="<?=$p_ost['total_comments'][$i]->id?>">Edit</a>
                             <?php }  ?>
                               
                               <a href="javascript:void(0)" class="dlt_comnt_" c_d="<?=$p_ost['total_comments'][$i]->id?>">Delete</a>
@@ -604,7 +601,7 @@
                             <!-- <input type="text" class="form-control" name="comment" data-emojiable="true"> -->
                         </p> 
 
-                              <input type="hidden" name="post_id" value="<?=$p_ost['post_id']?>">
+                              <input type="hidden" name="post_id" class="poster_class" value="<?=$post_id?>">
                       </div>
                       <!------contenteditable  data-text="Write a comment"------>
                      <!--  <div class="cmnt_icons">
@@ -866,7 +863,7 @@
                         <button class="dropbtn"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></button>
                         <div class="dropdown-content bg-white">
                              <?php  if($_SESSION['logged_in'][0]->user_id ==$p_ost['total_comments'][$i]->user_id ){   ?>
-                                <a href="javascript:void(0)"  data-toggle="modal" data-target="#commntModal">Edit</a>
+                                <a href="javascript:void(0)" class="edit_comment" c_d="<?=$p_ost['total_comments'][$i]->id?>">Edit</a>
                             <?php }  ?>
                           <a href="javascript:void(0)" class="dlt_comnt_" c_d="<?=$p_ost['total_comments'][$i]->id?>">Delete</a>
                           
@@ -885,7 +882,7 @@
                         <p class="lead emoji-picker-container">
                           <textarea class="input-field cmnt_" data-emojiable="true" type="text" name="comment"  placeholder="Add a Message">  </textarea>
                         </p>
-                              <input type="hidden" name="post_id" value="<?=$p_ost['post_id']?>">
+                               <input type="hidden" name="post_id" class="poster_class" value="<?=$post_id?>">
                       </div>
                       <!------contenteditable  data-text="Write a comment"------>
                      <!--  <div class="cmnt_icons">
@@ -1065,7 +1062,7 @@
                               <button class="dropbtn"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></button>
                               <div class="dropdown-content bg-white">
                                    <?php  if($_SESSION['logged_in'][0]->user_id ==$p_ost['total_comments'][$i]->user_id ){   ?>
-                                        <a href="javascript:void(0)"  data-toggle="modal" data-target="#commntModal">Edit</a>
+                                        <a href="javascript:void(0)" class="edit_comment" c_d="<?=$p_ost['total_comments'][$i]->id?>">Edit</a>
                                   <?php }  ?>
                                 <a href="javascript:void(0)" class="dlt_comnt_" c_d="<?=$p_ost['total_comments'][$i]->id?>">Delete</a>
                                 
@@ -1086,7 +1083,7 @@
                         <p class="lead emoji-picker-container">
                           <textarea class="input-field cmnt_" data-emojiable="true" type="text" name="comment"  placeholder="Add a Message">  </textarea>
                         </p>
-                              <input type="hidden" name="post_id" value="<?=$p_ost['post_id']?>">
+                             <input type="hidden" name="post_id" class="poster_class" value="<?=$post_id?>">
                       </div>
                       <!------contenteditable  data-text="Write a comment"------>
                      <!--  <div class="cmnt_icons">
@@ -1337,6 +1334,17 @@
 
 
 <script type="text/javascript">
+$(document).on('click','.edit_comment',function(){
+  var el=$(this);
+  var comment_id=el.attr('c_d');
+  $('#comment_id').val(comment_id);
+  var para = el.parent().parent().parent().parent().find("p").html();
+  $('#comment_para').parent().find(".emoji-wysiwyg-editor").html(para);
+  $('#commntModal').modal('show');
+})
+
+
+
 $(document).ready(function(){
 var story_cnt ;
   $(document).on('click','#addStatus',function(){
@@ -2622,11 +2630,11 @@ function myFunction() {
             <div class="pl-2 w-100 _input d-flex">
                <span> <img class="rounded-circle like_img" src="<?=base_url()?>assets/img/Profile_Pic/<?=$MyDetails[0]->profile_picture?>"></span>
               <p class="ml-1 lead w-100 emoji-picker-container">
-                <textarea class="input-field cmnt_" data-emojiable="true" type="text" name="comment"  placeholder="Add a Message">  </textarea>
+                <textarea class="input-field cmnt_" id="comment_para" data-emojiable="true" type="text" name="comment"  placeholder="Add a Message">  </textarea>
                   <!-- <input type="text" class="form-control" name="comment" data-emojiable="true"> -->
               </p> 
 
-                    <input type="hidden" name="comnt_id" value="">
+                    <input type="hidden" name="comnt_id" id="comment_id" value="">
             </div>
             <div class="float-right">
               <button class="btn btn-success p-1 fy">Update</button>
