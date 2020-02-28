@@ -77,10 +77,10 @@
 			public function insert_JobPostData($data)
     	{
     		$this->db->where($data);
-    		$re=$this->db->get('Jobpost_')->result();
+    		$re=$this->db->get('jobpost_')->result();
     		if(count($re)==0)
     		{
-    			$results=$this->db->insert('Jobpost_',$data);
+    			$results=$this->db->insert('jobpost_',$data);
     			if($results)
     			{
     				return 1;

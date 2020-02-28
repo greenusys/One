@@ -185,7 +185,7 @@
       <!-- id="w_t_follow" -->
       <div class="card mt-3" id="folllw">
         <div class="p-3">
-          <h4 class="widget-title">Who to follow?</h4>
+          <h4 class="widget-title">Whom to follow?</h4>
         </div>
         <div class="card-body p-0">
           <ul class="list-unstyled">
@@ -594,9 +594,11 @@
                     <span> <img class="rounded-circle like_img" src="<?=base_url()?>assets/img/Profile_Pic/<?=$MyDetails[0]->profile_picture?>"></span>
                     <form method="POST" class="w-100 ad_cmnt" >
                       <div class="pl-2 w-100 _input">
-                        <p class="lead emoji-picker-container">
+                     <p class="lead emoji-picker-container">
                           <textarea class="input-field cmnt_" data-emojiable="true" type="text" name="comment"  placeholder="Add a Message">  </textarea>
-                        </p>
+                            <!-- <input type="text" class="form-control" name="comment" data-emojiable="true"> -->
+                        </p> 
+
                               <input type="hidden" name="post_id" value="<?=$p_ost['post_id']?>">
                       </div>
                       <!------contenteditable  data-text="Write a comment"------>
@@ -1252,20 +1254,25 @@
         <div class="card-body p-0">
             <div id="carouselExampleIndicators1" class="carousel slide" data-ride="carousel">
                 <div class="carousel-inner">
-                    <div class="carousel-item active">
+                  <?php
+                  $counter=1;
+                  foreach ($birthdays as $birth) {
+                  ?>
+                    <div class="carousel-item <?php if($counter==1)echo "active"?>">
                       <div class=" " style="background: url('<?=base_url()?>assets/img/birthday.jpg');background-size: cover;">
                           <div class="p-4">
                             <div class="text-center"><img src="<?=base_url()?>assets/img/cake.svg" style="width:44px;" ><br></div>
 
                              <div class="p-4">
-                              <span class=" text-white">Today is</span>
-                             <h4 class="ml-2 text-white">Ravish Beg's Birthday</h4>
-                             <p class="text-white">Leave her a message with your best wishes on her profile page!</p>
+                             <h4 class="ml-2 text-white"><?=$birth->full_name?>'s Birthday</h4>
+                             <span class=" text-white">is on <?=date('d-m-Y',strtotime($birth->date_of_birth))?></span>
+                             <p class="text-white">Leave a message with your best wishes on his/her profile page!</p>
                            </div>
                            
                           </div>
                       </div>
                     </div>
+                  <?php $counter=2; } ?>
                 </div>
                 <a class="carousel-control-prev carousel_arrow_set" href="#carouselExampleIndicators1" role="button" data-slide="prev">
                   <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -1725,15 +1732,16 @@ $(document).ready(function(){
   var offset = 5;
   $(window).scroll(function() 
   {
-    // if($(window).scrollTop() == $(document).height() - $(window).height()) {
-    //   // limit=limit+5;
-    //   // offset = limit + offset;
+    //console.log($(document).height() - $(window).height());
+    if($(window).scrollTop() +1 >= $(document).height() - $(window).height()) {
+      // limit=limit+5;
+      // offset = limit + offset;
      
-    //   getAjaxData(offset);
-    //    offset = offset + 5;
-    //   }
       getAjaxData(offset);
        offset = offset + 5;
+      }
+      // getAjaxData(offset);
+      //  offset = offset + 5;
   });
 })
 // Timestamp JQUERY CONVERTER

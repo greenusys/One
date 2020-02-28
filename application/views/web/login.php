@@ -42,7 +42,7 @@ body.loading .modal2 {
     display: block;
 }
  </style>
-  <body style="padding-top: 95px;background: url('<?=base_url()?>assets/img/banner/banner.png')">
+  <body style="background-size: cover;padding-top: 95px;background: url('<?=base_url()?>assets/img/banner/banner.png')">
 
 <div class="cont">
 <form id="login_user">
@@ -57,7 +57,7 @@ body.loading .modal2 {
       <span>Password</span>
       <input type="password" name="password" />
     </label>
-    <div class="text-center mt-2"><a href=""  class="text-center forgot-pass" data-toggle="modal" data-target="#myModal">Forgot password?</a></div>
+    <div class="text-center mt-2"><a href=""  class="text-center forgot-pass" data-toggle="modal" data-target="#myModal">Forgot Password?</a></div>
     <button type="submit" class="submit">Sign In</button>
  <!--    <button type="button" class="fb-btn">Connect with <span>facebook</span></button> -->
   </div>

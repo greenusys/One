@@ -286,6 +286,9 @@ background:transparent;
       pointer-events: none;
        background:#ccc; 
     }
+    .pointer{
+      cursor:pointer;
+    }
     .fy
     {
       font-size: 14px;
