@@ -70,6 +70,12 @@ class Home extends CI_Controller {
 		$data['Trending']=$this->POST->getTrending();
 		$data['MyDetails']=$this->Profile->getMyDetails($id);
 		$data['notify']=$this->Home->fetchnofication($id);
+		$data['birthdays']=$this->Test->UpComingBirthdays();
+			// if(count($result)>0){
+			// 	die(json_encode(array("code"=>1,"data"=>$result)));
+			// }else{
+			// 	die(json_encode(array("code"=>0,"data"=>"No Data Found.")));
+			// }
 		$this->load->view('web/template/header');
 		$this->load->view('web/home',$data);
 		$this->load->view('web/template/footer');
