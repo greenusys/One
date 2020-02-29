@@ -1,6 +1,14 @@
 <script type="text/javascript" src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
     <script src="https://files.codepedia.info/files/uploads/iScripts/html2canvas.js"></script>
+
+
   <style>
+  .carousel-control-next, .carousel-control-prev{
+    	height: 20px;
+  	top: 50% !important;
+  	width: 7% !important;
+  }
+
     .profile-div
     {
 	    height:75px;
@@ -110,7 +118,9 @@
         margin-left: -22px;
         background-color: #80808033;
 	}
-	
+	.emoji-menu{
+		top: -230px;
+	}
   </style>
 <?php 
 
@@ -125,7 +135,8 @@
 		?> 
 		    <div class="col-sm-7 col-md-7 col-lg-7 p-4">
 			<?php
-				if($Detail[0]['post_type']==1){
+			//echo $Detail[0]['post_files'];
+				if($Detail[0]['post_type']){
 					$imgArry=explode(',',$Detail[0]['post_files']);
 					?>
 						<div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
@@ -138,11 +149,23 @@
 										if($i==1){
 											$active='active';
 										}
+										$ext = pathinfo($img, PATHINFO_EXTENSION);   
+										if($ext!='mp4'){
 										?>
 											<div class="carousel-item <?=$active?>">
 												<img src="<?=base_url('assets/uploads/images/').$img?>" class="d-block w-100" alt="...">
 											</div>
 										<?php
+											}else{ ?>
+												<div class="carousel-item  <?=$active?>">
+													<video controls class="w-100">
+													  <source src="<?=base_url('assets/uploads/videos/').$img?>" type="video/mp4">
+													  <!-- <source src="movie.ogg" type="video/ogg"> -->
+														Your browser does not support the video tag.
+													</video>
+												</div>
+										<?php	}
+
 										$i++;
 										$active="";
 									}
@@ -204,7 +227,7 @@
 		                            <button class="dropbtn"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></button>
 		                            <div class="dropdown-content bg-white">
 		                            
-		                              <a href="javascript:void(0)" class="dlt_post_" p_d=<?=$p_ost['post_id']?> >Delete</a>
+		                              <a href="javascript:void(0)" class="dlt_post_" p_d=<?=$Detail[0]['post_id']?> >Delete</a>
 		                              
 		                            </div>
 		                          </div>
@@ -296,10 +319,11 @@
                 <?php for($i=0; $i < count($Detail[0]['total_comments']); $i++){ ?>
               <div class="row mt-2 px-2">
                   <div class="col-md-1">
-                      <span> <img class="rounded-circle like_img" src="<?=base_url()?>assets/img/Profile_Pic/<?=$profile_picture?>"></span>  
+                      <span> <img class="rounded-circle like_img" src="<?=base_url()?>assets/img/Profile_Pic/<?=$Detail[0]['total_comments'][$i]->profile_picture?>"></span>  
                   </div> 
                   <div class="col-md-10 comnt_text border-bottom">
-                      <h6 class="font-weight-bold m-0" > <?=$Detail[0]['total_comments'][$i]->full_name?><small class="ml-3"><time class="timeago" datetime=" <?=$Detail[0]['total_comments'][$i]->commented_on?>"></time></small></h6>
+                      <h6 class="font-weight-bold m-0" > <?=$Detail[0]['total_comments'][$i]->full_name?><small class="ml-3">
+                      	<time class="timeago" datetime="<?=$Detail[0]['total_comments'][$i]->commented_on?>"></time></small></h6>
                       <p class=""><?=$Detail[0]['total_comments'][$i]->comment?></p>
                   </div>
                 <div class="col-md-1">
@@ -320,32 +344,8 @@
             <?php } 
           }?>
                 
-           
-            </div>
-					
-				</div>    
-				<div class="row emoji p-2 shadow-sm  rounded-pill" id="gifs" style="display:none">
-					<div class="col-sm-2">
-					<img src="<?=base_url('assets/img/')?>/em1.gif" class="rounded-circle gif">
-					</div>
-					<div class="col-sm-2">
-						<img src="<?=base_url('assets/img/')?>/em2.gif" class="rounded-circle gif">
-					</div>
-					<div class="col-sm-2">
-						<img src="<?=base_url('assets/img/')?>/em3.gif" class="rounded-circle gif">
-					</div>
-					<div class="col-sm-2">
-						<img src="<?=base_url('assets/img/')?>/em4.gif" class="rounded-circle gif">
-					</div>
-					<div class="col-sm-2">
-						<img src="<?=base_url('assets/img/')?>/em5.gif" class="rounded-circle gif">
-					</div>
-					<div class="col-sm-2">
-						<img src="<?=base_url('assets/img/')?>/em6.gif" class="rounded-circle gif">
-					</div>
-				</div>
-                <div class="row bottom-sectionshadow-sm">
-					<div class="p-2 w-100">
+          
+					<div class="p-2 w-90 bottom-sectionshadow-sm">
                  <div class="d-flex m-0">
                     <span> <img class="rounded-circle like_img" src="<?=base_url()?>assets/img/Profile_Pic/<?=$Detail[0]['profile_pic']?>"></span>
                     <form method="POST" class="w-100 ad_cmnt" >
@@ -353,7 +353,7 @@
                         <p class="lead emoji-picker-container">
                           <textarea class="input-field cmnt_" data-emojiable="true" type="text" name="comment"  placeholder="Add a Message">  </textarea>
                         </p>
-                              <input type="hidden" name="post_id" value="<?=$Detail[0]['post_id']?>">
+                             <input type="hidden" name="post_id" class="poster_class" value="<?=$post_id?>">
                       </div>
                       <!------contenteditable  data-text="Write a comment"------>
                      <!--  <div class="cmnt_icons">
@@ -364,7 +364,9 @@
                     </form>
                  </div>
                 </div>
-				</div>			
+				
+				 </div>
+				</div>    		
 			</div>
 		</div>
 	</div>

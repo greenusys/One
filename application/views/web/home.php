@@ -1514,7 +1514,7 @@
                         <p class="lead emoji-picker-container">
                           <textarea class="input-field cmnt_" data-emojiable="true" type="text" name="comment"  placeholder="Add a Message">  </textarea>
                         </p>
-                             <input type="hidden" name="post_id" class="poster_class" value="<?=$post_id?>">
+                              <input type="hidden" name="post_id" class="poster_class" value="<?=$post_id?>">
                       </div>
                       <!------contenteditable  data-text="Write a comment"------>
                      <!--  <div class="cmnt_icons">
@@ -2988,43 +2988,7 @@ function myFunction() {
       </script>
     
 
-<script type="text/javascript">
-    $(document).on("click",".favrt",function(){
-      var el= $(this);
-      var cls = el.attr("class");
-      var post_id = el.attr('post_id');
-      var fvrt = 1;
-      $.ajax({
-        type:'POST',
-        data:{
-          post_id:post_id,
-          fvrt:fvrt
-        },
-        url:'<?=base_url()?>Test/makefavrt',
-        success:function(response){
-          var response = JSON.parse(response);
-          if(response.status==1){
-            el.html('<i class="fas fa-star text-gold"></i>');
-            el.addClass("star");
-          }
-          else if(response.status==2){
-            el.html('<i class="far fa-star"></i>');
-            el.removeClass("star");
-          }
-          else{
-            alert('Something went wrong');
-          }
-        }
-      })
-      // if(cls=='favrt'){
-      //   $(this).html('<i class="fas fa-star text-gold"></i>');
-      //   $(this).addClass("star");
-      // }else{
-      //   $(this).html('<i class="far fa-star"></i>');
-      //   $(this).removeClass("star");
-      // }
-    })
-  </script>
+
  <script type="text/javascript">
     // $(document).on("click",".favrt",function(){
     //   var cls = $(this).attr("class");
