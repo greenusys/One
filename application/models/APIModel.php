@@ -17,6 +17,14 @@
 			return $this->db->get($table_name)->result();
 		}
 
+		public function fetch_post_by_id($post_id){
+				$condition=array('post_id'=>$post_id);
+             	$this->db->select("*");
+				$this->db->join('users','users.user_id=post_.posted_by');
+				$this->db->where($condition);	
+				return $this->db->get('post_')->result();
+		}
+
 
 			public function getAllPostDetails( $condition=""){
                 $this->db->select("users.user_id,users.full_name,users.profile_picture,post_.*");

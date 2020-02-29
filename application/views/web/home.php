@@ -447,7 +447,7 @@
               <br>
                 <small>
                   
-                 <time class="timeago" datetime=" <?=$p_ost['posted_on']?>"></time>
+                 <?php echo time_elapsed_string($p_ost['posted_on']);?>
                 </small>
             </div>
            
@@ -474,8 +474,8 @@
                           <div class="dropdown ml-3">
                             <button class="dropbtn"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></button>
                             <div class="dropdown-content bg-white">
-                              <a href="javascript:void(0)"  data-toggle="modal" data-target="#postEditModal">Edit</a>
-                              <a href="javascript:void(0)" class="dlt_post_" p_d=<?=$p_ost['post_id']?> >Delete</a>
+                              <a href="javascript:void(0)"  class="edit_post" p_d="<?=$p_ost['post_id']?>">Edit</a>
+                              <a href="javascript:void(0)" class="dlt_post_" p_d="<?=$p_ost['post_id']?>" >Delete</a>
                               
                             </div>
                           </div>
@@ -632,7 +632,7 @@
               </a>
               <br>
                 <small>
-                    <time class="timeago" datetime=" <?=$p_ost['posted_on']?>"></time>
+                    <?php echo time_elapsed_string($p_ost['posted_on']);?>
                 </small>
             </div>
                  
@@ -658,7 +658,7 @@
                           <div class="dropdown ml-3">
                             <button class="dropbtn"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></button>
                             <div class="dropdown-content bg-white">
-                              <a href="javascript:void(0)"  data-toggle="modal" data-target="#postEditModal">Edit</a>
+                              <a href="javascript:void(0)"  class="edit_post" p_d="<?=$p_ost['post_id']?>">Edit</a>
                               <a href="javascript:void(0)" class="dlt_post_" p_d=<?=$p_ost['post_id']?> >Delete</a>
                               
                             </div>
@@ -915,7 +915,7 @@
               </a>
               <br>
                 <small>
-                    <time class="timeago" datetime=" <?=$p_ost['posted_on']?>"></time>
+                    <?php echo time_elapsed_string($p_ost['posted_on']);?>
                 </small>
             </div>
                  
@@ -940,8 +940,8 @@
                   <div class="dropdown ml-3">
                     <button class="dropbtn"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></button>
                     <div class="dropdown-content bg-white">
-                      <a href="javascript:void(0)"  data-toggle="modal" data-target="#postEditModal">Edit</a>
-                      <a href="javascript:void(0)" class="dlt_post_" p_d=<?=$p_ost['post_id']?> >Delete</a>
+                      <a href="javascript:void(0)"  class="edit_post" p_d="<?=$p_ost['post_id']?>">Edit</a>
+                      <a href="javascript:void(0)" class="dlt_post_" p_d="<?=$p_ost['post_id']?>" >Delete</a>
                       
                     </div>
                   </div>
@@ -1375,8 +1375,8 @@
                           <div class="dropdown ml-3">
                             <button class="dropbtn"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></button>
                             <div class="dropdown-content bg-white">
-                              <a href="javascript:void(0)"  data-toggle="modal" data-target="#postEditModal">Edit</a>
-                              <a href="javascript:void(0)" class="dlt_post_" p_d=<?=$p_ost['post_id']?> >Delete</a>
+                              <a href="javascript:void(0)"  class="edit_post" p_d="<?=$p_ost['post_id']?>">Edit</a>
+                              <a href="javascript:void(0)" class="dlt_post_" p_d="<?=$p_ost['post_id']?>" >Delete</a>
                               
                             </div>
                           </div>
@@ -1765,9 +1765,6 @@
 
 
 <script type="text/javascript">
-
-
-
 $(document).ready(function(){
 var story_cnt ;
   $(document).on('click','#addStatus',function(){
@@ -3001,3 +2998,245 @@ function myFunction() {
     //   }
     // })
   </script>
+
+<!--Comment Modal -->
+<div class="modal fade" id="commntModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Update Comment</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+            <div class="pl-2 w-100 _input d-flex">
+               <span> <img class="rounded-circle like_img" src="<?=base_url()?>assets/img/Profile_Pic/<?=$MyDetails[0]->profile_picture?>"></span>
+              <p class="ml-1 lead w-100 emoji-picker-container">
+                <textarea class="input-field cmnt_" id="comment_para" data-emojiable="true" type="text" name="comment"  placeholder="Add a Message">  </textarea>
+                  <!-- <input type="text" class="form-control" name="comment" data-emojiable="true"> -->
+              </p> 
+
+                    <input type="hidden" name="comnt_id" id="comment_id" value="">
+            </div>
+            <div class="float-right">
+              <button class="btn btn-success p-1 fy update_comment">Update</button>
+              <button type="button" data-dismiss="modal" aria-label="Close" class="btn btn-info ml-2 fy p-1">Cancel</button>
+            </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  $(document).on('click','.update_comment',function(){
+    var comment=$('#comment_para').parent().find(".emoji-wysiwyg-editor").html();
+    var c_id=$('#comment_id').val();
+    $.ajax({
+      type:'POST',
+      data:{
+        comment:comment,
+        c_id:c_id
+      },
+      url:'<?=base_url()?>APIController/editcomment',
+      success:function(response){
+        var response=JSON.parse(response);
+        if(response.code==1){
+          location.reload();
+        }
+
+      }
+    })
+  })
+
+$(document).on('click','.edit_post',function(){
+  var post_id=$(this).attr('p_d');
+  $.ajax({
+    type:'POST',
+    data:{
+      post_id:post_id
+    },
+    url:'<?=base_url()?>APIController/fetch_post_by_id',
+    success:function(response){
+      var html='';
+      var response = JSON.parse(response);
+      if (response.status==1) {
+        if (response.data[0].post_type!=0) {
+          var post_files = response.data[0].post_files;
+          var arr = post_files.split(',');
+          for(var i=0;i<arr.length;i++){
+            var extension = arr[i].replace(/^.*\./, '');
+            if (extension=="mp4") {
+              html+='<div class="slideobject">'+
+                    '<video controls="" class="w-100">'+
+                       '<source src="<?=base_url()?>assets/uploads/videos/'+arr[i]+'" type="video/mp4">'+
+                      'Your browser does not support the video tag.'+
+                    '</video>'+
+                    '</div>';
+            }
+            else{
+              html+='<img src="<?=base_url()?>assets/uploads/images/'+arr[i]+'" class="slideobject"/>';
+            }
+          }
+          $('#SlideShow').empty();
+          $('#SlideShow').append(html); 
+          $('#postEditModal').modal('show');
+                          $('#SlideShow').SlideShow({
+                  slideDuration: 8000,
+                  transSpeed: 300,
+                  loop: false,
+                  infobar: false
+                });
+        }
+      }
+    }
+  })
+})
+</script>
+
+
+<!--Post Edit Modal -->
+<div class="modal fade" id="postEditModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal_width" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Update Post</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body p-0">
+          <div class="container-fluid">
+            <div class="">
+              <div class="card mt-4 p-2">
+          <div class="card-header ">
+            <div class="d-flex float-left">
+             <div> 
+              <a class="font-weight-bold" href="#">
+                 <img class="rounded-circle mr-2" src="<?=base_url()?>assets/img/Profile_Pic/<?=$MyDetails[0]->profile_picture?>" width="40"  height="40">
+               </a>
+             </div>
+            <div>
+              <a class="font-weight-bold _use_n" href="#">  
+               Name
+              </a>
+              <br>
+                <small>
+                  
+                 <time class="timeago" datetime=" ">date</time>
+                </small>
+            </div>
+           
+           </div>
+               
+                    <div class="float-right d-flex mt-2">
+                      <div class="">
+                         <?php
+                        $user_id;
+                        $post_id=$p_ost['post_id'];
+                        $this->db->where(array('user_id'=>$user_id,'post_id'=>$post_id));
+                        $re=$this->db->get('user_fav_section')->result();
+                        if(count($re)==0){
+                        ?>
+                        <span class="favrt" post_id="<?=$p_ost['post_id']?>" title="favourite"><i class="far fa-star"></i></span>
+                        <?php
+                        }else{?>
+                        <span class="favrt star" post_id="<?=$p_ost['post_id']?>" title="favourite"><i class="fas fa-star text-gold"></i></span>
+                        <?php }
+                        ?>
+                        <!-- <span><i class="fas fa-star"></i></span> -->
+                      </div>
+                      <?php if($_SESSION['logged_in'][0]->user_id==$p_ost['user_id']){ ?>
+                          <div class="dropdown ml-3">
+                            <button class="dropbtn"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></button>
+                            <div class="dropdown-content bg-white">
+                       
+                              <a href="javascript:void(0)" class="dlt_post_" p_d=<?=$p_ost['post_id']?> >Delete</a>
+                              
+                            </div>
+                          </div>
+                          <?php } ?>
+                    </div> 
+                
+          </div>
+        <link href="<?=base_url()?>assets/dist/demo.css" type="text/css" rel="stylesheet" />
+<!--         <script src="http://code.jquery.com/jquery-latest.js"></script> -->
+        <link href="<?=base_url()?>assets/dist/jquery-slideshow.css" type="text/css" rel="stylesheet" />
+        <script src="<?=base_url()?>assets/dist/jquery.slideshow.js" type="text/javascript"></script>          
+          <div class="card-body row text-justify">
+            <div class="col-md-12">
+                      <div id="holder">
+            <div id="SlideShow">
+                <!-- Slide Images -->
+                <img src="https://unsplash.it/753/480?image=639" class="slideobject" title="#slide1"/>
+                <img src="https://unsplash.it/753/480?image=652" class="slideobject" />
+                <div class="slideobject">
+                    <iframe width="100%" height="100%" src="http://www.youtube.com/embed/NAIIQvhKCuQ" frameborder="0" allowfullscreen></iframe>
+                </div>
+                <img src="https://unsplash.it/753/480?image=660" class="slideobject" />
+                <div class="slideobject">
+                    <iframe width="100%" height="100%" src="http://www.youtube.com/embed/NAIIQvhKCuQ" frameborder="0" allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+      </div>
+        <script type="text/javascript">
+            $(document).ready(function(){
+                //Load the SlideShow
+                $('#SlideShow').SlideShow({
+                  slideDuration: 8000,
+                  transSpeed: 300,
+                  loop: true,
+                  infobar: true
+                });
+            });
+        </script>
+<!--                <div id="carouselExampleIndicators_post" class="carousel slide" data-ride="carousel">
+                  <ol class="carousel-indicators">
+                    <li data-target="#carouselExampleIndicators_post" data-slide-to="0" class="active"></li>
+                    <li data-target="#carouselExampleIndicators_post" data-slide-to="1"></li>
+                    <li data-target="#carouselExampleIndicators_post" data-slide-to="2"></li>
+                  </ol>
+                  <div class="carousel-inner">
+                    <div class="carousel-item active">
+                      <img class="d-block w-100 post_ht" src="<?=base_url()?>assets/img/Profile_Pic/profile1.jpg" alt="First slide">
+                    </div>
+                    <div class="carousel-item">
+                      <img class="d-block w-100 post_ht" src="<?=base_url()?>assets/img/Profile_Pic/profile3.jpg" alt="Second slide">
+                    </div>
+                    <div class="carousel-item">
+                      <img class="d-block w-100 post_ht" src="<?=base_url()?>assets/img/Profile_Pic/profile2.jpg" alt="Third slide">
+                    </div>
+                  </div>
+                  <a class="carousel-control-prev" href="#carouselExampleIndicators_post" role="button" data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                  </a>
+                  <a class="carousel-control-next" href="#carouselExampleIndicators_post" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                  </a>
+                </div>
+              </div> -->
+            <div class="col-md-12">
+              <form method="" action="">
+              <p>
+                <textarea name="" class="w-100" > desciption</textarea>
+              </p> 
+              <div class="float-right">
+                <button class="btn btn-success p-1 fy">Update</button>
+                <button type="button" class="btn btn-info ml-2 fy p-1">Cancel</button>
+              </div>
+            </form>
+            </div>
+      
+          </div>
+        </div>
+
+            </div>
+          </div> 
+            
+      </div>
+
+    </div>
+  </div>
+</div>

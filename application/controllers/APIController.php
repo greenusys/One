@@ -9,6 +9,7 @@ class APIController extends CI_Controller
 		$this->load->model('PostModel','POST');
 		$this->load->model('FriendsModel','FRND');
 	}
+
 	//compredddss Image
 	public function resizeImage($filename)
 	{
@@ -31,6 +32,7 @@ class APIController extends CI_Controller
 	   
 	      $this->image_lib->clear();
    	}
+
    	//To Add Timeline Post
    	public function addTimeLinePost(){
    		$user_id=$_SESSION['logged_in'][0]->user_id;
@@ -879,6 +881,39 @@ public function getPostLikes($post_id){
 		}
 	}
 
+	public function editcomment(){
+		// echo ' Post Id: '.$post_id.' : '.$action;
+	    	if(isset($_POST['android']))
+    		{
+    			$user_id=$this->input->post('user_id');
+    		}
+    		else
+    		{
+    			$user_id=$_SESSION['logged_in'][0]->user_id;
+    		}
+    		$c_id=$this->input->post('c_id');
+    		$comment=$this->input->post('comment');
+			$this->db->where(array('id'=>$c_id,'commented_by_'=>$user_id));
+			if(count($data=$this->db->get('post_comments_')->result())>0)
+			{
+				$toUpdate=array("comment"=>$comment);
+				$this->db->where(array('id'=>$c_id,'commented_by_'=>$user_id));
+				if($this->db->update('post_comments_',$toUpdate))
+				{
+				    die(json_encode(array("code"=>1,"data"=>"Successfully Updated Comment."))); 
+				}
+				else
+				{
+					  die(json_encode(array("code"=>0,"data"=>"Failed To Update Comment."))); 
+				}
+			}
+			else
+			{
+			   die(json_encode(array("code"=>0,"data"=>"Error While Updating Comment."))); 
+			}
+		    
+		}
+
 
 
 	//To Comment On Post
@@ -890,15 +925,15 @@ public function getPostLikes($post_id){
 			$data=array("post_id"=>$this->input->post('post_id'),"commented_by_"=>$user_id=$_SESSION['logged_in'][0]->user_id,"comment"=>$this->input->post('comment'),"commented_on"=>date('d-m-Y h:i:s'));
 		}
 		if(!empty($this->input->post('comment')) && !empty($this->input->post('post_id'))){
-			if($this->APIM->addData('post_comments_',$data)){
-				die(json_encode(array("code"=>1,"data"=>"Comment Added Successfully.")));
+			$result=$this->APIM->addData('post_comments_',$data);
+			if($result){
+				die(json_encode(array("code"=>1,"data"=>"Comment Added Successfully.","id"=>$result)));
 			}else{
 				die(json_encode(array("code"=>0,"data"=>"Failed To Post Comment.")));
 			}
 		}else{
 			die(json_encode(array("code"=>0,"data"=>"Comment or Post Id Cannot be null.")));
-		}
-		
+		}		
 	}
 	//To get Comments
 	public function getComment($post_id){
@@ -1212,6 +1247,13 @@ public function getPostLikes($post_id){
 				}
 			}
 		}
+
+		public function fetch_post_by_id(){
+			$post_id=$_POST['post_id'];
+			$result=$this->APIM->fetch_post_by_id($post_id);
+			die(json_encode(array('status'=>'1','data'=>$result)));
+		}
+
 		public function scrollfetchpost(){
 
 		$offset=$this->input->post('offset');
