@@ -430,7 +430,7 @@
   //   print_r($AllPosts);
     if( count($AllPosts)>0){
         foreach($AllPosts as $p_ost){
-            $post_user_id=$p_ost['user_id'];
+        $post_user_id=$p_ost['user_id'];
        if($p_ost['post_type']==0){
          ?>
         <div class="card mt-4 p-2">
@@ -491,7 +491,7 @@
             
       
           </div>
-          <div class="mb-2 p-0">
+          <div class="my-2 p-0">
             <div class="row m-0 ">
             <div class="col-md-4 manage ">
               <div class="text-center px-3 py-1">
@@ -545,7 +545,7 @@
             </div>
             <div class="col-md-4 manage px-3 py-1">
               <div class="btn-comment post-btns">
-                <a href="javascript:void(0)"><i class="fa fa-comment-o" aria-hidden="true"></i> Comments</a> 
+                <a href=""<?=base_url('Post/viewPost/').$p_ost['post_id']?>"><i class="fa fa-comment-o" aria-hidden="true"></i> Comments</a> 
                 <span class=""><?=count($p_ost['total_comments'])?></span>
               </div>
             </div>
@@ -636,8 +636,7 @@
                 <small>
                     <?php echo time_elapsed_string($p_ost['posted_on']);?>
                 </small>
-            </div>
-                 
+            </div>      
            </div>
               
                     <div class="float-right d-flex mt-2">
@@ -773,7 +772,7 @@
             
           </div>
           
-          <div class="mb-2 p-0">
+          <div class="my-2 p-0">
             <div class="d-flex text-center">
             <div class="col-md-4 manage ">
               <div class="text-center px-3 py-1">
@@ -827,7 +826,7 @@
             </div>
             <div class="col-md-4 manage px-3 py-1">
               <div class="btn-comment post-btns">
-                <a href="javascript:void(0)"><i class="fa fa-comment-o" aria-hidden="true"></i> Comments</a>
+                 <a class="" href="<?=base_url('Post/viewPost/').$p_ost['post_id']?>"><i class="fa fa-comment-o" aria-hidden="true"></i> Comments</a>
                 <span class=""><?=count($p_ost['total_comments'])?></span>
               </div>
             </div>
@@ -1214,7 +1213,7 @@
             ?>
             
           </div>
-          <div class="mb-2 p-0">
+          <div class="my-2 p-0">
             <div class="d-flex text-center">
             <div class="col-md-4 manage ">
               <div class="text-center px-3 py-1">
@@ -1268,7 +1267,7 @@
             </div>
             <div class="col-md-4 manage px-3 py-1">
               <div class="btn-comment post-btns">
-                <a href="javascript:void(0)"><i class="fa fa-comment-o" aria-hidden="true"></i> Comments</a>
+                <a href=""<?=base_url('Post/viewPost/').$p_ost['post_id']?>"><i class="fa fa-comment-o" aria-hidden="true"></i> Comments</a>
                 <span class=""><?=count($p_ost['total_comments'])?></span>
               </div>
             </div>
@@ -1406,7 +1405,7 @@
           </div>  
           </div>
           
-          <div class="mb-2 p-0">
+          <div class="my-2 p-0">
             <div class="d-flex text-center">
               <div class="col-md-4 manage  ">
               <!--   <div class="btn-like" ><a href="javascript:void(0)" class="likePost" d-Post="<?=$p_ost['post_id']?>"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i>Like</a> <span class="font-weight-bold likeValue"> <?=$p_ost['total_likes']?></span></div> -->
@@ -1461,7 +1460,7 @@
             </div>
             <div class="col-md-4 manage  px-3 py-1">
               <div class="btn-comment post-btns">
-                <a href="javascript:void(0)"><i class="fa fa-comment-o" aria-hidden="true"></i> Comments</a>
+                <a href=""<?=base_url('Post/viewPost/').$p_ost['post_id']?>"><i class="fa fa-comment-o" aria-hidden="true"></i> Comments</a>
                  <span class=""><?=count($p_ost['likes_data'])?></span>
                </div>
             </div>
@@ -2239,7 +2238,7 @@ function getAjaxData(offset)
           {
             if((res.data[i].post_type)==0)
             {
-              html+='<div class="card mt-4"><div class="card-header"><div class="d-flex float-left"><div><a class="font-weight-bold" href="<?=base_url()?>Profile/'+res.data[i].posted_by+'"><img class="rounded-circle mr-2" src="<?=base_url()?>assets/img/Profile_Pic/'+res.data[i].profile_pic+'" width="40"  height="40"></a></div><div><a class="font-weight-bold _use_n" href="#">'+res.data[i].posted_by+'</a><br><small><time class="timeago" datetime="'+res.data[i].posted_on+'"></time></small></div></div>';
+              html+='<div class="card mt-4 p-2"><div class="card-header"><div class="d-flex float-left"><div><a class="font-weight-bold" href="<?=base_url()?>Profile/'+res.data[i].posted_by+'"><img class="rounded-circle mr-2" src="<?=base_url()?>assets/img/Profile_Pic/'+res.data[i].profile_pic+'" width="40"  height="40"></a></div><div><a class="font-weight-bold _use_n" href="#">'+res.data[i].posted_by+'</a><br><small><time class="timeago" datetime="'+res.data[i].posted_on+'"></time></small></div></div>';
                 html+='<div class="float-right d-flex mt-2">';
                 html+='<div class="">';
                 var count_fav=(res.data[i].fav).length;
@@ -2258,16 +2257,18 @@ function getAjaxData(offset)
                 }
               html+='</div>';
               // html+='</div>';
-              html+='<div class="card-body text-justify"><p>'+res.data[i].post+'</p></div><div class="mb-2 p-0"><div class="row "><div class="col-md-4 manage "><div class="text-center px-3 py-1"><div class="btn-like d-flex" ><a href="javascript:void(0)" class="text-danger likePost" d-Post="'+res.data[i].post_id+'">';
+              html+='<div class="card-body text-justify"><p>'+res.data[i].post+'</p></div><div class="my-2 p-0"><div class="row m-0"><div class="col-md-4 manage "><div class="text-center px-3 py-1"><div class="btn-like d-flex" ><a href="javascript:void(0)" class="text-danger likePost" d-Post="'+res.data[i].post_id+'">';
               var countlikes=(res.data[i].likes_data).length;
-              console.log(countlikes);
-              if((countlikes)!=null)
-              {
+              //console.log(countlikes);
+
+              if((countlikes)>0)
+              { 
                 for(var j=0;j<countlikes;j++)
-                {
-                  if(user_id==(res.data[i].data[i].likes_data[j].user_id))
+                { 
+                  if(user_id==(res.data[i].likes_data[j].user_id))
                   { 
                     html+='<i class="fa fa-heart " aria-hidden="true"></i>';
+                    break;
                   }
                   else
                   { 
@@ -2327,7 +2328,7 @@ function getAjaxData(offset)
                     html+='<div class="dropdown"><button class="dropbtn"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></button><div class="dropdown-content bg-white">';    
                     if(user_id==res.data[i].total_comments[k].commented_by_) 
                     {
-                      html+='<a href="javascript:void(0)"  data-toggle="modal" data-target="#commntModal">Edit</a>;'
+                      html+='<a href="javascript:void(0)"  data-toggle="modal" data-target="#commntModal">Edit</a>';
                     }
                      html+='<a href="javascript:void(0)" class="dlt_comnt_" c_d="'+res.data[i].total_comments[k].id+'">Delete</a>';
                    
@@ -2437,7 +2438,7 @@ function getAjaxData(offset)
                 html+='</div>';
               }
               html+='</div>';
-              html+='<div class="mb-2 p-0">';
+              html+='<div class="my-2 p-0">';
               html+='<div class="d-flex text-center">';
               html+='<div class="col-md-4 manage ">';
               html+='<div class="text-center px-3 py-1">';
@@ -2553,7 +2554,7 @@ function getAjaxData(offset)
               html+='</video>';
               html+='</div>';
               html+='</div>';     
-              html+='<div class="mb-2 p-0">';
+              html+='<div class="my-2 p-0">';
               html+='<div class="flex text-center">';
               html+='<div class="col-md-4 manage ">';
               html+='<div class="text-center px-3 py-1">';
