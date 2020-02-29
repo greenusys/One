@@ -570,7 +570,8 @@
                       <span> <img class="rounded-circle like_img" src="<?=base_url()?>assets/img/Profile_Pic/<?=$p_ost['total_comments'][$i]->profile_picture?>"></span>  
                   </div> 
                   <div class="col-md-10 comnt_text border-bottom">
-                      <h6 class="font-weight-bold m-0" > <?=$p_ost['total_comments'][$i]->full_name?><small class="ml-3"><time class="timeago" datetime=" <?=$p_ost['total_comments'][$i]->commented_on?>"></time></small></h6>
+                      <h6 class="font-weight-bold m-0" > <?=$p_ost['total_comments'][$i]->full_name?><small class="ml-3">
+                         <?php echo time_elapsed_string($p_ost['total_comments'][$i]->commented_on)?></small></h6>
                       <p class=""><?=$p_ost['total_comments'][$i]->comment?></p>
                   </div>
                   <div class="col-md-1">
@@ -853,7 +854,7 @@
                   </div>
                   <div class="col-md-10 comnt_text border-bottom">
                       <h6 class="font-weight-bold m-0" > <?=$p_ost['total_comments'][$i]->full_name?><small class="ml-3">
-                        <time class="timeago" datetime=" <?=$p_ost['total_comments'][$i]->commented_on?>"></time>
+                       <?php echo time_elapsed_string($p_ost['total_comments'][$i]->commented_on)?>
                       </small></h6>
                       <p class=""><?=$p_ost['total_comments'][$i]->comment?></p>
                   </div>
@@ -1289,7 +1290,7 @@
                   </div>
                   <div class="col-md-10 comnt_text border-bottom">
                       <h6 class="font-weight-bold m-0" > <?=$p_ost['total_comments'][$i]->full_name?><small class="ml-3">
-                        <time class="timeago" datetime=" <?=$p_ost['total_comments'][$i]->commented_on?>"></time>
+                  <?php echo time_elapsed_string($p_ost['total_comments'][$i]->commented_on)?>
                       </small></h6>
                       <p class=""><?=$p_ost['total_comments'][$i]->comment?></p>
                   </div>
@@ -1472,8 +1473,7 @@
           
            <div class=" comments_list border-top">
               <?php 
-                //echo"hello";
-
+            
                   // print_r($p_ost['total_comments']);
                 if(count($p_ost['total_comments'])>0){
                 for($i=0; $i < count($p_ost['total_comments']); $i++){ ?>
@@ -1483,7 +1483,7 @@
                       </div>
                       <div class="col-md-10 comnt_text border-bottom">
                           <h6 class="font-weight-bold m-0" > <?=$p_ost['total_comments'][$i]->full_name?><small class="ml-3">
-                            <time class="timeago" datetime=" <?=$p_ost['total_comments'][$i]->commented_on?>"></time>
+                           <?php echo time_elapsed_string($p_ost['total_comments'][$i]->commented_on)?>
                           </small></h6>
                           <p class=""><?=$p_ost['total_comments'][$i]->comment?></p>
                       </div>
@@ -2668,12 +2668,13 @@ function getAjaxData(offset)
           }
         });
       });
-         $(document).ready(function() {
-            $(".timeago").each(function(){
-                $(this).timeago();
+         // $(document).ready(function() {
+         //  alert("sdadasd");
+         //    $(".timeago").each(function(){
+         //        $(this).timeago();
 
-            });
-          });
+         //    });
+         //  });
       </script>
 
 
