@@ -4,7 +4,7 @@
       $user_bio=$session[0]->bio_graphy;
   ?>
 <style>
-    .randflow:hover{
+    .randflow:hover{ 
         cursor:pointer;
         background:#ffbc00;
     }
