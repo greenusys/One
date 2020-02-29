@@ -570,7 +570,8 @@
                       <span> <img class="rounded-circle like_img" src="<?=base_url()?>assets/img/Profile_Pic/<?=$p_ost['total_comments'][$i]->profile_picture?>"></span>  
                   </div> 
                   <div class="col-md-10 comnt_text border-bottom">
-                      <h6 class="font-weight-bold m-0" > <?=$p_ost['total_comments'][$i]->full_name?><small class="ml-3"><time class="timeago" datetime=" <?=$p_ost['total_comments'][$i]->commented_on?>"></time></small></h6>
+                      <h6 class="font-weight-bold m-0" > <?=$p_ost['total_comments'][$i]->full_name?><small class="ml-3">
+                         <?php echo time_elapsed_string($p_ost['total_comments'][$i]->commented_on)?></small></h6>
                       <p class=""><?=$p_ost['total_comments'][$i]->comment?></p>
                   </div>
                   <div class="col-md-1">
@@ -853,7 +854,7 @@
                   </div>
                   <div class="col-md-10 comnt_text border-bottom">
                       <h6 class="font-weight-bold m-0" > <?=$p_ost['total_comments'][$i]->full_name?><small class="ml-3">
-                        <time class="timeago" datetime=" <?=$p_ost['total_comments'][$i]->commented_on?>"></time>
+                       <?php echo time_elapsed_string($p_ost['total_comments'][$i]->commented_on)?>
                       </small></h6>
                       <p class=""><?=$p_ost['total_comments'][$i]->comment?></p>
                   </div>
@@ -1289,7 +1290,7 @@
                   </div>
                   <div class="col-md-10 comnt_text border-bottom">
                       <h6 class="font-weight-bold m-0" > <?=$p_ost['total_comments'][$i]->full_name?><small class="ml-3">
-                        <time class="timeago" datetime=" <?=$p_ost['total_comments'][$i]->commented_on?>"></time>
+                  <?php echo time_elapsed_string($p_ost['total_comments'][$i]->commented_on)?>
                       </small></h6>
                       <p class=""><?=$p_ost['total_comments'][$i]->comment?></p>
                   </div>
@@ -1472,8 +1473,7 @@
           
            <div class=" comments_list border-top">
               <?php 
-                //echo"hello";
-
+            
                   // print_r($p_ost['total_comments']);
                 if(count($p_ost['total_comments'])>0){
                 for($i=0; $i < count($p_ost['total_comments']); $i++){ ?>
@@ -1483,7 +1483,7 @@
                       </div>
                       <div class="col-md-10 comnt_text border-bottom">
                           <h6 class="font-weight-bold m-0" > <?=$p_ost['total_comments'][$i]->full_name?><small class="ml-3">
-                            <time class="timeago" datetime=" <?=$p_ost['total_comments'][$i]->commented_on?>"></time>
+                           <?php echo time_elapsed_string($p_ost['total_comments'][$i]->commented_on)?>
                           </small></h6>
                           <p class=""><?=$p_ost['total_comments'][$i]->comment?></p>
                       </div>
@@ -1514,7 +1514,7 @@
                         <p class="lead emoji-picker-container">
                           <textarea class="input-field cmnt_" data-emojiable="true" type="text" name="comment"  placeholder="Add a Message">  </textarea>
                         </p>
-                             <input type="hidden" name="post_id" class="poster_class" value="<?=$post_id?>">
+                              <input type="hidden" name="post_id" class="poster_class" value="<?=$post_id?>">
                       </div>
                       <!------contenteditable  data-text="Write a comment"------>
                      <!--  <div class="cmnt_icons">
@@ -2668,12 +2668,13 @@ function getAjaxData(offset)
           }
         });
       });
-         $(document).ready(function() {
-            $(".timeago").each(function(){
-                $(this).timeago();
+         // $(document).ready(function() {
+         //  alert("sdadasd");
+         //    $(".timeago").each(function(){
+         //        $(this).timeago();
 
-            });
-          });
+         //    });
+         //  });
       </script>
 
 
@@ -2985,43 +2986,7 @@ function myFunction() {
       </script>
     
 
-<script type="text/javascript">
-    $(document).on("click",".favrt",function(){
-      var el= $(this);
-      var cls = el.attr("class");
-      var post_id = el.attr('post_id');
-      var fvrt = 1;
-      $.ajax({
-        type:'POST',
-        data:{
-          post_id:post_id,
-          fvrt:fvrt
-        },
-        url:'<?=base_url()?>Test/makefavrt',
-        success:function(response){
-          var response = JSON.parse(response);
-          if(response.status==1){
-            el.html('<i class="fas fa-star text-gold"></i>');
-            el.addClass("star");
-          }
-          else if(response.status==2){
-            el.html('<i class="far fa-star"></i>');
-            el.removeClass("star");
-          }
-          else{
-            alert('Something went wrong');
-          }
-        }
-      })
-      // if(cls=='favrt'){
-      //   $(this).html('<i class="fas fa-star text-gold"></i>');
-      //   $(this).addClass("star");
-      // }else{
-      //   $(this).html('<i class="far fa-star"></i>');
-      //   $(this).removeClass("star");
-      // }
-    })
-  </script>
+
  <script type="text/javascript">
     // $(document).on("click",".favrt",function(){
     //   var cls = $(this).attr("class");

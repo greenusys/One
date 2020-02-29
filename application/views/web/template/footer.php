@@ -153,6 +153,44 @@ $profile_picture = $session[0]->profile_picture;
   </div>
 </div>
 
+<!-------footer ajax-------->
+<script type="text/javascript">
+    $(document).on("click",".favrt",function(){
+      var el= $(this);
+      var cls = el.attr("class");
+      var post_id = el.attr('post_id');
+      var fvrt = 1;
+      $.ajax({
+        type:'POST',
+        data:{
+          post_id:post_id,
+          fvrt:fvrt
+        },
+        url:'<?=base_url()?>Test/makefavrt',
+        success:function(response){
+          var response = JSON.parse(response);
+          if(response.status==1){
+            el.html('<i class="fas fa-star text-gold"></i>');
+            el.addClass("star");
+          }
+          else if(response.status==2){
+            el.html('<i class="far fa-star"></i>');
+            el.removeClass("star");
+          }
+          else{
+            alert('Something went wrong');
+          }
+        }
+      })
+      // if(cls=='favrt'){
+      //   $(this).html('<i class="fas fa-star text-gold"></i>');
+      //   $(this).addClass("star");
+      // }else{
+      //   $(this).html('<i class="far fa-star"></i>');
+      //   $(this).removeClass("star");
+      // }
+    })
+  </script>
 <script type="text/javascript">
 $(document).on('click','.edit_comment',function(){
   var el=$(this);
@@ -676,14 +714,46 @@ $(document).on('click','.seFnd',function(){
 	 $('#f_im').attr('src','assets/img/Profile_Pic/'+profile);
     $('#aad').attr('d-stored',user_id);
 });
+
+
+function time2TimeAgo(ts) {
+    // This function computes the delta between the
+    // provided timestamp and the current time, then test
+    // the delta for predefined ranges.
+
+    var d=new Date();  // Gets the current time
+    var nowTs = Math.floor(d.getTime()/1000); // getTime() returns milliseconds, and we need seconds, hence the Math.floor and division by 1000
+    var seconds = nowTs-ts;
+
+    // more that two days
+    if (seconds > 2*24*3600) {
+       return "a few days ago";
+    }
+    // a day
+    if (seconds > 24*3600) {
+       return "yesterday";
+    }
+
+    if (seconds > 3600) {
+       return "a few hours ago";
+    }
+    if (seconds > 1800) {
+       return "Half an hour ago";
+    }
+    if (seconds > 60) {
+       return Math.floor(seconds/60) + " minutes ago";
+    }
+}
 </script>
 
 <script type="text/javascript">
    $(document).ready(function () {
   $(document).on("keypress",'.cmnt_',function (e) {
+
 var keyCode = e.keyCode || e.which;
     if (keyCode === 13) {
     	 e.preventDefault();
+     
 //alert($(this).html());
         var text = $(this).html();
         var el=$(this);
@@ -695,7 +765,7 @@ var keyCode = e.keyCode || e.which;
       // $(".ad_cmnt").submit(function (ev) {
       //     ev.preventDefault();
         var post_id=$(this).parent().parent().find('.poster_class').val();
-     	   //   alert(post_id);
+     	     // alert(post_id);
        	  // console.log(form);
          // var formdata = new FormData($(this)[0]);
         // formdata.append("comment",text);

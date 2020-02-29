@@ -289,6 +289,13 @@ background:transparent;
     .pointer{
       cursor:pointer;
     }
+    .w-90{
+      width: 90% !important;
+    }
+    .bottom-sectionshadow-sm{
+      position: absolute;
+      bottom: 0px;
+    }
     .fy
     {
       font-size: 14px;
