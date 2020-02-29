@@ -1396,11 +1396,13 @@
             <?=$p_ost['post']?>
             </p>
             <div class="">
+               <a class="" href="<?=base_url('Post/viewPost/').$p_ost['post_id']?>">
             <video controls class="w-100">
             <source src="<?=base_url()?>assets/uploads/videos/<?=$p_ost['post_files']?>" type="video/mp4">
           
           Your browser does not support the video tag.
           </video>
+        </a>
           </div>  
           </div>
           
