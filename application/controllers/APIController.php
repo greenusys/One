@@ -9,6 +9,7 @@ class APIController extends CI_Controller
 		$this->load->model('PostModel','POST');
 		$this->load->model('FriendsModel','FRND');
 	}
+
 	//compredddss Image
 	public function resizeImage($filename)
 	{
@@ -1246,6 +1247,13 @@ public function getPostLikes($post_id){
 				}
 			}
 		}
+
+		public function fetch_post_by_id(){
+			$post_id=$_POST['post_id'];
+			$result=$this->APIM->fetch_post_by_id($post_id);
+			die(json_encode(array('status'=>'1','data'=>$result)));
+		}
+
 		public function scrollfetchpost(){
 
 		$offset=$this->input->post('offset');

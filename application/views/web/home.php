@@ -447,7 +447,7 @@
               <br>
                 <small>
                   
-                 <time class="timeago" datetime=" <?=$p_ost['posted_on']?>"></time>
+                 <?php echo time_elapsed_string($p_ost['posted_on']);?>
                 </small>
             </div>
            
@@ -474,8 +474,8 @@
                           <div class="dropdown ml-3">
                             <button class="dropbtn"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></button>
                             <div class="dropdown-content bg-white">
-                              <a href="javascript:void(0)"  data-toggle="modal" data-target="#postEditModal">Edit</a>
-                              <a href="javascript:void(0)" class="dlt_post_" p_d=<?=$p_ost['post_id']?> >Delete</a>
+                              <a href="javascript:void(0)"  class="edit_post" p_d="<?=$p_ost['post_id']?>">Edit</a>
+                              <a href="javascript:void(0)" class="dlt_post_" p_d="<?=$p_ost['post_id']?>" >Delete</a>
                               
                             </div>
                           </div>
@@ -632,7 +632,7 @@
               </a>
               <br>
                 <small>
-                    <time class="timeago" datetime=" <?=$p_ost['posted_on']?>"></time>
+                    <?php echo time_elapsed_string($p_ost['posted_on']);?>
                 </small>
             </div>
                  
@@ -658,7 +658,7 @@
                           <div class="dropdown ml-3">
                             <button class="dropbtn"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></button>
                             <div class="dropdown-content bg-white">
-                              <a href="javascript:void(0)"  data-toggle="modal" data-target="#postEditModal">Edit</a>
+                              <a href="javascript:void(0)"  class="edit_post" p_d="<?=$p_ost['post_id']?>">Edit</a>
                               <a href="javascript:void(0)" class="dlt_post_" p_d=<?=$p_ost['post_id']?> >Delete</a>
                               
                             </div>
@@ -915,7 +915,7 @@
               </a>
               <br>
                 <small>
-                    <time class="timeago" datetime=" <?=$p_ost['posted_on']?>"></time>
+                    <?php echo time_elapsed_string($p_ost['posted_on']);?>
                 </small>
             </div>
                  
@@ -940,8 +940,8 @@
                   <div class="dropdown ml-3">
                     <button class="dropbtn"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></button>
                     <div class="dropdown-content bg-white">
-                      <a href="javascript:void(0)"  data-toggle="modal" data-target="#postEditModal">Edit</a>
-                      <a href="javascript:void(0)" class="dlt_post_" p_d=<?=$p_ost['post_id']?> >Delete</a>
+                      <a href="javascript:void(0)"  class="edit_post" p_d="<?=$p_ost['post_id']?>">Edit</a>
+                      <a href="javascript:void(0)" class="dlt_post_" p_d="<?=$p_ost['post_id']?>" >Delete</a>
                       
                     </div>
                   </div>
@@ -1375,8 +1375,8 @@
                           <div class="dropdown ml-3">
                             <button class="dropbtn"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></button>
                             <div class="dropdown-content bg-white">
-                              <a href="javascript:void(0)"  data-toggle="modal" data-target="#postEditModal">Edit</a>
-                              <a href="javascript:void(0)" class="dlt_post_" p_d=<?=$p_ost['post_id']?> >Delete</a>
+                              <a href="javascript:void(0)"  class="edit_post" p_d="<?=$p_ost['post_id']?>">Edit</a>
+                              <a href="javascript:void(0)" class="dlt_post_" p_d="<?=$p_ost['post_id']?>" >Delete</a>
                               
                             </div>
                           </div>
@@ -1765,9 +1765,6 @@
 
 
 <script type="text/javascript">
-
-
-
 $(document).ready(function(){
 var story_cnt ;
   $(document).on('click','#addStatus',function(){
@@ -3037,7 +3034,6 @@ function myFunction() {
     //   }
     // })
   </script>
-<<<<<<< HEAD
 
 <!--Comment Modal -->
 <div class="modal fade" id="commntModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -3087,6 +3083,50 @@ function myFunction() {
       }
     })
   })
+
+$(document).on('click','.edit_post',function(){
+  var post_id=$(this).attr('p_d');
+  $.ajax({
+    type:'POST',
+    data:{
+      post_id:post_id
+    },
+    url:'<?=base_url()?>APIController/fetch_post_by_id',
+    success:function(response){
+      var html='';
+      var response = JSON.parse(response);
+      if (response.status==1) {
+        if (response.data[0].post_type!=0) {
+          var post_files = response.data[0].post_files;
+          var arr = post_files.split(',');
+          for(var i=0;i<arr.length;i++){
+            var extension = arr[i].replace(/^.*\./, '');
+            if (extension=="mp4") {
+              html+='<div class="slideobject">'+
+                    '<video controls="" class="w-100">'+
+                       '<source src="<?=base_url()?>assets/uploads/videos/'+arr[i]+'" type="video/mp4">'+
+                      'Your browser does not support the video tag.'+
+                    '</video>'+
+                    '</div>';
+            }
+            else{
+              html+='<img src="<?=base_url()?>assets/uploads/images/'+arr[i]+'" class="slideobject"/>';
+            }
+          }
+          $('#SlideShow').empty();
+          $('#SlideShow').append(html); 
+          $('#postEditModal').modal('show');
+                          $('#SlideShow').SlideShow({
+                  slideDuration: 8000,
+                  transSpeed: 300,
+                  loop: false,
+                  infobar: false
+                });
+        }
+      }
+    }
+  })
+})
 </script>
 
 
@@ -3154,9 +3194,39 @@ function myFunction() {
                     </div> 
                 
           </div>
+        <link href="<?=base_url()?>assets/dist/demo.css" type="text/css" rel="stylesheet" />
+<!--         <script src="http://code.jquery.com/jquery-latest.js"></script> -->
+        <link href="<?=base_url()?>assets/dist/jquery-slideshow.css" type="text/css" rel="stylesheet" />
+        <script src="<?=base_url()?>assets/dist/jquery.slideshow.js" type="text/javascript"></script>          
           <div class="card-body row text-justify">
-            <div class="col-md-6">
-               <div id="carouselExampleIndicators_post" class="carousel slide" data-ride="carousel">
+            <div class="col-md-12">
+                      <div id="holder">
+            <div id="SlideShow">
+                <!-- Slide Images -->
+                <img src="https://unsplash.it/753/480?image=639" class="slideobject" title="#slide1"/>
+                <img src="https://unsplash.it/753/480?image=652" class="slideobject" />
+                <div class="slideobject">
+                    <iframe width="100%" height="100%" src="http://www.youtube.com/embed/NAIIQvhKCuQ" frameborder="0" allowfullscreen></iframe>
+                </div>
+                <img src="https://unsplash.it/753/480?image=660" class="slideobject" />
+                <div class="slideobject">
+                    <iframe width="100%" height="100%" src="http://www.youtube.com/embed/NAIIQvhKCuQ" frameborder="0" allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+      </div>
+        <script type="text/javascript">
+            $(document).ready(function(){
+                //Load the SlideShow
+                $('#SlideShow').SlideShow({
+                  slideDuration: 8000,
+                  transSpeed: 300,
+                  loop: true,
+                  infobar: true
+                });
+            });
+        </script>
+<!--                <div id="carouselExampleIndicators_post" class="carousel slide" data-ride="carousel">
                   <ol class="carousel-indicators">
                     <li data-target="#carouselExampleIndicators_post" data-slide-to="0" class="active"></li>
                     <li data-target="#carouselExampleIndicators_post" data-slide-to="1"></li>
@@ -3182,8 +3252,8 @@ function myFunction() {
                     <span class="sr-only">Next</span>
                   </a>
                 </div>
-              </div>
-            <div class="col-md-6">
+              </div> -->
+            <div class="col-md-12">
               <form method="" action="">
               <p>
                 <textarea name="" class="w-100" > desciption</textarea>
@@ -3206,5 +3276,3 @@ function myFunction() {
     </div>
   </div>
 </div>
-=======
->>>>>>> 0fe388daf234f2407f5f6fe5c65ee699b9970dc7
