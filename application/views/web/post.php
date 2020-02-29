@@ -112,7 +112,12 @@
 	}
 	
   </style>
+<?php 
 
+  $session=$this->session->userdata('logged_in');
+    $user_Id=$session[0]->user_id;
+    $profile_picture = $session[0]->profile_picture;
+?>
     <div class="container card shadow mt-5 p-4" style="background-color:#00000094">
 		<div class="row">
 		<?php
@@ -177,20 +182,34 @@
 						  <h6 class="font-weight-normal"><?=$Detail[0]['posted_on']?> &nbsp; <i class='fas fa-user-friends'></i></h6>
 					    </div>
 					    <div class="col-sm-2">
-					        
-						    <?php if($_SESSION['logged_in'][0]->user_id==$Detail[0]['user_id']){ ?>
-			                    <div class="float-right mt-2">
-			                          <div class="dropdown">
-			                            <button class="dropbtn"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></button>
-			                            <div class="dropdown-content bg-white">
-			                              <a href="#">Edit</a>
-			                              <a href="javascript:void(0)" class="dlt_post_" p_d=<?=$Detail[0]['post_id']?> >Delete</a>
-			                              
-			                            </div>
-			                          </div>
-			                    </div> 
-			                <?php } ?>
-					
+					      <div class="float-right d-flex mt-2">
+		                      <div class="">
+		                         <?php
+		                      
+		                        $post_id=$Detail[0]['post_id'];
+		                        $this->db->where(array('user_id'=>$user_Id,'post_id'=>$post_id));
+		                        $re=$this->db->get('user_fav_section')->result();
+			                        if(count($re)==0){
+			                        ?>
+			                      	  <span class="favrt" post_id="<?=$post_id?>" title="favourite"><i class="far fa-star"></i></span>
+			                        <?php
+			                        }else{?>
+			                      	  <span class="favrt star" post_id="<?=$post_id?>" title="favourite"><i class="fas fa-star text-gold"></i></span>
+		                        <?php }
+		                        ?>
+		                        <!-- <span><i class="fas fa-star"></i></span> -->
+		                      </div>
+		                      <?php if($_SESSION['logged_in'][0]->user_id==$Detail[0]['user_id']){ ?>
+		                          <div class="dropdown ml-3">
+		                            <button class="dropbtn"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></button>
+		                            <div class="dropdown-content bg-white">
+		                            
+		                              <a href="javascript:void(0)" class="dlt_post_" p_d=<?=$p_ost['post_id']?> >Delete</a>
+		                              
+		                            </div>
+		                          </div>
+		                          <?php } ?>
+		                    </div> 
 					    </div>
 				    </div>
 					<div class="row">
@@ -277,24 +296,27 @@
                 <?php for($i=0; $i < count($Detail[0]['total_comments']); $i++){ ?>
               <div class="row mt-2 px-2">
                   <div class="col-md-1">
-                      <span> <img class="rounded-circle like_img" src="<?=base_url()?>assets/img/Profile_Pic/<?=$MyDetails[0]->profile_picture?>"></span>  
+                      <span> <img class="rounded-circle like_img" src="<?=base_url()?>assets/img/Profile_Pic/<?=$profile_picture?>"></span>  
                   </div> 
                   <div class="col-md-10 comnt_text border-bottom">
                       <h6 class="font-weight-bold m-0" > <?=$Detail[0]['total_comments'][$i]->full_name?><small class="ml-3"><time class="timeago" datetime=" <?=$Detail[0]['total_comments'][$i]->commented_on?>"></time></small></h6>
                       <p class=""><?=$Detail[0]['total_comments'][$i]->comment?></p>
                   </div>
-                  <div class="col-md-1">
-                      <?php if($_SESSION['logged_in'][0]->user_id==$Detail[0]['user_id']){ ?>
-                          <div class="dropdown">
-                            <button class="dropbtn"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></button>
-                            <div class="dropdown-content bg-white">
-                              <a href="#">Edit</a>
-                              <a href="javascript:void(0)" class="dlt_comnt_" c_d="<?=$Detail[0]['total_comments'][$i]->id?>">Delete</a>
-                            </div>
-                          </div>
-                      <?php } ?>
-                  </div>
-              </div>
+                <div class="col-md-1">
+                 <?php if(($_SESSION['logged_in'][0]->user_id==$Detail[0]['total_comments'][$i]->user_id) OR ($_SESSION['logged_in'][0]->user_id==$Detail[0]['user_id']) ){ ?>
+                    <div class="dropdown">
+                      <button class="dropbtn"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></button>
+                      <div class="dropdown-content bg-white">
+                           <?php  if($_SESSION['logged_in'][0]->user_id ==$Detail[0]['total_comments'][$i]->user_id ){   ?>
+                                <a href="javascript:void(0)" class="edit_comment" c_d="<?=$Detail[0]['total_comments'][$i]->id?>">Edit</a>
+                          <?php }  ?>
+                        <a href="javascript:void(0)" class="dlt_comnt_" c_d="<?=$Detail[0]['total_comments'][$i]->id?>">Delete</a>
+                        
+                      </div>
+                    </div>
+                	<?php } ?>
+              	</div>
+             </div>
             <?php } 
           }?>
                 

@@ -2,7 +2,7 @@
 //print_r($_SESSION['logged_in']); 
    $session=$this->session->userdata('logged_in');
       $user_bio=$session[0]->bio_graphy;
-
+    
 
       function time_elapsed_string($datetime, $full = false) {
     $now = new DateTime;
@@ -921,8 +921,8 @@
                  
            </div>   
           <div class="float-right d-flex mt-2">
-                  <div class="">  
-                      <?php
+                <div class="">  
+                  <?php
                     $user_id;
                     $post_id=$p_ost['post_id'];
                     $this->db->where(array('user_id'=>$user_id,'post_id'=>$post_id));
@@ -1765,14 +1765,6 @@
 
 
 <script type="text/javascript">
-$(document).on('click','.edit_comment',function(){
-  var el=$(this);
-  var comment_id=el.attr('c_d');
-  $('#comment_id').val(comment_id);
-  var para = el.parent().parent().parent().parent().find("p").html();
-  $('#comment_para').parent().find(".emoji-wysiwyg-editor").html(para);
-  $('#commntModal').modal('show');
-})
 
 
 
@@ -3045,6 +3037,7 @@ function myFunction() {
     //   }
     // })
   </script>
+<<<<<<< HEAD
 
 <!--Comment Modal -->
 <div class="modal fade" id="commntModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -3213,3 +3206,5 @@ function myFunction() {
     </div>
   </div>
 </div>
+=======
+>>>>>>> 0fe388daf234f2407f5f6fe5c65ee699b9970dc7
