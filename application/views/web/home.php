@@ -3057,7 +3057,6 @@ function myFunction() {
         </button>
       </div>
       <div class="modal-body">
-         <form method="POST" class="w-100 ad_cmnt" >
             <div class="pl-2 w-100 _input d-flex">
                <span> <img class="rounded-circle like_img" src="<?=base_url()?>assets/img/Profile_Pic/<?=$MyDetails[0]->profile_picture?>"></span>
               <p class="ml-1 lead w-100 emoji-picker-container">
@@ -3068,15 +3067,34 @@ function myFunction() {
                     <input type="hidden" name="comnt_id" id="comment_id" value="">
             </div>
             <div class="float-right">
-              <button class="btn btn-success p-1 fy">Update</button>
-              <button type="button" class="btn btn-info ml-2 fy p-1">Cancel</button>
+              <button class="btn btn-success p-1 fy update_comment">Update</button>
+              <button type="button" data-dismiss="modal" aria-label="Close" class="btn btn-info ml-2 fy p-1">Cancel</button>
             </div>
-          </form>
       </div>
-
     </div>
   </div>
 </div>
+<script>
+  $(document).on('click','.update_comment',function(){
+    var comment=$('#comment_para').parent().find(".emoji-wysiwyg-editor").html();
+    var c_id=$('#comment_id').val();
+    $.ajax({
+      type:'POST',
+      data:{
+        comment:comment,
+        c_id:c_id
+      },
+      url:'<?=base_url()?>APIController/editcomment',
+      success:function(response){
+        var response=JSON.parse(response);
+        if(response.code==1){
+          location.reload();
+        }
+
+      }
+    })
+  })
+</script>
 
 
 <!--Post Edit Modal -->
