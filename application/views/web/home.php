@@ -921,19 +921,31 @@
                  
            </div>   
           <div class="float-right d-flex mt-2">
-            <div class="">  
-               <span class="favrt" title="favourite"><i class="far fa-star"></i></span>
-            </div>
-            <?php if($_SESSION['logged_in'][0]->user_id==$p_ost['user_id']){ ?>
-                <div class="dropdown ml-3">
-                  <button class="dropbtn"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></button>
-                  <div class="dropdown-content bg-white">
-                    <a href="#">Edit</a>
-                    <a href="javascript:void(0)" class="dlt_post_" p_d=<?=$p_ost['post_id']?> >Delete</a>
-                    
+                  <div class="">  
+                      <?php
+                    $user_id;
+                    $post_id=$p_ost['post_id'];
+                    $this->db->where(array('user_id'=>$user_id,'post_id'=>$post_id));
+                    $re=$this->db->get('user_fav_section')->result();
+                    if(count($re)==0){
+                      ?>
+                         <span class="favrt" post_id="<?=$p_ost['post_id']?>" title="favourite"><i class="far fa-star"></i></span>
+                      <?php
+                      }else{?>
+                         <span class="favrt star" post_id="<?=$p_ost['post_id']?>" title="favourite"><i class="fas fa-star text-gold"></i></span>
+                    <?php }
+                    ?>
                   </div>
-                </div>
-            <?php } ?>
+             <?php if($_SESSION['logged_in'][0]->user_id==$p_ost['user_id']){ ?>
+                  <div class="dropdown ml-3">
+                    <button class="dropbtn"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></button>
+                    <div class="dropdown-content bg-white">
+                      <a href="javascript:void(0)"  data-toggle="modal" data-target="#postEditModal">Edit</a>
+                      <a href="javascript:void(0)" class="dlt_post_" p_d=<?=$p_ost['post_id']?> >Delete</a>
+                      
+                    </div>
+                  </div>
+              <?php } ?>
           </div> 
           </div>
           <div class="card-body pt-0 pb-0">
@@ -1281,11 +1293,13 @@
                       <p class=""><?=$p_ost['total_comments'][$i]->comment?></p>
                   </div>
                   <div class="col-md-1">
-                    <?php if($_SESSION['logged_in'][0]->user_id==$p_ost['user_id']){ ?>
+                   <?php if(($_SESSION['logged_in'][0]->user_id==$p_ost['total_comments'][$i]->user_id) OR ($_SESSION['logged_in'][0]->user_id==$p_ost['user_id']) ){ ?>
                       <div class="dropdown">
                         <button class="dropbtn"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></button>
                         <div class="dropdown-content bg-white">
-                          <a href="#">Edit</a>
+                             <?php  if($_SESSION['logged_in'][0]->user_id ==$p_ost['total_comments'][$i]->user_id ){   ?>
+                                <a href="javascript:void(0)" class="edit_comment" c_d="<?=$p_ost['total_comments'][$i]->id?>">Edit</a>
+                            <?php }  ?>
                           <a href="javascript:void(0)" class="dlt_comnt_" c_d="<?=$p_ost['total_comments'][$i]->id?>">Delete</a>
                           
                         </div>
@@ -1299,12 +1313,12 @@
              <div class="d-flex m-0">
                 <span> <img class="rounded-circle like_img" src="<?=base_url()?>assets/img/Profile_Pic/<?=$MyDetails[0]->profile_picture?>"></span>
                 <form method="POST" class="w-100 ad_cmnt" >
-                  <div class="pl-2 w-100 _input">
-                    <p class="lead emoji-picker-container">
-                      <textarea class="input-field cmnt_" data-emojiable="true" type="text" name="comment"  placeholder="Add a Message">  </textarea>
-                    </p>
-                          <input type="hidden" name="post_id" value="<?=$p_ost['post_id']?>">
-                  </div>
+                   <div class="pl-2 w-100 _input">
+                        <p class="lead emoji-picker-container">
+                          <textarea class="input-field cmnt_" data-emojiable="true" type="text" name="comment"  placeholder="Add a Message">  </textarea>
+                        </p>
+                               <input type="hidden" name="post_id" class="poster_class" value="<?=$post_id?>">
+                      </div>
                 </form>
              </div>
             </div>
