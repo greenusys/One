@@ -427,21 +427,22 @@
       </div>
 	  <div class="" id="pst_shw_">
 	  <?php
-    // print_r($AllPosts);
+  //   print_r($AllPosts);
     if( count($AllPosts)>0){
         foreach($AllPosts as $p_ost){
+            $post_user_id=$p_ost['user_id'];
        if($p_ost['post_type']==0){
          ?>
         <div class="card mt-4 p-2">
           <div class="card-header ">
             <div class="d-flex float-left">
              <div> 
-              <a class="font-weight-bold" href="#">
+              <a class="font-weight-bold" href="<?=base_url('Profile/'.$post_user_id)?>">
                  <img class="rounded-circle mr-2" src="<?=base_url()?>assets/img/Profile_Pic/<?=$p_ost['profile_pic']?>" width="40"  height="40">
                </a>
              </div>
             <div>
-              <a class="font-weight-bold _use_n" href="#">  
+              <a class="font-weight-bold _use_n" href="<?=base_url('Profile/'.$post_user_id)?>">  
                <?=$p_ost['posted_by']?>
               </a>
               <br>
@@ -462,10 +463,10 @@
                         $re=$this->db->get('user_fav_section')->result();
                         if(count($re)==0){
                         ?>
-                        <span class="favrt" post_id="<?=$p_ost['post_id']?>" title="favourite"><i class="far fa-star"></i></span>
+                            <span class="favrt" post_id="<?=$p_ost['post_id']?>" title="favourite"><i class="far fa-star"></i></span>
                         <?php
                         }else{?>
-                        <span class="favrt star" post_id="<?=$p_ost['post_id']?>" title="favourite"><i class="fas fa-star text-gold"></i></span>
+                            <span class="favrt star" post_id="<?=$p_ost['post_id']?>" title="favourite"><i class="fas fa-star text-gold"></i></span>
                         <?php }
                         ?>
                         <!-- <span><i class="fas fa-star"></i></span> -->
@@ -567,10 +568,10 @@
 
               <div class="row mt-2 px-2">
                   <div class="col-md-1">
-                      <span> <img class="rounded-circle like_img" src="<?=base_url()?>assets/img/Profile_Pic/<?=$p_ost['total_comments'][$i]->profile_picture?>"></span>  
+                      <a href="<?=base_url('Profile/'.$p_ost['total_comments'][$i]->user_id)?>"> <img class="rounded-circle like_img" src="<?=base_url()?>assets/img/Profile_Pic/<?=$p_ost['total_comments'][$i]->profile_picture?>"></a>  
                   </div> 
                   <div class="col-md-10 comnt_text border-bottom">
-                      <h6 class="font-weight-bold m-0" > <?=$p_ost['total_comments'][$i]->full_name?><small class="ml-3">
+                      <h6 class="font-weight-bold m-0" > <a href="<?=base_url('Profile/'.$p_ost['total_comments'][$i]->user_id)?>"><?=$p_ost['total_comments'][$i]->full_name?></a><small class="ml-3">
                          <?php echo time_elapsed_string($p_ost['total_comments'][$i]->commented_on)?></small></h6>
                       <p class=""><?=$p_ost['total_comments'][$i]->comment?></p>
                   </div>
@@ -623,12 +624,12 @@
          <div class="card-header border-0">
             <div class="d-flex float-left">
              <div> 
-              <a class="font-weight-bold" href="#">
+              <a class="font-weight-bold" href="<?=base_url('Profile/'.$post_user_id)?>">
                  <img class="rounded-circle mr-2" src="<?=base_url()?>assets/img/Profile_Pic/<?=$p_ost['profile_pic']?>" width="40"  height="40">
                </a>
              </div>
             <div>
-              <a class="font-weight-bold _use_n" href="#">  
+              <a class="font-weight-bold _use_n" href="<?=base_url('Profile/'.$post_user_id)?>">  
                <?=$p_ost['posted_by']?>
               </a>
               <br>
@@ -850,10 +851,10 @@
                 <?php for($i=0; $i < count($p_ost['total_comments']); $i++){ ?>
               <div class="row mt-2 px-2">
                   <div class="col-md-1">
-                      <span> <img class="rounded-circle like_img" src="<?=base_url()?>assets/img/Profile_Pic/<?=$p_ost['total_comments'][$i]->profile_picture?>"></span>  
+                      <a href="<?=base_url('Profile/'.$p_ost['total_comments'][$i]->user_id)?>"><img class="rounded-circle like_img" src="<?=base_url()?>assets/img/Profile_Pic/<?=$p_ost['total_comments'][$i]->profile_picture?>"></a>  
                   </div>
                   <div class="col-md-10 comnt_text border-bottom">
-                      <h6 class="font-weight-bold m-0" > <?=$p_ost['total_comments'][$i]->full_name?><small class="ml-3">
+                      <h6 class="font-weight-bold m-0" ><a href="<?=base_url('Profile/'.$p_ost['total_comments'][$i]->user_id)?>"> <?=$p_ost['total_comments'][$i]->full_name?></a><small class="ml-3">
                        <?php echo time_elapsed_string($p_ost['total_comments'][$i]->commented_on)?>
                       </small></h6>
                       <p class=""><?=$p_ost['total_comments'][$i]->comment?></p>
@@ -906,12 +907,12 @@
          <div class="card-header border-0">
             <div class="d-flex float-left">
              <div> 
-              <a class="font-weight-bold" href="#">
+              <a class="font-weight-bold" href="<?=base_url('Profile/'.$post_user_id)?>">
                  <img class="rounded-circle mr-2" src="<?=base_url()?>assets/img/Profile_Pic/<?=$MyDetails[0]->profile_picture?>" width="40"  height="40">
                </a>
              </div>
             <div>
-              <a class="font-weight-bold _use_n" href="#">  
+              <a class="font-weight-bold _use_n" href="<?=base_url('Profile/'.$post_user_id)?>">  
                <?=$p_ost['posted_by']?>
               </a>
               <br>
@@ -1286,10 +1287,10 @@
               for($i=0; $i < count($p_ost['total_comments']); $i++){ ?>
               <div class="row mt-2 px-2">
                   <div class="col-md-1">
-                      <span> <img class="rounded-circle like_img" src="<?=base_url()?>assets/img/Profile_Pic/<?=$p_ost['total_comments'][$i]->profile_picture?>"></span>  
+                      <a href="<?=base_url('Profile/'.$p_ost['total_comments'][$i]->user_id)?>"> <img class="rounded-circle like_img" src="<?=base_url()?>assets/img/Profile_Pic/<?=$p_ost['total_comments'][$i]->profile_picture?>"></a>  
                   </div>
                   <div class="col-md-10 comnt_text border-bottom">
-                      <h6 class="font-weight-bold m-0" > <?=$p_ost['total_comments'][$i]->full_name?><small class="ml-3">
+                      <h6 class="font-weight-bold m-0" > <a href="<?=base_url('Profile/'.$p_ost['total_comments'][$i]->user_id)?>"><?=$p_ost['total_comments'][$i]->full_name?></a><small class="ml-3">
                   <?php echo time_elapsed_string($p_ost['total_comments'][$i]->commented_on)?>
                       </small></h6>
                       <p class=""><?=$p_ost['total_comments'][$i]->comment?></p>
@@ -1335,12 +1336,12 @@
            <div class="card-header ">
             <div class="d-flex float-left">
              <div> 
-              <a class="font-weight-bold" href="#">
+              <a class="font-weight-bold" href="<?=base_url('Profile/'.$post_user_id)?>">
                  <img class="rounded-circle mr-2" src="<?=base_url()?>assets/img/Profile_Pic/<?=$p_ost['profile_pic']?>" width="40"  height="40">
                </a>
              </div>
             <div>
-              <a class="font-weight-bold _use_n" href="#">  
+              <a class="font-weight-bold _use_n" href="<?=base_url('Profile/'.$post_user_id)?>">  
                 <?=$p_ost['posted_by']?>
               </a>
               <br>
@@ -1479,10 +1480,10 @@
                 for($i=0; $i < count($p_ost['total_comments']); $i++){ ?>
                   <div class="row mt-2 px-2">
                       <div class="col-md-1">
-                          <span> <img class="rounded-circle like_img" src="<?=base_url()?>assets/img/Profile_Pic/<?=$p_ost['total_comments'][$i]->profile_picture?>"></span>  
+                         <a href="<?=base_url('Profile/'.$p_ost['total_comments'][$i]->user_id)?>"> <img class="rounded-circle like_img" src="<?=base_url()?>assets/img/Profile_Pic/<?=$p_ost['total_comments'][$i]->profile_picture?>"></a>  
                       </div>
                       <div class="col-md-10 comnt_text border-bottom">
-                          <h6 class="font-weight-bold m-0" > <?=$p_ost['total_comments'][$i]->full_name?><small class="ml-3">
+                          <h6 class="font-weight-bold m-0" > <a href="<?=base_url('Profile/'.$p_ost['total_comments'][$i]->user_id)?>"><?=$p_ost['total_comments'][$i]->full_name?></a><small class="ml-3">
                            <?php echo time_elapsed_string($p_ost['total_comments'][$i]->commented_on)?>
                           </small></h6>
                           <p class=""><?=$p_ost['total_comments'][$i]->comment?></p>
