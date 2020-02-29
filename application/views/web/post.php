@@ -1,6 +1,14 @@
 <script type="text/javascript" src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
     <script src="https://files.codepedia.info/files/uploads/iScripts/html2canvas.js"></script>
+
+
   <style>
+  .carousel-control-next, .carousel-control-prev{
+    	height: 20px;
+  	top: 50% !important;
+  	width: 7% !important;
+  }
+
     .profile-div
     {
 	    height:75px;
@@ -110,9 +118,16 @@
         margin-left: -22px;
         background-color: #80808033;
 	}
-	
+	.emoji-menu{
+		top: -230px;
+	}
   </style>
+<?php 
 
+  $session=$this->session->userdata('logged_in');
+    $user_Id=$session[0]->user_id;
+    $profile_picture = $session[0]->profile_picture;
+?>
     <div class="container card shadow mt-5 p-4" style="background-color:#00000094">
 		<div class="row">
 		<?php
@@ -120,7 +135,8 @@
 		?> 
 		    <div class="col-sm-7 col-md-7 col-lg-7 p-4">
 			<?php
-				if($Detail[0]['post_type']==1){
+			//echo $Detail[0]['post_files'];
+				if($Detail[0]['post_type']){
 					$imgArry=explode(',',$Detail[0]['post_files']);
 					?>
 						<div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
@@ -133,11 +149,23 @@
 										if($i==1){
 											$active='active';
 										}
+										$ext = pathinfo($img, PATHINFO_EXTENSION);   
+										if($ext!='mp4'){
 										?>
 											<div class="carousel-item <?=$active?>">
 												<img src="<?=base_url('assets/uploads/images/').$img?>" class="d-block w-100" alt="...">
 											</div>
 										<?php
+											}else{ ?>
+												<div class="carousel-item  <?=$active?>">
+													<video controls class="w-100">
+													  <source src="<?=base_url('assets/uploads/videos/').$img?>" type="video/mp4">
+													  <!-- <source src="movie.ogg" type="video/ogg"> -->
+														Your browser does not support the video tag.
+													</video>
+												</div>
+										<?php	}
+
 										$i++;
 										$active="";
 									}
@@ -177,20 +205,34 @@
 						  <h6 class="font-weight-normal"><?=$Detail[0]['posted_on']?> &nbsp; <i class='fas fa-user-friends'></i></h6>
 					    </div>
 					    <div class="col-sm-2">
-					        
-						    <?php if($_SESSION['logged_in'][0]->user_id==$Detail[0]['user_id']){ ?>
-			                    <div class="float-right mt-2">
-			                          <div class="dropdown">
-			                            <button class="dropbtn"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></button>
-			                            <div class="dropdown-content bg-white">
-			                              <a href="#">Edit</a>
-			                              <a href="javascript:void(0)" class="dlt_post_" p_d=<?=$Detail[0]['post_id']?> >Delete</a>
-			                              
-			                            </div>
-			                          </div>
-			                    </div> 
-			                <?php } ?>
-					
+					      <div class="float-right d-flex mt-2">
+		                      <div class="">
+		                         <?php
+		                      
+		                        $post_id=$Detail[0]['post_id'];
+		                        $this->db->where(array('user_id'=>$user_Id,'post_id'=>$post_id));
+		                        $re=$this->db->get('user_fav_section')->result();
+			                        if(count($re)==0){
+			                        ?>
+			                      	  <span class="favrt" post_id="<?=$post_id?>" title="favourite"><i class="far fa-star"></i></span>
+			                        <?php
+			                        }else{?>
+			                      	  <span class="favrt star" post_id="<?=$post_id?>" title="favourite"><i class="fas fa-star text-gold"></i></span>
+		                        <?php }
+		                        ?>
+		                        <!-- <span><i class="fas fa-star"></i></span> -->
+		                      </div>
+		                      <?php if($_SESSION['logged_in'][0]->user_id==$Detail[0]['user_id']){ ?>
+		                          <div class="dropdown ml-3">
+		                            <button class="dropbtn"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></button>
+		                            <div class="dropdown-content bg-white">
+		                            
+		                              <a href="javascript:void(0)" class="dlt_post_" p_d=<?=$Detail[0]['post_id']?> >Delete</a>
+		                              
+		                            </div>
+		                          </div>
+		                          <?php } ?>
+		                    </div> 
 					    </div>
 				    </div>
 					<div class="row">
@@ -277,53 +319,33 @@
                 <?php for($i=0; $i < count($Detail[0]['total_comments']); $i++){ ?>
               <div class="row mt-2 px-2">
                   <div class="col-md-1">
-                      <span> <img class="rounded-circle like_img" src="<?=base_url()?>assets/img/Profile_Pic/<?=$MyDetails[0]->profile_picture?>"></span>  
+                      <span> <img class="rounded-circle like_img" src="<?=base_url()?>assets/img/Profile_Pic/<?=$Detail[0]['total_comments'][$i]->profile_picture?>"></span>  
                   </div> 
                   <div class="col-md-10 comnt_text border-bottom">
-                      <h6 class="font-weight-bold m-0" > <?=$Detail[0]['total_comments'][$i]->full_name?><small class="ml-3"><time class="timeago" datetime=" <?=$Detail[0]['total_comments'][$i]->commented_on?>"></time></small></h6>
+                      <h6 class="font-weight-bold m-0" > <?=$Detail[0]['total_comments'][$i]->full_name?><small class="ml-3">
+                      	<time class="timeago" datetime="<?=$Detail[0]['total_comments'][$i]->commented_on?>"></time></small></h6>
                       <p class=""><?=$Detail[0]['total_comments'][$i]->comment?></p>
                   </div>
-                  <div class="col-md-1">
-                      <?php if($_SESSION['logged_in'][0]->user_id==$Detail[0]['user_id']){ ?>
-                          <div class="dropdown">
-                            <button class="dropbtn"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></button>
-                            <div class="dropdown-content bg-white">
-                              <a href="#">Edit</a>
-                              <a href="javascript:void(0)" class="dlt_comnt_" c_d="<?=$Detail[0]['total_comments'][$i]->id?>">Delete</a>
-                            </div>
-                          </div>
-                      <?php } ?>
-                  </div>
-              </div>
+                <div class="col-md-1">
+                 <?php if(($_SESSION['logged_in'][0]->user_id==$Detail[0]['total_comments'][$i]->user_id) OR ($_SESSION['logged_in'][0]->user_id==$Detail[0]['user_id']) ){ ?>
+                    <div class="dropdown">
+                      <button class="dropbtn"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></button>
+                      <div class="dropdown-content bg-white">
+                           <?php  if($_SESSION['logged_in'][0]->user_id ==$Detail[0]['total_comments'][$i]->user_id ){   ?>
+                                <a href="javascript:void(0)" class="edit_comment" c_d="<?=$Detail[0]['total_comments'][$i]->id?>">Edit</a>
+                          <?php }  ?>
+                        <a href="javascript:void(0)" class="dlt_comnt_" c_d="<?=$Detail[0]['total_comments'][$i]->id?>">Delete</a>
+                        
+                      </div>
+                    </div>
+                	<?php } ?>
+              	</div>
+             </div>
             <?php } 
           }?>
                 
-           
-            </div>
-					
-				</div>    
-				<div class="row emoji p-2 shadow-sm  rounded-pill" id="gifs" style="display:none">
-					<div class="col-sm-2">
-					<img src="<?=base_url('assets/img/')?>/em1.gif" class="rounded-circle gif">
-					</div>
-					<div class="col-sm-2">
-						<img src="<?=base_url('assets/img/')?>/em2.gif" class="rounded-circle gif">
-					</div>
-					<div class="col-sm-2">
-						<img src="<?=base_url('assets/img/')?>/em3.gif" class="rounded-circle gif">
-					</div>
-					<div class="col-sm-2">
-						<img src="<?=base_url('assets/img/')?>/em4.gif" class="rounded-circle gif">
-					</div>
-					<div class="col-sm-2">
-						<img src="<?=base_url('assets/img/')?>/em5.gif" class="rounded-circle gif">
-					</div>
-					<div class="col-sm-2">
-						<img src="<?=base_url('assets/img/')?>/em6.gif" class="rounded-circle gif">
-					</div>
-				</div>
-                <div class="row bottom-sectionshadow-sm">
-					<div class="p-2 w-100">
+          
+					<div class="p-2 w-90 bottom-sectionshadow-sm">
                  <div class="d-flex m-0">
                     <span> <img class="rounded-circle like_img" src="<?=base_url()?>assets/img/Profile_Pic/<?=$Detail[0]['profile_pic']?>"></span>
                     <form method="POST" class="w-100 ad_cmnt" >
@@ -331,7 +353,7 @@
                         <p class="lead emoji-picker-container">
                           <textarea class="input-field cmnt_" data-emojiable="true" type="text" name="comment"  placeholder="Add a Message">  </textarea>
                         </p>
-                              <input type="hidden" name="post_id" value="<?=$Detail[0]['post_id']?>">
+                             <input type="hidden" name="post_id" class="poster_class" value="<?=$post_id?>">
                       </div>
                       <!------contenteditable  data-text="Write a comment"------>
                      <!--  <div class="cmnt_icons">
@@ -342,7 +364,9 @@
                     </form>
                  </div>
                 </div>
-				</div>			
+				
+				 </div>
+				</div>    		
 			</div>
 		</div>
 	</div>

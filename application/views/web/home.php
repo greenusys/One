@@ -2,7 +2,7 @@
 //print_r($_SESSION['logged_in']); 
    $session=$this->session->userdata('logged_in');
       $user_bio=$session[0]->bio_graphy;
-
+    
 
       function time_elapsed_string($datetime, $full = false) {
     $now = new DateTime;
@@ -427,27 +427,28 @@
       </div>
 	  <div class="" id="pst_shw_">
 	  <?php
-    // print_r($AllPosts);
+  //   print_r($AllPosts);
     if( count($AllPosts)>0){
         foreach($AllPosts as $p_ost){
+            $post_user_id=$p_ost['user_id'];
        if($p_ost['post_type']==0){
          ?>
         <div class="card mt-4 p-2">
           <div class="card-header ">
             <div class="d-flex float-left">
              <div> 
-              <a class="font-weight-bold" href="#">
+              <a class="font-weight-bold" href="<?=base_url('Profile/'.$post_user_id)?>">
                  <img class="rounded-circle mr-2" src="<?=base_url()?>assets/img/Profile_Pic/<?=$p_ost['profile_pic']?>" width="40"  height="40">
                </a>
              </div>
             <div>
-              <a class="font-weight-bold _use_n" href="#">  
+              <a class="font-weight-bold _use_n" href="<?=base_url('Profile/'.$post_user_id)?>">  
                <?=$p_ost['posted_by']?>
               </a>
               <br>
                 <small>
                   
-                 <time class="timeago" datetime=" <?=$p_ost['posted_on']?>"></time>
+                 <?php echo time_elapsed_string($p_ost['posted_on']);?>
                 </small>
             </div>
            
@@ -462,10 +463,10 @@
                         $re=$this->db->get('user_fav_section')->result();
                         if(count($re)==0){
                         ?>
-                        <span class="favrt" post_id="<?=$p_ost['post_id']?>" title="favourite"><i class="far fa-star"></i></span>
+                            <span class="favrt" post_id="<?=$p_ost['post_id']?>" title="favourite"><i class="far fa-star"></i></span>
                         <?php
                         }else{?>
-                        <span class="favrt star" post_id="<?=$p_ost['post_id']?>" title="favourite"><i class="fas fa-star text-gold"></i></span>
+                            <span class="favrt star" post_id="<?=$p_ost['post_id']?>" title="favourite"><i class="fas fa-star text-gold"></i></span>
                         <?php }
                         ?>
                         <!-- <span><i class="fas fa-star"></i></span> -->
@@ -474,8 +475,8 @@
                           <div class="dropdown ml-3">
                             <button class="dropbtn"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></button>
                             <div class="dropdown-content bg-white">
-                              <a href="javascript:void(0)"  data-toggle="modal" data-target="#postEditModal">Edit</a>
-                              <a href="javascript:void(0)" class="dlt_post_" p_d=<?=$p_ost['post_id']?> >Delete</a>
+                              <a href="javascript:void(0)"  class="edit_post" p_d="<?=$p_ost['post_id']?>">Edit</a>
+                              <a href="javascript:void(0)" class="dlt_post_" p_d="<?=$p_ost['post_id']?>" >Delete</a>
                               
                             </div>
                           </div>
@@ -567,10 +568,11 @@
 
               <div class="row mt-2 px-2">
                   <div class="col-md-1">
-                      <span> <img class="rounded-circle like_img" src="<?=base_url()?>assets/img/Profile_Pic/<?=$p_ost['total_comments'][$i]->profile_picture?>"></span>  
+                      <a href="<?=base_url('Profile/'.$p_ost['total_comments'][$i]->user_id)?>"> <img class="rounded-circle like_img" src="<?=base_url()?>assets/img/Profile_Pic/<?=$p_ost['total_comments'][$i]->profile_picture?>"></a>  
                   </div> 
                   <div class="col-md-10 comnt_text border-bottom">
-                      <h6 class="font-weight-bold m-0" > <?=$p_ost['total_comments'][$i]->full_name?><small class="ml-3"><time class="timeago" datetime=" <?=$p_ost['total_comments'][$i]->commented_on?>"></time></small></h6>
+                      <h6 class="font-weight-bold m-0" > <a href="<?=base_url('Profile/'.$p_ost['total_comments'][$i]->user_id)?>"><?=$p_ost['total_comments'][$i]->full_name?></a><small class="ml-3">
+                         <?php echo time_elapsed_string($p_ost['total_comments'][$i]->commented_on)?></small></h6>
                       <p class=""><?=$p_ost['total_comments'][$i]->comment?></p>
                   </div>
                   <div class="col-md-1">
@@ -622,17 +624,17 @@
          <div class="card-header border-0">
             <div class="d-flex float-left">
              <div> 
-              <a class="font-weight-bold" href="#">
+              <a class="font-weight-bold" href="<?=base_url('Profile/'.$post_user_id)?>">
                  <img class="rounded-circle mr-2" src="<?=base_url()?>assets/img/Profile_Pic/<?=$p_ost['profile_pic']?>" width="40"  height="40">
                </a>
              </div>
             <div>
-              <a class="font-weight-bold _use_n" href="#">  
+              <a class="font-weight-bold _use_n" href="<?=base_url('Profile/'.$post_user_id)?>">  
                <?=$p_ost['posted_by']?>
               </a>
               <br>
                 <small>
-                    <time class="timeago" datetime=" <?=$p_ost['posted_on']?>"></time>
+                    <?php echo time_elapsed_string($p_ost['posted_on']);?>
                 </small>
             </div>
                  
@@ -658,7 +660,7 @@
                           <div class="dropdown ml-3">
                             <button class="dropbtn"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></button>
                             <div class="dropdown-content bg-white">
-                              <a href="javascript:void(0)"  data-toggle="modal" data-target="#postEditModal">Edit</a>
+                              <a href="javascript:void(0)"  class="edit_post" p_d="<?=$p_ost['post_id']?>">Edit</a>
                               <a href="javascript:void(0)" class="dlt_post_" p_d=<?=$p_ost['post_id']?> >Delete</a>
                               
                             </div>
@@ -849,11 +851,11 @@
                 <?php for($i=0; $i < count($p_ost['total_comments']); $i++){ ?>
               <div class="row mt-2 px-2">
                   <div class="col-md-1">
-                      <span> <img class="rounded-circle like_img" src="<?=base_url()?>assets/img/Profile_Pic/<?=$p_ost['total_comments'][$i]->profile_picture?>"></span>  
+                      <a href="<?=base_url('Profile/'.$p_ost['total_comments'][$i]->user_id)?>"><img class="rounded-circle like_img" src="<?=base_url()?>assets/img/Profile_Pic/<?=$p_ost['total_comments'][$i]->profile_picture?>"></a>  
                   </div>
                   <div class="col-md-10 comnt_text border-bottom">
-                      <h6 class="font-weight-bold m-0" > <?=$p_ost['total_comments'][$i]->full_name?><small class="ml-3">
-                        <time class="timeago" datetime=" <?=$p_ost['total_comments'][$i]->commented_on?>"></time>
+                      <h6 class="font-weight-bold m-0" ><a href="<?=base_url('Profile/'.$p_ost['total_comments'][$i]->user_id)?>"> <?=$p_ost['total_comments'][$i]->full_name?></a><small class="ml-3">
+                       <?php echo time_elapsed_string($p_ost['total_comments'][$i]->commented_on)?>
                       </small></h6>
                       <p class=""><?=$p_ost['total_comments'][$i]->comment?></p>
                   </div>
@@ -905,35 +907,47 @@
          <div class="card-header border-0">
             <div class="d-flex float-left">
              <div> 
-              <a class="font-weight-bold" href="#">
+              <a class="font-weight-bold" href="<?=base_url('Profile/'.$post_user_id)?>">
                  <img class="rounded-circle mr-2" src="<?=base_url()?>assets/img/Profile_Pic/<?=$MyDetails[0]->profile_picture?>" width="40"  height="40">
                </a>
              </div>
             <div>
-              <a class="font-weight-bold _use_n" href="#">  
+              <a class="font-weight-bold _use_n" href="<?=base_url('Profile/'.$post_user_id)?>">  
                <?=$p_ost['posted_by']?>
               </a>
               <br>
                 <small>
-                    <time class="timeago" datetime=" <?=$p_ost['posted_on']?>"></time>
+                    <?php echo time_elapsed_string($p_ost['posted_on']);?>
                 </small>
             </div>
                  
            </div>   
           <div class="float-right d-flex mt-2">
-            <div class="">  
-               <span class="favrt" title="favourite"><i class="far fa-star"></i></span>
-            </div>
-            <?php if($_SESSION['logged_in'][0]->user_id==$p_ost['user_id']){ ?>
-                <div class="dropdown ml-3">
-                  <button class="dropbtn"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></button>
-                  <div class="dropdown-content bg-white">
-                    <a href="#">Edit</a>
-                    <a href="javascript:void(0)" class="dlt_post_" p_d=<?=$p_ost['post_id']?> >Delete</a>
-                    
+                <div class="">  
+                  <?php
+                    $user_id;
+                    $post_id=$p_ost['post_id'];
+                    $this->db->where(array('user_id'=>$user_id,'post_id'=>$post_id));
+                    $re=$this->db->get('user_fav_section')->result();
+                    if(count($re)==0){
+                      ?>
+                         <span class="favrt" post_id="<?=$p_ost['post_id']?>" title="favourite"><i class="far fa-star"></i></span>
+                      <?php
+                      }else{?>
+                         <span class="favrt star" post_id="<?=$p_ost['post_id']?>" title="favourite"><i class="fas fa-star text-gold"></i></span>
+                    <?php }
+                    ?>
                   </div>
-                </div>
-            <?php } ?>
+             <?php if($_SESSION['logged_in'][0]->user_id==$p_ost['user_id']){ ?>
+                  <div class="dropdown ml-3">
+                    <button class="dropbtn"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></button>
+                    <div class="dropdown-content bg-white">
+                      <a href="javascript:void(0)"  class="edit_post" p_d="<?=$p_ost['post_id']?>">Edit</a>
+                      <a href="javascript:void(0)" class="dlt_post_" p_d="<?=$p_ost['post_id']?>" >Delete</a>
+                      
+                    </div>
+                  </div>
+              <?php } ?>
           </div> 
           </div>
           <div class="card-body pt-0 pb-0">
@@ -1273,20 +1287,22 @@
               for($i=0; $i < count($p_ost['total_comments']); $i++){ ?>
               <div class="row mt-2 px-2">
                   <div class="col-md-1">
-                      <span> <img class="rounded-circle like_img" src="<?=base_url()?>assets/img/Profile_Pic/<?=$p_ost['total_comments'][$i]->profile_picture?>"></span>  
+                      <a href="<?=base_url('Profile/'.$p_ost['total_comments'][$i]->user_id)?>"> <img class="rounded-circle like_img" src="<?=base_url()?>assets/img/Profile_Pic/<?=$p_ost['total_comments'][$i]->profile_picture?>"></a>  
                   </div>
                   <div class="col-md-10 comnt_text border-bottom">
-                      <h6 class="font-weight-bold m-0" > <?=$p_ost['total_comments'][$i]->full_name?><small class="ml-3">
-                        <time class="timeago" datetime=" <?=$p_ost['total_comments'][$i]->commented_on?>"></time>
+                      <h6 class="font-weight-bold m-0" > <a href="<?=base_url('Profile/'.$p_ost['total_comments'][$i]->user_id)?>"><?=$p_ost['total_comments'][$i]->full_name?></a><small class="ml-3">
+                  <?php echo time_elapsed_string($p_ost['total_comments'][$i]->commented_on)?>
                       </small></h6>
                       <p class=""><?=$p_ost['total_comments'][$i]->comment?></p>
                   </div>
                   <div class="col-md-1">
-                    <?php if($_SESSION['logged_in'][0]->user_id==$p_ost['user_id']){ ?>
+                   <?php if(($_SESSION['logged_in'][0]->user_id==$p_ost['total_comments'][$i]->user_id) OR ($_SESSION['logged_in'][0]->user_id==$p_ost['user_id']) ){ ?>
                       <div class="dropdown">
                         <button class="dropbtn"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></button>
                         <div class="dropdown-content bg-white">
-                          <a href="#">Edit</a>
+                             <?php  if($_SESSION['logged_in'][0]->user_id ==$p_ost['total_comments'][$i]->user_id ){   ?>
+                                <a href="javascript:void(0)" class="edit_comment" c_d="<?=$p_ost['total_comments'][$i]->id?>">Edit</a>
+                            <?php }  ?>
                           <a href="javascript:void(0)" class="dlt_comnt_" c_d="<?=$p_ost['total_comments'][$i]->id?>">Delete</a>
                           
                         </div>
@@ -1300,12 +1316,12 @@
              <div class="d-flex m-0">
                 <span> <img class="rounded-circle like_img" src="<?=base_url()?>assets/img/Profile_Pic/<?=$MyDetails[0]->profile_picture?>"></span>
                 <form method="POST" class="w-100 ad_cmnt" >
-                  <div class="pl-2 w-100 _input">
-                    <p class="lead emoji-picker-container">
-                      <textarea class="input-field cmnt_" data-emojiable="true" type="text" name="comment"  placeholder="Add a Message">  </textarea>
-                    </p>
-                          <input type="hidden" name="post_id" value="<?=$p_ost['post_id']?>">
-                  </div>
+                   <div class="pl-2 w-100 _input">
+                        <p class="lead emoji-picker-container">
+                          <textarea class="input-field cmnt_" data-emojiable="true" type="text" name="comment"  placeholder="Add a Message">  </textarea>
+                        </p>
+                               <input type="hidden" name="post_id" class="poster_class" value="<?=$post_id?>">
+                      </div>
                 </form>
              </div>
             </div>
@@ -1320,12 +1336,12 @@
            <div class="card-header ">
             <div class="d-flex float-left">
              <div> 
-              <a class="font-weight-bold" href="#">
+              <a class="font-weight-bold" href="<?=base_url('Profile/'.$post_user_id)?>">
                  <img class="rounded-circle mr-2" src="<?=base_url()?>assets/img/Profile_Pic/<?=$p_ost['profile_pic']?>" width="40"  height="40">
                </a>
              </div>
             <div>
-              <a class="font-weight-bold _use_n" href="#">  
+              <a class="font-weight-bold _use_n" href="<?=base_url('Profile/'.$post_user_id)?>">  
                 <?=$p_ost['posted_by']?>
               </a>
               <br>
@@ -1361,8 +1377,8 @@
                           <div class="dropdown ml-3">
                             <button class="dropbtn"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></button>
                             <div class="dropdown-content bg-white">
-                              <a href="javascript:void(0)"  data-toggle="modal" data-target="#postEditModal">Edit</a>
-                              <a href="javascript:void(0)" class="dlt_post_" p_d=<?=$p_ost['post_id']?> >Delete</a>
+                              <a href="javascript:void(0)"  class="edit_post" p_d="<?=$p_ost['post_id']?>">Edit</a>
+                              <a href="javascript:void(0)" class="dlt_post_" p_d="<?=$p_ost['post_id']?>" >Delete</a>
                               
                             </div>
                           </div>
@@ -1458,18 +1474,17 @@
           
            <div class=" comments_list border-top">
               <?php 
-                //echo"hello";
-
+            
                   // print_r($p_ost['total_comments']);
                 if(count($p_ost['total_comments'])>0){
                 for($i=0; $i < count($p_ost['total_comments']); $i++){ ?>
                   <div class="row mt-2 px-2">
                       <div class="col-md-1">
-                          <span> <img class="rounded-circle like_img" src="<?=base_url()?>assets/img/Profile_Pic/<?=$p_ost['total_comments'][$i]->profile_picture?>"></span>  
+                         <a href="<?=base_url('Profile/'.$p_ost['total_comments'][$i]->user_id)?>"> <img class="rounded-circle like_img" src="<?=base_url()?>assets/img/Profile_Pic/<?=$p_ost['total_comments'][$i]->profile_picture?>"></a>  
                       </div>
                       <div class="col-md-10 comnt_text border-bottom">
-                          <h6 class="font-weight-bold m-0" > <?=$p_ost['total_comments'][$i]->full_name?><small class="ml-3">
-                            <time class="timeago" datetime=" <?=$p_ost['total_comments'][$i]->commented_on?>"></time>
+                          <h6 class="font-weight-bold m-0" > <a href="<?=base_url('Profile/'.$p_ost['total_comments'][$i]->user_id)?>"><?=$p_ost['total_comments'][$i]->full_name?></a><small class="ml-3">
+                           <?php echo time_elapsed_string($p_ost['total_comments'][$i]->commented_on)?>
                           </small></h6>
                           <p class=""><?=$p_ost['total_comments'][$i]->comment?></p>
                       </div>
@@ -1500,7 +1515,7 @@
                         <p class="lead emoji-picker-container">
                           <textarea class="input-field cmnt_" data-emojiable="true" type="text" name="comment"  placeholder="Add a Message">  </textarea>
                         </p>
-                             <input type="hidden" name="post_id" class="poster_class" value="<?=$post_id?>">
+                              <input type="hidden" name="post_id" class="poster_class" value="<?=$post_id?>">
                       </div>
                       <!------contenteditable  data-text="Write a comment"------>
                      <!--  <div class="cmnt_icons">
@@ -1751,17 +1766,6 @@
 
 
 <script type="text/javascript">
-$(document).on('click','.edit_comment',function(){
-  var el=$(this);
-  var comment_id=el.attr('c_d');
-  $('#comment_id').val(comment_id);
-  var para = el.parent().parent().parent().parent().find("p").html();
-  $('#comment_para').parent().find(".emoji-wysiwyg-editor").html(para);
-  $('#commntModal').modal('show');
-})
-
-
-
 $(document).ready(function(){
 var story_cnt ;
   $(document).on('click','#addStatus',function(){
@@ -2665,12 +2669,13 @@ function getAjaxData(offset)
           }
         });
       });
-         $(document).ready(function() {
-            $(".timeago").each(function(){
-                $(this).timeago();
+         // $(document).ready(function() {
+         //  alert("sdadasd");
+         //    $(".timeago").each(function(){
+         //        $(this).timeago();
 
-            });
-          });
+         //    });
+         //  });
       </script>
 
 
@@ -2982,43 +2987,7 @@ function myFunction() {
       </script>
     
 
-<script type="text/javascript">
-    $(document).on("click",".favrt",function(){
-      var el= $(this);
-      var cls = el.attr("class");
-      var post_id = el.attr('post_id');
-      var fvrt = 1;
-      $.ajax({
-        type:'POST',
-        data:{
-          post_id:post_id,
-          fvrt:fvrt
-        },
-        url:'<?=base_url()?>Test/makefavrt',
-        success:function(response){
-          var response = JSON.parse(response);
-          if(response.status==1){
-            el.html('<i class="fas fa-star text-gold"></i>');
-            el.addClass("star");
-          }
-          else if(response.status==2){
-            el.html('<i class="far fa-star"></i>');
-            el.removeClass("star");
-          }
-          else{
-            alert('Something went wrong');
-          }
-        }
-      })
-      // if(cls=='favrt'){
-      //   $(this).html('<i class="fas fa-star text-gold"></i>');
-      //   $(this).addClass("star");
-      // }else{
-      //   $(this).html('<i class="far fa-star"></i>');
-      //   $(this).removeClass("star");
-      // }
-    })
-  </script>
+
  <script type="text/javascript">
     // $(document).on("click",".favrt",function(){
     //   var cls = $(this).attr("class");
@@ -3043,7 +3012,6 @@ function myFunction() {
         </button>
       </div>
       <div class="modal-body">
-         <form method="POST" class="w-100 ad_cmnt" >
             <div class="pl-2 w-100 _input d-flex">
                <span> <img class="rounded-circle like_img" src="<?=base_url()?>assets/img/Profile_Pic/<?=$MyDetails[0]->profile_picture?>"></span>
               <p class="ml-1 lead w-100 emoji-picker-container">
@@ -3054,15 +3022,78 @@ function myFunction() {
                     <input type="hidden" name="comnt_id" id="comment_id" value="">
             </div>
             <div class="float-right">
-              <button class="btn btn-success p-1 fy">Update</button>
-              <button type="button" class="btn btn-info ml-2 fy p-1">Cancel</button>
+              <button class="btn btn-success p-1 fy update_comment">Update</button>
+              <button type="button" data-dismiss="modal" aria-label="Close" class="btn btn-info ml-2 fy p-1">Cancel</button>
             </div>
-          </form>
       </div>
-
     </div>
   </div>
 </div>
+<script>
+  $(document).on('click','.update_comment',function(){
+    var comment=$('#comment_para').parent().find(".emoji-wysiwyg-editor").html();
+    var c_id=$('#comment_id').val();
+    $.ajax({
+      type:'POST',
+      data:{
+        comment:comment,
+        c_id:c_id
+      },
+      url:'<?=base_url()?>APIController/editcomment',
+      success:function(response){
+        var response=JSON.parse(response);
+        if(response.code==1){
+          location.reload();
+        }
+
+      }
+    })
+  })
+
+$(document).on('click','.edit_post',function(){
+  var post_id=$(this).attr('p_d');
+  $.ajax({
+    type:'POST',
+    data:{
+      post_id:post_id
+    },
+    url:'<?=base_url()?>APIController/fetch_post_by_id',
+    success:function(response){
+      var html='';
+      var response = JSON.parse(response);
+      if (response.status==1) {
+        if (response.data[0].post_type!=0) {
+          var post_files = response.data[0].post_files;
+          var arr = post_files.split(',');
+          for(var i=0;i<arr.length;i++){
+            var extension = arr[i].replace(/^.*\./, '');
+            if (extension=="mp4") {
+              html+='<div class="slideobject">'+
+                    '<video controls="" class="w-100">'+
+                       '<source src="<?=base_url()?>assets/uploads/videos/'+arr[i]+'" type="video/mp4">'+
+                      'Your browser does not support the video tag.'+
+                    '</video>'+
+                    '</div>';
+            }
+            else{
+              html+='<img src="<?=base_url()?>assets/uploads/images/'+arr[i]+'" class="slideobject"/>';
+            }
+          }
+          $('#SlideShow').empty();
+          $('#SlideShow').append(html); 
+          $('#postEditModal').modal('show');
+                          $('#SlideShow').SlideShow({
+                  slideDuration: 8000,
+                  transSpeed: 300,
+                  loop: false,
+                  infobar: false
+                });
+        }
+      }
+    }
+  })
+})
+</script>
 
 
 <!--Post Edit Modal -->
@@ -3129,9 +3160,39 @@ function myFunction() {
                     </div> 
                 
           </div>
+        <link href="<?=base_url()?>assets/dist/demo.css" type="text/css" rel="stylesheet" />
+<!--         <script src="http://code.jquery.com/jquery-latest.js"></script> -->
+        <link href="<?=base_url()?>assets/dist/jquery-slideshow.css" type="text/css" rel="stylesheet" />
+        <script src="<?=base_url()?>assets/dist/jquery.slideshow.js" type="text/javascript"></script>          
           <div class="card-body row text-justify">
-            <div class="col-md-6">
-               <div id="carouselExampleIndicators_post" class="carousel slide" data-ride="carousel">
+            <div class="col-md-12">
+                      <div id="holder">
+            <div id="SlideShow">
+                <!-- Slide Images -->
+                <img src="https://unsplash.it/753/480?image=639" class="slideobject" title="#slide1"/>
+                <img src="https://unsplash.it/753/480?image=652" class="slideobject" />
+                <div class="slideobject">
+                    <iframe width="100%" height="100%" src="http://www.youtube.com/embed/NAIIQvhKCuQ" frameborder="0" allowfullscreen></iframe>
+                </div>
+                <img src="https://unsplash.it/753/480?image=660" class="slideobject" />
+                <div class="slideobject">
+                    <iframe width="100%" height="100%" src="http://www.youtube.com/embed/NAIIQvhKCuQ" frameborder="0" allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+      </div>
+        <script type="text/javascript">
+            $(document).ready(function(){
+                //Load the SlideShow
+                $('#SlideShow').SlideShow({
+                  slideDuration: 8000,
+                  transSpeed: 300,
+                  loop: true,
+                  infobar: true
+                });
+            });
+        </script>
+<!--                <div id="carouselExampleIndicators_post" class="carousel slide" data-ride="carousel">
                   <ol class="carousel-indicators">
                     <li data-target="#carouselExampleIndicators_post" data-slide-to="0" class="active"></li>
                     <li data-target="#carouselExampleIndicators_post" data-slide-to="1"></li>
@@ -3157,8 +3218,8 @@ function myFunction() {
                     <span class="sr-only">Next</span>
                   </a>
                 </div>
-              </div>
-            <div class="col-md-6">
+              </div> -->
+            <div class="col-md-12">
               <form method="" action="">
               <p>
                 <textarea name="" class="w-100" > desciption</textarea>
