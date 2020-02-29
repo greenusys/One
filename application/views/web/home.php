@@ -545,7 +545,7 @@
             </div>
             <div class="col-md-4 manage px-3 py-1">
               <div class="btn-comment post-btns">
-                <a href="javascript:void(0)"><i class="fa fa-comment-o" aria-hidden="true"></i> Comments</a> 
+                <a href=""<?=base_url('Post/viewPost/').$p_ost['post_id']?>"><i class="fa fa-comment-o" aria-hidden="true"></i> Comments</a> 
                 <span class=""><?=count($p_ost['total_comments'])?></span>
               </div>
             </div>
@@ -636,8 +636,7 @@
                 <small>
                     <?php echo time_elapsed_string($p_ost['posted_on']);?>
                 </small>
-            </div>
-                 
+            </div>      
            </div>
               
                     <div class="float-right d-flex mt-2">
@@ -827,7 +826,7 @@
             </div>
             <div class="col-md-4 manage px-3 py-1">
               <div class="btn-comment post-btns">
-                <a href="javascript:void(0)"><i class="fa fa-comment-o" aria-hidden="true"></i> Comments</a>
+                 <a class="" href="<?=base_url('Post/viewPost/').$p_ost['post_id']?>"><i class="fa fa-comment-o" aria-hidden="true"></i> Comments</a>
                 <span class=""><?=count($p_ost['total_comments'])?></span>
               </div>
             </div>
@@ -1268,7 +1267,7 @@
             </div>
             <div class="col-md-4 manage px-3 py-1">
               <div class="btn-comment post-btns">
-                <a href="javascript:void(0)"><i class="fa fa-comment-o" aria-hidden="true"></i> Comments</a>
+                <a href=""<?=base_url('Post/viewPost/').$p_ost['post_id']?>"><i class="fa fa-comment-o" aria-hidden="true"></i> Comments</a>
                 <span class=""><?=count($p_ost['total_comments'])?></span>
               </div>
             </div>
@@ -1461,7 +1460,7 @@
             </div>
             <div class="col-md-4 manage  px-3 py-1">
               <div class="btn-comment post-btns">
-                <a href="javascript:void(0)"><i class="fa fa-comment-o" aria-hidden="true"></i> Comments</a>
+                <a href=""<?=base_url('Post/viewPost/').$p_ost['post_id']?>"><i class="fa fa-comment-o" aria-hidden="true"></i> Comments</a>
                  <span class=""><?=count($p_ost['likes_data'])?></span>
                </div>
             </div>
