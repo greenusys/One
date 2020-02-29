@@ -527,12 +527,15 @@ var keyCode = e.keyCode || e.which;
    		var pic='<?=$_SESSION['logged_in'][0]->profile_picture?>';
    		var name='<?=$_SESSION['logged_in'][0]->full_name?>';
 //alert(text);
+
       // $(".ad_cmnt").submit(function (ev) {
       //     ev.preventDefault();
-        var form = $('.ad_cmnt')[0];
+        var post_id=$(this).parent().parent().find('.poster_class').val();
+     //   alert(post_id);
        // console.log(form);
-         var formdata = new FormData(form);
-         formdata.append("comment",text);
+         // var formdata = new FormData($(this)[0]);
+         // formdata.append("comment",text);
+         // formData.append("post_id",post_id);
           // for (var value of formdata.values()) {
           //    console.log(value); 
           // }
@@ -548,11 +551,10 @@ var keyCode = e.keyCode || e.which;
              $.ajax({
                         url:"<?=base_url()?>APIController/addComment",
                          type:"post",
-                         data:formdata,
-                         contentType:false,
-                         processData:false,
-                         cache:false,
-
+                         data:{
+                         	post_id:post_id,
+                         	comment:text
+                         },
                         success:function(response)
                         {
                           //console.log(response);
@@ -571,7 +573,7 @@ var keyCode = e.keyCode || e.which;
 				                          '<div class="dropdown">'+
 				                            '<button class="dropbtn"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></button>'+
 				                            '<div class="dropdown-content bg-white">'+
-				                              '<a href="#">Edit</a>'+
+				                              '<a href="javascript:void(0)" class="edit_comment" c_d="'+response.id+'">Edit</a>'+
 				                              '<a href="javascript:void(0)" class="dlt_comnt_" c_d="'+response.id+'">Delete</a>'+
 				                            '</div>'+
 				                          '</div>'+
@@ -582,6 +584,7 @@ var keyCode = e.keyCode || e.which;
                             // swal("Success", "Story Successfully", "success");
                            // $('.ad_cmnt').trigger("reset");
                         //  location.reload();
+                        el.html('');
                             
                           }
                          

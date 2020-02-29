@@ -923,7 +923,7 @@ $( document ).ready(function(e) {
 </style>
 <script type="text/javascript">
   var user_id=<?=$_SESSION['logged_in'][0]->user_id?>;
-  getMyPost(user_id);
+  // getMyPost(user_id);
   var lastId;
   var startId;
   var initial=0;
@@ -1076,20 +1076,32 @@ $( document ).ready(function(e) {
   //   });
   // });
 
-
-  $(window).scroll(function () {
-    var scrollValue=Math.round($(window).scrollTop());
-    var screenSize=Math.round($(window).height());
-    var documentSize=Math.round($(document).height());
-    var windowSection=documentSize - screenSize;
-    console.log(windowSection-scrollValue+" dsf ");
-    if(windowSection-scrollValue<=1){
-      getMyPost(user_id);
-    }
-   
+  var ssdasd=false;
+  $(document).ready(function () {
+      setTimeout(function () {
+        ssdasd=true
+      }, 4000);
+  })
+  var lastScrollTop = 0;
+  $(document).scroll(function (event) {
+      var st = $(this).scrollTop();
+      if (st > lastScrollTop && ssdasd){
+          var scrollValue=Math.round($(window).scrollTop());
+          var screenSize=Math.round($(window).height());
+          var documentSize=Math.round($(document).height());
+          var windowSection=documentSize - screenSize;
+          // console.log(windowSection-scrollValue+" dsf ");
+          if(windowSection-scrollValue<=1){
+              getMyPost(user_id);
+          }
+      } else {
+          // upscroll code
+      }
+      lastScrollTop = st;
 
       });
- 
+
+
 </script>
 
 
@@ -1234,18 +1246,18 @@ var like = ele.find("i").attr("class");
       success:function(response){
         console.log(response);
         response=JSON.parse(response);
-      //   if(response.code==1){
-      //      if(like=='fa fa-heart-o'){
-      //          ele.parent().find('ul').find('.like_cont').html(parseInt(lcnt)+1);
-      //          ele.find("i").attr("class","fa fa-heart");
-      //       }else{
-      //         ele.find("i").attr("class","fa fa-heart-o");
-      //          ele.parent().find('ul').find('.like_cont').html(parseInt(lcnt)-1);
-      //       }
-      // //    swal("Good", response.msg, "success");
-      //   }else{
-      //   //  swal("Oops...!", response.msg, "warning");
-      //   }
+        if(response.code==1){
+           if(like=='fa fa-heart-o'){
+               ele.parent().find('ul').find('.like_cont').html(parseInt(lcnt)+1);
+               ele.find("i").attr("class","fa fa-heart");
+            }else{
+              ele.find("i").attr("class","fa fa-heart-o");
+               ele.parent().find('ul').find('.like_cont').html(parseInt(lcnt)-1);
+            }
+      //    swal("Good", response.msg, "success");
+        }else{
+        //  swal("Oops...!", response.msg, "warning");
+        }
       }
     })
   });
@@ -1379,9 +1391,13 @@ var like = ele.find("i").attr("class");
     window.emojiPicker.discover();
 });
    $(document).ready(function() {
+       $('#postViews').empty()
+       $('#postViews').html('')
+       $('#postViews').contents().remove()
             $(".timeago").each(function(){
                 $(this).timeago();
 
             });
+            $('#add')
           });
 </script>
