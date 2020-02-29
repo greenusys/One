@@ -36,6 +36,7 @@
 			// echo $id;
 			$this->db->where('owner_id',$id);
 			$this->db->join('users','users.user_id=post_.posted_by');
+			$this->db->order_by('post_.post_id','desc');
 			return $this->db->get('post_')->result();
 		}
 		public function getTrending()
