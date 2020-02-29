@@ -1004,6 +1004,7 @@
                 <div class="post_img row">
                 <?php
                  $ext = pathinfo($postimages[0], PATHINFO_EXTENSION);
+                // print_r($ext);
                 if($ext=='mp4')
                 {
                 $video=base_url().'assets/uploads/videos/'.$postimages[0];
