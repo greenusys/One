@@ -604,7 +604,7 @@ class APIController extends CI_Controller
 		if(count($this->APIM->getAllDetails('friend_request',$condition))==0){
 			if($this->APIM->addData('friend_request',$data)){
 			    //send notification
-			    if($this->sendNotification($this->input->post('sent_by'),"Sent Friend Request",$this->input->post('sent_by'))){
+			    if($this->sendNotification($this->input->post('sent_to'),"Sent Friend Request",$this->input->post('sent_by'))){
 			        die(json_encode(array("code"=>1,"data"=>"Request Sent.")));    
 			    }else{
 			        die(json_encode(array("code"=>0,"data"=>"Failed to Send Notification")));
@@ -654,11 +654,12 @@ class APIController extends CI_Controller
 		$condition=array("req_id"=>$req_Id);
 		$my_Id=$this->input->post('myid');
 		$toAct=$this->input->post('toAct');
+		$friendDetail=$this->getRequestDetail($condition);
     	if($toAct==1){
     		$action=1;
     		$toUpdate=array("request_status"=>1);
     		if($this->APIM->updateRequestStatus($toUpdate,$condition)){
-    			$friendDetail=$this->getRequestDetail($condition);
+    			
     			$toInsert=array("friend_id"=>$friendDetail[0]->sent_by,"user_id"=>$my_Id);
     			// print_r($toInsert);
     			if($this->APIM->makeItMyFriend($toInsert)){
@@ -672,6 +673,7 @@ class APIController extends CI_Controller
     		//Now Delete Request
     		$action=3;
     		if($this->APIM->deleteRequest($condition)){
+
     			die(json_encode(array("code"=>1,"data"=>"Request Deleted.")));
     		}else{
     			die(json_encode(array("code"=>0,"data"=>"Failed To Delete Request.")));
@@ -697,9 +699,12 @@ class APIController extends CI_Controller
 
 	}
 	public function deleteRequest(){
+		$frn_id =$this->input->post('sent_to');
+		$my_id =$_SESSION['logged_in'][0]->user_id;
 		$req=$this->input->post('req');
 			$this->db->where('req_id',$req);
-			if($this->db->delete('friend_request')){
+			if($this->APIM->deleteNotification($frn_id,$my_id)){
+				$this->db->delete('friend_request');
     			die(json_encode(array("code"=>1,"data"=>"Request Deleted.")));
     		}else{
     			die(json_encode(array("code"=>0,"data"=>"Failed To Delete Request.")));
@@ -1303,5 +1308,12 @@ public function getPostLikes($post_id){
 		
 	}
 	
-	
+	function UnFriend(){
+		$frnd_id = $this->input->Post('sent_to');
+		$my_id =$_SESSION['logged_in'][0]->user_id;
+		if($this->APIM->unfriend($frnd_id,$my_id)){
+				die(json_encode(array("code"=>1)));
+		}
+	}	
 }
+?>
