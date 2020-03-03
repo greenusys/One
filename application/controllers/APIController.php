@@ -621,7 +621,7 @@ class APIController extends CI_Controller
 		if(count($this->APIM->getAllDetails('friend_request',$condition))==0){
 			if($this->APIM->addData('friend_request',$data)){
 			    //send notification
-			    if($this->sendNotification($this->input->post('sent_by'),"Sent Friend Request",$this->input->post('sent_by'))){
+			    if($this->sendNotification($this->input->post('sent_to'),"Sent Friend Request",$this->input->post('sent_by'))){
 			        die(json_encode(array("code"=>1,"data"=>"Request Sent.")));    
 			    }else{
 			        die(json_encode(array("code"=>0,"data"=>"Failed to Send Notification")));
@@ -671,11 +671,12 @@ class APIController extends CI_Controller
 		$condition=array("req_id"=>$req_Id);
 		$my_Id=$this->input->post('myid');
 		$toAct=$this->input->post('toAct');
+		$friendDetail=$this->getRequestDetail($condition);
     	if($toAct==1){
     		$action=1;
     		$toUpdate=array("request_status"=>1);
     		if($this->APIM->updateRequestStatus($toUpdate,$condition)){
-    			$friendDetail=$this->getRequestDetail($condition);
+    			
     			$toInsert=array("friend_id"=>$friendDetail[0]->sent_by,"user_id"=>$my_Id);
     			// print_r($toInsert);
     			if($this->APIM->makeItMyFriend($toInsert)){
@@ -689,6 +690,7 @@ class APIController extends CI_Controller
     		//Now Delete Request
     		$action=3;
     		if($this->APIM->deleteRequest($condition)){
+
     			die(json_encode(array("code"=>1,"data"=>"Request Deleted.")));
     		}else{
     			die(json_encode(array("code"=>0,"data"=>"Failed To Delete Request.")));
@@ -714,9 +716,12 @@ class APIController extends CI_Controller
 
 	}
 	public function deleteRequest(){
+		$frn_id =$this->input->post('sent_to');
+		$my_id =$_SESSION['logged_in'][0]->user_id;
 		$req=$this->input->post('req');
 			$this->db->where('req_id',$req);
-			if($this->db->delete('friend_request')){
+			if($this->APIM->deleteNotification($frn_id,$my_id)){
+				$this->db->delete('friend_request');
     			die(json_encode(array("code"=>1,"data"=>"Request Deleted.")));
     		}else{
     			die(json_encode(array("code"=>0,"data"=>"Failed To Delete Request.")));
@@ -957,7 +962,7 @@ public function getPostLikes($post_id){
 		return $this->APIM->getAllDetails('post_comments_', $condition=array("post_id"=>$post_id));
 	}//
 	public function getModifyComment($post_id){
-		$this->db->select('post_comments_.comment as comment, post_comments_.commented_on as commented_on, users.full_name as full_name,  post_comments_.id as comment_id');
+		$this->db->select('post_comments_.comment as comment, post_comments_.commented_on as commented_on, users.full_name as full_name,post_comments_.commented_by_ as commented_by_,users.profile_picture as profile_picture,  post_comments_.id as comment_id');
 		$this->db->join('users','users.user_id=post_comments_.commented_by_');
 		return $this->db->where('post_comments_.post_id',$post_id)->get('post_comments_')->result();
 	}
@@ -1307,12 +1312,18 @@ public function getPostLikes($post_id){
 			$result=$this->APIM->fetch_post_by_id($post_id);
 			die(json_encode(array('status'=>'1','data'=>$result)));
 		}
-
 		public function scrollfetchpost(){
 
 		$offset=$this->input->post('offset');
 		$limit=$this->input->post('limit');
-		$user_id=$_SESSION['logged_in'][0]->user_id;
+		if(isset($_POST['android']))
+		{
+			$user_id=$this->input->post('user_id');
+		}
+		else
+		{
+			$user_id=$_SESSION['logged_in'][0]->user_id;
+		}
 		$my_friends=$this->FRND->getMyFriends($user_id);	
 		// if(!isset($_POST['android']))
 		// {
@@ -1334,17 +1345,20 @@ public function getPostLikes($post_id){
 				$p_Data['profile_pic']=$value->profile_picture;
 				$p_Data['initially_posted_by']=$value->initially_posted_by;
 				$p_Data['posted_on']=$value->posted_on;
-				if(($likes_data= $this->getPostLikes($value->post_id))!=false){
+				if(($likes_data= $this->getPostLikes($value->post_id))!=false)
+				{
 					 $p_Data['likes_data']=$likes_data;
-				}else{
+				}
+				else
+				{
 					 $p_Data['likes_data']=array();
 				}
 				// $p_Data['']=;
 				$p_Data['total_likes']=$this->getLikeCount($value->post_id);
 				$p_Data['total_dislikes']=$this->getDislikeCount($value->post_id);
 				$p_Data['total_comments']=$this->getModifyComment($value->post_id);
-				// print_r($p_Data['total_comments']);
 				$p_Data['total_share']=$this->getShareCount($value->post_id);
+				$p_Data['fav']=$this->favrouite($value->post_id);   
 				$posts[]=$p_Data;
 			}	
 			die(json_encode(array("code"=>1,"data"=>$posts)));
@@ -1353,9 +1367,24 @@ public function getPostLikes($post_id){
 		{
 			die(json_encode(array("code"=>0,"data"=>"No Data Found.")));
 		}
-		
-		
 	}
+
+	public function favrouite($post_id)
+    {
+        $user_id=$_SESSION['logged_in'][0]->user_id;
+        $this->db->where(array('user_id'=>$user_id,'post_id'=>$post_id));
+        $re=$this->db->get('user_fav_section')->result();
+        return $re;
+    }
+
 	
-	
+	function UnFriend(){
+		$frnd_id = $this->input->Post('sent_to');
+		$my_id =$_SESSION['logged_in'][0]->user_id;
+		if($this->APIM->unfriend($frnd_id,$my_id)){
+				die(json_encode(array("code"=>1)));
+		}
+	}	
+
 }
+?>

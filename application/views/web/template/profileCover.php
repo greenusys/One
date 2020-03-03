@@ -1,6 +1,12 @@
 <link rel="stylesheet" type="text/css" href="<?=base_url('assets/css/friends.css')?>">
 <link rel="stylesheet" type="text/css" href="<?=base_url('assets/css/gallery.css')?>">
 <link rel="stylesheet" type="text/css" href="<?=base_url('assets/css/profile.css')?>">
+
+<?php 
+  $session=$this->session->userdata('logged_in');
+      $userID=$session[0]->user_id;
+
+?>
 <style type="text/css">
   .profile-upload {
     display: none;
@@ -44,12 +50,12 @@
         <?php
         // echo 'My Id: '.$myId.' | Cancel Friend : '.$cancelFriend;
           if($myId==0 && $cancelFriend == 1){
-            echo '<a href="#" title="" class="ml-2 " style="padding:10px !important" data-ripple="">Cancel Friend</a>';
+            echo '<a href="#" title="" class="ml-2 " style="padding:10px !important" data-ripple="" id="unfriend" d-fnd="'.$user_id.'"> Unfriend</a>';
             
           }else if($myId==0 && $cancelFriend == 0){
             if(count($ReqStatus)>0){
             //  print_r($ReqStatus[0]['req_id']);
-             echo '<a href="javascript:void(0)" title="" style="padding:10px !important" class=" btn btn-success" id="deleteReq" data-ripple="" d-act="'.$ReqStatus[0]['req_id'].'">Friend Request Sent</a>';
+             echo '<a href="javascript:void(0)" title="" style="padding:10px !important" class=" sendFriendRequest" id="deleteReq" d-frnd="'.$user_id.'" data-ripple="" d-act="'.$ReqStatus[0]['req_id'].'">Cancel Request</a>';
             }else{
               echo '<a href="javascript:void(0)" title="" style="padding:10px !important" class="sendFriendRequest" data-ripple="" id="sendReq" d-fnd="'.$user_id.'">Add Friend</a>';
             }
@@ -62,6 +68,28 @@
       </div>
  
       <script>
+          $(document).on('click','#unfriend',function(){
+          var sent_by=<?=$_SESSION['logged_in'][0]->user_id;?>;
+          var sent_to=$(this).attr('d-fnd');
+          var elem=$(this);
+         // alert(sent_to);
+          //swal("Friend Id: "+sent_to);
+          // var sent_to=<?=$this->uri->segment(2);?>;
+          $.ajax({
+            url:'<?=base_url('APIController/UnFriend')?>',
+          type:"post",
+          data:{sent_by:sent_by,sent_to:sent_to},
+          success:function(response){
+            response=JSON.parse(response);
+              if(response.code==1){
+                swal("UnFriend ");
+               // $('#action_area').load(document.URL +  ' #action_area');
+                //elem.text('Friend Request Sent');
+              }
+            }
+          });
+        });
+
         $(document).on('click','#sendReq',function(){
           var sent_by=<?=$_SESSION['logged_in'][0]->user_id;?>;
           var sent_to=$(this).attr('d-fnd');
@@ -85,13 +113,14 @@
         $(document).on('click','#deleteReq',function(){
           // var sent_by=<?=$_SESSION['logged_in'][0]->user_id;?>;
           var req=$(this).attr('d-act');
+            var sent_to=$(this).attr('d-frnd');
           var elem=$(this);
           //swal("Friend Id: "+sent_to);
           // var sent_to=<?=$this->uri->segment(2);?>;
           $.ajax({
             url:'<?=base_url('APIController/deleteRequest')?>',
           type:"post",
-          data:{req:req},
+          data:{req:req,sent_to:sent_to},
           success:function(response){
             response=JSON.parse(response);
               if(response.code==1){

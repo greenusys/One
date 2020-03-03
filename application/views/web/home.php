@@ -426,21 +426,22 @@
       </div>
 	  <div class="" id="pst_shw_">
 	  <?php
-    // print_r($AllPosts);
+  //   print_r($AllPosts);
     if( count($AllPosts)>0){
         foreach($AllPosts as $p_ost){
+        $post_user_id=$p_ost['user_id'];
        if($p_ost['post_type']==0){
          ?>
         <div class="card mt-4 p-2">
           <div class="card-header ">
             <div class="d-flex float-left">
              <div> 
-              <a class="font-weight-bold" href="#">
+              <a class="font-weight-bold" href="<?=base_url('Profile/'.$post_user_id)?>">
                  <img class="rounded-circle mr-2" src="<?=base_url()?>assets/img/Profile_Pic/<?=$p_ost['profile_pic']?>" width="40"  height="40">
                </a>
              </div>
             <div>
-              <a class="font-weight-bold _use_n" href="#">  
+              <a class="font-weight-bold _use_n" href="<?=base_url('Profile/'.$post_user_id)?>">  
                <?=$p_ost['posted_by']?>
               </a>
               <br>
@@ -461,10 +462,10 @@
                         $re=$this->db->get('user_fav_section')->result();
                         if(count($re)==0){
                         ?>
-                        <span class="favrt" post_id="<?=$p_ost['post_id']?>" title="favourite"><i class="far fa-star"></i></span>
+                            <span class="favrt" post_id="<?=$p_ost['post_id']?>" title="favourite"><i class="far fa-star"></i></span>
                         <?php
                         }else{?>
-                        <span class="favrt star" post_id="<?=$p_ost['post_id']?>" title="favourite"><i class="fas fa-star text-gold"></i></span>
+                            <span class="favrt star" post_id="<?=$p_ost['post_id']?>" title="favourite"><i class="fas fa-star text-gold"></i></span>
                         <?php }
                         ?>
                         <!-- <span><i class="fas fa-star"></i></span> -->
@@ -489,7 +490,7 @@
             
       
           </div>
-          <div class="mb-2 p-0">
+          <div class="my-2 p-0">
             <div class="row m-0 ">
             <div class="col-md-4 manage ">
               <div class="text-center px-3 py-1">
@@ -543,7 +544,7 @@
             </div>
             <div class="col-md-4 manage px-3 py-1">
               <div class="btn-comment post-btns">
-                <a href="javascript:void(0)"><i class="fa fa-comment-o" aria-hidden="true"></i> Comments</a> 
+                <a href=""<?=base_url('Post/viewPost/').$p_ost['post_id']?>"><i class="fa fa-comment-o" aria-hidden="true"></i> Comments</a> 
                 <span class=""><?=count($p_ost['total_comments'])?></span>
               </div>
             </div>
@@ -566,10 +567,10 @@
 
               <div class="row mt-2 px-2">
                   <div class="col-md-1">
-                      <span> <img class="rounded-circle like_img" src="<?=base_url()?>assets/img/Profile_Pic/<?=$p_ost['total_comments'][$i]->profile_picture?>"></span>  
+                      <a href="<?=base_url('Profile/'.$p_ost['total_comments'][$i]->user_id)?>"> <img class="rounded-circle like_img" src="<?=base_url()?>assets/img/Profile_Pic/<?=$p_ost['total_comments'][$i]->profile_picture?>"></a>  
                   </div> 
                   <div class="col-md-10 comnt_text border-bottom">
-                      <h6 class="font-weight-bold m-0" > <?=$p_ost['total_comments'][$i]->full_name?><small class="ml-3">
+                      <h6 class="font-weight-bold m-0" > <a href="<?=base_url('Profile/'.$p_ost['total_comments'][$i]->user_id)?>"><?=$p_ost['total_comments'][$i]->full_name?></a><small class="ml-3">
                          <?php echo time_elapsed_string($p_ost['total_comments'][$i]->commented_on)?></small></h6>
                       <p class=""><?=$p_ost['total_comments'][$i]->comment?></p>
                   </div>
@@ -622,20 +623,19 @@
          <div class="card-header border-0">
             <div class="d-flex float-left">
              <div> 
-              <a class="font-weight-bold" href="#">
+              <a class="font-weight-bold" href="<?=base_url('Profile/'.$post_user_id)?>">
                  <img class="rounded-circle mr-2" src="<?=base_url()?>assets/img/Profile_Pic/<?=$p_ost['profile_pic']?>" width="40"  height="40">
                </a>
              </div>
             <div>
-              <a class="font-weight-bold _use_n" href="#">  
+              <a class="font-weight-bold _use_n" href="<?=base_url('Profile/'.$post_user_id)?>">  
                <?=$p_ost['posted_by']?>
               </a>
               <br>
                 <small>
                     <?php echo time_elapsed_string($p_ost['posted_on']);?>
                 </small>
-            </div>
-                 
+            </div>      
            </div>
               
                     <div class="float-right d-flex mt-2">
@@ -771,7 +771,7 @@
             
           </div>
           
-          <div class="mb-2 p-0">
+          <div class="my-2 p-0">
             <div class="d-flex text-center">
             <div class="col-md-4 manage ">
               <div class="text-center px-3 py-1">
@@ -825,7 +825,7 @@
             </div>
             <div class="col-md-4 manage px-3 py-1">
               <div class="btn-comment post-btns">
-                <a href="javascript:void(0)"><i class="fa fa-comment-o" aria-hidden="true"></i> Comments</a>
+                 <a class="" href="<?=base_url('Post/viewPost/').$p_ost['post_id']?>"><i class="fa fa-comment-o" aria-hidden="true"></i> Comments</a>
                 <span class=""><?=count($p_ost['total_comments'])?></span>
               </div>
             </div>
@@ -849,10 +849,10 @@
                 <?php for($i=0; $i < count($p_ost['total_comments']); $i++){ ?>
               <div class="row mt-2 px-2">
                   <div class="col-md-1">
-                      <span> <img class="rounded-circle like_img" src="<?=base_url()?>assets/img/Profile_Pic/<?=$p_ost['total_comments'][$i]->profile_picture?>"></span>  
+                      <a href="<?=base_url('Profile/'.$p_ost['total_comments'][$i]->user_id)?>"><img class="rounded-circle like_img" src="<?=base_url()?>assets/img/Profile_Pic/<?=$p_ost['total_comments'][$i]->profile_picture?>"></a>  
                   </div>
                   <div class="col-md-10 comnt_text border-bottom">
-                      <h6 class="font-weight-bold m-0" > <?=$p_ost['total_comments'][$i]->full_name?><small class="ml-3">
+                      <h6 class="font-weight-bold m-0" ><a href="<?=base_url('Profile/'.$p_ost['total_comments'][$i]->user_id)?>"> <?=$p_ost['total_comments'][$i]->full_name?></a><small class="ml-3">
                        <?php echo time_elapsed_string($p_ost['total_comments'][$i]->commented_on)?>
                       </small></h6>
                       <p class=""><?=$p_ost['total_comments'][$i]->comment?></p>
@@ -905,12 +905,12 @@
          <div class="card-header border-0">
             <div class="d-flex float-left">
              <div> 
-              <a class="font-weight-bold" href="#">
+              <a class="font-weight-bold" href="<?=base_url('Profile/'.$post_user_id)?>">
                  <img class="rounded-circle mr-2" src="<?=base_url()?>assets/img/Profile_Pic/<?=$MyDetails[0]->profile_picture?>" width="40"  height="40">
                </a>
              </div>
             <div>
-              <a class="font-weight-bold _use_n" href="#">  
+              <a class="font-weight-bold _use_n" href="<?=base_url('Profile/'.$post_user_id)?>">  
                <?=$p_ost['posted_by']?>
               </a>
               <br>
@@ -1212,7 +1212,7 @@
             ?>
             
           </div>
-          <div class="mb-2 p-0">
+          <div class="my-2 p-0">
             <div class="d-flex text-center">
             <div class="col-md-4 manage ">
               <div class="text-center px-3 py-1">
@@ -1266,7 +1266,7 @@
             </div>
             <div class="col-md-4 manage px-3 py-1">
               <div class="btn-comment post-btns">
-                <a href="javascript:void(0)"><i class="fa fa-comment-o" aria-hidden="true"></i> Comments</a>
+                <a href=""<?=base_url('Post/viewPost/').$p_ost['post_id']?>"><i class="fa fa-comment-o" aria-hidden="true"></i> Comments</a>
                 <span class=""><?=count($p_ost['total_comments'])?></span>
               </div>
             </div>
@@ -1285,10 +1285,10 @@
               for($i=0; $i < count($p_ost['total_comments']); $i++){ ?>
               <div class="row mt-2 px-2">
                   <div class="col-md-1">
-                      <span> <img class="rounded-circle like_img" src="<?=base_url()?>assets/img/Profile_Pic/<?=$p_ost['total_comments'][$i]->profile_picture?>"></span>  
+                      <a href="<?=base_url('Profile/'.$p_ost['total_comments'][$i]->user_id)?>"> <img class="rounded-circle like_img" src="<?=base_url()?>assets/img/Profile_Pic/<?=$p_ost['total_comments'][$i]->profile_picture?>"></a>  
                   </div>
                   <div class="col-md-10 comnt_text border-bottom">
-                      <h6 class="font-weight-bold m-0" > <?=$p_ost['total_comments'][$i]->full_name?><small class="ml-3">
+                      <h6 class="font-weight-bold m-0" > <a href="<?=base_url('Profile/'.$p_ost['total_comments'][$i]->user_id)?>"><?=$p_ost['total_comments'][$i]->full_name?></a><small class="ml-3">
                   <?php echo time_elapsed_string($p_ost['total_comments'][$i]->commented_on)?>
                       </small></h6>
                       <p class=""><?=$p_ost['total_comments'][$i]->comment?></p>
@@ -1334,12 +1334,12 @@
            <div class="card-header ">
             <div class="d-flex float-left">
              <div> 
-              <a class="font-weight-bold" href="#">
+              <a class="font-weight-bold" href="<?=base_url('Profile/'.$post_user_id)?>">
                  <img class="rounded-circle mr-2" src="<?=base_url()?>assets/img/Profile_Pic/<?=$p_ost['profile_pic']?>" width="40"  height="40">
                </a>
              </div>
             <div>
-              <a class="font-weight-bold _use_n" href="#">  
+              <a class="font-weight-bold _use_n" href="<?=base_url('Profile/'.$post_user_id)?>">  
                 <?=$p_ost['posted_by']?>
               </a>
               <br>
@@ -1394,15 +1394,17 @@
             <?=$p_ost['post']?>
             </p>
             <div class="">
+               <a class="" href="<?=base_url('Post/viewPost/').$p_ost['post_id']?>">
             <video controls class="w-100">
             <source src="<?=base_url()?>assets/uploads/videos/<?=$p_ost['post_files']?>" type="video/mp4">
           
           Your browser does not support the video tag.
           </video>
+        </a>
           </div>  
           </div>
           
-          <div class="mb-2 p-0">
+          <div class="my-2 p-0">
             <div class="d-flex text-center">
               <div class="col-md-4 manage  ">
               <!--   <div class="btn-like" ><a href="javascript:void(0)" class="likePost" d-Post="<?=$p_ost['post_id']?>"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i>Like</a> <span class="font-weight-bold likeValue"> <?=$p_ost['total_likes']?></span></div> -->
@@ -1457,7 +1459,7 @@
             </div>
             <div class="col-md-4 manage  px-3 py-1">
               <div class="btn-comment post-btns">
-                <a href="javascript:void(0)"><i class="fa fa-comment-o" aria-hidden="true"></i> Comments</a>
+                <a href=""<?=base_url('Post/viewPost/').$p_ost['post_id']?>"><i class="fa fa-comment-o" aria-hidden="true"></i> Comments</a>
                  <span class=""><?=count($p_ost['likes_data'])?></span>
                </div>
             </div>
@@ -1478,10 +1480,10 @@
                 for($i=0; $i < count($p_ost['total_comments']); $i++){ ?>
                   <div class="row mt-2 px-2">
                       <div class="col-md-1">
-                          <span> <img class="rounded-circle like_img" src="<?=base_url()?>assets/img/Profile_Pic/<?=$p_ost['total_comments'][$i]->profile_picture?>"></span>  
+                         <a href="<?=base_url('Profile/'.$p_ost['total_comments'][$i]->user_id)?>"> <img class="rounded-circle like_img" src="<?=base_url()?>assets/img/Profile_Pic/<?=$p_ost['total_comments'][$i]->profile_picture?>"></a>  
                       </div>
                       <div class="col-md-10 comnt_text border-bottom">
-                          <h6 class="font-weight-bold m-0" > <?=$p_ost['total_comments'][$i]->full_name?><small class="ml-3">
+                          <h6 class="font-weight-bold m-0" > <a href="<?=base_url('Profile/'.$p_ost['total_comments'][$i]->user_id)?>"><?=$p_ost['total_comments'][$i]->full_name?></a><small class="ml-3">
                            <?php echo time_elapsed_string($p_ost['total_comments'][$i]->commented_on)?>
                           </small></h6>
                           <p class=""><?=$p_ost['total_comments'][$i]->comment?></p>
@@ -2223,7 +2225,6 @@ function getAjaxData(offset)
     { 
       res=JSON.parse(res); 
       console.log(res.data);   
-
       if(res.code==1)
       {
         var count=(res.data).length;
@@ -2236,21 +2237,37 @@ function getAjaxData(offset)
           {
             if((res.data[i].post_type)==0)
             {
-              html+='<div class="card mt-4"><div class="card-header"><div class="d-flex "><div><a class="font-weight-bold" href="#"><img class="rounded-circle mr-2" src="<?=base_url()?>assets/img/Profile_Pic/'+my_profilepic+'" width="40"  height="40"></a></div><div><a class="font-weight-bold _use_n" href="#">'+res.data[i].posted_by+'</a><br><small><time class="timeago" datetime="'+res.data[i].posted_on+'"></time></small></div></div>';
-              if(user_id==res.data[i].user_id)
-              {
-                html+='<div class="float-right mt-2"><button class="dropbtn"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></button><div class="dropdown-content bg-white"><a href="#">Edit</a><a href="javascript:void(0)" class="dlt_post_" p_d="'+res.data[i].post_id+'" >Delete</a></div></div></div>'; 
-              }
-              html+='<div class="dropdown"><div class=""><span class="favrt" post_id="'+res.data[i].post_id+'" title="favourite"><i class="far fa-star"></i></span></div></div><div class="card-body text-justify"><p>'+res.data[i].post+'</p></div><div class="mb-2 p-0"><div class="row "><div class="col-md-4 manage "><div class="text-center px-3 py-1"><div class="btn-like d-flex" ><a href="javascript:void(0)" class="text-danger likePost" d-Post="'+res.data[i].post_id+'"></a>';
-              var countlikes=(res.data[i].likes_data).length;
-              // console.log(countlikes);
-              if((countlikes)!=null)
-              {
-                for(var j=0;j<countlikes;j++)
+              html+='<div class="card mt-4 p-2"><div class="card-header"><div class="d-flex float-left"><div><a class="font-weight-bold" href="<?=base_url()?>Profile/'+res.data[i].posted_by+'"><img class="rounded-circle mr-2" src="<?=base_url()?>assets/img/Profile_Pic/'+res.data[i].profile_pic+'" width="40"  height="40"></a></div><div><a class="font-weight-bold _use_n" href="#">'+res.data[i].posted_by+'</a><br><small><time class="timeago" datetime="'+res.data[i].posted_on+'"></time></small></div></div>';
+                html+='<div class="float-right d-flex mt-2">';
+                html+='<div class="">';
+                var count_fav=(res.data[i].fav).length;
+                if(count_fav==0)
                 {
-                  if(user_id==(res.data[i].user_id))
+                  html+='<span class="favrt" post_id="'+res.data[i].post_id+'" title="favourite"><i class="far fa-star"></i></span>';
+                }
+                else
+                {
+                  html+='<span class="favrt star" post_id="'+res.data[i].post_id+'" title="favourite"><i class="fas fa-star text-gold"></i></span>';
+                } 
+                html+='</div>';
+                if(user_id==res.data[i].user_id)
+                {
+                  html+='<div class="dropdown ml-3"><button class="dropbtn"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></button><div class="dropdown-content bg-white"><a href="javascript:void(0)"  class="edit_post"  p_d="'+res.data[i].post_id+'">Edit</a><a href="javascript:void(0)" class="dlt_post_" p_d="'+res.data[i].post_id+'" >Delete</a></div></div></div>'; 
+                }
+              html+='</div>';
+              // html+='</div>';
+              html+='<div class="card-body text-justify"><p>'+res.data[i].post+'</p></div><div class="my-2 p-0"><div class="row m-0"><div class="col-md-4 manage "><div class="text-center px-3 py-1"><div class="btn-like d-flex" ><a href="javascript:void(0)" class="text-danger likePost" d-Post="'+res.data[i].post_id+'">';
+              var countlikes=(res.data[i].likes_data).length;
+              //console.log(countlikes);
+
+              if((countlikes)>0)
+              { 
+                for(var j=0;j<countlikes;j++)
+                { 
+                  if(user_id==(res.data[i].likes_data[j].user_id))
                   { 
                     html+='<i class="fa fa-heart " aria-hidden="true"></i>';
+                    break;
                   }
                   else
                   { 
@@ -2300,14 +2317,21 @@ function getAjaxData(offset)
                 {
                   html+='<div class="row mt-2 px-2">';
                   html+='<div class="col-md-1">';
-                  html+='<span> <img class="rounded-circle like_img" src="<?=base_url()?>assets/img/Profile_Pic/'+my_profilepic+'"></span></div>';
+                  html+='<a href="<?=base_url()?>assets/img/Profile_Pic/'+res.data[i].total_comments[k].user_id+'"><img class="rounded-circle like_img" src="<?=base_url()?>assets/img/Profile_Pic/'+res.data[i].total_comments[k].profile_picture+'"></a></div>';
                   html+='<div class="col-md-10 comnt_text border-bottom">';
-                  html+='<h6 class="font-weight-bold m-0" >'+res.data[i].total_comments[k].full_name+'<small class="ml-3">'+res.data[i].total_comments[k].commented_on+'</small></h6>';
+                  html+='<h6 class="font-weight-bold m-0" ><a href="<?=base_url()?>assets/img/Profile_Pic/'+res.data[i].total_comments[k].user_id+'">'+res.data[i].total_comments[k].full_name+'</a><small class="ml-3">'+res.data[i].total_comments[k].commented_on+'</small></h6>';
                   html+='<p class="">'+res.data[i].total_comments[k].comment+'</p></div>';
-                  html+='<div class="col-md-1">';
-                  if(user_id==res.data[i].user_id)
+                 html+='<div class="col-md-1">';
+                  if((user_id==res.data[i].user_id) || (user_id==res.data[i].total_comments[k].commented_by_))
                   {
-                    html+='<div class="dropdown"><button class="dropbtn"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></button><div class="dropdown-content bg-white">     <a href="javascript:void(0)"  data-toggle="modal" data-target="#commntModal">Edit</a><a href="javascript:void(0)" class="dlt_comnt_" c_d="'+res.data[i].total_comments[k].id+'">Delete</a></div></div>';
+                    html+='<div class="dropdown"><button class="dropbtn"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></button><div class="dropdown-content bg-white">';    
+                    if(user_id==res.data[i].total_comments[k].commented_by_) 
+                    {
+                      html+='<a href="javascript:void(0)"  data-toggle="modal" data-target="#commntModal">Edit</a>';
+                    }
+                     html+='<a href="javascript:void(0)" class="dlt_comnt_" c_d="'+res.data[i].total_comments[k].id+'">Delete</a>';
+                   
+                   html+='</div></div>';
                   }
                   html+='</div></div>';
                 } 
@@ -2413,7 +2437,7 @@ function getAjaxData(offset)
                 html+='</div>';
               }
               html+='</div>';
-              html+='<div class="mb-2 p-0">';
+              html+='<div class="my-2 p-0">';
               html+='<div class="d-flex text-center">';
               html+='<div class="col-md-4 manage ">';
               html+='<div class="text-center px-3 py-1">';
@@ -2529,7 +2553,7 @@ function getAjaxData(offset)
               html+='</video>';
               html+='</div>';
               html+='</div>';     
-              html+='<div class="mb-2 p-0">';
+              html+='<div class="my-2 p-0">';
               html+='<div class="flex text-center">';
               html+='<div class="col-md-4 manage ">';
               html+='<div class="text-center px-3 py-1">';

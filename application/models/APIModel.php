@@ -9,7 +9,16 @@
 			return $this->db->delete($table_name);
 		}
 
-
+function unfriend($frnd_id,$my_id){
+	if($this->db->query("delete from friend_request where (sent_by='$my_id' and sent_to='$frnd_id') OR (sent_by='$frnd_id' and sent_to='$my_id')")){
+		return $this->db->query("delete from friends_ where (friend_id='$my_id' and user_id='$frnd_id') OR (friend_id='$frnd_id' and user_id='$my_id')");
+	}
+	
+}
+function deleteNotification($frnd_id,$my_id){
+	return $this->db->query("delete from notifications_ where (notify_by='$my_id' and notify_to='$frnd_id') OR (notify_to='$frnd_id' and notify_to='$my_id')");
+	
+}
 		public function getAllDetails($table_name, $condition=""){
 			if($condition!=""){
 				$this->db->where($condition);	
