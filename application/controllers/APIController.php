@@ -232,6 +232,16 @@ class APIController extends CI_Controller
 				}
 			}
    	}
+
+   	public function update_post_text(){
+   		$result = $this->APIM->update_post_text($_POST);
+   		if ($result) {
+   			die(json_encode(array('status'=>'1','msg'=>'updated')));
+   		}
+   		else{
+   			die(json_encode(array('status'=>'0','msg'=>'err')));
+   		}
+   	}
    	
    	// To send Notification
    	
@@ -252,7 +262,11 @@ class APIController extends CI_Controller
    	}
 	//To Add Post
 	public function addPost()
-	{
+	{	
+		$tag="";
+		if(isset($_POST['friends'])){
+			$tag=implode(",",$_POST['friends']);
+		}
 		$user_id=$_SESSION['logged_in'][0]->user_id;
 		if(isset($_POST['u_id'])){
 			$owner_id=$_POST['u_id'];
@@ -275,7 +289,7 @@ class APIController extends CI_Controller
 			//$imgageData = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $imgageData));
 			// print_r($imgageData);
 			// $data=array('story_type' =>$story_type ,'posted_by'=>$user_id,'story'=>$story_text,'posted_on'=>$posted_on,'story_status'=>1);
-			  $data = array('post_files'=>$filename,'post_type'=>1,'owner_id'=>$owner_id,'posted_by'=>$user_id,'initially_posted_by'=>$user_id,'posted_on'=>$timenow
+			  $data = array('post_files'=>$filename,'tagged_friends'=>$tag,'post_type'=>1,'owner_id'=>$owner_id,'posted_by'=>$user_id,'initially_posted_by'=>$user_id,'posted_on'=>$timenow
 		                );
 			  $result=$this->APIM->insert_post($data);
 				if($result){
@@ -287,7 +301,7 @@ class APIController extends CI_Controller
 		}
 		elseif($post_type==0 && !isset($_POST['imgageData']))
 		{
-			$data=array('post_type' =>$post_type ,'posted_by'=>$user_id,'owner_id'=>$owner_id,'post'=>$post_text,'initially_posted_by'=>$user_id,'posted_on'=>$timenow);
+			$data=array('post_type' =>$post_type ,'tagged_friends'=>$tag,'posted_by'=>$user_id,'owner_id'=>$owner_id,'post'=>$post_text,'initially_posted_by'=>$user_id,'posted_on'=>$timenow);
 			$result=$this->APIM->insert_post($data);
 			if($result){
 				die(json_encode(array('status' =>'1' ,'msg'=>'Post Inserted Successfully')));
@@ -336,6 +350,7 @@ class APIController extends CI_Controller
 		            if(!empty($uploadData)){
 		                // Insert files data into the database
 		                $data = array(
+		                	'tagged_friends'=>$tag,
 		                	'post'=>$post_text,
 		                	'post_files'=>$pics,
 		                	'owner_id'=>$owner_id,
@@ -396,6 +411,7 @@ class APIController extends CI_Controller
 		                // Insert files data into the database
 		                $data = array(
 		                	'post'=>$post_text,
+		                	'tagged_friends'=>$tag,
 		                	'post_files'=>$pics,
 		                	'owner_id'=>$owner_id,
 		                	'post_type'=>2,
@@ -484,6 +500,7 @@ class APIController extends CI_Controller
 		                $data = array(
 		                	'post'=>$post_text,
 		                	'post_files'=>$pics,
+		                	'tagged_friends'=>$tag,
 		                	'owner_id'=>$owner_id,
 		                	'post_type'=>3,
 		                	'posted_by'=>$user_id,
@@ -945,7 +962,7 @@ public function getPostLikes($post_id){
 		return $this->APIM->getAllDetails('post_comments_', $condition=array("post_id"=>$post_id));
 	}//
 	public function getModifyComment($post_id){
-		$this->db->select('post_comments_.comment as comment, post_comments_.commented_on as commented_on, users.full_name as full_name,  post_comments_.id as comment_id');
+		$this->db->select('post_comments_.comment as comment, post_comments_.commented_on as commented_on, users.full_name as full_name,post_comments_.commented_by_ as commented_by_,users.profile_picture as profile_picture,  post_comments_.id as comment_id');
 		$this->db->join('users','users.user_id=post_comments_.commented_by_');
 		return $this->db->where('post_comments_.post_id',$post_id)->get('post_comments_')->result();
 	}
@@ -968,6 +985,43 @@ public function getPostLikes($post_id){
 		}else{
 			return 0;
 		}
+	}
+
+	public function upload_resume(){
+			$ext = pathinfo($_FILES['file']['name'], PATHINFO_EXTENSION);
+            $_FILES['file']['name']     = "resume-".date("Y-m-d-H-i-s").".".$ext;
+            $_FILES['file']['type']     = $_FILES['file']['type'];
+            $_FILES['file']['tmp_name'] = $_FILES['file']['tmp_name'];
+            $_FILES['file']['error']     = $_FILES['file']['error'];
+            $_FILES['file']['size']     = $_FILES['file']['size'];
+            
+            // File upload configuration
+            $uploadPath = 'assets/jobpost/';
+            $config['upload_path'] = $uploadPath;
+            $config['max_size'] = '*';
+            $config['allowed_types'] = 'doc|docx|pdf';
+            
+            // Load and initialize upload library
+            $this->load->library('upload', $config);
+            $this->upload->initialize($config);
+            
+            // Upload file to server
+            if($this->upload->do_upload('file')){
+                // Uploaded file data
+                $fileData = $this->upload->data();
+                //$this->resizeImage($_FILES['file']['name'] );
+                $uploadData['file_name'] = $fileData['file_name'];
+                $uploadData['uploaded_on'] = date("Y-m-d H:i:s");
+            }
+            $file_name=$_FILES['file']['name'];
+            $data=array('jobpost_id'=>$_POST['jobpost_id'],
+        				'uploads'=>$file_name);
+            if($this->db->insert('jobpost_resume',$data)){
+   	            echo "1";
+   	        }else{
+   	            // die(json_encode(array("code"=>1)));
+   	            echo "0";
+   	        }
 	}
 	//To share post
 	public function sharePost(){
@@ -1258,12 +1312,18 @@ public function getPostLikes($post_id){
 			$result=$this->APIM->fetch_post_by_id($post_id);
 			die(json_encode(array('status'=>'1','data'=>$result)));
 		}
-
 		public function scrollfetchpost(){
 
 		$offset=$this->input->post('offset');
 		$limit=$this->input->post('limit');
-		$user_id=$_SESSION['logged_in'][0]->user_id;
+		if(isset($_POST['android']))
+		{
+			$user_id=$this->input->post('user_id');
+		}
+		else
+		{
+			$user_id=$_SESSION['logged_in'][0]->user_id;
+		}
 		$my_friends=$this->FRND->getMyFriends($user_id);	
 		// if(!isset($_POST['android']))
 		// {
@@ -1285,17 +1345,20 @@ public function getPostLikes($post_id){
 				$p_Data['profile_pic']=$value->profile_picture;
 				$p_Data['initially_posted_by']=$value->initially_posted_by;
 				$p_Data['posted_on']=$value->posted_on;
-				if(($likes_data= $this->getPostLikes($value->post_id))!=false){
+				if(($likes_data= $this->getPostLikes($value->post_id))!=false)
+				{
 					 $p_Data['likes_data']=$likes_data;
-				}else{
+				}
+				else
+				{
 					 $p_Data['likes_data']=array();
 				}
 				// $p_Data['']=;
 				$p_Data['total_likes']=$this->getLikeCount($value->post_id);
 				$p_Data['total_dislikes']=$this->getDislikeCount($value->post_id);
 				$p_Data['total_comments']=$this->getModifyComment($value->post_id);
-				// print_r($p_Data['total_comments']);
 				$p_Data['total_share']=$this->getShareCount($value->post_id);
+				$p_Data['fav']=$this->favrouite($value->post_id);   
 				$posts[]=$p_Data;
 			}	
 			die(json_encode(array("code"=>1,"data"=>$posts)));
@@ -1304,9 +1367,16 @@ public function getPostLikes($post_id){
 		{
 			die(json_encode(array("code"=>0,"data"=>"No Data Found.")));
 		}
-		
-		
 	}
+
+	public function favrouite($post_id)
+    {
+        $user_id=$_SESSION['logged_in'][0]->user_id;
+        $this->db->where(array('user_id'=>$user_id,'post_id'=>$post_id));
+        $re=$this->db->get('user_fav_section')->result();
+        return $re;
+    }
+
 	
 	function UnFriend(){
 		$frnd_id = $this->input->Post('sent_to');
@@ -1315,5 +1385,6 @@ public function getPostLikes($post_id){
 				die(json_encode(array("code"=>1)));
 		}
 	}	
+
 }
 ?>

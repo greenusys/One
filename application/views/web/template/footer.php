@@ -748,6 +748,7 @@ function time2TimeAgo(ts) {
 
 <script type="text/javascript">
    $(document).ready(function () {
+
   $(document).on("keypress",'.cmnt_',function (e) {
 
 var keyCode = e.keyCode || e.which;

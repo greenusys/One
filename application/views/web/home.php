@@ -311,13 +311,12 @@
               </div>
               <div class="col-md-10 px-0">
                <!--  <input class="form-control" type="text" name="tag" id="tags"> -->
-                <select class="js-example-basic-multiple" name="friends[]" multiple="multiple">
-                  <option value="Deepak">Deepak Nouliya</option>
-                  <option value="Rahul">Rahul</option>
-                  <option value="Ravish">Ravish</option>
-                  <option value="Shivam">Shivam</option>
-                  <option value="Shubham">Shubham</option>
-                  <option value="Kaif">Kaif</option>
+                <select class="js-example-basic-multiple" id="Tag_friends" name="friends[]" multiple="multiple">
+                  <?php
+                  foreach ($MyFriends as $frnds) {
+                  ?>
+                  <option value="<?=$frnds->user_id?>"><?=$frnds->full_name?></option>
+                <?php } ?>
                 </select>
               </div>
             </div>
@@ -1590,7 +1589,7 @@
                                       </div>
                                       
                                       <div class="col-md-4 p-0">
-                                        <button class="btn btn-primary p-1 mt-3 fy" data-toggle="modal" data-target="#jobsModal">Apply Now</button>
+                                        <button class="btn btn-primary p-1 mt-3 fy jobposter" job_id="<?=$FJB->jobpost_id?>">Apply Now</button>
                                       </div>
                                   </div>
                                 </div>
@@ -2087,7 +2086,7 @@ var like = ele.find("i").attr("class");
 
                     success:function(response)
                     {
-                      console.log(response);
+                      // console.log(response);
                       response=JSON.parse(response);
                       if(response.status==1){
                         alert(response.msg);
@@ -2226,7 +2225,6 @@ function getAjaxData(offset)
     { 
       res=JSON.parse(res); 
       console.log(res.data);   
-
       if(res.code==1)
       {
         var count=(res.data).length;
@@ -2239,21 +2237,37 @@ function getAjaxData(offset)
           {
             if((res.data[i].post_type)==0)
             {
-              html+='<div class="card mt-4"><div class="card-header"><div class="d-flex "><div><a class="font-weight-bold" href="#"><img class="rounded-circle mr-2" src="<?=base_url()?>assets/img/Profile_Pic/'+my_profilepic+'" width="40"  height="40"></a></div><div><a class="font-weight-bold _use_n" href="#">'+res.data[i].posted_by+'</a><br><small><time class="timeago" datetime="'+res.data[i].posted_on+'"></time></small></div></div>';
-              if(user_id==res.data[i].user_id)
-              {
-                html+='<div class="float-right mt-2"><button class="dropbtn"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></button><div class="dropdown-content bg-white"><a href="#">Edit</a><a href="javascript:void(0)" class="dlt_post_" p_d="'+res.data[i].post_id+'" >Delete</a></div></div></div>'; 
-              }
-              html+='<div class="dropdown"><div class=""><span class="favrt" post_id="'+res.data[i].post_id+'" title="favourite"><i class="far fa-star"></i></span></div></div><div class="card-body text-justify"><p>'+res.data[i].post+'</p></div><div class="my-2 p-0"><div class="row "><div class="col-md-4 manage "><div class="text-center px-3 py-1"><div class="btn-like d-flex" ><a href="javascript:void(0)" class="text-danger likePost" d-Post="'+res.data[i].post_id+'"></a>';
-              var countlikes=(res.data[i].likes_data).length;
-              // console.log(countlikes);
-              if((countlikes)!=null)
-              {
-                for(var j=0;j<countlikes;j++)
+              html+='<div class="card mt-4 p-2"><div class="card-header"><div class="d-flex float-left"><div><a class="font-weight-bold" href="<?=base_url()?>Profile/'+res.data[i].posted_by+'"><img class="rounded-circle mr-2" src="<?=base_url()?>assets/img/Profile_Pic/'+res.data[i].profile_pic+'" width="40"  height="40"></a></div><div><a class="font-weight-bold _use_n" href="#">'+res.data[i].posted_by+'</a><br><small><time class="timeago" datetime="'+res.data[i].posted_on+'"></time></small></div></div>';
+                html+='<div class="float-right d-flex mt-2">';
+                html+='<div class="">';
+                var count_fav=(res.data[i].fav).length;
+                if(count_fav==0)
                 {
-                  if(user_id==(res.data[i].user_id))
+                  html+='<span class="favrt" post_id="'+res.data[i].post_id+'" title="favourite"><i class="far fa-star"></i></span>';
+                }
+                else
+                {
+                  html+='<span class="favrt star" post_id="'+res.data[i].post_id+'" title="favourite"><i class="fas fa-star text-gold"></i></span>';
+                } 
+                html+='</div>';
+                if(user_id==res.data[i].user_id)
+                {
+                  html+='<div class="dropdown ml-3"><button class="dropbtn"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></button><div class="dropdown-content bg-white"><a href="javascript:void(0)"  class="edit_post"  p_d="'+res.data[i].post_id+'">Edit</a><a href="javascript:void(0)" class="dlt_post_" p_d="'+res.data[i].post_id+'" >Delete</a></div></div></div>'; 
+                }
+              html+='</div>';
+              // html+='</div>';
+              html+='<div class="card-body text-justify"><p>'+res.data[i].post+'</p></div><div class="my-2 p-0"><div class="row m-0"><div class="col-md-4 manage "><div class="text-center px-3 py-1"><div class="btn-like d-flex" ><a href="javascript:void(0)" class="text-danger likePost" d-Post="'+res.data[i].post_id+'">';
+              var countlikes=(res.data[i].likes_data).length;
+              //console.log(countlikes);
+
+              if((countlikes)>0)
+              { 
+                for(var j=0;j<countlikes;j++)
+                { 
+                  if(user_id==(res.data[i].likes_data[j].user_id))
                   { 
                     html+='<i class="fa fa-heart " aria-hidden="true"></i>';
+                    break;
                   }
                   else
                   { 
@@ -2303,14 +2317,21 @@ function getAjaxData(offset)
                 {
                   html+='<div class="row mt-2 px-2">';
                   html+='<div class="col-md-1">';
-                  html+='<span> <img class="rounded-circle like_img" src="<?=base_url()?>assets/img/Profile_Pic/'+my_profilepic+'"></span></div>';
+                  html+='<a href="<?=base_url()?>assets/img/Profile_Pic/'+res.data[i].total_comments[k].user_id+'"><img class="rounded-circle like_img" src="<?=base_url()?>assets/img/Profile_Pic/'+res.data[i].total_comments[k].profile_picture+'"></a></div>';
                   html+='<div class="col-md-10 comnt_text border-bottom">';
-                  html+='<h6 class="font-weight-bold m-0" >'+res.data[i].total_comments[k].full_name+'<small class="ml-3">'+res.data[i].total_comments[k].commented_on+'</small></h6>';
+                  html+='<h6 class="font-weight-bold m-0" ><a href="<?=base_url()?>assets/img/Profile_Pic/'+res.data[i].total_comments[k].user_id+'">'+res.data[i].total_comments[k].full_name+'</a><small class="ml-3">'+res.data[i].total_comments[k].commented_on+'</small></h6>';
                   html+='<p class="">'+res.data[i].total_comments[k].comment+'</p></div>';
-                  html+='<div class="col-md-1">';
-                  if(user_id==res.data[i].user_id)
+                 html+='<div class="col-md-1">';
+                  if((user_id==res.data[i].user_id) || (user_id==res.data[i].total_comments[k].commented_by_))
                   {
-                    html+='<div class="dropdown"><button class="dropbtn"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></button><div class="dropdown-content bg-white">     <a href="javascript:void(0)"  data-toggle="modal" data-target="#commntModal">Edit</a><a href="javascript:void(0)" class="dlt_comnt_" c_d="'+res.data[i].total_comments[k].id+'">Delete</a></div></div>';
+                    html+='<div class="dropdown"><button class="dropbtn"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></button><div class="dropdown-content bg-white">';    
+                    if(user_id==res.data[i].total_comments[k].commented_by_) 
+                    {
+                      html+='<a href="javascript:void(0)"  data-toggle="modal" data-target="#commntModal">Edit</a>';
+                    }
+                     html+='<a href="javascript:void(0)" class="dlt_comnt_" c_d="'+res.data[i].total_comments[k].id+'">Delete</a>';
+                   
+                   html+='</div></div>';
                   }
                   html+='</div></div>';
                 } 
@@ -2657,7 +2678,7 @@ function getAjaxData(offset)
      <script type="text/javascript">
       $(document).on('click','.shareThisPost',function(){
         var postId=$(this).attr('d-ost');
-        console.log("Posted Id: "+postId);
+        //console.log("Posted Id: "+postId);
         $.ajax({
           url:"<?=base_url('APIController/sharePost')?>",
           type:"post",
@@ -2665,7 +2686,7 @@ function getAjaxData(offset)
           success:function(res){
             res=JSON.parse(res);
             if(res.code==1){
-              
+              location.reload();
             }
           }
         });
@@ -2730,7 +2751,48 @@ function myFunction() {
   }
 }
 </script> -->
+<script>
+  $(document).on('click','.jobposter',function(){
+    var job_id = $(this).attr('job_id');
+    $('#jobpost_id').val(job_id);
+    $('#jobsModal').modal('show');
+  })
 
+  $(document).ready(function(){
+    $("#add_resume").submit(function(e){
+        e.preventDefault();
+        var formData= new FormData($(this)[0]);
+        $.ajax({
+            url:"<?=base_url()?>APIController/upload_resume",
+             type:"post",
+             data:formData,
+             contentType:false,
+             processData:false,
+             cache:false,
+
+            success:function(response)
+            {
+              if (response==1) {
+                swal('Success','Resume Uploaded Successfully','success');
+                $('#jobsModal').modal('hide');
+              }
+              else{
+                swal('OOPS','Please upload resume in pdf,docx or doc format','warning');
+              }
+                // if(response=="1"){
+                //   alert("Size Added Successfully");
+                //   $("#fresher").load(location.href + " #fresher");
+                //   $('#size').trigger("reset");
+                // }
+                // else{
+                //   alert("Failed");
+                // }
+                //location.reload();
+            }
+        });
+    });
+});
+</script>
 <!-- Jobs Modal -->
 <div class="modal fade" id="jobsModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
@@ -2743,13 +2805,13 @@ function myFunction() {
       </div>
       <div class="modal-body">
         <div class="">
-          <form method="POST" action="">
+          <form id="add_resume">
             <label class="author">Upload Resume
-               <input type="file" name="" class="form-control">
+               <input type="file" name="file" class="form-control" accept=".pdf,.docx,.doc">
             </label>
-
+            <input type="hidden" value="" name="jobpost_id" id="jobpost_id">
             <div class="text-center">
-              <button class="btn btn-success">Apply</button>
+              <button class="btn btn-success" type="submit">Apply</button>
             </div>
           </form>
         </div>
@@ -3030,6 +3092,34 @@ function myFunction() {
     </div>
   </div>
 </div>
+
+<div class="modal fade" id="postTextEditModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Update Post</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+            <div class="pl-2 w-100 _input d-flex">
+               <span> <img class="rounded-circle like_img" src="<?=base_url()?>assets/img/Profile_Pic/<?=$MyDetails[0]->profile_picture?>"></span>
+              <p class="ml-1 lead w-100 emoji-picker-container">
+                <textarea class="input-field cmnt_" id="post_para" data-emojiable="true" type="text" name="comment"  placeholder="Add a Message">  </textarea>
+                  <!-- <input type="text" class="form-control" name="comment" data-emojiable="true"> -->
+              </p> 
+
+                    <input type="hidden" name="comnt_id" id="poster_id" value="">
+            </div>
+            <div class="float-right">
+              <button class="btn btn-success p-1 fy update_post_text">Update</button>
+              <button type="button" data-dismiss="modal" aria-label="Close" class="btn btn-info ml-2 fy p-1">Cancel</button>
+            </div>
+      </div>
+    </div>
+  </div>
+</div>
 <script>
   $(document).on('click','.update_comment',function(){
     var comment=$('#comment_para').parent().find(".emoji-wysiwyg-editor").html();
@@ -3080,16 +3170,62 @@ $(document).on('click','.edit_post',function(){
               html+='<img src="<?=base_url()?>assets/uploads/images/'+arr[i]+'" class="slideobject"/>';
             }
           }
+          $('#post_img_text').parent().find(".emoji-wysiwyg-editor").html(response.data[0].post);
+          $('#post_img_id').val(response.data[0].post_id);
           $('#SlideShow').empty();
           $('#SlideShow').append(html); 
           $('#postEditModal').modal('show');
-                          $('#SlideShow').SlideShow({
+          $('#SlideShow').SlideShow({
                   slideDuration: 8000,
                   transSpeed: 300,
                   loop: false,
                   infobar: false
-                });
+          });
         }
+        else{
+          $('#poster_id').val(response.data[0].post_id);
+          $('#post_para').parent().find(".emoji-wysiwyg-editor").html(response.data[0].post);
+          $('#postTextEditModal').modal('show');
+        }
+      }
+    }
+  })
+})
+
+
+$(document).on('click','.update_post_text',function(){
+  var post=$('#post_para').val();
+  var post_id=$('#poster_id').val();
+  $.ajax({
+    type:'POST',
+    data:{
+      post:post,
+      post_id:post_id
+    },
+    url:'<?=base_url()?>APIController/update_post_text',
+    success:function(response){
+      var response = JSON.parse(response);
+      if (response.status==1) {
+        location.reload();
+      }
+    }
+  })
+})
+
+$(document).on('click','.post_img_update',function(){
+  var post = $('#post_img_text').val();
+  var post_id = $('#post_img_id').val();
+    $.ajax({
+    type:'POST',
+    data:{
+      post:post,
+      post_id:post_id
+    },
+    url:'<?=base_url()?>APIController/update_post_text',
+    success:function(response){
+      var response = JSON.parse(response);
+      if (response.status==1) {
+        location.reload();
       }
     }
   })
@@ -3120,45 +3256,13 @@ $(document).on('click','.edit_post',function(){
              </div>
             <div>
               <a class="font-weight-bold _use_n" href="#">  
-               Name
+               <?=$MyDetails[0]->full_name?>
               </a>
               <br>
-                <small>
-                  
-                 <time class="timeago" datetime=" ">date</time>
-                </small>
             </div>
            
            </div>
-               
-                    <div class="float-right d-flex mt-2">
-                      <div class="">
-                         <?php
-                        $user_id;
-                        $post_id=$p_ost['post_id'];
-                        $this->db->where(array('user_id'=>$user_id,'post_id'=>$post_id));
-                        $re=$this->db->get('user_fav_section')->result();
-                        if(count($re)==0){
-                        ?>
-                        <span class="favrt" post_id="<?=$p_ost['post_id']?>" title="favourite"><i class="far fa-star"></i></span>
-                        <?php
-                        }else{?>
-                        <span class="favrt star" post_id="<?=$p_ost['post_id']?>" title="favourite"><i class="fas fa-star text-gold"></i></span>
-                        <?php }
-                        ?>
-                        <!-- <span><i class="fas fa-star"></i></span> -->
-                      </div>
-                      <?php if($_SESSION['logged_in'][0]->user_id==$p_ost['user_id']){ ?>
-                          <div class="dropdown ml-3">
-                            <button class="dropbtn"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></button>
-                            <div class="dropdown-content bg-white">
-                       
-                              <a href="javascript:void(0)" class="dlt_post_" p_d=<?=$p_ost['post_id']?> >Delete</a>
-                              
-                            </div>
-                          </div>
-                          <?php } ?>
-                    </div> 
+              
                 
           </div>
         <link href="<?=base_url()?>assets/dist/demo.css" type="text/css" rel="stylesheet" />
@@ -3169,30 +3273,10 @@ $(document).on('click','.edit_post',function(){
             <div class="col-md-12">
                       <div id="holder">
             <div id="SlideShow">
-                <!-- Slide Images -->
-                <img src="https://unsplash.it/753/480?image=639" class="slideobject" title="#slide1"/>
-                <img src="https://unsplash.it/753/480?image=652" class="slideobject" />
-                <div class="slideobject">
-                    <iframe width="100%" height="100%" src="http://www.youtube.com/embed/NAIIQvhKCuQ" frameborder="0" allowfullscreen></iframe>
-                </div>
-                <img src="https://unsplash.it/753/480?image=660" class="slideobject" />
-                <div class="slideobject">
-                    <iframe width="100%" height="100%" src="http://www.youtube.com/embed/NAIIQvhKCuQ" frameborder="0" allowfullscreen></iframe>
-                </div>
+
             </div>
         </div>
       </div>
-        <script type="text/javascript">
-            $(document).ready(function(){
-                //Load the SlideShow
-                $('#SlideShow').SlideShow({
-                  slideDuration: 8000,
-                  transSpeed: 300,
-                  loop: true,
-                  infobar: true
-                });
-            });
-        </script>
 <!--                <div id="carouselExampleIndicators_post" class="carousel slide" data-ride="carousel">
                   <ol class="carousel-indicators">
                     <li data-target="#carouselExampleIndicators_post" data-slide-to="0" class="active"></li>
@@ -3221,15 +3305,14 @@ $(document).on('click','.edit_post',function(){
                 </div>
               </div> -->
             <div class="col-md-12">
-              <form method="" action="">
               <p>
-                <textarea name="" class="w-100" > desciption</textarea>
+                <textarea name="" class="w-100" data-emojiable="true" id="post_img_text"></textarea>
+                <input type="hidden" value="" id="post_img_id">
               </p> 
               <div class="float-right">
-                <button class="btn btn-success p-1 fy">Update</button>
+                <button class="btn btn-success p-1 fy post_img_update">Update</button>
                 <button type="button" class="btn btn-info ml-2 fy p-1">Cancel</button>
               </div>
-            </form>
             </div>
       
           </div>

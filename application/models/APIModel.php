@@ -34,8 +34,18 @@ function deleteNotification($frnd_id,$my_id){
 				return $this->db->get('post_')->result();
 		}
 
+		public function update_post_text($data){
+			$condition = array('post_id'=>$data['post_id']);
+			$this->db->where($condition);
+			if($this->db->update('post_',array('post'=>$data['post']))){
+				return true;
+			}else{
+				return false;
+			}
+		}
 
-			public function getAllPostDetails( $condition=""){
+
+		public function getAllPostDetails( $condition=""){
                 $this->db->select("users.user_id,users.full_name,users.profile_picture,post_.*");
                 $this->db->order_by('post_id','Desc');
                 if($condition!=""){
@@ -62,8 +72,17 @@ function deleteNotification($frnd_id,$my_id){
 		}
 		public function insert_post($data){
 			$this->db->insert('post_', $data);
-			if ($this->db->affected_rows() > 0) 
+			if ($insert=$this->db->insert_id()) 
 			{
+				$tags=explode(",",$data['tagged_friends']);
+				foreach ($tags as $tag) {
+					$string="<a href=".base_url()."Post/viewPost/".$insert.">You Were Tagged in a post</a>";
+					$notify=array('notification_'=>$string,
+								  'notify_by'=>$data['posted_by'],
+								  'notify_to'=>$tag,
+								  'status_'=>'0');
+					$this->db->insert('notifications_',$notify);
+				}
 			    return true;
 			}else {
 			    return false;
