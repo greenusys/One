@@ -98,7 +98,7 @@
 	    }
     	public function fetchJobPostData()
     	{
-    	   return $this->db->get('jobpost_')->result();
+    			return $this->db->select('*')->from('jobpost_')->join('cities', 'cities.cities_id = jobpost_.jobpost_cities')->get()->result();
     	}
 
 

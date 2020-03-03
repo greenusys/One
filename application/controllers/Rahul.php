@@ -1,5 +1,5 @@
 <?php
-	class Rahul extends CI_Controller{
+	class Rahul extends MY_Controller{
 		function __construct(){
 			parent::__construct();
 			$this->load->model('TestModel', 'Demo');

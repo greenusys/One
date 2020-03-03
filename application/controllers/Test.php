@@ -329,7 +329,34 @@ class Test extends MY_Controller {
 			}
 		}
 	}
-
+public function get_States()
+    {
+        $data=$this->Test->fetchState_Byid($this->input->post('countryid'));
+        
+        // print_r($data);
+        if(count($data)>0)
+        {
+            die(json_encode(array('code'=>1,"data"=>$data)));
+        }
+        else
+        {
+             die(json_encode(array('code'=>0,"data"=>"No data Found ")));
+        }
+    }
+     public function get_Cities()
+    {
+        $data=$this->Test->fetchCities_Byid($this->input->post('stateId'));
+        
+        // print_r($data);
+        if(count($data)>0)
+        {
+            die(json_encode(array('code'=>1,"data"=>$data)));
+        }
+        else
+        {
+             die(json_encode(array('code'=>0,"data"=>"No data Found ")));
+        }
+    }
 	public function changeCoverPhoto(){
 		if(isset($_POST['android'])){
 			$user_id=$this->input->post('user_id');
@@ -558,6 +585,8 @@ class Test extends MY_Controller {
 				 		    "jobpost_salary"=>$this->input->post('jobpost_salary'),
 				 		    "jobpost_salarytype"=>$this->input->post('jobpost_salarytype'),
 				 		    "jobpost_jobtype"=>$this->input->post('jobpost_jobtype'),
+				 		    "jobpost_company"=>$this->input->post('jobpost_company'),
+				 		    "jobpost_time"=>date('d-m-Y h:i:s'),
 				 		    "jobpost_image"=>$jobpostpicture,);
 
         	    $results=$this->Test->insert_JobPostData($data);
