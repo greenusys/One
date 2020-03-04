@@ -544,7 +544,7 @@
             </div>
             <div class="col-md-4 manage px-3 py-1">
               <div class="btn-comment post-btns">
-                <a href=""<?=base_url('Post/viewPost/').$p_ost['post_id']?>"><i class="fa fa-comment-o" aria-hidden="true"></i> Comments</a> 
+                <a href="<?=base_url('Post/viewPost/').$p_ost['post_id']?>"><i class="fa fa-comment-o" aria-hidden="true"></i> Comments</a> 
                 <span class=""><?=count($p_ost['total_comments'])?></span>
               </div>
             </div>
@@ -1266,7 +1266,7 @@
             </div>
             <div class="col-md-4 manage px-3 py-1">
               <div class="btn-comment post-btns">
-                <a href=""<?=base_url('Post/viewPost/').$p_ost['post_id']?>"><i class="fa fa-comment-o" aria-hidden="true"></i> Comments</a>
+                <a href="<?=base_url('Post/viewPost/').$p_ost['post_id']?>"><i class="fa fa-comment-o" aria-hidden="true"></i> Comments</a>
                 <span class=""><?=count($p_ost['total_comments'])?></span>
               </div>
             </div>
@@ -1459,7 +1459,7 @@
             </div>
             <div class="col-md-4 manage  px-3 py-1">
               <div class="btn-comment post-btns">
-                <a href=""<?=base_url('Post/viewPost/').$p_ost['post_id']?>"><i class="fa fa-comment-o" aria-hidden="true"></i> Comments</a>
+                <a href="<?=base_url('Post/viewPost/').$p_ost['post_id']?>"><i class="fa fa-comment-o" aria-hidden="true"></i> Comments</a>
                  <span class=""><?=count($p_ost['likes_data'])?></span>
                </div>
             </div>

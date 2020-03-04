@@ -76,7 +76,12 @@ class Gallery extends MY_Controller {
 		$data['MyFollowers']=$this->FRND->getMyFollowers($id);
 		$data['MyPosts']=$this->POST->getMyPosts($id);
 		$data['MyAlbum']=$this->Profile->getMyAlbum($id);
-	
+        $data['Trending']=$this->POST->getTrending();
+        $data['WorkDetails']=$this->getMyWorkDetails($id);
+        $data['SkillDetails']=$this->getMySkillsDetails($id);
+        $data['UniversityDetails']=$this->getMyUniversityDetails($id);
+        $data['SchoolDetails']=$this->getMySchoolDetails($id);
+
 		$this->load->view('web/template/header',$data);
 		$this->load->view('web/template/profileCover');
 		$this->load->view('web/template/sideSection');
@@ -136,5 +141,49 @@ class Gallery extends MY_Controller {
 		return count($this->APIM->getAllDetails('post_', $condition));
 		
 	}
-
+	    public function getMyWorkDetails($id){
+        $this->db->where('user_id',$id);
+        return $this->db->get('user_work_details')->result();
+    }
+    public function getMySchoolDetails($id){
+        $this->db->where('user_id',$id);
+        return $this->db->get('user_school_details')->result();
+    }
+    public function getMySkillsDetails($id){
+        $this->db->where('user_id',$id);
+        return $this->db->get('user_skills')->result();
+    }
+    public function addUniversity(){
+        // print_r($_POST);
+        if($this->input->post('graduated')=='on'){
+            $graduated=1;
+        }else{
+            $graduated=0;
+        }
+        $data=array(
+            "user_id"=>$_SESSION['logged_in'][0]->user_id,
+            "university"=>$this->input->post('university'),
+            "from_"=>$this->input->post('from_'),
+            "to_"=>$this->input->post('to_'),
+            "graduated"=>$graduated,
+            "course"=>$this->input->post('course'),
+            "description"=>$this->input->post('description'),
+            
+            "degree"=>$this->input->post('degree')
+        );    
+        $this->db->where($data);
+        if(count($this->db->get('user_university_details')->result())==0){
+            if($this->db->insert('user_university_details',$data)){
+                die(json_encode(array("code"=>1)));
+            }else{
+                die(json_encode(array("code"=>0,"msg"=>"Failed To Add Details.")));
+            }
+        }else{
+            die(json_encode(array("code"=>0,"msg"=>"Details Already Exists.")));
+        } 
+    }
+    public function getMyUniversityDetails($id){
+        $this->db->where('user_id',$id);
+        return $this->db->get('user_university_details')->result();
+    }
 }
