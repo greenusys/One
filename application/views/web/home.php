@@ -1993,7 +1993,7 @@ var like = ele.find("i").attr("class");
             // console.log(ext_array);
         }
         if ($.inArray('mp4', ext_array) != -1 && ($.inArray('jpg', ext_array) != -1 || $.inArray('jpeg', ext_array) != -1 || $.inArray('gif', ext_array) != -1 || $.inArray('png', ext_array) != -1)) {
-            alert('Video and Image');
+            //alert('Video and Image');
             formData.append('post_type','3');
         }
         else if($.inArray('mp4', ext_array) != -1){
