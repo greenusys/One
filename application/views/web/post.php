@@ -1,5 +1,5 @@
 <script type="text/javascript" src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
-    <script src="https://files.codepedia.info/files/uploads/iScripts/html2canvas.js"></script>
+<script src="https://files.codepedia.info/files/uploads/iScripts/html2canvas.js"></script>
 
 
   <style>

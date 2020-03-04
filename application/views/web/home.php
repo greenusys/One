@@ -1549,7 +1549,10 @@
       <div class="">
         <div class="card mt-2">
           <div class="p-3">
-            <h4 class="widget-title">Jobs</h4>
+            <div class="d-flex">
+              <h4 class="widget-title">Jobs</h4>
+              <a href="<?=base_url('Jobs/jobslist')?>" class="btn btn-primary jobs_btn" >See All</a>
+            </div>
             <div class="mt-4">
               <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
              <!--    <ol class="carousel-indicators">
@@ -1986,15 +1989,20 @@ var like = ele.find("i").attr("class");
         for (var i=0; i<selection.files.length; i++) {
             var ext = selection.files[i].name.substr(-3);
             ext_array.push(ext);
+            // console.log(ext);
+            // console.log(ext_array);
         }
         if ($.inArray('mp4', ext_array) != -1 && ($.inArray('jpg', ext_array) != -1 || $.inArray('jpeg', ext_array) != -1 || $.inArray('gif', ext_array) != -1 || $.inArray('png', ext_array) != -1)) {
-           // alert('Video and Image');
+            alert('Video and Image');
             formData.append('post_type','3');
         }
         else if($.inArray('mp4', ext_array) != -1){
-          // alert('video only');
-          formData.append('post_type','2');
-        }
+          if(ext_array.length > 1){
+              formData.append('post_type','3');
+            }else{
+              formData.append('post_type','2');
+            }
+          }
         else if($.inArray('jpg', ext_array) != -1 || $.inArray('jpeg', ext_array) != -1 || $.inArray('gif', ext_array) != -1 || $.inArray('png', ext_array) != -1){
           formData.append('post_type','1');
         }
@@ -2807,7 +2815,7 @@ function myFunction() {
         <div class="">
           <form id="add_resume">
             <label class="author">Upload Resume
-               <input type="file" name="file" class="form-control" accept=".pdf,.docx,.doc">
+               <input type="file" name="file" class="form-control" accept=".pdf,.docx,.doc" required="">
             </label>
             <input type="hidden" value="" name="jobpost_id" id="jobpost_id">
             <div class="text-center">
@@ -2837,6 +2845,11 @@ function myFunction() {
         <div class="">
           <form class="" id="jobpost" method="" action="">
              <div class="row px-3">
+              <label class="form-group w-100">Company Name
+                <input type="text" class="form-control" name="jobpost_company" placeholder="Company Name" required="">
+              </label>
+            </div>
+             <div class="row px-3">
               <label class="form-group w-100">Job Title
                 <input type="text" class="form-control" name="jobpost_title" placeholder="Job Title" required="">
               </label>
@@ -2849,7 +2862,7 @@ function myFunction() {
             <div class="row">
                 <div class="col-md-4">
                <label><strong>Country </strong>:</label>
-                  	<select  class="countries order-alpha input-style form-control " autocomplete="false" required name="country" id="countryId">
+                  	<select  class="countries order-alpha input-style form-control " autocomplete="false" required name="country" id="countryId__">
 						<option value="">Select Country</option>
 						<?php
                       foreach ($fetchCountries as $FC) 
@@ -2885,13 +2898,13 @@ function myFunction() {
                   <label class="form-group w-100">Salary Type
                     <select name="jobpost_salarytype" class="form-control" required="">
                       <option selected="" disabled="">Select Type</option>
-                      <option value="1">per hour</option>
-                      <option value="2">per day</option>
-                      <option value="3">per week</option>
-                      <option value="4">per two weeks</option>
-                      <option value="5">per month</option>
-                      <option value="6">per year</option>
-                      <option value="7">one time</option>
+                      <option value=" hour">per hour</option>
+                      <option value=" day">per day</option>
+                      <option value=" week">per week</option>
+                      <option value=" two weeks">per two weeks</option>
+                      <option value=" month">per month</option>
+                      <option value=" year">per year</option>
+                      <option value=" time">one time</option>
                     </select>
                   </label>
                 </div>
@@ -2900,11 +2913,11 @@ function myFunction() {
                 <label class="form-group w-100">Job Type
                   <select name="jobpost_jobtype" class="form-control" required="">
                     <option selected="" disabled="">Select Type</option>
-                    <option value="1">Full-time</option>
-                    <option value="2">Part-time</option>
-                    <option value="3">Internship</option>
-                    <option value="4">Volunteer</option>
-                    <option value="5">Contract</option>
+                    <option value="Full-time">Full-time</option>
+                    <option value="Part-time">Part-time</option>
+                    <option value="Internship">Internship</option>
+                    <option value="Volunteer">Volunteer</option>
+                    <option value="Contract">Contract</option>
                 
                   </select>
                 </label>
@@ -2921,10 +2934,10 @@ function myFunction() {
           </form>
         </div>
       </div>
-      <div class="modal-footer">
+  <!--     <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
         <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
+      </div> -->
     </div>
   </div>
 </div>
@@ -2970,7 +2983,7 @@ function myFunction() {
     </script>
      <script>
         $(document).ready(function(){
-          $('#countryId').on('change',function(){
+          $('#countryId__').on('change',function(){
             var countryid=$(this).val();
             // alert(countryid);
             $.ajax({
@@ -3063,266 +3076,3 @@ function myFunction() {
     //   }
     // })
   </script>
-
-<!--Comment Modal -->
-<div class="modal fade" id="commntModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Update Comment</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-            <div class="pl-2 w-100 _input d-flex">
-               <span> <img class="rounded-circle like_img" src="<?=base_url()?>assets/img/Profile_Pic/<?=$MyDetails[0]->profile_picture?>"></span>
-              <p class="ml-1 lead w-100 emoji-picker-container">
-                <textarea class="input-field cmnt_" id="comment_para" data-emojiable="true" type="text" name="comment"  placeholder="Add a Message">  </textarea>
-                  <!-- <input type="text" class="form-control" name="comment" data-emojiable="true"> -->
-              </p> 
-
-                    <input type="hidden" name="comnt_id" id="comment_id" value="">
-            </div>
-            <div class="float-right">
-              <button class="btn btn-success p-1 fy update_comment">Update</button>
-              <button type="button" data-dismiss="modal" aria-label="Close" class="btn btn-info ml-2 fy p-1">Cancel</button>
-            </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="modal fade" id="postTextEditModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Update Post</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-            <div class="pl-2 w-100 _input d-flex">
-               <span> <img class="rounded-circle like_img" src="<?=base_url()?>assets/img/Profile_Pic/<?=$MyDetails[0]->profile_picture?>"></span>
-              <p class="ml-1 lead w-100 emoji-picker-container">
-                <textarea class="input-field cmnt_" id="post_para" data-emojiable="true" type="text" name="comment"  placeholder="Add a Message">  </textarea>
-                  <!-- <input type="text" class="form-control" name="comment" data-emojiable="true"> -->
-              </p> 
-
-                    <input type="hidden" name="comnt_id" id="poster_id" value="">
-            </div>
-            <div class="float-right">
-              <button class="btn btn-success p-1 fy update_post_text">Update</button>
-              <button type="button" data-dismiss="modal" aria-label="Close" class="btn btn-info ml-2 fy p-1">Cancel</button>
-            </div>
-      </div>
-    </div>
-  </div>
-</div>
-<script>
-  $(document).on('click','.update_comment',function(){
-    var comment=$('#comment_para').parent().find(".emoji-wysiwyg-editor").html();
-    var c_id=$('#comment_id').val();
-    $.ajax({
-      type:'POST',
-      data:{
-        comment:comment,
-        c_id:c_id
-      },
-      url:'<?=base_url()?>APIController/editcomment',
-      success:function(response){
-        var response=JSON.parse(response);
-        if(response.code==1){
-          location.reload();
-        }
-
-      }
-    })
-  })
-
-$(document).on('click','.edit_post',function(){
-  var post_id=$(this).attr('p_d');
-  $.ajax({
-    type:'POST',
-    data:{
-      post_id:post_id
-    },
-    url:'<?=base_url()?>APIController/fetch_post_by_id',
-    success:function(response){
-      var html='';
-      var response = JSON.parse(response);
-      if (response.status==1) {
-        if (response.data[0].post_type!=0) {
-          var post_files = response.data[0].post_files;
-          var arr = post_files.split(',');
-          for(var i=0;i<arr.length;i++){
-            var extension = arr[i].replace(/^.*\./, '');
-            if (extension=="mp4") {
-              html+='<div class="slideobject">'+
-                    '<video controls="" class="w-100">'+
-                       '<source src="<?=base_url()?>assets/uploads/videos/'+arr[i]+'" type="video/mp4">'+
-                      'Your browser does not support the video tag.'+
-                    '</video>'+
-                    '</div>';
-            }
-            else{
-              html+='<img src="<?=base_url()?>assets/uploads/images/'+arr[i]+'" class="slideobject"/>';
-            }
-          }
-          $('#post_img_text').parent().find(".emoji-wysiwyg-editor").html(response.data[0].post);
-          $('#post_img_id').val(response.data[0].post_id);
-          $('#SlideShow').empty();
-          $('#SlideShow').append(html); 
-          $('#postEditModal').modal('show');
-          $('#SlideShow').SlideShow({
-                  slideDuration: 8000,
-                  transSpeed: 300,
-                  loop: false,
-                  infobar: false
-          });
-        }
-        else{
-          $('#poster_id').val(response.data[0].post_id);
-          $('#post_para').parent().find(".emoji-wysiwyg-editor").html(response.data[0].post);
-          $('#postTextEditModal').modal('show');
-        }
-      }
-    }
-  })
-})
-
-
-$(document).on('click','.update_post_text',function(){
-  var post=$('#post_para').val();
-  var post_id=$('#poster_id').val();
-  $.ajax({
-    type:'POST',
-    data:{
-      post:post,
-      post_id:post_id
-    },
-    url:'<?=base_url()?>APIController/update_post_text',
-    success:function(response){
-      var response = JSON.parse(response);
-      if (response.status==1) {
-        location.reload();
-      }
-    }
-  })
-})
-
-$(document).on('click','.post_img_update',function(){
-  var post = $('#post_img_text').val();
-  var post_id = $('#post_img_id').val();
-    $.ajax({
-    type:'POST',
-    data:{
-      post:post,
-      post_id:post_id
-    },
-    url:'<?=base_url()?>APIController/update_post_text',
-    success:function(response){
-      var response = JSON.parse(response);
-      if (response.status==1) {
-        location.reload();
-      }
-    }
-  })
-})
-</script>
-
-
-<!--Post Edit Modal -->
-<div class="modal fade" id="postEditModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal_width" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Update Post</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body p-0">
-          <div class="container-fluid">
-            <div class="">
-              <div class="card mt-4 p-2">
-          <div class="card-header ">
-            <div class="d-flex float-left">
-             <div> 
-              <a class="font-weight-bold" href="#">
-                 <img class="rounded-circle mr-2" src="<?=base_url()?>assets/img/Profile_Pic/<?=$MyDetails[0]->profile_picture?>" width="40"  height="40">
-               </a>
-             </div>
-            <div>
-              <a class="font-weight-bold _use_n" href="#">  
-               <?=$MyDetails[0]->full_name?>
-              </a>
-              <br>
-            </div>
-           
-           </div>
-              
-                
-          </div>
-        <link href="<?=base_url()?>assets/dist/demo.css" type="text/css" rel="stylesheet" />
-<!--         <script src="http://code.jquery.com/jquery-latest.js"></script> -->
-        <link href="<?=base_url()?>assets/dist/jquery-slideshow.css" type="text/css" rel="stylesheet" />
-        <script src="<?=base_url()?>assets/dist/jquery.slideshow.js" type="text/javascript"></script>          
-          <div class="card-body row text-justify">
-            <div class="col-md-12">
-                      <div id="holder">
-            <div id="SlideShow">
-
-            </div>
-        </div>
-      </div>
-<!--                <div id="carouselExampleIndicators_post" class="carousel slide" data-ride="carousel">
-                  <ol class="carousel-indicators">
-                    <li data-target="#carouselExampleIndicators_post" data-slide-to="0" class="active"></li>
-                    <li data-target="#carouselExampleIndicators_post" data-slide-to="1"></li>
-                    <li data-target="#carouselExampleIndicators_post" data-slide-to="2"></li>
-                  </ol>
-                  <div class="carousel-inner">
-                    <div class="carousel-item active">
-                      <img class="d-block w-100 post_ht" src="<?=base_url()?>assets/img/Profile_Pic/profile1.jpg" alt="First slide">
-                    </div>
-                    <div class="carousel-item">
-                      <img class="d-block w-100 post_ht" src="<?=base_url()?>assets/img/Profile_Pic/profile3.jpg" alt="Second slide">
-                    </div>
-                    <div class="carousel-item">
-                      <img class="d-block w-100 post_ht" src="<?=base_url()?>assets/img/Profile_Pic/profile2.jpg" alt="Third slide">
-                    </div>
-                  </div>
-                  <a class="carousel-control-prev" href="#carouselExampleIndicators_post" role="button" data-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="sr-only">Previous</span>
-                  </a>
-                  <a class="carousel-control-next" href="#carouselExampleIndicators_post" role="button" data-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="sr-only">Next</span>
-                  </a>
-                </div>
-              </div> -->
-            <div class="col-md-12">
-              <p>
-                <textarea name="" class="w-100" data-emojiable="true" id="post_img_text"></textarea>
-                <input type="hidden" value="" id="post_img_id">
-              </p> 
-              <div class="float-right">
-                <button class="btn btn-success p-1 fy post_img_update">Update</button>
-                <button type="button" class="btn btn-info ml-2 fy p-1">Cancel</button>
-              </div>
-            </div>
-      
-          </div>
-        </div>
-
-            </div>
-          </div> 
-            
-      </div>
-
-    </div>
-  </div>
-</div>

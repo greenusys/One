@@ -3,6 +3,8 @@
   $session=$this->session->userdata('logged_in');
 $profile_picture = $session[0]->profile_picture;
 ?>
+
+
 <!--Comment Modal -->
 <div class="modal fade" id="commntModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
@@ -14,26 +16,162 @@ $profile_picture = $session[0]->profile_picture;
         </button>
       </div>
       <div class="modal-body">
-         <form method="POST" class="w-100 ad_cmnt" >
-            <div class="pl-2 w-100 _input d-flex">
-               <span> <img class="rounded-circle like_img" src="<?=base_url()?>assets/img/Profile_Pic/<?=$profile_picture?>"></span>
-              <p class="ml-1 lead w-100 emoji-picker-container">
-                <textarea class="input-field cmnt_" id="comment_para" data-emojiable="true" type="text" name="comment"  placeholder="Add a Message">  </textarea>
-                  <!-- <input type="text" class="form-control" name="comment" data-emojiable="true"> -->
-              </p> 
+          <div class="pl-2 w-100 _input d-flex">
+             <span> <img class="rounded-circle like_img" src="<?=base_url()?>assets/img/Profile_Pic/<?=$MyDetails[0]->profile_picture?>"></span>
+            <p class="ml-1 lead w-100 emoji-picker-container">
+              <textarea class="input-field cmnt_" id="comment_para" data-emojiable="true" type="text" name="comment"  placeholder="Add a Message">  </textarea>
+                <!-- <input type="text" class="form-control" name="comment" data-emojiable="true"> -->
+            </p> 
 
-                    <input type="hidden" name="comnt_id" id="comment_id" value="">
-            </div>
-            <div class="float-right">
-              <button class="btn btn-success p-1 fy">Update</button>
-              <button type="button" class="btn btn-info ml-2 fy p-1">Cancel</button>
-            </div>
-          </form>
+                  <input type="hidden" name="comnt_id" id="comment_id" value="">
+          </div>
+          <div class="float-right">
+            <button class="btn btn-success p-1 fy update_comment">Update</button>
+            <button type="button" data-dismiss="modal" aria-label="Close" class="btn btn-info ml-2 fy p-1">Cancel</button>
+          </div>
       </div>
-
     </div>
   </div>
 </div>
+
+<div class="modal fade" id="postTextEditModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Update Post</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+            <div class="pl-2 w-100 _input d-flex">
+               <span> <img class="rounded-circle like_img" src="<?=base_url()?>assets/img/Profile_Pic/<?=$MyDetails[0]->profile_picture?>"></span>
+              <p class="ml-1 lead w-100 emoji-picker-container">
+                <textarea class="input-field cmnt_" id="post_para" data-emojiable="true" type="text" name="comment"  placeholder="Add a Message">  </textarea>
+                  <!-- <input type="text" class="form-control" name="comment" data-emojiable="true"> -->
+              </p> 
+
+                    <input type="hidden" name="comnt_id" id="poster_id" value="">
+            </div>
+            <div class="float-right">
+              <button class="btn btn-success p-1 fy update_post_text">Update</button>
+              <button type="button" data-dismiss="modal" aria-label="Close" class="btn btn-info ml-2 fy p-1">Cancel</button>
+            </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  $(document).on('click','.update_comment',function(){
+    var comment=$('#comment_para').parent().find(".emoji-wysiwyg-editor").html();
+    var c_id=$('#comment_id').val();
+    $.ajax({
+      type:'POST',
+      data:{
+        comment:comment,
+        c_id:c_id
+      },
+      url:'<?=base_url()?>APIController/editcomment',
+      success:function(response){
+        var response=JSON.parse(response);
+        if(response.code==1){
+          location.reload();
+        }
+
+      }
+    })
+  })
+
+$(document).on('click','.edit_post',function(){
+  var post_id=$(this).attr('p_d');
+  $.ajax({
+    type:'POST',
+    data:{
+      post_id:post_id
+    },
+    url:'<?=base_url()?>APIController/fetch_post_by_id',
+    success:function(response){
+      var html='';
+      var response = JSON.parse(response);
+      if (response.status==1) {
+        if (response.data[0].post_type!=0) {
+          var post_files = response.data[0].post_files;
+          var arr = post_files.split(',');
+          for(var i=0;i<arr.length;i++){
+            var extension = arr[i].replace(/^.*\./, '');
+            if (extension=="mp4") {
+              html+='<div class="slideobject">'+
+                    '<video controls="" class="w-100">'+
+                       '<source src="<?=base_url()?>assets/uploads/videos/'+arr[i]+'" type="video/mp4">'+
+                      'Your browser does not support the video tag.'+
+                    '</video>'+
+                    '</div>';
+            }
+            else{
+              html+='<img src="<?=base_url()?>assets/uploads/images/'+arr[i]+'" class="slideobject"/>';
+            }
+          }
+          $('#post_img_text').parent().find(".emoji-wysiwyg-editor").html(response.data[0].post);
+          $('#post_img_id').val(response.data[0].post_id);
+          $('#SlideShow').empty();
+          $('#SlideShow').append(html); 
+          $('#postEditModal').modal('show');
+          $('#SlideShow').SlideShow({
+                  slideDuration: 8000,
+                  transSpeed: 300,
+                  loop: false,
+                  infobar: false
+          });
+        }
+        else{
+          $('#poster_id').val(response.data[0].post_id);
+          $('#post_para').parent().find(".emoji-wysiwyg-editor").html(response.data[0].post);
+          $('#postTextEditModal').modal('show');
+        }
+      }
+    }
+  })
+})
+
+
+$(document).on('click','.update_post_text',function(){
+  var post=$('#post_para').val();
+  var post_id=$('#poster_id').val();
+  $.ajax({
+    type:'POST',
+    data:{
+      post:post,
+      post_id:post_id
+    },
+    url:'<?=base_url()?>APIController/update_post_text',
+    success:function(response){
+      var response = JSON.parse(response);
+      if (response.status==1) {
+        location.reload();
+      }
+    }
+  })
+})
+
+$(document).on('click','.post_img_update',function(){
+  var post = $('#post_img_text').val();
+  var post_id = $('#post_img_id').val();
+    $.ajax({
+    type:'POST',
+    data:{
+      post:post,
+      post_id:post_id
+    },
+    url:'<?=base_url()?>APIController/update_post_text',
+    success:function(response){
+      var response = JSON.parse(response);
+      if (response.status==1) {
+        location.reload();
+      }
+    }
+  })
+})
+</script>
 
 
 <!--Post Edit Modal -->
@@ -54,55 +192,33 @@ $profile_picture = $session[0]->profile_picture;
             <div class="d-flex float-left">
              <div> 
               <a class="font-weight-bold" href="#">
-                 <img class="rounded-circle mr-2" src="<?=base_url()?>assets/img/Profile_Pic/<?=$profile_picture?>" width="40"  height="40">
+                 <img class="rounded-circle mr-2" src="<?=base_url()?>assets/img/Profile_Pic/<?=$MyDetails[0]->profile_picture?>" width="40"  height="40">
                </a>
              </div>
             <div>
               <a class="font-weight-bold _use_n" href="#">  
-               Name
+               <?=$MyDetails[0]->full_name?>
               </a>
               <br>
-                <small>
-                  
-                 <time class="timeago" datetime=" ">date</time>
-                </small>
             </div>
            
            </div>
-               
-                    <div class="float-right d-flex mt-2">
-                      <div class="">
-                         <?php
-                        $user_id;
-                        $post_id=$p_ost['post_id'];
-                        $this->db->where(array('user_id'=>$user_id,'post_id'=>$post_id));
-                        $re=$this->db->get('user_fav_section')->result();
-                        if(count($re)==0){
-                        ?>
-                        <span class="favrt" post_id="<?=$p_ost['post_id']?>" title="favourite"><i class="far fa-star"></i></span>
-                        <?php
-                        }else{?>
-                        <span class="favrt star" post_id="<?=$p_ost['post_id']?>" title="favourite"><i class="fas fa-star text-gold"></i></span>
-                        <?php }
-                        ?>
-                        <!-- <span><i class="fas fa-star"></i></span> -->
-                      </div>
-                      <?php if($_SESSION['logged_in'][0]->user_id==$p_ost['user_id']){ ?>
-                          <div class="dropdown ml-3">
-                            <button class="dropbtn"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></button>
-                            <div class="dropdown-content bg-white">
-                       
-                              <a href="javascript:void(0)" class="dlt_post_" p_d=<?=$p_ost['post_id']?> >Delete</a>
-                              
-                            </div>
-                          </div>
-                          <?php } ?>
-                    </div> 
+              
                 
           </div>
+        <link href="<?=base_url()?>assets/dist/demo.css" type="text/css" rel="stylesheet" />
+<!--         <script src="http://code.jquery.com/jquery-latest.js"></script> -->
+        <link href="<?=base_url()?>assets/dist/jquery-slideshow.css" type="text/css" rel="stylesheet" />
+        <script src="<?=base_url()?>assets/dist/jquery.slideshow.js" type="text/javascript"></script>          
           <div class="card-body row text-justify">
-            <div class="col-md-6">
-               <div id="carouselExampleIndicators_post" class="carousel slide" data-ride="carousel">
+            <div class="col-md-12">
+                      <div id="holder">
+            <div id="SlideShow">
+
+            </div>
+        </div>
+      </div>
+<!--                <div id="carouselExampleIndicators_post" class="carousel slide" data-ride="carousel">
                   <ol class="carousel-indicators">
                     <li data-target="#carouselExampleIndicators_post" data-slide-to="0" class="active"></li>
                     <li data-target="#carouselExampleIndicators_post" data-slide-to="1"></li>
@@ -128,17 +244,16 @@ $profile_picture = $session[0]->profile_picture;
                     <span class="sr-only">Next</span>
                   </a>
                 </div>
-              </div>
-            <div class="col-md-6">
-              <form method="" action="">
+              </div> -->
+            <div class="col-md-12">
               <p>
-                <textarea name="" class="w-100" > desciption</textarea>
+                <textarea name="" class="w-100" data-emojiable="true" id="post_img_text"></textarea>
+                <input type="hidden" value="" id="post_img_id">
               </p> 
               <div class="float-right">
-                <button class="btn btn-success p-1 fy">Update</button>
+                <button class="btn btn-success p-1 fy post_img_update">Update</button>
                 <button type="button" class="btn btn-info ml-2 fy p-1">Cancel</button>
               </div>
-            </form>
             </div>
       
           </div>

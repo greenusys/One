@@ -335,6 +335,13 @@ position: absolute;
   {
     height: 100%;
   }*/
+
+  .jobs_btn{
+    right: 16px;
+    padding: 0px 4px;
+    font-size: 14px;
+    position: absolute;
+  }
  .tag_pht{
       font-size: 16px;
       padding: 4px;
@@ -349,6 +356,10 @@ position: absolute;
   }
   .ext_img{
         height: 196px;
+  }
+  .notify_img{
+        height: 30px;
+    width: 30px;
   }
   #srchFndLs li{
     padding:5px 0px ;
@@ -414,6 +425,11 @@ a:hover {
     color: #666666;
         font-weight: 500;
     padding-top: 10px;
+}
+.notify_read{
+    bottom: 0px;
+    position: absolute;
+    width: 100%;
 }
 </style>
 
@@ -532,24 +548,25 @@ a:hover {
     			<li class="nav-item messenger mr-3">
     				<a class="nav-link p-1 text-center " id="openMessage" href="javascript:void(0)"><span><i class="fa fa-comments-o" aria-hidden="true" title="Message"></i><span class="badge badge_rt_notify"><?=count($myMessages)?></span></span><div class="mt-n2">Messages</div></a>
     			  <ul class="dropdown-menu notify-drop p-3 message_box" style="width: 348px; height:348px; overflow-y:scroll">
-              <div class="notify-drop-title">
+             <!--  <div class="notify-drop-title">
                 <div class="row">
                   <div class="col-md-6 col-sm-6 col-xs-6"><a href="<?=base_url('Message')?>">Messages (<b><?=count($myMessages)?></b>)</a></div>
                   <div class="col-md-6 col-sm-6 col-xs-6 text-right"><a href="" class="rIcon allRead" data-tooltip="tooltip" data-placement="bottom" title="close"><i class="fa fa-dot-circle-o"></i></a></div>
                 </div>
-              </div>
+              </div> -->
               <!-- end notify title -->
               <!-- notify content -->
-              <div class="drop-content">
+              <!-- <div class="drop-content"> -->
                
                 <?php
                   foreach($myMessages as $msgs){
+                   // print_r($msgs);
                       ?>
                         <li>
                           <div class="row p-1">
                       
-                              <div class="col-md-2">
-                                <img src="" onerror="this.src='<?=base_url()?>assets/img/Profile_Pic/default.png';" alt="" style="border-radius:50%" width="100%">
+                              <div class="col-md-2 pt-1">
+                                <img src="<?=base_url()?>assets/img/Profile_Pic/<?=$msgs->profile_picture?>" onerror="this.src='<?=base_url()?>assets/img/Profile_Pic/default.png';" alt=""  class="notify_img rounded-circle" >
                               </div>
                               <div class="col-md-10">
                                 <p class="notfication_text"><span><strong><?=$msgs->full_name?></strong> : </span><?=$msgs->message_?> <span class="time float-right">1 Seconds Ago</span></p>
@@ -560,8 +577,8 @@ a:hover {
                       <?php
                   }
                 ?>
-              </div>
-              <div class="notify-drop-footer text-center">
+              <!-- </div> -->
+              <div class="notify-drop-footer notify_read text-center">
                 <a href=""><i class="fa fa-eye"></i> Read More</a>
               </div>
             </ul>
@@ -570,31 +587,32 @@ a:hover {
            <li class="nav-item notification mr-3">
             <a class="nav-link p-1 text-center"  id="notific" href="javascript:void(0)"><span><i class="fa fa-bell-o" aria-hidden="true" title="Notification"></i><span class="badge badge_rt_notify"><?=count($myNotifications)?></span></span><div class="mt-n2">Notification</div></a>
             <ul class="dropdown-menu notify-drop p-3 notifications_box" style="width: 348px; height:348px">
-              <div class="notify-drop-title">
+              <!-- <div class="notify-drop-title">
                 <div class="row">
                   <div class="col-md-6 col-sm-6 col-xs-6"><a href="<?=base_url('Test/notifications')?>">Notifications (<b><?=count($myNotifications)?></b>)</a></div>
                   <div class="col-md-6 col-sm-6 col-xs-6 text-right"><a href="" class="rIcon allRead" data-tooltip="tooltip" data-placement="bottom" title="close"><i class="fa fa-dot-circle-o"></i></a></div>
                 </div>
-              </div>
+              </div> -->
               <!-- end notify title -->
               <!-- notify content -->
-              <div class="drop-content">
+              <!-- <div class="drop-content"> -->
                 <?php
                   foreach($myNotifications as $notifications){
-                    // print_r($notifications);
+                  //   print_r($notifications);
                     ?>
-                      <li>
-                        <div class="row p-3">
+                      <li class="border-bottom">
+                        <div class="row ">
                     
-                            <div class="col-md-2">
-                              <img src="<?=base_url('assets/img/Profile_Pic/').$notifications->profile_picture?>" onerror="this.src='<?=base_url()?>assets/img/Profile_Pic/default.png';" alt="" style="border-radius:50%" width="100%">
+                            <div class="col-md-2 pt-1">
+                             <a href="<?=base_url('Profile/'.$notifications->user_id)?>"> <img src="<?=base_url('assets/img/Profile_Pic/').$notifications->profile_picture?>" onerror="this.src='<?=base_url()?>assets/img/Profile_Pic/default.png';" alt="" class="notify_img rounded-circle" >
+                             </a>
                             </div>
-                            <div class="col-md-10">
-                              <p class="notfication_text"><?=$notifications->notification_?><span class="time float-right"> 1 Seconds Ago</span></p>
+                            <div class="col-md-10 pl-1  ">
+                              <p class="notfication_text"><a class="author" href="<?=base_url('Profile/'.$notifications->user_id)?>"><?=$notifications->full_name?> </a> <span><?=$notifications->notification_?></span><span class="time float-right"> 1 Seconds Ago</span></p>
                             </div>
                         
                         </div>
-                        <hr>
+                        
                       </li>
                     <?php
                   }
@@ -626,9 +644,9 @@ a:hover {
                   </div>
                   <hr>
                 </li> -->
-              </div>
-              <div class="notify-drop-footer text-center">
-                <a href=""><i class="fa fa-eye"></i> Read More</a>
+              <!-- </div> -->
+              <div class="notify-drop-footer notify_read text-center">
+                <a href="<?=base_url('Test/notifications')?>"><i class="fa fa-eye"></i> Read More</a>
               </div>
             </ul>
           </li> 

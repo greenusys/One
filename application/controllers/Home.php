@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Home extends CI_Controller {
+class Home extends MY_Controller {
 
 	public function __construct(){	
 		parent::__construct();
@@ -10,8 +10,13 @@ class Home extends CI_Controller {
 		$this->load->model('FriendsModel','FRND');
 		$this->load->model('APIModel','APIM');
 		$this->load->model('PostModel','POST');
-			$this->load->model('TestModel','Test');
+		$this->load->model('TestModel','Test');
+
 	}
+
+
+	// $this->fetchNotification();
+	// die();
 	public function getAllMyPost(){
 		$my_Id_=$_SESSION['logged_in'][0]->user_id;
 		$condition=array("posted_by"=>$my_Id_);
@@ -23,10 +28,9 @@ class Home extends CI_Controller {
 
 	}
 	public function index()
-	{	
-
+	{
 		//$this->getAllPostLikes();
-       
+      
 		$id=$_SESSION['logged_in'][0]->user_id;
 		$offset=0;
 		$limit=5;
