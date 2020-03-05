@@ -1616,30 +1616,54 @@
         </div>
         
       </div>
-      <div class="card mt-3" id="">
+      <div class="card mt-3" id="page_you_may_like">
         <div class="p-3">
           <h4 class="widget-title">Page You May Like</h4>
         </div>
         <div class="card-body p-0">
           <ul class="list-unstyled">
              <?php
-              // print_r($RandomPeople);
-             
-              foreach ($RandomPeople as $user) {
-                $nameArrI=explode(" ",$user->full_name);
+             //  print_r($fetchPages);
+             // die;
+              foreach ($fetchPages as $user) {
+                $nameArrI=explode(" ",$user['full_name']);
+                $category='';
+                switch ($user['category']) {
+                  case 1:$category="Personal Blog";break;
+                  case 2:$category="Product & Services";break;
+                  case 3:$category="Shopping & Retail";break;
+                  case 4:$category="Health & Beauty";break;
+                  case 5:$category="Super Market & Convenience";break;
+                  
+                  default:$category="Others";
+                    # code...
+                    break;
+                }
+
                 ?>
                  <li class="row mx-0 folow_rw ">
                     <div class="col-md-3 pt-1">
+<<<<<<< HEAD
+                      <a href="<?=base_url('Profile/').$user['user_id']?>">
+                        <img class="rounded-circle " src="<?=base_url()?>assets/img/Profile_Pic/<?=$user['upage_profilepic']?>" onerror="this.src='<?=base_url()?>assets/img/Profile_Pic/default.png';" width="40px" height="40px">
+=======
                       <a href="<?=base_url('Profile/').$user->user_id?>">
                         <img class="rounded-circle " src="<?=base_url()?>assets/uploads/images/<?=$user->profile_picture?>" onerror="this.src='<?=base_url()?>assets/uploads/images/default.png';" width="40px" height="40px">
+>>>>>>> 5e19a9ad45900f8d7c87bfa588e2a553ab5b715d
                       </a>
                     </div>
                     <div class="col-md-7 p-0">
-                      <span class=" author"><?=$user->full_name?></span>
-                      <div class="mt-n2"> <small>Adventure</small></div>
+                      <span class=" author"><?=$user['full_name']?></span>
+                      <div class="mt-n2"> <small><?=$category?></small> <small class="text-danger">Likes: <?=$user['total_likes']?></small></div>
                     </div>
                     <div class="col-md-2 p-0">
-                      <span class="text-danger pge_lke"><i class="fa fa-heart-o" aria-hidden="true"></i></span>
+                      <a href="javascript:void(0)" class="likeThisPage" page="<?=$user['page_id']?>">
+                        <span class="text-danger pge_lke">
+                          
+                          
+                          <i class="fa <?= ($user['like'] == 1 ? 'fa-heart' : 'fa-heart-o');?>" aria-hidden="true"></i>
+                        </span>
+                      </a>  
                     </div>
                   </li>
                 <?php
@@ -1703,12 +1727,13 @@
                 </ol> -->
                 <div class="carousel-inner">
                     <?php 
+                    // print_r($fetchAds);
                          $i=0;
-                          foreach($fetchjobpost as $FJB)
+                          foreach($fetchAds as $FJB)
                           {
                               
                             // print_r($FJB);
-                            $img=$FJB->jobpost_image;
+                            $img=$FJB->ad_image;
                             //   $myImages=explode(',',$FJB->jobpost_image);
                             if($i==0)
                             {
@@ -1722,9 +1747,9 @@
                             <div class="carousel-item <?=$st?>">
                                 <div class="">
                                   <div class="">
-                                     <img src="<?=base_url()?>/assets/img/advertize.jpg" class="d-block w-100" alt="..."  onerror="this.src='<?=base_url()?>assets/img/jobs.jpg';">
+                                     <a href="<?=$FJB->ad_url?>"><img src="<?=base_url('assets/Ads/').$img?>" class="d-block w-100" alt="..."  onerror="this.src='<?=base_url()?>assets/img/jobs.jpg';"></a>
                                   </div>
-                                 
+                                 <span><strong>Posted By:</strong> <a href="<?=base_url('Profile/').$FJB->user_id?>"><?=$FJB->full_name?></a></span>
                                 </div>
                               </div>
                             <?php
@@ -1788,6 +1813,34 @@
 
 
 <script type="text/javascript">
+  $(document).on('click','.likeThisPage',function(){
+
+    var element=$(this);
+    var page=$(this).attr('page');
+    // console.log(element.find('span').find('i'));
+    var i=element.find('span').find('i');
+    if(i.hasClass('fa-heart')){
+      i.removeClass('fa-heart');
+      console.log("User Dis Like This Page.");
+      i.addClass('fa-heart-o');
+      var todo=0;
+    }else{
+      console.log("User Like This Page.");
+      i.removeClass('fa-heart-o');
+      i.addClass('fa-heart');
+      var todo=1;
+    }
+    $.ajax({
+      url:"<?=base_url('Page/actPage')?>",
+      type:"post",
+      data:{todo:todo,page:page},
+      success:function(response){
+        // console.log(response);
+        // $("#page_you_may_like").load(location.href+"#page_you_may_like");
+      }
+    });
+
+  });
 $(document).ready(function(){
 var story_cnt ;
   $(document).on('click','#addStatus',function(){
@@ -3147,7 +3200,7 @@ function myFunction() {
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
       </div>
     </div>
   </div>
@@ -3297,7 +3350,7 @@ function myFunction() {
           </div>
           <div class="form-group">
             <label>Ad URL:</label>
-            <input type="text" name="ad_url" class="form-control">
+            <input type="url" name="ad_url" class="form-control">
           </div>
           <div class="form-group">
             
