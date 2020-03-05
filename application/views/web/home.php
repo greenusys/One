@@ -1643,13 +1643,9 @@
                 ?>
                  <li class="row mx-0 folow_rw ">
                     <div class="col-md-3 pt-1">
-<<<<<<< HEAD
                       <a href="<?=base_url('Profile/').$user['user_id']?>">
                         <img class="rounded-circle " src="<?=base_url()?>assets/img/Profile_Pic/<?=$user['upage_profilepic']?>" onerror="this.src='<?=base_url()?>assets/img/Profile_Pic/default.png';" width="40px" height="40px">
-=======
-                      <a href="<?=base_url('Profile/').$user->user_id?>">
-                        <img class="rounded-circle " src="<?=base_url()?>assets/uploads/images/<?=$user->profile_picture?>" onerror="this.src='<?=base_url()?>assets/uploads/images/default.png';" width="40px" height="40px">
->>>>>>> 5e19a9ad45900f8d7c87bfa588e2a553ab5b715d
+
                       </a>
                     </div>
                     <div class="col-md-7 p-0">
