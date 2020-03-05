@@ -1639,17 +1639,11 @@
                     # code...
                     break;
                 }
-
                 ?>
                  <li class="row mx-0 folow_rw ">
                     <div class="col-md-3 pt-1">
-<<<<<<< HEAD
                       <a href="<?=base_url('Profile/').$user['user_id']?>">
-                        <img class="rounded-circle " src="<?=base_url()?>assets/img/Profile_Pic/<?=$user['upage_profilepic']?>" onerror="this.src='<?=base_url()?>assets/img/Profile_Pic/default.png';" width="40px" height="40px">
-=======
-                      <a href="<?=base_url('Profile/').$user->user_id?>">
-                        <img class="rounded-circle " src="<?=base_url()?>assets/uploads/images/<?=$user->profile_picture?>" onerror="this.src='<?=base_url()?>assets/uploads/images/default.png';" width="40px" height="40px">
->>>>>>> 5e19a9ad45900f8d7c87bfa588e2a553ab5b715d
+                        <img class="rounded-circle " src="<?=base_url()?>assets/uploads/images/<?=$user['upage_profilepic']?>" onerror="this.src='<?=base_url()?>assets/uploads/images/default.png';" width="40px" height="40px">
                       </a>
                     </div>
                     <div class="col-md-7 p-0">
@@ -1761,17 +1755,11 @@
                  
                   
                 </div>
-                <a class="carousel-control-prev carousel_arrow_set" href="#carouselExampleIndicators2" role="button" data-slide="prev" style="
-    background: blue;
-    padding: 11px;
-">
+                <a class="carousel-control-prev carousel_arrow_set" href="#carouselExampleIndicators2" role="button" data-slide="prev" style="background: blue;padding: 11px;">
                   <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                   <span class="sr-only">Previous</span>
                 </a>
-                <a class="carousel-control-next carousel_arrow_set" href="#carouselExampleIndicators2" role="button" data-slide="next" style="
-    background: blue;
-    padding: 11px;
-">
+                <a class="carousel-control-next carousel_arrow_set" href="#carouselExampleIndicators2" role="button" data-slide="next" style="background: blue;padding: 11px;">
                   <span class="carousel-control-next-icon" aria-hidden="true"></span>
                   <span class="sr-only">Next</span>
                 </a>
