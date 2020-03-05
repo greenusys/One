@@ -2448,7 +2448,7 @@ function getAjaxData(offset)
                 {
                   html+='<div class="dropdown ml-3"><button class="dropbtn"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></button><div class="dropdown-content bg-white"><a href="javascript:void(0)"  class="edit_post"  p_d="'+res.data[i].post_id+'">Edit</a><a href="javascript:void(0)" class="dlt_post_" p_d="'+res.data[i].post_id+'" >Delete</a></div></div></div>'; 
                 }
-              html+='</div>';
+              html+='</div></div>';
               html+='<div class="card-body py-0">';
               if(res.data[i].post!=null){
                    html+='<p>'+res.data[i].post+'</p>';
@@ -2641,7 +2641,7 @@ function getAjaxData(offset)
                 {
                   html+='<div class="dropdown ml-3"><button class="dropbtn"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></button><div class="dropdown-content bg-white"><a href="javascript:void(0)"  class="edit_post"  p_d="'+res.data[i].post_id+'">Edit</a><a href="javascript:void(0)" class="dlt_post_" p_d="'+res.data[i].post_id+'" >Delete</a></div></div></div>'; 
                 }
-              html+='</div>';
+              html+='</div></div>';
               html+='<div class="card-body py-0">';
               if(res.data[i].post!=null){
                    html+='<p>'+res.data[i].post+'</p>';
@@ -2778,7 +2778,7 @@ function getAjaxData(offset)
                    html+='</div>';   
                     html+='</div>';
                   }
-                html+='</div>';
+              
               }
               else
               {
@@ -3024,7 +3024,7 @@ function getAjaxData(offset)
               html+='</div>';
               html+='</form>';
               html+='</div></div>';
-              html+='</div></div>';
+              html+='</div></div></div>';
               
             }
              // $("#pst_shw_").empty();

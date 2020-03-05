@@ -166,7 +166,8 @@ class Login extends CI_Controller {
 		$otp=1234;//to be randomized later
 	   	$otp_hashed=$this->hashing($otp);
 	   	$hashed_password=$this->hashing($password);
-		if ($this->checkEmail($email_phone)) {
+		if ($this->checkEmail($email_phone)) 
+		{
 	   		$email=$email_phone;
 	   		$data = array('email'=>$email);
 	   		$result=$this->Login_model->check_user($data);
@@ -174,32 +175,67 @@ class Login extends CI_Controller {
 	   			die(json_encode(array('status' =>'0','msg'=>'User Already Exists' )));
 	   		}
 	   		else{
-				die(json_encode(array('status' =>'1','name'=>$name,'email'=>$email,'password'=>$hashed_password,'otp'=>$otp_hashed)));
+				die(json_encode(array('status' =>'1','name'=>$name,'email_phone'=>$email,'password'=>$hashed_password,'otp'=>$otp_hashed,'gender'=>$gender,'date_of_birth'=>$dob)));
 			}
-		}else{
+		}
+		else{
 			$phone=$email_phone;
+	   		$data = array('phone'=>$phone);
+	   		$result=$this->Login_model->check_user_phone($data);
+	   		if($result){
+	   			die(json_encode(array('status' =>'0','msg'=>'User Already Exists' )));
+	   		}
+	   		else{
+				die(json_encode(array('status' =>'1','name'=>$name,'email_phone'=>$phone,'password'=>$hashed_password,'otp'=>$otp_hashed,'gender'=>$gender,'date_of_birth'=>$dob)));
+			}
 		}
 	}
 
 	public function signup(){
 		$verify_otp=$_POST['verify_otp'];
 		$given_hash=$_POST['otp'];
+		$dod=$_POST['dob-day'];
+		$dom=$_POST['dob-month'];
+		$doy=$_POST['dob-year'];
+		$newdob='$dod'-'$dom'-'$doy';
+		$gender=$_POST['gender'];
 		$parts = explode('$', $given_hash);
 		$test_hash = crypt($verify_otp, sprintf('$%s$%s$%s$', $parts[1], $parts[2], $parts[3]));
-		if($given_hash === $test_hash){
-			$data=array('email' =>$_POST['email'], 
-						'password' =>$_POST['password'],
-						'full_name'=>$_POST['name']);
-			$result=$this->Login_model->insert_user($data);
-			if($result){
-				die(json_encode(array('status' =>'1' ,'msg'=>'User Registered' )));
-			}
-			else{
-				die(json_encode(array('status' =>'0' ,'msg'=>'Error' )));
-			}
+			if($given_hash === $test_hash)
+		{
+	    	if ($this->checkEmail($_POST['email_phone'])) 
+		    {
+    			$data=array('email' =>$_POST['email_phone'], 
+    						'password' =>$_POST['password'],
+    						'full_name'=>$_POST['name'],'gender'=>$gender,'date_of_birth'=>$newdob);
+    			$result=$this->Login_model->insert_user($data);
+    			if($result)
+    			{
+    				die(json_encode(array('status' =>'1' ,'msg'=>'User Registered Successfully' )));
+    			}
+    			else
+    			{
+    				die(json_encode(array('status' =>'0' ,'msg'=>'Error' )));
+    			}
+		    }
+		    else
+		    {
+		        $data=array('phone' =>$_POST['email_phone'], 
+    						'password' =>$_POST['password'],
+    						'full_name'=>$_POST['name'],'gender'=>$gender,'date_of_birth'=>$newdob);
+    			$result=$this->Login_model->insert_user($data);
+    			if($result)
+    			{
+    				die(json_encode(array('status' =>'1' ,'msg'=>'User Registered Successfully' )));
+    			}
+    			else
+    			{
+    				die(json_encode(array('status' =>'0' ,'msg'=>'Error' )));
+    			}
+		    }
 		}
 		else{
-			echo "not workin";
+			die(json_encode(array('status' =>'0' ,'msg'=>'Error' )));
 		}
 	}
 
