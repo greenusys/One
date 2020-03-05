@@ -192,6 +192,8 @@ class Post extends MY_Controller {
 	// 	return count($this->APIM->getAllDetails('post_', $condition));
 		
 	// }
-	
+	public function AddAds(){
+		print_r($_POST);
+	}
 }
 ?>

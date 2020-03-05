@@ -76,6 +76,7 @@ class Home extends MY_Controller {
 		$data['MyDetails']=$this->Profile->getMyDetails($id);
 		$data['notify']=$this->Home->fetchnofication($id);
 		$data['birthdays']=$this->Test->UpComingBirthdays();
+		$data['adsCategory']=$this->db->get('ads_category')->result();
 			// if(count($result)>0){
 			// 	die(json_encode(array("code"=>1,"data"=>$result)));
 			// }else{

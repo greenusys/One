@@ -1598,42 +1598,7 @@
                           }
                           ?>
                   
-                  <!--<div class="carousel-item">-->
-                  <!--  <div class="">-->
-                  <!--    <div class="">-->
-                  <!--      <img src="<?=base_url()?>assets/uploads/images/Post-image-2020-01-31-08-37-180.jpg" class="d-block w-100" alt="...">-->
-                  <!--    </div>-->
-                  <!--    <div class="row m-0">-->
-                  <!--        <div class="col-md-8 p-0">-->
-                  <!--          <ul class="unstyled m-0">-->
-                  <!--           <li><small>Uttrakhand -Greenusys</small></li>-->
-                  <!--           <li class="line_het"><span class="author">Web Content Writer</span></li>-->
-                  <!--           <li><small>Dehradun - Full Time</small></li>-->
-                  <!--        </div>-->
-                  <!--        <div class="col-md-4 p-0">-->
-                  <!--          <button class="btn btn-primary p-1 mt-3 fy" data-toggle="modal" data-target="#jobsModal">Apply Now</button>-->
-                  <!--        </div>-->
-                  <!--    </div>-->
-                  <!--  </div>-->
-                  <!--</div>-->
-                  <!--<div class="carousel-item">-->
-                  <!--  <div class="">-->
-                  <!--    <div class="">-->
-                  <!--      <img src="<?=base_url()?>assets/uploads/images/Post-image-2020-01-31-08-37-181.jpg" class="d-block w-100" alt="...">-->
-                  <!--    </div>-->
-                  <!--    <div class="row m-0">-->
-                  <!--        <div class="col-md-8 p-0">-->
-                  <!--          <ul class="unstyled m-0">-->
-                  <!--           <li><small>Uttrakhand -Greenusys</small></li>-->
-                  <!--           <li class="line_het"><span class="author">Web Content Writer</span></li>-->
-                  <!--           <li><small>Dehradun - Full Time</small></li>-->
-                  <!--        </div>-->
-                  <!--        <div class="col-md-4 p-0">-->
-                  <!--          <button class="btn btn-primary p-1 mt-3 fy" data-toggle="modal" data-target="#JobsModal">Apply Now</button>-->
-                  <!--        </div>-->
-                  <!--    </div>-->
-                  <!--  </div>-->
-                  <!--</div>-->
+                 
                   
                 </div>
                 <a class="carousel-control-prev carousel_arrow_set" href="#carouselExampleIndicators" role="button" data-slide="prev">
@@ -1683,6 +1648,7 @@
           </ul>
         </div>
       </div>
+      <?php if(count($birthdays)>0):?>
        <div class="card mt-3">
         <!--   <div class="p-3">
             <h4 class="widget-title">Birthday</h4>
@@ -1721,12 +1687,70 @@
               </div>  
         </div>
       </div>
+    <?php endif;?>
       <div class="card mt-3" id="">
-        <div class="p-3">
-          <h4 class="widget-title">Advertizement</h4>
+        <div class="p-3 d-flex">
+          <h4 class="widget-title">Advertisement</h4>
+          <a href="javascript:void(0)" class="btn btn-primary ads_btn float-right" >Post Ad</a>
         </div>
         <div class="card-body p-3">
-            <a href="#"><img src="<?=base_url()?>/assets/img/advertize.jpg" class="img-fluid"></a>
+            <!-- <a href="#"><img src="<?=base_url()?>/assets/img/advertize.jpg" class="img-fluid"></a> -->
+            <div id="carouselExampleIndicators2" class="carousel slide" data-ride="carousel">
+             <!--    <ol class="carousel-indicators">
+                  <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                  <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                  <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+                </ol> -->
+                <div class="carousel-inner">
+                    <?php 
+                         $i=0;
+                          foreach($fetchjobpost as $FJB)
+                          {
+                              
+                            // print_r($FJB);
+                            $img=$FJB->jobpost_image;
+                            //   $myImages=explode(',',$FJB->jobpost_image);
+                            if($i==0)
+                            {
+                                $st="active";
+                            }
+                            else{
+                                $st="";
+                            }
+                            
+                            ?>
+                            <div class="carousel-item <?=$st?>">
+                                <div class="">
+                                  <div class="">
+                                     <img src="<?=base_url()?>/assets/img/advertize.jpg" class="d-block w-100" alt="..."  onerror="this.src='<?=base_url()?>assets/img/jobs.jpg';">
+                                  </div>
+                                 
+                                </div>
+                              </div>
+                            <?php
+                            $i++;
+                             
+                          }
+                          ?>
+                  
+                 
+                  
+                </div>
+                <a class="carousel-control-prev carousel_arrow_set" href="#carouselExampleIndicators2" role="button" data-slide="prev" style="
+    background: blue;
+    padding: 11px;
+">
+                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                  <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next carousel_arrow_set" href="#carouselExampleIndicators2" role="button" data-slide="next" style="
+    background: blue;
+    padding: 11px;
+">
+                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                  <span class="sr-only">Next</span>
+                </a>
+              </div>
         </div>
       </div>
     </div>
@@ -3113,7 +3137,7 @@ function myFunction() {
         <div class="">
           <form id="add_resume">
             <label class="author">Upload Resume
-               <input type="file" name="file" class="form-control" accept=".pdf,.docx,.doc" required="">
+               <input type="file" name="file"  accept=".pdf,.docx,.doc" required="">
             </label>
             <input type="hidden" value="" name="jobpost_id" id="jobpost_id">
             <div class="text-center">
@@ -3239,9 +3263,99 @@ function myFunction() {
     </div>
   </div>
 </div>
-<script>
-      
+<div id="advertisementModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
 
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Post Your Ad For Free</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        
+      </div>
+      <div class="modal-body">
+        <form id="postNewAdd">
+          <div class="form-group">
+            <label>Select Ads Category:</label>
+            <select class="form-control" name="adsCate">
+              <option value="0">Select</option>
+              <?php
+                foreach ($adsCategory as $key => $value):
+                  # code...
+                  echo '<option value="'.$value->ad_cat_id.'">'.$value->category_name.'</option>';
+                endforeach;
+
+              ?>
+              
+            </select>
+          </div>
+          <div class="form-group" align="center">
+            <label>Post Ad Image:</label>
+            <input type='file' id="imgInp"  name="adImage" multiple>
+            <img id="blah" src="#" alt="your image"  style="max-height: 300px; max-width: 400px;" onerror="this.src='<?=base_url()?>assets/img/adDummy.jpeg';">
+            <!-- <input type="file" name=""> -->
+          </div>
+          <div class="form-group">
+            <label>Ad URL:</label>
+            <input type="text" name="ad_url" class="form-control">
+          </div>
+          <div class="form-group">
+            
+            <input type="submit" value="Post" class="btn btn-success">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
+      </div>
+    </div>
+
+  </div>
+</div>
+<script>
+      function readURL(input) {
+        if (input.files && input.files[0]) {
+          var reader = new FileReader();
+          
+          reader.onload = function(e) {
+            $('#blah').attr('src', e.target.result);
+          }
+          
+          reader.readAsDataURL(input.files[0]);
+        }
+      }
+
+      $("#imgInp").change(function() {
+        readURL(this);
+      });
+      $(document).on('submit','#postNewAdd',function(e){
+        e.preventDefault();
+        var formData=new FormData($(this)[0]);
+        $.ajax({
+          url:"<?=base_url('Advertisement/AddAds')?>",
+          type:"post",
+          enctype: 'multipart/form-data',
+          cache:false,
+         
+          contentType:false,
+          processData:false,
+          data:formData,
+          success:function(response){
+            response=JSON.parse(response);
+            if(response.status==1){
+              swal("Success", "Add Posted Successfully", "success");
+            }else{
+              swal("Ooops!", response.msg, "info");
+            }
+            $('#postNewAdd').trigger("reset");
+            // $('#blah')
+            $("#postNewAdd").load(location.href + " #postNewAdd");
+          }
+        });
+      });
+      $(document).on('click','.ads_btn',function(){
+        $('#advertisementModal').modal('show');
+      });
        $(document).ready(function(){
             $("#jobpost").submit(function(e){
                 e.preventDefault();
