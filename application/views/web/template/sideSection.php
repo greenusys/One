@@ -180,6 +180,8 @@
                // die;
               if(count($AllPosts)>0){
                 foreach ($AllPosts as $post) {
+                   $post_file=$post['post_files'];
+                   $post_file=explode(',', $post_file);
                   # code...
                //    print_r($post);
                // die;
@@ -187,16 +189,17 @@
                     ?>
                      <div class="col-md-4 mt-2 px-1">
                         <a href="<?=base_url('Post/viewPost/').$post['post_id']?>" class="d-block">
-                          <img src="assets/uploads/images/<?=$post['post_files']?>" class="">
+                          <img src="assets/uploads/images/<?=$post_file[0]?>" class="">
                         </a>
                      </div>
                     <?php
                   }else if($post['post_type']==2){
+
                     ?>
                     <a href="<?=base_url('Post/viewPost/').$post['post_id']?>">
                       <div class="col-md-4 mt-2 px-1">
                         <video  width="60" >
-                          <source src="<?=base_url()?>assets/uploads/videos/<?=$post['post_files']?>" type="video/mp4">
+                          <source src="<?=base_url()?>assets/uploads/videos/<?=$post_file[0]?>" type="video/mp4">
                          
                           Your browser does not support the video tag.
                         </video>
