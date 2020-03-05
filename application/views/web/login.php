@@ -441,8 +441,11 @@ $("#signup").submit(function(e){
                 var html='';
                 html+='<input type="hidden" name="name" value="'+response.name+'">'+
                       '<input type="hidden" name="password" value="'+response.password+'">'+
-                      '<input type="hidden" name="email" value="'+response.email+'">'+
+                      '<input type="hidden" name="email_phone" value="'+response.email_phone+'">'+
+                      '<input type="hidden" name="gender" value="'+response.gender+'">'+
+                      '<input type="hidden" name="dob" value="'+response.dob+'">'+
                       '<input type="hidden" name="otp" value="'+response.otp+'">';
+                
                 $('#user_data').empty();
                 $('#user_data').append(html);
                 $('#myModal').modal('show');
