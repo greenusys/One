@@ -36,6 +36,7 @@ class Profile extends MY_Controller
 				$p_Data['post_id']=$value->post_id;
 				$p_Data['user_id']=$value->user_id;
 				$p_Data['post']=$value->post;
+				$p_Data['post_head']=$value->post_head;
 				$p_Data['post_files']=$value->post_files;
 				$p_Data['post_type']=$value->post_type;
 				$p_Data['posted_by']=$value->full_name;

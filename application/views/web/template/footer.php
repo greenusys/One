@@ -17,7 +17,7 @@ $profile_picture = $session[0]->profile_picture;
       </div>
       <div class="modal-body">
           <div class="pl-2 w-100 _input d-flex">
-             <span> <img class="rounded-circle like_img" src="<?=base_url()?>assets/img/Profile_Pic/<?=$MyDetails[0]->profile_picture?>"></span>
+             <span> <img class="rounded-circle like_img" src="<?=base_url()?>assets/uploads/images/<?=$MyDetails[0]->profile_picture?>"></span>
             <p class="ml-1 lead w-100 emoji-picker-container">
               <textarea class="input-field cmnt_" id="comment_para" data-emojiable="true" type="text" name="comment"  placeholder="Add a Message">  </textarea>
                 <!-- <input type="text" class="form-control" name="comment" data-emojiable="true"> -->
@@ -45,7 +45,7 @@ $profile_picture = $session[0]->profile_picture;
       </div>
       <div class="modal-body">
             <div class="pl-2 w-100 _input d-flex">
-               <span> <img class="rounded-circle like_img" src="<?=base_url()?>assets/img/Profile_Pic/<?=$MyDetails[0]->profile_picture?>"></span>
+               <span> <img class="rounded-circle like_img" src="<?=base_url()?>assets/uploads/images/<?=$MyDetails[0]->profile_picture?>"></span>
               <p class="ml-1 lead w-100 emoji-picker-container">
                 <textarea class="input-field cmnt_" id="post_para" data-emojiable="true" type="text" name="comment"  placeholder="Add a Message">  </textarea>
                   <!-- <input type="text" class="form-control" name="comment" data-emojiable="true"> -->
@@ -192,7 +192,7 @@ $(document).on('click','.post_img_update',function(){
             <div class="d-flex float-left">
              <div> 
               <a class="font-weight-bold" href="#">
-                 <img class="rounded-circle mr-2" src="<?=base_url()?>assets/img/Profile_Pic/<?=$MyDetails[0]->profile_picture?>" width="40"  height="40">
+                 <img class="rounded-circle mr-2" src="<?=base_url()?>assets/uploads/images/<?=$MyDetails[0]->profile_picture?>" width="40"  height="40">
                </a>
              </div>
             <div>
@@ -226,13 +226,13 @@ $(document).on('click','.post_img_update',function(){
                   </ol>
                   <div class="carousel-inner">
                     <div class="carousel-item active">
-                      <img class="d-block w-100 post_ht" src="<?=base_url()?>assets/img/Profile_Pic/profile1.jpg" alt="First slide">
+                      <img class="d-block w-100 post_ht" src="<?=base_url()?>assets/uploads/images/profile1.jpg" alt="First slide">
                     </div>
                     <div class="carousel-item">
-                      <img class="d-block w-100 post_ht" src="<?=base_url()?>assets/img/Profile_Pic/profile3.jpg" alt="Second slide">
+                      <img class="d-block w-100 post_ht" src="<?=base_url()?>assets/uploads/images/profile3.jpg" alt="Second slide">
                     </div>
                     <div class="carousel-item">
-                      <img class="d-block w-100 post_ht" src="<?=base_url()?>assets/img/Profile_Pic/profile2.jpg" alt="Third slide">
+                      <img class="d-block w-100 post_ht" src="<?=base_url()?>assets/uploads/images/profile2.jpg" alt="Third slide">
                     </div>
                   </div>
                   <a class="carousel-control-prev" href="#carouselExampleIndicators_post" role="button" data-slide="prev">
@@ -799,7 +799,7 @@ $(document).on('keyup','.searchFriend',function(){
 						var flist='';
 						flist+='<a href="javascript:void(0)" class="My-Friend seFnd" d-Store="'+res.data[i].user_id+'" t-act="'+res.data[i].profile_picture+'" act="0" d-name="'+res.data[i].full_name+'">';
 	                    flist+='<li class="clearfix px-2">';
-	                    flist+='<img src="assets/img/Profile_Pic/'+res.data[i].profile_picture+'" width="50px" height="50px" alt="avatar" this.src="assets/img/Profile_Pic/default.png;" style="border-radius: 50%" >';
+	                    flist+='<img src="assets/uploads/images/'+res.data[i].profile_picture+'" width="50px" height="50px" alt="avatar" this.src="assets/uploads/images/default.png;" style="border-radius: 50%" >';
 	                    flist+='<div class="about">';
 	                    flist+='<div class="name">'+res.data[i].full_name+'</div>';
 	                    flist+='<div class="status">';
@@ -826,7 +826,7 @@ $(document).on('click','.seFnd',function(){
 	var profile=$(this).attr('t-act');
 	$('#f_id').text(name);
 	$('#t_ms').text('0');
-	 $('#f_im').attr('src','assets/img/Profile_Pic/'+profile);
+	 $('#f_im').attr('src','assets/uploads/images/'+profile);
     $('#aad').attr('d-stored',user_id);
 });
 
@@ -913,7 +913,7 @@ var keyCode = e.keyCode || e.which;
                             var html='';
                             html+='<div class="row mt-2 px-2">'+
 				                  '<div class="col-md-1">'+
-				                      '<span> <img class="rounded-circle like_img" src="<?=base_url()?>assets/img/Profile_Pic/'+pic+'"></span>'+  
+				                      '<span> <img class="rounded-circle like_img" src="<?=base_url()?>assets/uploads/images/'+pic+'"></span>'+  
 				                  '</div>'+ 
 				                  '<div class="col-md-10 comnt_text border-bottom">'+
 				                      '<h6 class="font-weight-bold m-0" >'+name+'<small class="ml-3"></small></h6>'+
@@ -1006,7 +1006,7 @@ var keyCode = e.keyCode || e.which;
                   ?>
                 <li>
                     <a href="jaascript:void(0)" class="chatFriend" d-name="<?=$frnd->full_name?>" d-fNd="<?=$frnd->user_id?>">
-                        <span><img class="img slid_img rounded-circle" src="<?=base_url('assets/img/Profile_Pic/').$frnd->profile_picture ?>" >
+                        <span><img class="img slid_img rounded-circle" src="<?=base_url('assets/uploads/images/').$frnd->profile_picture ?>" >
                         	  <?php
 	                            if($frnd->login_Status==1){
 	                              echo '<span class="online_icon"></span>';
@@ -1025,7 +1025,7 @@ var keyCode = e.keyCode || e.which;
             <?php } ?>
                 <li>
                     <a href="#">
-                        <span><img class="img slid_img rounded-circle" src="<?=base_url()?>assets/img/Profile_Pic/profile2.jpg?>" ><span class="online_icon"></span> </span>
+                        <span><img class="img slid_img rounded-circle" src="<?=base_url()?>assets/uploads/images/profile2.jpg?>" ><span class="online_icon"></span> </span>
                         <span class="ml-2 author onln_usname dis_name">Portfolio</span>
                     </a>
                 </li>

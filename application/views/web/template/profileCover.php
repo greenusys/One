@@ -42,7 +42,7 @@
 <section class="container-fluid mt-5" id="action_area">
   <div class="feature-photo">
   <div class="row">
-    <img src="<?=base_url()?>assets/img/Cover_Photo/<?=$MyDetails[0]->cover_photo?>" onerror="this.src='<?=base_url()?>assets/img/Cover_Photo/default.jpg';" alt="cover image" class="cover-pic img-fluid w-100" style="height: 350px">
+    <img src="<?=base_url()?>assets/uploads/images/<?=$MyDetails[0]->cover_photo?>" onerror="this.src='<?=base_url()?>assets/uploads/images/default.jpg';" alt="cover image" class="cover-pic img-fluid w-100" style="height: 350px">
   </div>
  
       <div class="add-btn " >
@@ -153,7 +153,7 @@
   <div class="row">
     <div class="col-md-3 pr-0">
       <div class="mar_t110 usr_proImg">
-        <img src="<?=base_url()?>assets/img/Profile_Pic/<?=$MyDetails[0]->profile_picture?>" alt="profile image" onerror="this.src='<?=base_url()?>assets/img/Profile_Pic/default.png';" class="profile-pic img-fluid">
+        <img src="<?=base_url()?>assets/uploads/images/<?=$MyDetails[0]->profile_picture?>" alt="profile image" onerror="this.src='<?=base_url()?>assets/uploads/images/default.png';" class="profile-pic img-fluid">
       </div>
       <?php
         if($myId==1){
@@ -231,6 +231,7 @@
               response=JSON.parse(response);
               if(response.status==1){
                 //alert(response.msg);
+                location.reload();
                }
             }
           });
@@ -267,10 +268,11 @@
               contentType: false,
               processData: false,
               data : myFormData,
-              success: function(response){
+              success: function(response){ 
               response=JSON.parse(response);
               if(response.status==1){
                 //alert(response.msg);
+                 location.reload();
                }
             }
           });

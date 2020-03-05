@@ -186,7 +186,7 @@ $(document).ready(function(){
             <div class="d-flex float-left">
              <div> 
               <a class="font-weight-bold" href="<?=base_url('Profile/'.$post_user_id)?>">
-                 <img class="rounded-circle mr-2" src="<?=base_url()?>assets/img/Profile_Pic/<?=$p_ost['profile_pic']?>" width="40"  height="40">
+                 <img class="rounded-circle mr-2" src="<?=base_url()?>assets/uploads/images/<?=$p_ost['profile_pic']?>" width="40"  height="40">
                </a>
              </div>
             <div>
@@ -270,10 +270,10 @@ $(document).ready(function(){
                             
                               if($sno==1){ ?>
 
-                                   <li><img class="rounded-circle like_img " src="<?=base_url('assets/img/Profile_Pic/').$likedata->profile_picture?> "></li>
+                                   <li><img class="rounded-circle like_img " src="<?=base_url('assets/uploads/images/').$likedata->profile_picture?> "></li>
 
                           <?php }else{    ?>
-                                <li><img class="rounded-circle like_img like_img_marg25" src="<?=base_url('assets/img/Profile_Pic/').$likedata->profile_picture?> "></li>
+                                <li><img class="rounded-circle like_img like_img_marg25" src="<?=base_url('assets/uploads/images/').$likedata->profile_picture?> "></li>
                      <?php  
                             }
                          }
@@ -316,7 +316,7 @@ $(document).ready(function(){
 
               <div class="row mt-2 px-2">
                   <div class="col-md-1">
-                      <a href="<?=base_url('Profile/'.$p_ost['total_comments'][$i]->user_id)?>"> <img class="rounded-circle like_img" src="<?=base_url()?>assets/img/Profile_Pic/<?=$p_ost['total_comments'][$i]->profile_picture?>"></a>  
+                      <a href="<?=base_url('Profile/'.$p_ost['total_comments'][$i]->user_id)?>"> <img class="rounded-circle like_img" src="<?=base_url()?>assets/uploads/images/<?=$p_ost['total_comments'][$i]->profile_picture?>"></a>  
                   </div> 
                   <div class="col-md-10 comnt_text border-bottom">
                       <h6 class="font-weight-bold m-0" > <a href="<?=base_url('Profile/'.$p_ost['total_comments'][$i]->user_id)?>"><?=$p_ost['total_comments'][$i]->full_name?></a><small class="ml-3">
@@ -343,7 +343,7 @@ $(document).ready(function(){
           }?>
                 <div class="p-2">
                  <div class="d-flex m-0">
-                    <span> <img class="rounded-circle like_img" src="<?=base_url()?>assets/img/Profile_Pic/<?=$MyDetails[0]->profile_picture?>"></span>
+                    <span> <img class="rounded-circle like_img" src="<?=base_url()?>assets/uploads/images/<?=$MyDetails[0]->profile_picture?>"></span>
                     <form method="POST" class="w-100 ad_cmnt" >
                       <div class="pl-2 w-100 _input">
                      <p class="lead emoji-picker-container">
@@ -373,13 +373,13 @@ $(document).ready(function(){
             <div class="d-flex float-left">
              <div> 
               <a class="font-weight-bold" href="<?=base_url('Profile/'.$post_user_id)?>">
-                 <img class="rounded-circle mr-2" src="<?=base_url()?>assets/img/Profile_Pic/<?=$p_ost['profile_pic']?>" width="40"  height="40">
+                 <img class="rounded-circle mr-2" src="<?=base_url()?>assets/uploads/images/<?=$p_ost['profile_pic']?>" width="40"  height="40">
                </a>
              </div>
             <div>
-              <a class="font-weight-bold _use_n" href="<?=base_url('Profile/'.$post_user_id)?>">  
+              <a class="font-weight-bold" href="<?=base_url('Profile/'.$post_user_id)?>">  
                <?=$p_ost['posted_by']?>
-              </a>
+              </a><span style="color:#616770"><?=$p_ost['post_head']?></span>
               <br>
                 <small>
                     <?php echo time_elapsed_string($p_ost['posted_on']);?>
@@ -511,7 +511,7 @@ $(document).ready(function(){
               ?>
                 <div class="post_img row">
                    <div class="col-md p-3">
-                    <a class="" href="<?=base_url('Post/viewPost/').$p_ost['post_id']?>"><img class="img img-fluid d-block rounded" src="<?=base_url()?>assets/uploads/images/<?=$postimages[0]?>"></a>
+                    <a class="d-flex justify-content-center" href="<?=base_url('Post/viewPost/').$p_ost['post_id']?>"><img class="img img-fluid d-block rounded" src="<?=base_url()?>assets/uploads/images/<?=$postimages[0]?>"></a>
                   </div>
                 </div>
             <?php
@@ -551,9 +551,9 @@ $(document).ready(function(){
                             if($sno <= 5){
                              
                               if($sno==1){ ?>
-                                   <li><img class="rounded-circle like_img " src="<?=base_url('assets/img/Profile_Pic/').$likedata->profile_picture?> "></li>
+                                   <li><img class="rounded-circle like_img " src="<?=base_url('assets/uploads/images/').$likedata->profile_picture?> "></li>
                       <?php }else{    ?>
-                            <li><img class="rounded-circle like_img like_img_marg25" src="<?=base_url('assets/img/Profile_Pic/').$likedata->profile_picture?> "></li>
+                            <li><img class="rounded-circle like_img like_img_marg25" src="<?=base_url('assets/uploads/images/').$likedata->profile_picture?> "></li>
                    <?php 
                             }
                          }
@@ -598,7 +598,7 @@ $(document).ready(function(){
                 <?php for($i=0; $i < count($p_ost['total_comments']); $i++){ ?>
               <div class="row mt-2 px-2">
                   <div class="col-md-1">
-                      <a href="<?=base_url('Profile/'.$p_ost['total_comments'][$i]->user_id)?>"><img class="rounded-circle like_img" src="<?=base_url()?>assets/img/Profile_Pic/<?=$p_ost['total_comments'][$i]->profile_picture?>"></a>  
+                      <a href="<?=base_url('Profile/'.$p_ost['total_comments'][$i]->user_id)?>"><img class="rounded-circle like_img" src="<?=base_url()?>assets/uploads/images/<?=$p_ost['total_comments'][$i]->profile_picture?>"></a>  
                   </div>
                   <div class="col-md-10 comnt_text border-bottom">
                       <h6 class="font-weight-bold m-0" ><a href="<?=base_url('Profile/'.$p_ost['total_comments'][$i]->user_id)?>"> <?=$p_ost['total_comments'][$i]->full_name?></a><small class="ml-3">
@@ -625,7 +625,7 @@ $(document).ready(function(){
           }?>
                 <div class="p-2">
                  <div class="d-flex m-0">
-                    <span> <img class="rounded-circle like_img" src="<?=base_url()?>assets/img/Profile_Pic/<?=$MyDetails[0]->profile_picture?>"></span>
+                    <span> <img class="rounded-circle like_img" src="<?=base_url()?>assets/uploads/images/<?=$MyDetails[0]->profile_picture?>"></span>
                     <form method="POST" class="w-100 ad_cmnt" >
                       <div class="pl-2 w-100 _input">
                         <p class="lead emoji-picker-container">
@@ -655,7 +655,7 @@ $(document).ready(function(){
             <div class="d-flex float-left">
              <div> 
               <a class="font-weight-bold" href="<?=base_url('Profile/'.$post_user_id)?>">
-                 <img class="rounded-circle mr-2" src="<?=base_url()?>assets/img/Profile_Pic/<?=$MyDetails[0]->profile_picture?>" width="40"  height="40">
+                 <img class="rounded-circle mr-2" src="<?=base_url()?>assets/uploads/images/<?=$MyDetails[0]->profile_picture?>" width="40"  height="40">
                </a>
              </div>
             <div>
@@ -992,9 +992,9 @@ $(document).ready(function(){
                             if($sno <= 5){
                              
                               if($sno==1){ ?>
-                                   <li><img class="rounded-circle like_img " src="<?=base_url('assets/img/Profile_Pic/').$likedata->profile_picture?> "></li>
+                                   <li><img class="rounded-circle like_img " src="<?=base_url('assets/uploads/images/').$likedata->profile_picture?> "></li>
                       <?php }else{    ?>
-                            <li><img class="rounded-circle like_img like_img_marg25" src="<?=base_url('assets/img/Profile_Pic/').$likedata->profile_picture?> "></li>
+                            <li><img class="rounded-circle like_img like_img_marg25" src="<?=base_url('assets/uploads/images/').$likedata->profile_picture?> "></li>
                    <?php 
                             }
                          }
@@ -1034,7 +1034,7 @@ $(document).ready(function(){
               for($i=0; $i < count($p_ost['total_comments']); $i++){ ?>
               <div class="row mt-2 px-2">
                   <div class="col-md-1">
-                      <a href="<?=base_url('Profile/'.$p_ost['total_comments'][$i]->user_id)?>"> <img class="rounded-circle like_img" src="<?=base_url()?>assets/img/Profile_Pic/<?=$p_ost['total_comments'][$i]->profile_picture?>"></a>  
+                      <a href="<?=base_url('Profile/'.$p_ost['total_comments'][$i]->user_id)?>"> <img class="rounded-circle like_img" src="<?=base_url()?>assets/uploads/images/<?=$p_ost['total_comments'][$i]->profile_picture?>"></a>  
                   </div>
                   <div class="col-md-10 comnt_text border-bottom">
                       <h6 class="font-weight-bold m-0" > <a href="<?=base_url('Profile/'.$p_ost['total_comments'][$i]->user_id)?>"><?=$p_ost['total_comments'][$i]->full_name?></a><small class="ml-3">
@@ -1061,7 +1061,7 @@ $(document).ready(function(){
           }?>
             <div class="p-2">
              <div class="d-flex m-0">
-                <span> <img class="rounded-circle like_img" src="<?=base_url()?>assets/img/Profile_Pic/<?=$MyDetails[0]->profile_picture?>"></span>
+                <span> <img class="rounded-circle like_img" src="<?=base_url()?>assets/uploads/images/<?=$MyDetails[0]->profile_picture?>"></span>
                 <form method="POST" class="w-100 ad_cmnt" >
                    <div class="pl-2 w-100 _input">
                         <p class="lead emoji-picker-container">
@@ -1084,7 +1084,7 @@ $(document).ready(function(){
             <div class="d-flex float-left">
              <div> 
               <a class="font-weight-bold" href="<?=base_url('Profile/'.$post_user_id)?>">
-                 <img class="rounded-circle mr-2" src="<?=base_url()?>assets/img/Profile_Pic/<?=$p_ost['profile_pic']?>" width="40"  height="40">
+                 <img class="rounded-circle mr-2" src="<?=base_url()?>assets/uploads/images/<?=$p_ost['profile_pic']?>" width="40"  height="40">
                </a>
              </div>
             <div>
@@ -1138,7 +1138,7 @@ $(document).ready(function(){
             <p class="pl-2">CAA के विरोध के नाम पर विपक्ष भड़का रहा है उपद्रवियों को?</p>
             </div> -->
           </div>
-          <div class="card-body text-center">
+          <div class="card-body">
           <p>
             <?=$p_ost['post']?>
             </p>
@@ -1186,9 +1186,9 @@ $(document).ready(function(){
                               if($sno <= 5){
                                
                                 if($sno==1){ ?>
-                                     <li><img class="rounded-circle like_img " src="<?=base_url('assets/img/Profile_Pic/').$likedata->profile_picture?> "></li>
+                                     <li><img class="rounded-circle like_img " src="<?=base_url('assets/uploads/images/').$likedata->profile_picture?> "></li>
                         <?php }else{    ?>
-                              <li><img class="rounded-circle like_img like_img_marg25" src="<?=base_url('assets/img/Profile_Pic/').$likedata->profile_picture?> "></li>
+                              <li><img class="rounded-circle like_img like_img_marg25" src="<?=base_url('assets/uploads/images/').$likedata->profile_picture?> "></li>
                      <?php 
                               }
                            }
@@ -1229,7 +1229,7 @@ $(document).ready(function(){
                 for($i=0; $i < count($p_ost['total_comments']); $i++){ ?>
                   <div class="row mt-2 px-2">
                       <div class="col-md-1">
-                         <a href="<?=base_url('Profile/'.$p_ost['total_comments'][$i]->user_id)?>"> <img class="rounded-circle like_img" src="<?=base_url()?>assets/img/Profile_Pic/<?=$p_ost['total_comments'][$i]->profile_picture?>"></a>  
+                         <a href="<?=base_url('Profile/'.$p_ost['total_comments'][$i]->user_id)?>"> <img class="rounded-circle like_img" src="<?=base_url()?>assets/uploads/images/<?=$p_ost['total_comments'][$i]->profile_picture?>"></a>  
                       </div>
                       <div class="col-md-10 comnt_text border-bottom">
                           <h6 class="font-weight-bold m-0" > <a href="<?=base_url('Profile/'.$p_ost['total_comments'][$i]->user_id)?>"><?=$p_ost['total_comments'][$i]->full_name?></a><small class="ml-3">
@@ -1258,7 +1258,7 @@ $(document).ready(function(){
           }?>
               <div class="p-2">
                  <div class="d-flex m-0">
-                    <span> <img class="rounded-circle like_img" src="<?=base_url()?>assets/img/Profile_Pic/<?=$MyDetails[0]->profile_picture?>"></span>
+                    <span> <img class="rounded-circle like_img" src="<?=base_url()?>assets/uploads/images/<?=$MyDetails[0]->profile_picture?>"></span>
                     <form method="POST" class="w-100 ad_cmnt" >
                       <div class="pl-2 w-100 _input">
                         <p class="lead emoji-picker-container">
@@ -1338,7 +1338,7 @@ $(document).ready(function(){
                   <li class="row folow_rw ">
                     <div class="col-md-3 pt-1">
                       <a href="<?=base_url('Profile/').$user->user_id?>">
-                        <img class="rounded-circle " src="<?=base_url()?>assets/img/Profile_Pic/<?=$user->profile_picture?>" onerror="this.src='<?=base_url()?>assets/img/Profile_Pic/default.png';" width="40px" height="40px">
+                        <img class="rounded-circle " src="<?=base_url()?>assets/uploads/images/<?=$user->profile_picture?>" onerror="this.src='<?=base_url()?>assets/uploads/images/default.png';" width="40px" height="40px">
                       </a>
                     </div>
                     <div class="col-md-9 p-0">
@@ -1527,7 +1527,7 @@ function getAjaxData(offset)
           {
              if((res.data[i].post_type)==0)
             {
-              html+='<div class="card mt-4 p-2"><div class="card-header"><div class="d-flex float-left"><div><a class="font-weight-bold" href="<?=base_url()?>Profile/'+res.data[i].posted_by+'"><img class="rounded-circle mr-2" src="<?=base_url()?>assets/img/Profile_Pic/'+res.data[i].profile_pic+'" width="40"  height="40"></a></div><div><a class="font-weight-bold _use_n" href="#">'+res.data[i].posted_by+'</a><br><small><time class="timeago" datetime="'+res.data[i].posted_on+'"></time></small></div></div>';
+              html+='<div class="card mt-4 p-2"><div class="card-header"><div class="d-flex float-left"><div><a class="font-weight-bold" href="<?=base_url()?>Profile/'+res.data[i].posted_by+'"><img class="rounded-circle mr-2" src="<?=base_url()?>assets/uploads/images/'+res.data[i].profile_pic+'" width="40"  height="40"></a></div><div><a class="font-weight-bold _use_n" href="#">'+res.data[i].posted_by+'</a><br><small><time class="timeago" datetime="'+res.data[i].posted_on+'"></time></small></div></div>';
                 html+='<div class="float-right d-flex mt-2">';
                 html+='<div class="">';
                 var count_fav=(res.data[i].fav).length;
@@ -1578,11 +1578,11 @@ function getAjaxData(offset)
                 {
                   if(sno==1)
                   {
-                    html+='<li><img class="rounded-circle like_img " src="<?=base_url()?>assets/img/Profile_Pic/'+res.data[i].likes_data[j].profile_picture+'"></li>';
+                    html+='<li><img class="rounded-circle like_img " src="<?=base_url()?>assets/uploads/images/'+res.data[i].likes_data[j].profile_picture+'"></li>';
                   }
                   else
                   {
-                    html+='<li><img class="rounded-circle like_img like_img_marg25" src="<?=base_url()?>assets/img/Profile_Pic/'+res.data[i].likes_data[j].profile_picture+'"></li>';
+                    html+='<li><img class="rounded-circle like_img like_img_marg25" src="<?=base_url()?>assets/uploads/images/'+res.data[i].likes_data[j].profile_picture+'"></li>';
                   }
                 }    
                 sno++;
@@ -1607,9 +1607,9 @@ function getAjaxData(offset)
                 {
                   html+='<div class="row mt-2 px-2">';
                   html+='<div class="col-md-1">';
-                  html+='<a href="<?=base_url()?>assets/img/Profile_Pic/'+res.data[i].total_comments[k].user_id+'"><img class="rounded-circle like_img" src="<?=base_url()?>assets/img/Profile_Pic/'+res.data[i].total_comments[k].profile_picture+'"></a></div>';
+                  html+='<a href="<?=base_url()?>assets/uploads/images/'+res.data[i].total_comments[k].user_id+'"><img class="rounded-circle like_img" src="<?=base_url()?>assets/uploads/images/'+res.data[i].total_comments[k].profile_picture+'"></a></div>';
                   html+='<div class="col-md-10 comnt_text border-bottom">';
-                  html+='<h6 class="font-weight-bold m-0" ><a href="<?=base_url()?>assets/img/Profile_Pic/'+res.data[i].total_comments[k].user_id+'">'+res.data[i].total_comments[k].full_name+'</a><small class="ml-3">'+res.data[i].total_comments[k].commented_on+'</small></h6>';
+                  html+='<h6 class="font-weight-bold m-0" ><a href="<?=base_url()?>assets/uploads/images/'+res.data[i].total_comments[k].user_id+'">'+res.data[i].total_comments[k].full_name+'</a><small class="ml-3">'+res.data[i].total_comments[k].commented_on+'</small></h6>';
                   html+='<p class="">'+res.data[i].total_comments[k].comment+'</p></div>';
                  html+='<div class="col-md-1">';
                   if((user_id==res.data[i].user_id) || (user_id==res.data[i].total_comments[k].commented_by_))
@@ -1626,7 +1626,7 @@ function getAjaxData(offset)
                   html+='</div></div>';
                 } 
               }
-              html+='<div class="p-2"><div class="d-flex m-0"><span> <img class="rounded-circle like_img" src="<?=base_url()?>assets/img/Profile_Pic/'+my_profilepic+'"></span>';
+              html+='<div class="p-2"><div class="d-flex m-0"><span> <img class="rounded-circle like_img" src="<?=base_url()?>assets/uploads/images/'+my_profilepic+'"></span>';
               html+='<form method="POST" class="w-100 ad_cmnt" >';
               html+='<div class="pl-2 w-100 _input">';
               html+='<p class="lead emoji-picker-container">';
@@ -1642,9 +1642,9 @@ function getAjaxData(offset)
             {
               html+='<div class="card mt-4"><div class="card-header "><div class="d-flex float-left"><div>';
               html+='<a class="font-weight-bold" href="<?=base_url()?>Profile/'+res.data[i].posted_by+'">';
-              html+='<img class="rounded-circle mr-2" src="<?=base_url()?>assets/img/Profile_Pic/'+res.data[i].profile_pic+'" width="40"  height="40">';
+              html+='<img class="rounded-circle mr-2" src="<?=base_url()?>assets/uploads/images/'+res.data[i].profile_pic+'" width="40"  height="40">';
               html+='</a></div><div>';
-              html+='<a class="font-weight-bold _use_n"  href="#">'+res.data[i].posted_by+'</a><br><small><time class="timeago" datetime="'+res.data[i].posted_on+'"></time></small></div></div>';
+              html+='<a class="font-weight-bold"  href="#">'+res.data[i].posted_by+'</a><span style="color:#616770">'+res.data[i].post_head+'</span><br><small><time class="timeago" datetime="'+res.data[i].posted_on+'"></time></small></div></div>';
                 html+='<div class="float-right d-flex mt-2">';
                 html+='<div class="">';
                 var count_fav=(res.data[i].fav).length;
@@ -1729,7 +1729,7 @@ function getAjaxData(offset)
               {
                 html+='<div class="post_img row">';
                 html+='<div class="col-md p-3">';
-                html+='<a class="" href="<?=base_url()?>Post/viewPost/'+res.data[i].post_id+'"><img class="img img-fluid d-block rounded" src="<?=base_url()?>assets/uploads/images/'+postimages[0]+'"></a>';
+                html+='<a class="d-flex justify-content-center" href="<?=base_url()?>Post/viewPost/'+res.data[i].post_id+'"><img class="img img-fluid d-block rounded" src="<?=base_url()?>assets/uploads/images/'+postimages[0]+'"></a>';
                 html+='</div>';
                 html+='</div>';
               }
@@ -1770,11 +1770,11 @@ function getAjaxData(offset)
                 {
                   if(sno==1)
                   {
-                    html+='<li><img class="rounded-circle like_img " src="<?=base_url()?>assets/img/Profile_Pic/'+res.data[i].likes_data[j].profile_picture+'"></li>';
+                    html+='<li><img class="rounded-circle like_img " src="<?=base_url()?>assets/uploads/images/'+res.data[i].likes_data[j].profile_picture+'"></li>';
                   }
                   else
                   {
-                    html+='<li><img class="rounded-circle like_img like_img_marg25" src="<?=base_url()?>assets/img/Profile_Pic/'+res.data[i].likes_data[j].profile_picture+'"></li>';
+                    html+='<li><img class="rounded-circle like_img like_img_marg25" src="<?=base_url()?>assets/uploads/images/'+res.data[i].likes_data[j].profile_picture+'"></li>';
                   }
                 }    
                 sno++;
@@ -1799,9 +1799,9 @@ function getAjaxData(offset)
                 {
                   html+='<div class="row mt-2 px-2">';
                   html+='<div class="col-md-1">';
-                  html+='<a href="<?=base_url()?>assets/img/Profile_Pic/'+res.data[i].total_comments[k].user_id+'"><img class="rounded-circle like_img" src="<?=base_url()?>assets/img/Profile_Pic/'+res.data[i].total_comments[k].profile_picture+'"></a></div>';
+                  html+='<a href="<?=base_url()?>assets/uploads/images/'+res.data[i].total_comments[k].user_id+'"><img class="rounded-circle like_img" src="<?=base_url()?>assets/uploads/images/'+res.data[i].total_comments[k].profile_picture+'"></a></div>';
                   html+='<div class="col-md-10 comnt_text border-bottom">';
-                  html+='<h6 class="font-weight-bold m-0" ><a href="<?=base_url()?>assets/img/Profile_Pic/'+res.data[i].total_comments[k].user_id+'">'+res.data[i].total_comments[k].full_name+'</a><small class="ml-3">'+res.data[i].total_comments[k].commented_on+'</small></h6>';
+                  html+='<h6 class="font-weight-bold m-0" ><a href="<?=base_url()?>assets/uploads/images/'+res.data[i].total_comments[k].user_id+'">'+res.data[i].total_comments[k].full_name+'</a><small class="ml-3">'+res.data[i].total_comments[k].commented_on+'</small></h6>';
                   html+='<p class="">'+res.data[i].total_comments[k].comment+'</p></div>';
                  html+='<div class="col-md-1">';
                   if((user_id==res.data[i].user_id) || (user_id==res.data[i].total_comments[k].commented_by_))
@@ -1818,7 +1818,7 @@ function getAjaxData(offset)
                   html+='</div></div>';
                 } 
               }
-              html+='<div class="p-2"><div class="d-flex m-0"><span> <img class="rounded-circle like_img" src="<?=base_url()?>assets/img/Profile_Pic/'+my_profilepic+'"></span>';
+              html+='<div class="p-2"><div class="d-flex m-0"><span> <img class="rounded-circle like_img" src="<?=base_url()?>assets/uploads/images/'+my_profilepic+'"></span>';
               html+='<form method="POST" class="w-100 ad_cmnt" >';
               html+='<div class="pl-2 w-100 _input">';
               html+='<p class="lead emoji-picker-container">';
@@ -1835,7 +1835,7 @@ function getAjaxData(offset)
             {
               html+='<div class="card mt-4 p-2"><div class="card-header border-0"><div class="d-flex float-left"><div>';
               html+='<a class="font-weight-bold" href="<?=base_url()?>Profile/'+res.data[i].posted_by+'">';
-              html+='<img class="rounded-circle mr-2" src="<?=base_url()?>assets/img/Profile_Pic/'+res.data[i].profile_pic+'" width="40"  height="40">';
+              html+='<img class="rounded-circle mr-2" src="<?=base_url()?>assets/uploads/images/'+res.data[i].profile_pic+'" width="40"  height="40">';
               html+='</a></div><div>';
               html+='<a class="font-weight-bold _use_n"  href="<?=base_url()?>Profile/'+res.data[i].posted_by+'">'+res.data[i].posted_by+'</a><br><small><time class="timeago" datetime="'+res.data[i].posted_on+'"></time></small></div></div>';
                 html+='<div class="float-right d-flex mt-2">';
@@ -2008,7 +2008,7 @@ function getAjaxData(offset)
                 {
                    var image='<?=base_url()?>assets/uploads/images/'+postimages[0]+'';
                   html+='<div class="col-md-6 p-2">';
-                    html+='<a class=""href="<?=base_url()?>Post/viewPost/'+res.data[i].post_id+'"><img class="img img-fluid d-block post_image rounded" src="'+image+'"></a>';
+                    html+='<a class="d-flex justify-content-center" href="<?=base_url()?>Post/viewPost/'+res.data[i].post_id+'"><img class="img img-fluid d-block post_image rounded" src="'+image+'"></a>';
                    html+='</div>';
                 }
                 html+='</div>';
@@ -2050,11 +2050,11 @@ function getAjaxData(offset)
                 {
                   if(sno==1)
                   {
-                    html+='<li><img class="rounded-circle like_img " src="<?=base_url()?>assets/img/Profile_Pic/'+res.data[i].likes_data[j].profile_picture+'"></li>';
+                    html+='<li><img class="rounded-circle like_img " src="<?=base_url()?>assets/uploads/images/'+res.data[i].likes_data[j].profile_picture+'"></li>';
                   }
                   else
                   {
-                    html+='<li><img class="rounded-circle like_img like_img_marg25" src="<?=base_url()?>assets/img/Profile_Pic/'+res.data[i].likes_data[j].profile_picture+'"></li>';
+                    html+='<li><img class="rounded-circle like_img like_img_marg25" src="<?=base_url()?>assets/uploads/images/'+res.data[i].likes_data[j].profile_picture+'"></li>';
                   }
                 }    
                 sno++;
@@ -2079,9 +2079,9 @@ function getAjaxData(offset)
                 {
                   html+='<div class="row mt-2 px-2">';
                   html+='<div class="col-md-1">';
-                  html+='<a href="<?=base_url()?>assets/img/Profile_Pic/'+res.data[i].total_comments[k].user_id+'"><img class="rounded-circle like_img" src="<?=base_url()?>assets/img/Profile_Pic/'+res.data[i].total_comments[k].profile_picture+'"></a></div>';
+                  html+='<a href="<?=base_url()?>assets/uploads/images/'+res.data[i].total_comments[k].user_id+'"><img class="rounded-circle like_img" src="<?=base_url()?>assets/uploads/images/'+res.data[i].total_comments[k].profile_picture+'"></a></div>';
                   html+='<div class="col-md-10 comnt_text border-bottom">';
-                  html+='<h6 class="font-weight-bold m-0" ><a href="<?=base_url()?>assets/img/Profile_Pic/'+res.data[i].total_comments[k].user_id+'">'+res.data[i].total_comments[k].full_name+'</a><small class="ml-3">'+res.data[i].total_comments[k].commented_on+'</small></h6>';
+                  html+='<h6 class="font-weight-bold m-0" ><a href="<?=base_url()?>assets/uploads/images/'+res.data[i].total_comments[k].user_id+'">'+res.data[i].total_comments[k].full_name+'</a><small class="ml-3">'+res.data[i].total_comments[k].commented_on+'</small></h6>';
                   html+='<p class="">'+res.data[i].total_comments[k].comment+'</p></div>';
                  html+='<div class="col-md-1">';
                   if((user_id==res.data[i].user_id) || (user_id==res.data[i].total_comments[k].commented_by_))
@@ -2098,7 +2098,7 @@ function getAjaxData(offset)
                   html+='</div></div>';
                 } 
               }
-              html+='<div class="p-2"><div class="d-flex m-0"><span> <img class="rounded-circle like_img" src="<?=base_url()?>assets/img/Profile_Pic/'+my_profilepic+'"></span>';
+              html+='<div class="p-2"><div class="d-flex m-0"><span> <img class="rounded-circle like_img" src="<?=base_url()?>assets/uploads/images/'+my_profilepic+'"></span>';
               html+='<form method="POST" class="w-100 ad_cmnt" >';
               html+='<div class="pl-2 w-100 _input">';
               html+='<p class="lead emoji-picker-container">';
@@ -2116,7 +2116,7 @@ function getAjaxData(offset)
 
             else
             {                    
-             html+='<div class="card mt-4 p-2"><div class="card-header"><div class="d-flex float-left"><div><a class="font-weight-bold" href="<?=base_url()?>Profile/'+res.data[i].posted_by+'"><img class="rounded-circle mr-2" src="<?=base_url()?>assets/img/Profile_Pic/'+res.data[i].profile_pic+'" width="40"  height="40"></a></div><div><a class="font-weight-bold _use_n" href="#">'+res.data[i].posted_by+'</a><br><small><time class="timeago" datetime="'+res.data[i].posted_on+'"></time></small></div></div>';
+             html+='<div class="card mt-4 p-2"><div class="card-header"><div class="d-flex float-left"><div><a class="font-weight-bold" href="<?=base_url()?>Profile/'+res.data[i].posted_by+'"><img class="rounded-circle mr-2" src="<?=base_url()?>assets/uploads/images/'+res.data[i].profile_pic+'" width="40"  height="40"></a></div><div><a class="font-weight-bold _use_n" href="#">'+res.data[i].posted_by+'</a><br><small><time class="timeago" datetime="'+res.data[i].posted_on+'"></time></small></div></div>';
                 html+='<div class="float-right d-flex mt-2">';
                 html+='<div class="">';
                 var count_fav=(res.data[i].fav).length;
@@ -2179,11 +2179,11 @@ function getAjaxData(offset)
                 {
                   if(sno==1)
                   {
-                    html+='<li><img class="rounded-circle like_img " src="<?=base_url()?>assets/img/Profile_Pic/'+res.data[i].likes_data[j].profile_picture+'"></li>';
+                    html+='<li><img class="rounded-circle like_img " src="<?=base_url()?>assets/uploads/images/'+res.data[i].likes_data[j].profile_picture+'"></li>';
                   }
                   else
                   {
-                    html+='<li><img class="rounded-circle like_img like_img_marg25" src="<?=base_url()?>assets/img/Profile_Pic/'+res.data[i].likes_data[j].profile_picture+'"></li>';
+                    html+='<li><img class="rounded-circle like_img like_img_marg25" src="<?=base_url()?>assets/uploads/images/'+res.data[i].likes_data[j].profile_picture+'"></li>';
                   }
                 }    
                 sno++;
@@ -2208,9 +2208,9 @@ function getAjaxData(offset)
                 {
                   html+='<div class="row mt-2 px-2">';
                   html+='<div class="col-md-1">';
-                  html+='<a href="<?=base_url()?>assets/img/Profile_Pic/'+res.data[i].total_comments[k].user_id+'"><img class="rounded-circle like_img" src="<?=base_url()?>assets/img/Profile_Pic/'+res.data[i].total_comments[k].profile_picture+'"></a></div>';
+                  html+='<a href="<?=base_url()?>assets/uploads/images/'+res.data[i].total_comments[k].user_id+'"><img class="rounded-circle like_img" src="<?=base_url()?>assets/uploads/images/'+res.data[i].total_comments[k].profile_picture+'"></a></div>';
                   html+='<div class="col-md-10 comnt_text border-bottom">';
-                  html+='<h6 class="font-weight-bold m-0" ><a href="<?=base_url()?>assets/img/Profile_Pic/'+res.data[i].total_comments[k].user_id+'">'+res.data[i].total_comments[k].full_name+'</a><small class="ml-3">'+res.data[i].total_comments[k].commented_on+'</small></h6>';
+                  html+='<h6 class="font-weight-bold m-0" ><a href="<?=base_url()?>assets/uploads/images/'+res.data[i].total_comments[k].user_id+'">'+res.data[i].total_comments[k].full_name+'</a><small class="ml-3">'+res.data[i].total_comments[k].commented_on+'</small></h6>';
                   html+='<p class="">'+res.data[i].total_comments[k].comment+'</p></div>';
                  html+='<div class="col-md-1">';
                   if((user_id==res.data[i].user_id) || (user_id==res.data[i].total_comments[k].commented_by_))
@@ -2227,7 +2227,7 @@ function getAjaxData(offset)
                   html+='</div></div>';
                 } 
               }
-              html+='<div class="p-2"><div class="d-flex m-0"><span> <img class="rounded-circle like_img" src="<?=base_url()?>assets/img/Profile_Pic/'+my_profilepic+'"></span>';
+              html+='<div class="p-2"><div class="d-flex m-0"><span> <img class="rounded-circle like_img" src="<?=base_url()?>assets/uploads/images/'+my_profilepic+'"></span>';
               html+='<form method="POST" class="w-100 ad_cmnt" >';
               html+='<div class="pl-2 w-100 _input">';
               html+='<p class="lead emoji-picker-container">';

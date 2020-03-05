@@ -1219,17 +1219,27 @@ public function getPostLikes($post_id){
 		}
 	}
 		public function changecoverpic()
+	{
+	    if(isset($_POST['android']))
+	    {
+			$user_id=$this->input->post('user_id');
+		}
+		else
 		{
+			$user_id=$_SESSION['logged_in'][0]->user_id;
+		}
 		 	if(!empty($_FILES['files']['name']))
 		 	{    
-		 		$user_id=$_SESSION['logged_in'][0]->user_id;
+	 	    	$post_text='updated his Cover picture.';
+	 	    	$timenow = date('Y-m-d H:i:s');
 		        $ext = pathinfo($_FILES['files']['name'], PATHINFO_EXTENSION);
-		        $_FILES['file']['name']     = "cover-image-".date("Y-m-d-H-i-s").".".$ext;
+		        $_FILES['file']['name']= "cover-image-".date("Y-m-d-H-i-s").".".$ext;
 		        $_FILES['file']['type']     = $_FILES['files']['type'];
 		        $_FILES['file']['tmp_name'] = $_FILES['files']['tmp_name'];
 		        $_FILES['file']['error']     = $_FILES['files']['error'];
 		        $_FILES['file']['size']     = $_FILES['files']['size'];
-	          	$uploadPath = 'assets/img/Cover_Photo/';
+	          	//$uploadPath = 'assets/img/Cover_Photo/';
+	          	$uploadPath = 'assets/uploads/images/';
                 $config['upload_path'] = $uploadPath;
                 $config['allowed_types'] = 'jpg|jpeg|png|gif';
                 
@@ -1254,7 +1264,19 @@ public function getPostLikes($post_id){
     			$result=$this->APIM->updatecoverpic($toUpdate,$condition);
 				if($result)
 				{
-					die(json_encode(array('status' =>'1' ,'msg'=>'Cover pic uploaded Successfully')));
+				    $datas = array('post_head'=>$post_text,'post_files'=>$images,'post_type'=>1,'owner_id'=>$user_id,'posted_by'=>$user_id,'initially_posted_by'=>$user_id,'posted_on'=>$timenow
+		                );
+			        $results=$this->APIM->insert_post($datas);
+			        $newdata=array('user_id	'=>$user_id,'cover_path'=>$images,'status'=>2);
+			        $newresult=$this->APIM->addData('user_profile_cover',$newdata);
+			        if($newresult)
+			        {
+					    die(json_encode(array('status' =>'1' ,'msg'=>'Cover pic uploaded Successfully','pic'=>$images)));
+			        }
+			        else
+			        {
+			            die(json_encode(array('status' =>'0' ,'msg'=>'Error while uploading')));
+			        }
 				}
 				else
 				{
@@ -1266,17 +1288,26 @@ public function getPostLikes($post_id){
 		{
 		 	if(!empty($_FILES['files']['name']))
 		 	{    
-		 		$user_id=$_SESSION['logged_in'][0]->user_id;
+		 		if(isset($_POST['android']))
+        		{
+        			$user_id=$this->input->post('user_id');
+        		}
+        		else
+        		{
+        			$user_id=$_SESSION['logged_in'][0]->user_id;
+        		}
+        		$post_text='updated his profile picture.';
 		        $ext = pathinfo($_FILES['files']['name'], PATHINFO_EXTENSION);
 		        $_FILES['file']['name']     = "profile-image-".date("Y-m-d-H-i-s").".".$ext;
 		        $_FILES['file']['type']     = $_FILES['files']['type'];
 		        $_FILES['file']['tmp_name'] = $_FILES['files']['tmp_name'];
 		        $_FILES['file']['error']     = $_FILES['files']['error'];
 		        $_FILES['file']['size']     = $_FILES['files']['size'];
-	          	$uploadPath = 'assets/img/Profile_Pic/';
+	          	//$uploadPath = 'assets/img/Profile_Pic/';
+	          	$uploadPath = 'assets/uploads/images/';
                 $config['upload_path'] = $uploadPath;
                 $config['allowed_types'] = 'jpg|jpeg|png|gif';
-                
+            	$timenow = date('Y-m-d H:i:s');
                 // Load and initialize upload library
                 $this->load->library('upload', $config);
                 $this->upload->initialize($config);
@@ -1298,7 +1329,19 @@ public function getPostLikes($post_id){
     			$result=$this->APIM->updatecoverpic($toUpdate,$condition);
 				if($result)
 				{
-					die(json_encode(array('status' =>'1' ,'msg'=>'profile pic uploaded Successfully')));
+				    $datas = array('post_head'=>$post_text,'post_files'=>$images,'post_type'=>1,'owner_id'=>$user_id,'posted_by'=>$user_id,'initially_posted_by'=>$user_id,'posted_on'=>$timenow
+		                );
+			        $results=$this->APIM->insert_post($datas);
+			        $newdata=array('user_id	'=>$user_id,'profile_path'=>$images,'status'=>1);
+			        $newresult=$this->APIM->addData('user_profile_cover',$newdata);
+			        if($newresult)
+			        {
+					    die(json_encode(array('status' =>'1' ,'msg'=>'profile pic uploaded Successfully','pic'=>$images)));
+			        }
+			        else
+			        {
+			            die(json_encode(array('status' =>'0' ,'msg'=>'Error while uploading')));
+			        }
 				}
 				else
 				{
@@ -1340,6 +1383,7 @@ public function getPostLikes($post_id){
 				$p_Data['user_id']=$value->user_id;
 				$p_Data['post']=$value->post;
 				$p_Data['post_files']=$value->post_files;
+				$p_Data['post_head']=$value->post_head;
 				$p_Data['post_type']=$value->post_type;
 				$p_Data['posted_by']=$value->full_name;
 				$p_Data['profile_pic']=$value->profile_picture;
