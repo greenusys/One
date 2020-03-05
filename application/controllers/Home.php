@@ -77,14 +77,51 @@ class Home extends MY_Controller {
 		$data['notify']=$this->Home->fetchnofication($id);
 		$data['birthdays']=$this->Test->UpComingBirthdays();
 		$data['adsCategory']=$this->db->get('ads_category')->result();
+		$data['fetchAds']=$this->db->join('users','ads_.added_by= users.user_id')->order_by('rand()')->get('ads_')->result();
+		$PageArray=$this->db->query("SELECT * FROM user_page join users on users.user_id=user_page.user_id  WHERE user_page.user_id NOT IN ('$id') order by rand()")->result();
+		foreach ($PageArray as $PageDetails) {
+			$totalLikes=$this->returnTotalLikesForThisPage($PageDetails->page_id);
+			if($this->checkIfILikeThisPage($PageDetails->page_id)){
+				$like=1;
+			}else{
+				$like=0;
+			}
+			$pageData[]=array(
+								"page_id"=>$PageDetails->page_id,
+								"user_id"=>$PageDetails->user_id,
+								"upage_profilepic"=>$PageDetails->upage_profilepic,
+								"full_name"=>$PageDetails->full_name,
+								"category"=>$PageDetails->category,
+								'like'=>$like,
+								"total_likes"=>$totalLikes
+							);
+		}
 			// if(count($result)>0){
 			// 	die(json_encode(array("code"=>1,"data"=>$result)));
 			// }else{
 			// 	die(json_encode(array("code"=>0,"data"=>"No Data Found.")));
 			// }
+		$data['fetchPages']=$pageData;
 		$this->load->view('web/template/header');
 		$this->load->view('web/home',$data);
 		$this->load->view('web/template/footer');
+	}
+	public function checkIfILikeThisPage($page_id){
+		$id=$_SESSION['logged_in'][0]->user_id;
+		$condition=array("page_id"=>$page_id,"liked_by"=>$id);
+		$this->db->where($condition);
+		if (count($this->db->get('user_page_like_dislike')->result())>0) {
+			return true;
+		}else{
+			return false;
+		}
+		// return $this->db->get('user_page_like_dislike')->result();
+	}
+	public function returnTotalLikesForThisPage($page_id){
+		$condition=array("page_id"=>$page_id);
+		$this->db->where($condition);
+		return count($this->db->get('user_page_like_dislike')->result());
+	
 	}
 	public function getComment($post_id){
 		$this->db->where($condition=array("post_id"=>$post_id));
