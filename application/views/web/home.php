@@ -1643,9 +1643,13 @@
                  <li class="row mx-0 folow_rw ">
                     <div class="col-md-3 pt-1">
                       <a href="<?=base_url('Profile/').$user['user_id']?>">
+<<<<<<< HEAD
 
                         <img class="rounded-circle " src="<?=base_url()?>assets/img/Profile_Pic/<?=$user['upage_profilepic']?>" onerror="this.src='<?=base_url()?>assets/img/Profile_Pic/default.png';" width="40px" height="40px">
 
+=======
+                        <img class="rounded-circle " src="<?=base_url()?>assets/uploads/images/<?=$user['upage_profilepic']?>" onerror="this.src='<?=base_url()?>assets/uploads/images/default.png';" width="40px" height="40px">
+>>>>>>> f9afaeaed3c200c5bcebfc50c60da3a368687c34
                       </a>
                     </div>
                     <div class="col-md-7 p-0">
@@ -2325,7 +2329,7 @@ function getAjaxData(offset)
                 {
                   html+='<div class="dropdown ml-3"><button class="dropbtn"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></button><div class="dropdown-content bg-white"><a href="javascript:void(0)"  class="edit_post"  p_d="'+res.data[i].post_id+'">Edit</a><a href="javascript:void(0)" class="dlt_post_" p_d="'+res.data[i].post_id+'" >Delete</a></div></div></div>'; 
                 }
-              html+='</div>';
+              html+='</div></div>';
               // html+='</div>';
               html+='<div class="card-body text-justify"><p>'+res.data[i].post+'</p></div><div class="my-2 p-0"><div class="row m-0"><div class="col-md-4 manage "><div class="text-center px-3 py-1"><div class="btn-like d-flex" ><a href="javascript:void(0)" class="text-danger likePost" d-Post="'+res.data[i].post_id+'">';
               var countlikes=(res.data[i].likes_data).length;
