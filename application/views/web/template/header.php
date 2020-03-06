@@ -597,6 +597,8 @@ a:hover {
               <!-- notify content -->
               <!-- <div class="drop-content"> -->
                 <?php
+
+                  if(count($myNotifications) >0){
                   foreach($myNotifications as $notifications){
                   //   print_r($notifications);
                     ?>
@@ -616,6 +618,10 @@ a:hover {
                       </li>
                     <?php
                   }
+                }else{
+                  ?>
+                  <li> <h4 class="author">No Notification Found.</h4></li>
+               <?php }
                 ?>
                 
                 <!-- <li>

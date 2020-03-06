@@ -1643,12 +1643,9 @@
                  <li class="row mx-0 folow_rw ">
                     <div class="col-md-3 pt-1">
                       <a href="<?=base_url('Profile/').$user['user_id']?>">
-<<<<<<< HEAD
-                        <img class="rounded-circle " src="<?=base_url()?>assets/uploads/images/<?=$user['upage_profilepic']?>" onerror="this.src='<?=base_url()?>assets/uploads/images/default.png';" width="40px" height="40px">
-=======
+
                         <img class="rounded-circle " src="<?=base_url()?>assets/img/Profile_Pic/<?=$user['upage_profilepic']?>" onerror="this.src='<?=base_url()?>assets/img/Profile_Pic/default.png';" width="40px" height="40px">
 
->>>>>>> ef05b17af414dcd61e5cd31da80f82a9390c7041
                       </a>
                     </div>
                     <div class="col-md-7 p-0">
@@ -1714,7 +1711,7 @@
       <div class="card mt-3" id="">
         <div class="p-3 d-flex">
           <h4 class="widget-title">Advertisement</h4>
-          <a href="javascript:void(0)" class="btn btn-primary ads_btn float-right" >Post Ad</a>
+          <a href="javascript:void(0)" class="btn btn-primary ads_btn float-right jobs_btn" >Post Ad.</a>
         </div>
         <div class="card-body p-3">
             <!-- <a href="#"><img src="<?=base_url()?>/assets/img/advertize.jpg" class="img-fluid"></a> -->
