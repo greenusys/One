@@ -1081,7 +1081,6 @@ public function getPostLikes($post_id){
 	public function addImageToAlbum(){
 		$post_id=$this->input->post('post_id');
 		$res = $this->db->query("select * from post_ where post_id='$post_id'")->result();
-<<<<<<< HEAD
 		$old_imgs= $res[0]->post_files;
 		if(!empty($_FILES['files']['name'])){
 		    $filesCount = count($_FILES['files']['name']);
@@ -1114,11 +1113,6 @@ public function getPostLikes($post_id){
                 }
                 $this->resizeImage($_FILES['file']['name'] );
                 $images[]=$_FILES['file']['name'];
-=======
-		// print_r($res);
-		// $old_imgs= $res;
->>>>>>> 92e5b5c5426016ffdcc1f4c55030bd9b632f3b95
-
 	            }
 	            $pics=implode(",",$images);
 	            $res_images = $old_imgs.','.$pics;
@@ -1542,7 +1536,8 @@ public function getPostLikes($post_id){
     }
 
 	
-	function UnFriend(){
+	function UnFriend()
+	{
 		$frnd_id = $this->input->Post('sent_to');
 		$my_id =$_SESSION['logged_in'][0]->user_id;
 		if($this->APIM->unfriend($frnd_id,$my_id)){
