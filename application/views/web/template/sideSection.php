@@ -188,7 +188,7 @@
                   if($post['post_type']==1){
                     ?>
                      <div class="col-md-4 mt-2 px-1">
-                        <a href="<?=base_url('Post/viewPost/').$post['post_id']?>" class="d-block">
+                        <a href="<?=base_url('Post/viewPost/').$post['post_id']?>" class="d-block" target="_blank">
                           <img src="<?=base_url()?>assets/uploads/images/<?=$post_file[0]?>" class="">
                         </a>
                      </div>
@@ -196,7 +196,7 @@
                   }else if($post['post_type']==2){
 
                     ?>
-                    <a href="<?=base_url('Post/viewPost/').$post['post_id']?>">
+                    <a href="<?=base_url('Post/viewPost/').$post['post_id']?>" target="_blank">
                       <div class="col-md-4 mt-2 px-1">
                         <video  width="60" >
                           <source src="<?=base_url()?>assets/uploads/videos/<?=$post_file[0]?>" type="video/mp4">
