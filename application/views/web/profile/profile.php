@@ -494,7 +494,7 @@ $(document).ready(function(){
                    <?php
                     }
                     ?>
-                    <div class="col-md-6 p-2 text-center">
+                    <div class="col-md-6 p-3 text-center">
                     <a class="" href="<?=base_url('Post/viewPost/').$p_ost['post_id']?>" target="blank">
                       <img class="img img-fluid d-block rounded post_image" src="<?=base_url()?>assets/uploads/images/<?=$postimages[4]?>">
                     </a>
@@ -890,7 +890,7 @@ $(document).ready(function(){
                        {
                         $video=base_url().'assets/uploads/videos/'.$postimages[4];
                         ?>
-                        <div class="col-md-6 p-2 text-center">
+                        <div class="col-md-6 p-3 text-center">
                           <a class="" href="<?=base_url('Post/viewPost/').$p_ost['post_id']?>" target="blank">
                               <video controls class="w-100">
                                <source src="<?= $video?>" type="video/mp4">
@@ -907,7 +907,7 @@ $(document).ready(function(){
                       {
                         $images=base_url().'assets/uploads/images/'.$postimages[4];
                       ?>
-                      <div class="col-md-6 p-2 text-center">
+                      <div class="col-md-6 p-3 text-center">
                         <a class="" href="<?=base_url('Post/viewPost/').$p_ost['post_id']?>" target="blank">
                           <img class="img img-fluid d-block rounded post_image" src="<?=$images?>">
                         </a>
@@ -1723,7 +1723,7 @@ function getAjaxData(offset)
                   html+='<img class="img img-fluid d-block ext_img rounded"  src="<?=base_url()?>assets/uploads/images/'+postimages[m]+'"></a>';
                   html+='</div>';
                 }
-                html+='<div class="col-md-6 p-2 text-center">';
+                html+='<div class="col-md-6 p-3 text-center">';
                 html+='<a class="" href="<?=base_url()?>Post/viewPost/'+res.data[i].post_id+'" target="blank">';
                 html+='<img class="img img-fluid d-block  post_image rounded"  src="<?=base_url()?>assets/uploads/images/'+postimages[4]+'"></a>';
                 html+='<div class="position-absolute h-100 w-100 bg-dark " style="left: 0%;top:0px;padding-top: 8rem !important;opacity: 0.5">';
@@ -1979,7 +1979,7 @@ function getAjaxData(offset)
                   if(file_ext=='mp4')
                   {
                     var video='<?=base_url()?>assets/uploads/videos/'+postimages[0]+'';
-                    html+='<div class="col-md-6 p-2 text-center">';
+                    html+='<div class="col-md-6 p-3 text-center">';
                     html+='<a class="" href="<?=base_url()?>Post/viewPost/'+res.data[i].post_id+'" target="blank"><video controls class="w-100"><source src="'+video+'" type="video/mp4">Your browser does not support the video tag.</video></a>';
                     html+='<div class="position-absolute h-100 w-100 bg-dark " style="left: 0%;top:0px;padding-top: 8rem !important;opacity: 0.5">';
                     html+='</div>';
@@ -1990,7 +1990,7 @@ function getAjaxData(offset)
                   else
                   {
                     var image='<?=base_url()?>assets/uploads/images/'+postimages[0]+'';
-                    html+='<div class="col-md-6 p-2 text-center">';
+                    html+='<div class="col-md-6 p-3 text-center">';
                     html+='<a class=""href="<?=base_url()?>Post/viewPost/'+res.data[i].post_id+'" target="blank"><img class="img img-fluid d-block post_image rounded" src="'+image+'"></a>';
                     html+='<div class="position-absolute h-100 w-100 bg-dark " style="left: 0%;top:0px;padding-top: 8rem !important;opacity: 0.5">';
                     html+='</div>';
