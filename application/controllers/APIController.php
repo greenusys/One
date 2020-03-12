@@ -1101,35 +1101,30 @@ public function getPostLikes($post_id){
 		        $_FILES['file']['size']     = $_FILES['files']['size'][$i];
 		        
 		        // File upload configuration
-		        $uploadPath = 'assets/uploads/album/';
-		        $config['upload_path'] = $uploadPath;
-		        $config['allowed_types'] = 'jpg|jpeg|png|gif';
-		
-		        
-		        // Upload file to server
-		        // if($this->upload->do_upload('file')){
-		        //     // Uploaded file data
-		        //     $fileData = $this->upload->data();
-		        //     //$this->resizeImage($_FILES['file']['name'] );
-		        //     $uploadData[$i]['file_name'] = $fileData['file_name'];
-		        //     $uploadData[$i]['uploaded_on'] = date("Y-m-d H:i:s");
-		        // }
-		        //$this->resizeImage($_FILES['file']['name'] );
-		       // $this->compressImage();
-    	      	// $target_path = $_SERVER['DOCUMENT_ROOT'] . '/BrainT/laneCrowd/assets/uploads/album/';
-    	      	$uploadData['file_name'] = $_FILES['file']['name'];
-		        $uploadDate=date('d-m-Y H:i:s');
-    	      	$target_path='assets/uploads/album/'.$_FILES['file']['name'];
-    	      	if($status_=$this->compressImage($_FILES['file']['tmp_name'], $target_path, 60)){
-    	      		$images[]=$status_;
-    	      	}else{
-    	      		echo 'Failed';
-    	      	}
-		        
-		        // $images[]=$_FILES['file']['name'];
+		        $uploadPath = 'assets/uploads/images/';
+		       
+				$config['upload_path'] = $uploadPath;
+                $config['max_size'] = '*';
+                $config['allowed_types'] = 'jpg|jpeg|png|gif';
+                
+                // Load and initialize upload library
+                $this->load->library('upload', $config);
+                $this->upload->initialize($config);
+                
+                // Upload file to server
+                if($this->upload->do_upload('file')){
+                    // Uploaded file data
+                    $fileData = $this->upload->data();
+                    //$this->resizeImage($_FILES['file']['name'] );
+                    $uploadData[$i]['file_name'] = $fileData['file_name'];
+                    $uploadData[$i]['uploaded_on'] = date("d-m-Y H:i:s");
+                }
+                $this->resizeImage($_FILES['file']['name'] );
+                $images[]=$_FILES['file']['name'];
 
-		    }
-		    $pics=implode(",",$images);
+	            }
+	            $pics=implode(",",$images);
+	            $uploadDate=date('d-m-Y H:i:s');
 		    if(!empty($uploadData)){
 		        // Insert files data into the database
 				
@@ -1145,7 +1140,26 @@ public function getPostLikes($post_id){
 		        $result=$this->APIM->addData($tablename,$data);
 				if($result)
 				{
-					die(json_encode(array('status' =>'1' ,'msg'=>'Album uploaded Successfully')));
+					$post_text=$album_title;
+					$data = array(
+		                	'tagged_friends'=>0,
+		                	'post'=>$post_text,
+		                	'post_files'=>$pics,
+		                	'owner_id'=>$user_id,
+		                	'post_type'=>1,
+		                	'posted_by'=>$user_id,
+		                	'initially_posted_by'=>$user_id,
+		                	'posted_on'=>$uploadDate
+		                );
+		                $res=$this->APIM->insert_post($data);
+		                if($res)
+		                {
+							die(json_encode(array('status' =>'1' ,'msg'=>'Album uploaded Successfully')));
+						}
+						else
+						{
+							die(json_encode(array('status' =>'0' ,'msg'=>'Error while uploading')));
+						}
 				}
 				else
 				{
