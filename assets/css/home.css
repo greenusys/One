@@ -26,6 +26,16 @@ small {
    background: linear-gradient(to bottom, #0000cc 0%,#0000cc 0%, #3399ff 100%);
 }
 
+.fa-angle-down{
+  transform: rotate(0deg);
+  transition: transform .5s linear;
+}
+
+.fa_open{
+  transform: rotate(180deg);
+  transition: transform .5s linear;
+}
+
 .dot {
   height: 3px;
   width: 3px;

@@ -429,7 +429,8 @@ a:hover {
 .notify_read{
     bottom: 0px;
     position: absolute;
-    width: 100%;
+    width: 91%;
+    height: 32px;
 }
 </style>
 

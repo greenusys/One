@@ -17,7 +17,7 @@
     right: 22px;
     color: #666666;
     transition: all .3s cubic-bezier(.175, .885, .32, 1.275);
-    z-index: 22;
+    z-index: 1;
     font-size: 17px;
 
 }
@@ -135,9 +135,9 @@
       <?php
         if($myId==1){
           ?>
-            <form class="edit-phto">
+            <form class="edit-phto pointer">
               <i class="fa fa-camera-retro upload-button"></i>
-              <label class="fileContainer">
+              <label class="fileContainer pointer">
                 Edit Cover Photo
               <input type="file" class="file-upload d-none" name="" >
               </label>
@@ -158,7 +158,7 @@
       <?php
         if($myId==1){
           ?>
-            <div class="p-image">
+            <div class="p-image pointer">
               <i class="fa fa-camera upload-buttons"></i>
                 <input class="profile-upload" type="file" accept="image/*"/>
             </div>
