@@ -101,9 +101,9 @@
 
            <li class="row">
             <i class="fa fa-file-text ranUse mt-3 col-md-1" aria-hidden="true"></i>
-            <a href="#other-fruits" class="nav-link w-100 menu_botttom col-md-9" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="other-fruits">
-                
-                Page
+            <a href="#other-fruits" id="pages_s_" class="nav-link w-100 menu_botttom col-md-9" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="other-fruits">
+               Page
+               <span class="float-right"><i class="fas fa-angle-down "></i></span>
               </a>
 
               <ul id="other-fruits" class="flex-column collapse">
@@ -120,6 +120,7 @@
                   </a>
                 </li>
               </ul> 
+          </li>
               <!-- /Sub Nav -->
              <!-- <i class="fa fa-file-text ranUse mt-3 col-md-1" aria-hidden="true"></i><a class=" menu_botttom col-md-9" href="<?=base_url('Test/page')?>">Page</a> -->
           <!-- </li> -->
@@ -1643,13 +1644,7 @@
                  <li class="row mx-0 folow_rw ">
                     <div class="col-md-3 pt-1">
                       <a href="<?=base_url('Profile/').$user['user_id']?>">
-<<<<<<< HEAD
-
                         <img class="rounded-circle " src="<?=base_url()?>assets/img/Profile_Pic/<?=$user['upage_profilepic']?>" onerror="this.src='<?=base_url()?>assets/img/Profile_Pic/default.png';" width="40px" height="40px">
-
-=======
-                        <img class="rounded-circle " src="<?=base_url()?>assets/uploads/images/<?=$user['upage_profilepic']?>" onerror="this.src='<?=base_url()?>assets/uploads/images/default.png';" width="40px" height="40px">
->>>>>>> f9afaeaed3c200c5bcebfc50c60da3a368687c34
                       </a>
                     </div>
                     <div class="col-md-7 p-0">

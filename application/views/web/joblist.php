@@ -56,7 +56,7 @@
 	    	<div class="col-sm-6">
 	    		<div class="card bg-white p-4 line">
 	    			<a href="http://greenusys.com/" class="text-dark"><h5 class="font-weight-bold"><?= $jobs->jobpost_title?></h5></a>
-	    			<h6  data-toggle="modal" data-target="#exampleModal" id="comp"><?= $jobs->jobpost_company?></h6>
+	    			<h6  id="comp"><?= $jobs->jobpost_company?></h6>
 	    			<a href="http://greenusys.com/" class="text-dark"><h6><?= $jobs->name?></h6></a>
 	    			<h6 class="font-weight-bold mt-2">&#8377;<?= $jobs->jobpost_salary?> / <?= ucwords($jobs->jobpost_salarytype)?></h6>
 	    			<div class="row mt-2">

@@ -189,7 +189,7 @@
                     ?>
                      <div class="col-md-4 mt-2 px-1">
                         <a href="<?=base_url('Post/viewPost/').$post['post_id']?>" class="d-block">
-                          <img src="assets/uploads/images/<?=$post_file[0]?>" class="">
+                          <img src="<?=base_url()?>assets/uploads/images/<?=$post_file[0]?>" class="">
                         </a>
                      </div>
                     <?php

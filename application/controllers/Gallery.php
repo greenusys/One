@@ -186,4 +186,88 @@ class Gallery extends MY_Controller {
         $this->db->where('user_id',$id);
         return $this->db->get('user_university_details')->result();
     }
+
+    public function fetchAlbum($albumid,$uId=null){
+
+		$user_id=$_SESSION['logged_in'][0]->user_id;
+		if($uId!=""){
+			$id=$uId;
+		}else{
+			$id=$user_id;
+		}
+		
+		if($id!=$_SESSION['logged_in'][0]->user_id){
+			$res=$this->FRND->checkForExistingFriendship($uId,$user_id);
+			// print_r($res);
+			if(count($res)>0){
+				$data['cancelFriend']=1;
+			}else{
+				$data['cancelFriend']=0;
+			}
+			$data['myId']=0;
+		}else{
+			$data['myId']=1;
+		}
+
+
+		if(count($pstDoat=$this->POST->getAllPost($this->getAllMyPost(),$id))>0){
+			foreach ($pstDoat as $key => $value) {
+				$p_Data['post_id']=$value->post_id;
+				$p_Data['user_id']=$value->user_id;
+				$p_Data['post']=$value->post;
+				$p_Data['post_files']=$value->post_files;
+				$p_Data['post_type']=$value->post_type;
+				$p_Data['posted_by']=$value->full_name;
+				$p_Data['profile_pic']=$value->profile_picture;
+				$p_Data['initially_posted_by']=$value->initially_posted_by;
+				$p_Data['posted_on']=$value->posted_on;
+				if(($likes_data= $this->getPostLikes($value->post_id))!=false){
+					 $p_Data['likes_data']=$likes_data;
+				}else{
+					 $p_Data['likes_data']=array();
+				}
+				// $p_Data['']=;
+				$p_Data['total_likes']=count($this->getLikeCount($value->post_id));
+				$p_Data['total_dislikes']=$this->getDislikeCount($value->post_id);
+				$p_Data['total_comments']=$this->getComment($value->post_id);
+				$p_Data['total_share']=$this->getShareCount($value->post_id);
+				$post[]=$p_Data;
+				//$data['AllPosts']=$p_Data;
+			}
+			$data['AllPosts']=$post;
+		}
+		else{
+			$data['AllPosts']=array();
+		}
+		// $data['user_id']=$id;
+		$data['user_id']=$id;
+		$data['ReqStatus']=$this->FRND->checkFriendRequestStatus($id);
+		$data['RandomPeople']=$this->FRND->getRandomUser($id);
+		$data['MyFriends']=$this->FRND->getMyFriends($id);
+		$data['FriendsActivity']=$this->FRND->getMyFreActivities($id);
+		$data['MyDetails']=$this->Profile->getMyDetails($id);
+		$data['FriendRequests']=$this->FRND->getFriendRequests($id);
+		$data['MyFollowers']=$this->FRND->getMyFollowers($id);
+		$data['MyPosts']=$this->POST->getMyPosts($id);
+		$data['MyAlbum']=$this->Profile->getMyAlbum($id);
+        $data['Trending']=$this->POST->getTrending();
+        $data['WorkDetails']=$this->getMyWorkDetails($id);
+        $data['SkillDetails']=$this->getMySkillsDetails($id);
+        $data['UniversityDetails']=$this->getMyUniversityDetails($id);
+        $data['SchoolDetails']=$this->getMySchoolDetails($id);
+
+    	$res['MyAlbum']= $this->imageAlbum($albumid);
+    	$this->load->view('web/template/header',$data);
+		$this->load->view('web/template/profileCover');
+		$this->load->view('web/template/sideSection');
+		$this->load->view('web/profile/album_view',$res);
+		$this->load->view('web/template/footer');
+
+    }
+
+    public function imageAlbum($id){
+	  	$this->db->where('album_id',$id);
+   		 return $this->db->get('album_')->result();
+    }
+
 }
