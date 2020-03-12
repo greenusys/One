@@ -1264,7 +1264,8 @@ public function getPostLikes($post_id){
             $this->upload->initialize($config);
             
             // Upload file to server
-            if($this->upload->do_upload('file')){
+            if($this->upload->do_upload('file'))
+            {
                 // Uploaded file data
                 $fileData = $this->upload->data();
                 $uploadData['file_name'] = $fileData['file_name'];
@@ -1283,7 +1284,8 @@ public function getPostLikes($post_id){
 			    $datas = array('post_head'=>$post_text,'post_files'=>$images,'post_type'=>1,'owner_id'=>$user_id,'posted_by'=>$user_id,'initially_posted_by'=>$user_id,'posted_on'=>$timenow,'tagged_friends'=>''
 	                );
 		        $results=$this->APIM->insert_post($datas);
-		        $newdata=array('user_id	'=>$user_id,'cover_path'=>$images,'status'=>2);
+	         	$post_id=$results;
+		        $newdata=array('user_id	'=>$user_id,'cover_path'=>$images,'status'=>2,'post_id'=>$post_id);
 		        $newresult=$this->APIM->addData('user_profile_cover',$newdata);
 		        if($newresult)
 		        {
@@ -1361,7 +1363,8 @@ public function getPostLikes($post_id){
 			    $datas = array('post_head'=>$post_text,'post_files'=>$images,'post_type'=>1,'owner_id'=>$user_id,'posted_by'=>$user_id,'initially_posted_by'=>$user_id,'posted_on'=>$timenow,'tagged_friends'=>''
 	                );
 		        $results=$this->APIM->insert_post($datas);
-		        $newdata=array('user_id	'=>$user_id,'profile_path'=>$images,'status'=>1);
+		        $post_id=$results;
+		        $newdata=array('user_id	'=>$user_id,'profile_path'=>$images,'status'=>1,'post_id'=>$post_id);
 		        $newresult=$this->APIM->addData('user_profile_cover',$newdata);
 		        if($newresult)
 		        {
