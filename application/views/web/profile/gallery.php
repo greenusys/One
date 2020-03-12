@@ -349,9 +349,13 @@ img.hover-shadow {
                          onclick="openModal(<?=$album->album_id?>);currentSlide(<?=$i?>)"
                       </div> -->
                       <div class="card-body p-0">
+<<<<<<< HEAD
+                        <img src="<?=base_url().'assets/uploads/images/'.$imgArr[0]?>" onclick="openModal(<?=$album->album_id?>);currentSlide(<?=$i?>)" class="h-100 img-fluid w-100">
+=======
                         <a href="<?=base_url('Gallery/fetchAlbum/').$album_id?>">
                           <img src="<?=base_url().$imgArr[0]?>" class="h_220 img-fluid w-100">
                         </a>
+>>>>>>> ec5de0198070c0773159fa2e31694bbd7414f286
                       </div>
                       <div class="card-footer p-2 deletealbum ">
                         <a href="<?=base_url('Gallery/fetchAlbum/').$album_id?>">
@@ -1001,13 +1005,13 @@ $.ajax({
 
             di+='<div class="mySlides">';
             di+='    <div class="numbertext2">'+i+' / '+response.album.length+'</div>';
-            di+='    <img src="<?=base_url()?>'+response.album[i]+'" style="width:680px">';
+            di+='    <img src="<?=base_url()?>assets/uploads/images/'+response.album[i]+'" style="width:680px">';
             di+='</div>';
 
 
             var di_='';
             di_+='<div class="column2">';
-            di_+='<img class="demo2" src="<?=base_url()?>'+response.album[i]+'" onclick="currentSlide('+i+')" alt="Nature">';
+            di_+='<img class="demo2" src="<?=base_url()?>assets/uploads/images/'+response.album[i]+'" onclick="currentSlide('+i+')" alt="album">';
             di_+='</div>';
             $('#sli_').append(di);
             $('#img__').append(di_);
