@@ -247,7 +247,7 @@ img.hover-shadow {
 
            <?php
                 foreach ($AllPosts as $post) {
-                  // print_r($post);
+             //print_r($post);
                   if($post['post_type'] ==1){
                     $gallary=$post['post_files'];
                     $gallaryimg=explode(',',$gallary);
@@ -294,18 +294,20 @@ img.hover-shadow {
                       <?php
                     }
                   ?>
+
+                  <?php if($ProfileImgs){ ?>
                     <div class="card mt-2 col-md-4 albums p-2">
                     <!-- <a href="javascript:void(0)"> -->
                  <!--      <div class="card-header d-flex mt-1 justify-content-center">
                          onclick="openModal(<?=$album->album_id?>);currentSlide(<?=$i?>)"
                       </div> -->
                       <div class="card-body p-0">
-                        <a href="<?=base_url('Gallery/fetchAlbum/')?>">
-                          <img src="<?=base_url()?>" class="h-100 img-fluid w-100">
+                        <a href="<?=base_url('Gallery/ProfileAlbum/profile/').$user_id?>">
+                          <img src="<?=base_url().'assets/uploads/images/'.$ProfileImgs[0]->profile_path?>" class="h_220 img-fluid w-100">
                         </a>
                       </div>
                       <div class="card-footer p-2 deletealbum ">
-                        <a href="<?=base_url('Gallery/fetchProfileImages/')?>">
+                        <a href="<?=base_url('Gallery/ProfileAlbum/profile/').$user_id?>">
                           <h5 class="m-0 p-1 text-capitalize author float-left">Profile Pictures</h5>
                         </a>
                         <!-- <span val="" class=" float-right delt_img text-danger"><i class="fas fa-trash-alt"></i></span> -->
@@ -313,18 +315,20 @@ img.hover-shadow {
                     
                     <!-- </a> -->
                     </div>
+                  <?php } ?>
+                   <?php if($CoverImgs){ ?>
                      <div class="card mt-2 col-md-4 albums p-2">
                     <!-- <a href="javascript:void(0)"> -->
                  <!--      <div class="card-header d-flex mt-1 justify-content-center">
                          onclick="openModal(<?=$album->album_id?>);currentSlide(<?=$i?>)"
                       </div> -->
                       <div class="card-body p-0">
-                        <a href="<?=base_url('Gallery/fetchAlbum/')?>">
-                          <img src="<?=base_url()?>" class="h-100 img-fluid w-100">
+                        <a href="<?=base_url('Gallery/ProfileAlbum/cover/').$user_id?>">
+                          <img src="<?=base_url().'assets/uploads/images/'.$CoverImgs[0]->cover_path?>" class="h_220 img-fluid w-100">
                         </a>
                       </div>
                       <div class="card-footer p-2 deletealbum ">
-                        <a href="<?=base_url('Gallery/fetchProfileImages/')?>">
+                        <a href="<?=base_url('Gallery/ProfileAlbum/cover/').$user_id?>">
                           <h5 class="m-0 p-1 text-capitalize author float-left">Cover Pictures</h5>
                         </a>
                         <!-- <span val="" class=" float-right delt_img text-danger"><i class="fas fa-trash-alt"></i></span> -->
@@ -332,6 +336,7 @@ img.hover-shadow {
                     
                     <!-- </a> -->
                     </div>
+                  <?php } ?>
                    <?php
                 $i=1;
                   foreach ($MyAlbum as $album) {
@@ -345,7 +350,7 @@ img.hover-shadow {
                       </div> -->
                       <div class="card-body p-0">
                         <a href="<?=base_url('Gallery/fetchAlbum/').$album_id?>">
-                          <img src="<?=base_url().$imgArr[0]?>" class="h-100 img-fluid w-100">
+                          <img src="<?=base_url().$imgArr[0]?>" class="h_220 img-fluid w-100">
                         </a>
                       </div>
                       <div class="card-footer p-2 deletealbum ">

@@ -28,12 +28,12 @@ small {
 
 .fa-angle-down{
   transform: rotate(0deg);
-  transition: transform 1s linear;
+  transition: transform .5s linear;
 }
 
 .fa_open{
   transform: rotate(180deg);
-  transition: transform 1s linear;
+  transition: transform .5s linear;
 }
 
 .dot {

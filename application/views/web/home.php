@@ -121,6 +121,17 @@
                 </li>
               </ul> 
           </li>
+        <script>
+          $(document).on("click","#pages_s_",function(){
+            var ht = $(this).attr("class");
+            if(ht=='nav-link w-100 menu_botttom col-md-9'){
+              $(this).find("i").addClass("fa_open");
+            }else{
+               $(this).find("i").removeClass("fa_open");
+            }
+
+          })
+        </script>
               <!-- /Sub Nav -->
              <!-- <i class="fa fa-file-text ranUse mt-3 col-md-1" aria-hidden="true"></i><a class=" menu_botttom col-md-9" href="<?=base_url('Test/page')?>">Page</a> -->
           <!-- </li> -->

@@ -78,15 +78,11 @@ class Home extends MY_Controller {
 		$data['birthdays']=$this->Test->UpComingBirthdays();
 		$data['adsCategory']=$this->db->get('ads_category')->result();
 		$data['fetchAds']=$this->db->join('users','ads_.added_by= users.user_id')->order_by('rand()')->get('ads_')->result();
-<<<<<<< HEAD
+
 		$PageArray=$this->db->query("SELECT * FROM user_page join users on users.user_id=user_page.user_id  WHERE user_page.user_id NOT IN ('$id') order by rand() limit 5")->result();
-		foreach ($PageArray as $PageDetails) {
-=======
-		$PageArray=$this->db->query("SELECT * FROM user_page join users on users.user_id=user_page.user_id  WHERE user_page.user_id NOT IN ('$id') order by rand()")->result();
 		if(!empty($PageArray))
 		{
 			foreach ($PageArray as $PageDetails) {
->>>>>>> 75c41eedad701cff2d4ab512c1f7c9ab16f2de2f
 			$totalLikes=$this->returnTotalLikesForThisPage($PageDetails->page_id);
 			if($this->checkIfILikeThisPage($PageDetails->page_id)){
 				$like=1;

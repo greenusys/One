@@ -81,6 +81,8 @@ class Gallery extends MY_Controller {
         $data['SkillDetails']=$this->getMySkillsDetails($id);
         $data['UniversityDetails']=$this->getMyUniversityDetails($id);
         $data['SchoolDetails']=$this->getMySchoolDetails($id);
+        $data['ProfileImgs']=$this->profileImageAlbum('profile',$id);
+        $data['CoverImgs']=$this->profileImageAlbum('cover',$id);
 
 		$this->load->view('web/template/header',$data);
 		$this->load->view('web/template/profileCover');
@@ -249,7 +251,7 @@ class Gallery extends MY_Controller {
 		$data['FriendRequests']=$this->FRND->getFriendRequests($id);
 		$data['MyFollowers']=$this->FRND->getMyFollowers($id);
 		$data['MyPosts']=$this->POST->getMyPosts($id);
-		$data['MyAlbum']=$this->Profile->getMyAlbum($id);
+		//$data['MyAlbum']=$this->Profile->getMyAlbum($id);
         $data['Trending']=$this->POST->getTrending();
         $data['WorkDetails']=$this->getMyWorkDetails($id);
         $data['SkillDetails']=$this->getMySkillsDetails($id);
@@ -270,4 +272,92 @@ class Gallery extends MY_Controller {
    		 return $this->db->get('album_')->result();
     }
 
+      public function ProfileAlbum($type,$userId,$uId=null){
+
+		$user_id=$_SESSION['logged_in'][0]->user_id;
+		if($uId!=""){
+			$id=$uId;
+		}else{
+			$id=$user_id;
+		}
+		
+		if($id!=$_SESSION['logged_in'][0]->user_id){
+			$res=$this->FRND->checkForExistingFriendship($uId,$user_id);
+			// print_r($res);
+			if(count($res)>0){
+				$data['cancelFriend']=1;
+			}else{
+				$data['cancelFriend']=0;
+			}
+			$data['myId']=0;
+		}else{
+			$data['myId']=1;
+		}
+
+
+		if(count($pstDoat=$this->POST->getAllPost($this->getAllMyPost(),$id))>0){
+			foreach ($pstDoat as $key => $value) {
+				$p_Data['post_id']=$value->post_id;
+				$p_Data['user_id']=$value->user_id;
+				$p_Data['post']=$value->post;
+				$p_Data['post_files']=$value->post_files;
+				$p_Data['post_type']=$value->post_type;
+				$p_Data['posted_by']=$value->full_name;
+				$p_Data['profile_pic']=$value->profile_picture;
+				$p_Data['initially_posted_by']=$value->initially_posted_by;
+				$p_Data['posted_on']=$value->posted_on;
+				if(($likes_data= $this->getPostLikes($value->post_id))!=false){
+					 $p_Data['likes_data']=$likes_data;
+				}else{
+					 $p_Data['likes_data']=array();
+				}
+				// $p_Data['']=;
+				$p_Data['total_likes']=count($this->getLikeCount($value->post_id));
+				$p_Data['total_dislikes']=$this->getDislikeCount($value->post_id);
+				$p_Data['total_comments']=$this->getComment($value->post_id);
+				$p_Data['total_share']=$this->getShareCount($value->post_id);
+				$post[]=$p_Data;
+				//$data['AllPosts']=$p_Data;
+			}
+			$data['AllPosts']=$post;
+		}
+		else{
+			$data['AllPosts']=array();
+		}
+		// $data['user_id']=$id;
+		$data['user_id']=$id;
+		$data['ReqStatus']=$this->FRND->checkFriendRequestStatus($id);
+		$data['RandomPeople']=$this->FRND->getRandomUser($id);
+		$data['MyFriends']=$this->FRND->getMyFriends($id);
+		$data['FriendsActivity']=$this->FRND->getMyFreActivities($id);
+		$data['MyDetails']=$this->Profile->getMyDetails($id);
+		$data['FriendRequests']=$this->FRND->getFriendRequests($id);
+		$data['MyFollowers']=$this->FRND->getMyFollowers($id);
+		$data['MyPosts']=$this->POST->getMyPosts($id);
+	//	$data['MyAlbum']=$this->Profile->getMyAlbum($id);
+        $data['Trending']=$this->POST->getTrending();
+        $data['WorkDetails']=$this->getMyWorkDetails($id);
+        $data['SkillDetails']=$this->getMySkillsDetails($id);
+        $data['UniversityDetails']=$this->getMyUniversityDetails($id);
+        $data['SchoolDetails']=$this->getMySchoolDetails($id);
+
+    	$data['ProfileImages']= $this->profileImageAlbum($type,$userId);
+
+    	$this->load->view('web/template/header',$data);
+		$this->load->view('web/template/profileCover');
+		$this->load->view('web/template/sideSection');
+		$this->load->view('web/profile/profile_images');
+		$this->load->view('web/template/footer');
+
+    }
+
+    public function profileImageAlbum($type,$u_id){	
+    	if ($type=='cover') {
+    		return $this->db->query("SELECT post_.*,user_profile_cover.*,COUNT(post_comments_.post_id) as total_comments FROM `post_comments_` join user_profile_cover on post_comments_.post_id=user_profile_cover.post_id JOIN post_ on post_.post_id=user_profile_cover.post_id  where user_profile_cover.user_id='$u_id' and user_profile_cover.status=2 group BY post_comments_.post_id")->result();
+    	}else{
+    		return $this->db->query("SELECT post_.*,user_profile_cover.*,COUNT(post_comments_.post_id) as total_comments FROM `post_comments_` join user_profile_cover on post_comments_.post_id=user_profile_cover.post_id JOIN post_ on post_.post_id=user_profile_cover.post_id where user_profile_cover.user_id='$u_id'and user_profile_cover.status=1 group BY post_comments_.post_id")->result();
+    	}
+    	
+	  		
+    }
 }
