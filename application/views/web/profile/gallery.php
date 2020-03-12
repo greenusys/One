@@ -349,13 +349,11 @@ img.hover-shadow {
                          onclick="openModal(<?=$album->album_id?>);currentSlide(<?=$i?>)"
                       </div> -->
                       <div class="card-body p-0">
-<<<<<<< HEAD
-                        <img src="<?=base_url().'assets/uploads/images/'.$imgArr[0]?>" onclick="openModal(<?=$album->album_id?>);currentSlide(<?=$i?>)" class="h-100 img-fluid w-100">
-=======
+
                         <a href="<?=base_url('Gallery/fetchAlbum/').$album_id?>">
                           <img src="<?=base_url().$imgArr[0]?>" class="h_220 img-fluid w-100">
                         </a>
->>>>>>> ec5de0198070c0773159fa2e31694bbd7414f286
+
                       </div>
                       <div class="card-footer p-2 deletealbum ">
                         <a href="<?=base_url('Gallery/fetchAlbum/').$album_id?>">
