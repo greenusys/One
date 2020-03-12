@@ -1654,16 +1654,7 @@
                  <li class="row mx-0 folow_rw ">
                     <div class="col-md-3 pt-1">
                       <a href="<?=base_url('Profile/').$user['user_id']?>">
-<<<<<<< HEAD
-
                         <img class="rounded-circle " src="<?=base_url()?>assets/uploads/images/<?=$user['upage_profilepic']?>" onerror="this.src='<?=base_url()?>assets/uploads/images/default.png';" width="40px" height="40px">
-
-                        <!-- <img class="rounded-circle " src="<?=base_url()?>assets/img/Profile_Pic/<?=$user['upage_profilepic']?>" onerror="this.src='<?=base_url()?>assets/img/Profile_Pic/default.png';" width="40px" height="40px"> -->
-
-=======
-                        <img class="rounded-circle " src="<?=base_url()?>assets/uploads/images/<?=$user['upage_profilepic']?>" onerror="this.src='<?=base_url()?>assets/uploads/images/default.png';" width="40px" height="40px">
-
->>>>>>> b22e0c43f802cb50b4c9cd851c69d4916d36b7dd
                       </a>
                     </div>
                     <div class="col-md-7 p-0">
@@ -2341,7 +2332,7 @@ function getAjaxData(offset)
                 html+='</div>';
                 if(user_id==res.data[i].user_id)
                 {
-                  html+='<div class="dropdown ml-3"><button class="dropbtn"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></button><div class="dropdown-content bg-white"><a href="javascript:void(0)"  class="edit_post"  p_d="'+res.data[i].post_id+'">Edit</a><a href="javascript:void(0)" class="dlt_post_" p_d="'+res.data[i].post_id+'" >Delete</a></div></div></div>'; 
+                  html+='<div class="dropdown ml-3"><button class="dropbtn"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></button><div class="dropdown-content bg-white"><a href="javascript:void(0)"  class="edit_post"  p_d="'+res.data[i].post_id+'">Edit</a><a href="javascript:void(0)" class="dlt_post_" p_d="'+res.data[i].post_id+'" >Delete</a></div></div>'; 
                 }
               html+='</div></div>';
               // html+='</div>';
@@ -2398,7 +2389,7 @@ function getAjaxData(offset)
               html+='</ul></div></div></div><div class="col-md-4 manage px-3 py-1"><div class="btn-comment post-btns"><a href="javascript:void(0)"><i class="fa fa-comment-o" aria-hidden="true"></i> Comments</a><span class="">'+countcomment+'</span></div></div>';
               html+='<div class="col-md-4 manage px-3 py-1"><div class="btn-share post-btns">';
               html+='<a href="javascript:void(0)" class="shareThisPost" d-ost="'+res.data[i].post_id+'"><i class="fa fa-share-square-o" aria-hidden="true"></i> Share</a>';
-              html+='<span class="">'+res.data[i].total_share+'</span></div></div></div></div><hr>';
+              html+='<span class="">'+res.data[i].total_share+'</span></div></div></div></div>';
               html+='<div class=" comments_list border-top">';
               if((countcomment)>0)
               {
@@ -2439,11 +2430,11 @@ function getAjaxData(offset)
             }
             else if(res.data[i].post_type==1)
             {
-              html+='<div class="card mt-4"><div class="card-header "><div class="d-flex float-left"><div>';
-              html+='<a class="font-weight-bold" href="<?=base_url()?>Profile/'+res.data[i].posted_by+'">';
+              html+='<div class="card mt-4"><div class="card-header"><div class="d-flex float-left">';
+              html+='<div><a class="font-weight-bold" href="<?=base_url()?>Profile/'+res.data[i].posted_by+'">';
               html+='<img class="rounded-circle mr-2" src="<?=base_url()?>assets/uploads/images/'+res.data[i].profile_pic+'" width="40"  height="40">';
-              html+='</a></div><div>';
-              html+='<a class="font-weight-bold "  href="#">'+res.data[i].posted_by+'</a><span style="color:#616770">'+res.data[i].post_head+'</span><br><small><time class="timeago" datetime="'+res.data[i].posted_on+'"></time></small></div></div>';
+              html+='</a></div>';
+              html+='<div><a class="font-weight-bold "  href="#">'+res.data[i].posted_by+'</a><span style="color:#616770">'+res.data[i].post_head+'</span><br><small><time class="timeago" datetime="'+res.data[i].posted_on+'"></time></small></div></div>';
                 html+='<div class="float-right d-flex mt-2">';
                 html+='<div class="">';
                 var count_fav=(res.data[i].fav).length;
@@ -2458,7 +2449,7 @@ function getAjaxData(offset)
                 html+='</div>';
                 if(user_id==res.data[i].user_id)
                 {
-                  html+='<div class="dropdown ml-3"><button class="dropbtn"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></button><div class="dropdown-content bg-white"><a href="javascript:void(0)"  class="edit_post"  p_d="'+res.data[i].post_id+'">Edit</a><a href="javascript:void(0)" class="dlt_post_" p_d="'+res.data[i].post_id+'" >Delete</a></div></div></div>'; 
+                  html+='<div class="dropdown ml-3"><button class="dropbtn"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></button><div class="dropdown-content bg-white"><a href="javascript:void(0)"  class="edit_post"  p_d="'+res.data[i].post_id+'">Edit</a><a href="javascript:void(0)" class="dlt_post_" p_d="'+res.data[i].post_id+'" >Delete</a></div></div>'; 
                 }
               html+='</div></div>';
               html+='<div class="card-body py-0">';
@@ -2590,7 +2581,7 @@ function getAjaxData(offset)
               html+='</ul></div></div></div><div class="col-md-4 manage px-3 py-1"><div class="btn-comment post-btns"><a href="javascript:void(0)"><i class="fa fa-comment-o" aria-hidden="true"></i> Comments</a><span class="">'+countcomment+'</span></div></div>';
               html+='<div class="col-md-4 manage px-3 py-1"><div class="btn-share post-btns">';
               html+='<a href="javascript:void(0)" class="shareThisPost" d-ost="'+res.data[i].post_id+'"><i class="fa fa-share-square-o" aria-hidden="true"></i> Share</a>';
-              html+='<span class="">'+res.data[i].total_share+'</span></div></div></div></div><hr>';
+              html+='<span class="">'+res.data[i].total_share+'</span></div></div></div></div>';
               html+='<div class=" comments_list border-top">';
               if((countcomment)>0)
               {
@@ -2651,7 +2642,7 @@ function getAjaxData(offset)
                 html+='</div>';
                 if(user_id==res.data[i].user_id)
                 {
-                  html+='<div class="dropdown ml-3"><button class="dropbtn"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></button><div class="dropdown-content bg-white"><a href="javascript:void(0)"  class="edit_post"  p_d="'+res.data[i].post_id+'">Edit</a><a href="javascript:void(0)" class="dlt_post_" p_d="'+res.data[i].post_id+'" >Delete</a></div></div></div>'; 
+                  html+='<div class="dropdown ml-3"><button class="dropbtn"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></button><div class="dropdown-content bg-white"><a href="javascript:void(0)"  class="edit_post"  p_d="'+res.data[i].post_id+'">Edit</a><a href="javascript:void(0)" class="dlt_post_" p_d="'+res.data[i].post_id+'" >Delete</a></div></div>'; 
                 }
               html+='</div></div>';
               html+='<div class="card-body py-0">';
@@ -2870,7 +2861,7 @@ function getAjaxData(offset)
               html+='</ul></div></div></div><div class="col-md-4 manage px-3 py-1"><div class="btn-comment post-btns"><a href="javascript:void(0)"><i class="fa fa-comment-o" aria-hidden="true"></i> Comments</a><span class="">'+countcomment+'</span></div></div>';
               html+='<div class="col-md-4 manage px-3 py-1"><div class="btn-share post-btns">';
               html+='<a href="javascript:void(0)" class="shareThisPost" d-ost="'+res.data[i].post_id+'"><i class="fa fa-share-square-o" aria-hidden="true"></i> Share</a>';
-              html+='<span class="">'+res.data[i].total_share+'</span></div></div></div></div><hr>';
+              html+='<span class="">'+res.data[i].total_share+'</span></div></div></div></div>';
               html+='<div class=" comments_list border-top">';
               if((countcomment)>0)
               {
@@ -2930,7 +2921,7 @@ function getAjaxData(offset)
                 html+='</div>';
                 if(user_id==res.data[i].user_id)
                 {
-                  html+='<div class="dropdown ml-3"><button class="dropbtn"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></button><div class="dropdown-content bg-white"><a href="javascript:void(0)"  class="edit_post"  p_d="'+res.data[i].post_id+'">Edit</a><a href="javascript:void(0)" class="dlt_post_" p_d="'+res.data[i].post_id+'" >Delete</a></div></div></div>'; 
+                  html+='<div class="dropdown ml-3"><button class="dropbtn"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></button><div class="dropdown-content bg-white"><a href="javascript:void(0)"  class="edit_post"  p_d="'+res.data[i].post_id+'">Edit</a><a href="javascript:void(0)" class="dlt_post_" p_d="'+res.data[i].post_id+'" >Delete</a></div></div>'; 
                 }
               html+='</div>';
               // html+='</div>';
@@ -2999,7 +2990,7 @@ function getAjaxData(offset)
               html+='</ul></div></div></div><div class="col-md-4 manage px-3 py-1"><div class="btn-comment post-btns"><a href="javascript:void(0)"><i class="fa fa-comment-o" aria-hidden="true"></i> Comments</a><span class="">'+countcomment+'</span></div></div>';
               html+='<div class="col-md-4 manage px-3 py-1"><div class="btn-share post-btns">';
               html+='<a href="javascript:void(0)" class="shareThisPost" d-ost="'+res.data[i].post_id+'"><i class="fa fa-share-square-o" aria-hidden="true"></i> Share</a>';
-              html+='<span class="">'+res.data[i].total_share+'</span></div></div></div></div><hr>';
+              html+='<span class="">'+res.data[i].total_share+'</span></div></div></div></div>';
               html+='<div class=" comments_list border-top">';
               if((countcomment)>0)
               {

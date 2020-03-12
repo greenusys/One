@@ -1081,9 +1081,8 @@ public function getPostLikes($post_id){
 	public function addImageToAlbum(){
 		$post_id=$this->input->post('post_id');
 		$res = $this->db->query("select * from post_ where post_id='$post_id'")->result();
-		print_r($res);
-		die();
-		$old_imgs= $res
+		// print_r($res);
+		// $old_imgs= $res;
 
 	}
 
