@@ -79,7 +79,9 @@ class Home extends MY_Controller {
 		$data['adsCategory']=$this->db->get('ads_category')->result();
 		$data['fetchAds']=$this->db->join('users','ads_.added_by= users.user_id')->order_by('rand()')->get('ads_')->result();
 		$PageArray=$this->db->query("SELECT * FROM user_page join users on users.user_id=user_page.user_id  WHERE user_page.user_id NOT IN ('$id') order by rand()")->result();
-		foreach ($PageArray as $PageDetails) {
+		if(!empty($PageArray))
+		{
+			foreach ($PageArray as $PageDetails) {
 			$totalLikes=$this->returnTotalLikesForThisPage($PageDetails->page_id);
 			if($this->checkIfILikeThisPage($PageDetails->page_id)){
 				$like=1;
@@ -95,7 +97,14 @@ class Home extends MY_Controller {
 								'like'=>$like,
 								"total_likes"=>$totalLikes
 							);
+
+			}
 		}
+		else
+		{
+			$pageData[]=array();
+		}
+		
 			// if(count($result)>0){
 			// 	die(json_encode(array("code"=>1,"data"=>$result)));
 			// }else{

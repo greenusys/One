@@ -83,7 +83,7 @@ function deleteNotification($frnd_id,$my_id){
 								  'status_'=>'0');
 					$this->db->insert('notifications_',$notify);
 				}
-			    return true;
+			    return $insert;
 			}else {
 			    return false;
 			}
