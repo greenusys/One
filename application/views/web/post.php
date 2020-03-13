@@ -4,13 +4,25 @@
 
   <style>
   .carousel-control-next, .carousel-control-prev{
-    	height: 20px;
-  	top: 50% !important;
-  	width: 7% !important;
+    height: 40px;
+    top: 50% !important;
+    width: 40px !important;
+    background: black;
+    border-radius: 50%;
   }
+  .carousel-control-prev {
+    left: 6px;
+}
+.carousel-control-next {
+    right: 6px;
+}
   .user_prof{
   	    height: 50px !important;
     width: 50px !important;
+  }
+  .midl_img{
+  	    top: 7%;
+    bottom: 7%;
   }
     .profile-div
     {
@@ -54,6 +66,9 @@
         top: -20px;
         left: -95px;
         transform: translate3d(9px, 44px, 0px)
+	}
+	.Pst_vw_{
+		max-height: 500px;
 	}
 	.emoji
 	{
@@ -142,7 +157,7 @@
 				if($Detail[0]['post_type']){
 					$imgArry=explode(',',$Detail[0]['post_files']);
 					?>
-						<div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+						<div id="carouselExampleControls" class="carousel slide midl_img" data-ride="carousel">
 							<div class="carousel-inner">
 								<?php
 								$i=1;
@@ -156,7 +171,7 @@
 										if($ext!='mp4'){
 										?>
 											<div class="carousel-item <?=$active?>">
-												<img src="<?=base_url('assets/uploads/images/').$img?>" class="d-block w-100" alt="...">
+												<img src="<?=base_url('assets/uploads/images/').$img?>" class="d-block w-100 Pst_vw_" alt="...">
 											</div>
 										<?php
 											}else{ ?>

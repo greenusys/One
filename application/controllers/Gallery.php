@@ -354,9 +354,24 @@ class Gallery extends MY_Controller {
 
     public function profileImageAlbum($type,$u_id){	
     	if ($type=='cover') {
-    		return $this->db->query("SELECT post_.*,user_profile_cover.*,COUNT(post_comments_.post_id) as total_comments FROM `post_comments_` join user_profile_cover on post_comments_.post_id=user_profile_cover.post_id JOIN post_ on post_.post_id=user_profile_cover.post_id  where user_profile_cover.user_id='$u_id' and user_profile_cover.status=2 group BY post_comments_.post_id")->result();
+    		$res= $this->db->query("SELECT user_profile_cover.*,post_.* from user_profile_cover JOIN post_ on post_.post_id=user_profile_cover.post_id where user_profile_cover.user_id='$u_id' and user_profile_cover.status=2 ")->result();
+    		
+    		for($i=0;$i<count($res);$i++){
+    			echo $post_id = $res[$i]->post_id;
+    			$coments = $this->db->query("select * from post_comments_ where post_id='$post_id'")->result();
+    			$res[$i]->total_comments=count($coments);	
+    		}
+    		return $res;
     	}else{
-    		return $this->db->query("SELECT post_.*,user_profile_cover.*,COUNT(post_comments_.post_id) as total_comments FROM `post_comments_` join user_profile_cover on post_comments_.post_id=user_profile_cover.post_id JOIN post_ on post_.post_id=user_profile_cover.post_id where user_profile_cover.user_id='$u_id'and user_profile_cover.status=1 group BY post_comments_.post_id")->result();
+    		$res= $this->db->query("SELECT user_profile_cover.*,post_.* from user_profile_cover JOIN post_ on post_.post_id=user_profile_cover.post_id where user_profile_cover.user_id='$u_id'and user_profile_cover.status=1 ")->result();
+
+    		for($i=0;$i<count($res);$i++){
+    			$post_id = $res[$i]->post_id;
+    			$coments = $this->db->query("select * from post_comments_ where post_id='$post_id'")->result();
+    			$res[$i]->total_comments=count($coments);	
+    		}
+    		return $res;
+
     	}
     	
 	  		

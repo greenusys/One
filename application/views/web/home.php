@@ -552,7 +552,7 @@
             </div>
             <div class="col-md-4 manage px-3 py-1">
               <div class="btn-comment post-btns">
-                <a href="<?=base_url('Post/viewPost/').$p_ost['post_id']?>"><i class="fa fa-comment-o" aria-hidden="true"></i> Comments</a> 
+                <a href="<?=base_url('Post/viewPost/').$p_ost['post_id']?>" target="blank"><i class="fa fa-comment-o" aria-hidden="true"></i> Comments</a> 
                 <span class=""><?=count($p_ost['total_comments'])?></span>
               </div>
             </div>
@@ -698,7 +698,7 @@
                   <?php for ($i=0; $i < count($postimages); $i++) {
                     ?>
                   <div class="col-md-6 p-3">
-                    <a class="" target="_blank" href="<?=base_url('Post/viewPost/').$p_ost['post_id']?>"><img class="img img-fluid rounded d-block post_image" src="<?=base_url()?>assets/uploads/images/<?=$postimages[$i]?>"></a>
+                    <a class="" target="_blank" href="<?=base_url('Post/viewPost/').$p_ost['post_id']?>" target="blank"><img class="img img-fluid rounded d-block post_image" src="<?=base_url()?>assets/uploads/images/<?=$postimages[$i]?>"></a>
                   </div>
                    <?php
                     }
@@ -711,12 +711,12 @@
               ?>
                 <div class="post_img row">
                   <div class="col-md-12 p-3">
-                    <a class="" target="_blank" href="<?=base_url('Post/viewPost/').$p_ost['post_id']?>"><img class="img img-fluid d-block post_image rounded" src="<?=base_url()?>assets/uploads/images/<?=$postimages[0]?>"></a>
+                    <a class="" target="_blank" href="<?=base_url('Post/viewPost/').$p_ost['post_id']?>" target="blank"><img class="img img-fluid d-block  rounded" src="<?=base_url()?>assets/uploads/images/<?=$postimages[0]?>"></a>
                   </div>
                   <?php for ($i=1; $i < count($postimages); $i++) {
                     ?>
                    <div class="col-md-6 ">
-                    <a class="" href="<?=base_url('Post/viewPost/').$p_ost['post_id']?>"><img class="img img-fluid d-block ext_img rounded" src="<?=base_url()?>assets/uploads/images/<?=$postimages[$i]?>"></a>
+                    <a class="" href="<?=base_url('Post/viewPost/').$p_ost['post_id']?>" target="blank"><img class="img img-fluid d-block ext_img rounded" src="<?=base_url()?>assets/uploads/images/<?=$postimages[$i]?>"></a>
                   </div>
                    <?php
                     }
@@ -731,7 +731,7 @@
                   <?php for ($i=0; $i < count($postimages); $i++) {
                     ?>
                    <div class="col-md-6 pt-3">
-                    <a class="" target="_blank" href="<?=base_url('Post/viewPost/').$p_ost['post_id']?>"><img class="img img-fluid d-block ext_img rounded" src="<?=base_url()?>assets/uploads/images/<?=$postimages[$i]?>"></a>
+                    <a class="" target="_blank" href="<?=base_url('Post/viewPost/').$p_ost['post_id']?>" target="blank"><img class="img img-fluid d-block ext_img rounded" src="<?=base_url()?>assets/uploads/images/<?=$postimages[$i]?>"></a>
                   </div>
                    <?php
                     }
@@ -746,7 +746,7 @@
                   <?php for ($i=0; $i <3; $i++) {
                     ?>
                    <div class="col-md-6 pt-3">
-                    <a class="" target="_blank" href="<?=base_url('Post/viewPost/').$p_ost['post_id']?>">
+                    <a class="" target="_blank" href="<?=base_url('Post/viewPost/').$p_ost['post_id']?>" target="blank">
                       <img class="img img-fluid d-block ext_img rounded" src="<?=base_url()?>assets/uploads/images/<?=$postimages[$i]?>"></a>
 
                   </div>
@@ -754,12 +754,12 @@
                     }
                     ?>
                     <div class="col-md-6 p-2 text-center">
-                    <a class="" href="<?=base_url('Post/viewPost/').$p_ost['post_id']?>">
+                    <a class="" href="<?=base_url('Post/viewPost/').$p_ost['post_id']?>" target="blank">
                       <img class="img img-fluid d-block rounded post_image" src="<?=base_url()?>assets/uploads/images/<?=$postimages[4]?>">
                     </a>
                       <div class="position-absolute h-100 w-100 bg-dark " style="left: 0%;top:0px;padding-top: 8rem !important;opacity: 0.5">
                       </div>
-                      <a class="position-absolute" href="<?=base_url('Post/viewPost/').$p_ost['post_id']?>" style="top:115px"> <h2 class="text-white"><strong><?=(count($postimages)-4)?>+</strong></h2></a>
+                      <a class="position-absolute" href="<?=base_url('Post/viewPost/').$p_ost['post_id']?>" target="blank" style="top:115px"> <h2 class="text-white"><strong><?=(count($postimages)-4)?>+</strong></h2></a>
                   </div>
                     
                 </div>
@@ -770,7 +770,7 @@
               ?>
                 <div class="post_img row">
                    <div class="col-md p-3">
-                    <a class="d-flex justify-content-center" href="<?=base_url('Post/viewPost/').$p_ost['post_id']?>"><img class="img img-fluid d-block rounded" src="<?=base_url()?>assets/uploads/images/<?=$postimages[0]?>"></a>
+                    <a class="d-flex justify-content-center" href="<?=base_url('Post/viewPost/').$p_ost['post_id']?>" target="blank"><img class="img img-fluid d-block rounded" src="<?=base_url()?>assets/uploads/images/<?=$postimages[0]?>"></a>
                   </div>
                 </div>
             <?php
@@ -833,7 +833,7 @@
             </div>
             <div class="col-md-4 manage px-3 py-1">
               <div class="btn-comment post-btns">
-                 <a class="" href="<?=base_url('Post/viewPost/').$p_ost['post_id']?>"><i class="fa fa-comment-o" aria-hidden="true"></i> Comments</a>
+                 <a class="" href="<?=base_url('Post/viewPost/').$p_ost['post_id']?>" target="blank"><i class="fa fa-comment-o" aria-hidden="true"></i> Comments</a>
                 <span class=""><?=count($p_ost['total_comments'])?></span>
               </div>
             </div>
@@ -977,7 +977,7 @@
                       $video=base_url().'assets/uploads/videos/'.$postimages[$i];
                       ?>
                        <div class="col-md-6 p-3">
-                    <a class="" href="<?=base_url('Post/viewPost/').$p_ost['post_id']?>">
+                    <a class="" href="<?=base_url('Post/viewPost/').$p_ost['post_id']?>" target="blank">
                       <video controls class="w-100">
                        <source src="<?= $video?>" type="video/mp4">
                   
@@ -991,7 +991,7 @@
                     $images=base_url().'assets/uploads/images/'.$postimages[$i];
                     ?>
                     <div class="col-md-6 p-3">
-                      <a class="" href="<?=base_url('Post/viewPost/').$p_ost['post_id']?>"><img class="img img-fluid rounded d-block post_image" src="<?= $images ?>">
+                      <a class="" href="<?=base_url('Post/viewPost/').$p_ost['post_id']?>" target="blank"><img class="img img-fluid rounded d-block post_image" src="<?= $images ?>">
                       </a>
                     </div>
                     <?php
@@ -1017,7 +1017,7 @@
                 $video=base_url().'assets/uploads/videos/'.$postimages[0];
                 ?>
                   <div class="col-md-12 p-3">
-                    <a class="" href="<?=base_url('Post/viewPost/').$p_ost['post_id']?>">
+                    <a class="" href="<?=base_url('Post/viewPost/').$p_ost['post_id']?>" target="blank">
                       <video controls class="w-100">
                        <source src="<?= $video?>" type="video/mp4">
                   
@@ -1031,7 +1031,7 @@
                   $images=base_url().'assets/uploads/images/'.$postimages[0];
                   ?>
                    <div class="col-md-12 p-3">
-                    <a class="" href="<?=base_url('Post/viewPost/').$p_ost['post_id']?>"><img class="img img-fluid d-block post_image rounded" src="<?=$images?>"></a>
+                    <a class="" href="<?=base_url('Post/viewPost/').$p_ost['post_id']?>" target="blank"><img class="img img-fluid d-block  rounded" src="<?=$images?>"></a>
                   </div>
                   <?php
                 } 
@@ -1043,7 +1043,7 @@
                     $video=base_url().'assets/uploads/videos/'.$postimages[$i];
                     ?>
                     <div class="col-md-6 p-3">
-                      <a class="" href="<?=base_url('Post/viewPost/').$p_ost['post_id']?>">
+                      <a class="" href="<?=base_url('Post/viewPost/').$p_ost['post_id']?>" target="blank">
                         <video controls class="w-100">
                          <source src="<?= $video?>" type="video/mp4">
                     
@@ -1057,7 +1057,7 @@
                       $images=base_url().'assets/uploads/images/'.$postimages[$i];
                       ?>
                       <div class="col-md-6 p-3">
-                        <a class="" href="<?=base_url('Post/viewPost/').$p_ost['post_id']?>"><img class="img img-fluid rounded d-block post_image" src="<?= $images ?>">
+                        <a class="" href="<?=base_url('Post/viewPost/').$p_ost['post_id']?>" target="blank"><img class="img img-fluid rounded d-block post_image" src="<?= $images ?>">
                         </a>
                       </div>
                       <?php
@@ -1080,7 +1080,7 @@
                       $video=base_url().'assets/uploads/videos/'.$postimages[$i];
                       ?>
                        <div class="col-md-6 p-3">
-                    <a class="" href="<?=base_url('Post/viewPost/').$p_ost['post_id']?>">
+                    <a class="" href="<?=base_url('Post/viewPost/').$p_ost['post_id']?>" target="blank">
                       <video controls class="w-100">
                        <source src="<?= $video?>" type="video/mp4">
                   
@@ -1094,7 +1094,7 @@
                     $images=base_url().'assets/uploads/images/'.$postimages[$i];
                     ?>
                     <div class="col-md-6 p-3">
-                      <a class="" href="<?=base_url('Post/viewPost/').$p_ost['post_id']?>"><img class="img img-fluid rounded d-block post_image" src="<?= $images ?>">
+                      <a class="" href="<?=base_url('Post/viewPost/').$p_ost['post_id']?>" target="blank"><img class="img img-fluid rounded d-block post_image" src="<?= $images ?>">
                       </a>
                     </div>
                     <?php
@@ -1119,7 +1119,7 @@
                       $video=base_url().'assets/uploads/videos/'.$postimages[$i];
                       ?>
                        <div class="col-md-6 p-3">
-                    <a class="" href="<?=base_url('Post/viewPost/').$p_ost['post_id']?>">
+                    <a class="" href="<?=base_url('Post/viewPost/').$p_ost['post_id']?>" target="blank">
                       <video controls class="w-100">
                        <source src="<?= $video?>" type="video/mp4">
                   
@@ -1133,7 +1133,7 @@
                     $images=base_url().'assets/uploads/images/'.$postimages[$i];
                     ?>
                     <div class="col-md-6 p-3">
-                      <a class="" href="<?=base_url('Post/viewPost/').$p_ost['post_id']?>"><img class="img img-fluid rounded d-block post_image" src="<?= $images ?>">
+                      <a class="" href="<?=base_url('Post/viewPost/').$p_ost['post_id']?>" target="blank"><img class="img img-fluid rounded d-block post_image" src="<?= $images ?>">
                       </a>
                     </div>
                     <?php
@@ -1149,7 +1149,7 @@
                         $video=base_url().'assets/uploads/videos/'.$postimages[4];
                         ?>
                         <div class="col-md-6 p-2 text-center">
-                          <a class="" href="<?=base_url('Post/viewPost/').$p_ost['post_id']?>">
+                          <a class="" href="<?=base_url('Post/viewPost/').$p_ost['post_id']?>" target="blank">
                               <video controls class="w-100">
                                <source src="<?= $video?>" type="video/mp4">
                           
@@ -1166,7 +1166,7 @@
                         $images=base_url().'assets/uploads/images/'.$postimages[4];
                       ?>
                       <div class="col-md-6 p-2 text-center">
-                        <a class="" href="<?=base_url('Post/viewPost/').$p_ost['post_id']?>">
+                        <a class="" href="<?=base_url('Post/viewPost/').$p_ost['post_id']?>" target="blank">
                           <img class="img img-fluid d-block rounded post_image" src="<?=$images?>">
                         </a>
                           <div class="position-absolute h-100 w-100 bg-dark " style="left: 0%;top:0px;padding-top: 8rem !important;opacity: 0.5">
@@ -1194,7 +1194,7 @@
                       $video=base_url().'assets/uploads/videos/'.$postimages[0];
                       ?>
                       <div class="col-md p-3">
-                      <a class="" href="<?=base_url('Post/viewPost/').$p_ost['post_id']?>">
+                      <a class="" href="<?=base_url('Post/viewPost/').$p_ost['post_id']?>" target="blank">
                         <video controls class="w-100">
                          <source src="<?= $video?>" type="video/mp4">
                     
@@ -1208,7 +1208,7 @@
                     $images=base_url().'assets/uploads/images/'.$postimages[0];
                     ?>
                         <div class="col-md p-3">
-                        <a class="" href="<?=base_url('Post/viewPost/').$p_ost['post_id']?>"><img class="img img-fluid d-block rounded" src="<?=$images?>"></a>
+                        <a class="" href="<?=base_url('Post/viewPost/').$p_ost['post_id']?>" target="blank"><img class="img img-fluid d-block rounded" src="<?=$images?>"></a>
                       </div>
                     <?php
                   }
@@ -1273,7 +1273,7 @@
             </div>
             <div class="col-md-4 manage px-3 py-1">
               <div class="btn-comment post-btns">
-                <a href="<?=base_url('Post/viewPost/').$p_ost['post_id']?>"><i class="fa fa-comment-o" aria-hidden="true"></i> Comments</a>
+                <a href="<?=base_url('Post/viewPost/').$p_ost['post_id']?>" target="blank"><i class="fa fa-comment-o" aria-hidden="true"></i> Comments</a>
                 <span class=""><?=count($p_ost['total_comments'])?></span>
               </div>
             </div>
@@ -1401,7 +1401,7 @@
             <?=$p_ost['post']?>
             </p>
             <div class="">
-               <a class="" href="<?=base_url('Post/viewPost/').$p_ost['post_id']?>">
+               <a class="" href="<?=base_url('Post/viewPost/').$p_ost['post_id']?>" target="blank">
             <video controls class="w-100">
             <source src="<?=base_url()?>assets/uploads/videos/<?=$p_ost['post_files']?>" type="video/mp4">
           
@@ -1466,7 +1466,7 @@
             </div>
             <div class="col-md-4 manage  px-3 py-1">
               <div class="btn-comment post-btns">
-                <a href="<?=base_url('Post/viewPost/').$p_ost['post_id']?>"><i class="fa fa-comment-o" aria-hidden="true"></i> Comments</a>
+                <a href="<?=base_url('Post/viewPost/').$p_ost['post_id']?>" target="blank"><i class="fa fa-comment-o" aria-hidden="true"></i> Comments</a>
                  <span class=""><?=count($p_ost['likes_data'])?></span>
                </div>
             </div>
@@ -2475,7 +2475,7 @@ function getAjaxData(offset)
                 for (var m=0; m < countimg; m++) 
                 {
                   html+='<div class="col-md-6 p-3">';
-                    html+='<a class="" href="<?=base_url()?>Post/viewPost/'+res.data[i].post_id+'"><img class="img img-fluid d-block post_image rounded" src="<?=base_url()?>assets/uploads/images/'+postimages[m]+'"></a>';
+                    html+='<a class="" href="<?=base_url()?>Post/viewPost/'+res.data[i].post_id+'" target="blank"><img class="img img-fluid d-block post_image rounded" src="<?=base_url()?>assets/uploads/images/'+postimages[m]+'"></a>';
                   html+='</div>';
                 }
                 html+='</div>';
@@ -2484,12 +2484,12 @@ function getAjaxData(offset)
               {
                 html+='<div class="post_img row">';
                 html+='<div class="col-md-12 p-3">';
-                html+='<a class="" href="<?=base_url()?>Post/viewPost/'+res.data[i].post_id+'"><img class="img img-fluid d-block post_image rounded" src="<?=base_url()?>assets/uploads/images/'+postimages[0]+'"></a>';
+                html+='<a class="" href="<?=base_url()?>Post/viewPost/'+res.data[i].post_id+'" target="blank"><img class="img img-fluid d-block rounded" src="<?=base_url()?>assets/uploads/images/'+postimages[0]+'"></a>';
                 html+='</div>';
                 for (var m=1; m < countimg; m++) 
                 {
                   html+='<div class="col-md-6">';
-                  html+='<a class="" href="<?=base_url()?>Post/viewPost/'+res.data[i].post_id+'"><img class="img img-fluid d-block ext_img rounded" src="<?=base_url()?>assets/uploads/images/'+postimages[m]+'"></a>';
+                  html+='<a class="" href="<?=base_url()?>Post/viewPost/'+res.data[i].post_id+'" target="blank"><img class="img img-fluid d-block ext_img rounded" src="<?=base_url()?>assets/uploads/images/'+postimages[m]+'"></a>';
                   html+='</div>';
                 }
                   html+='</div>';
@@ -2500,7 +2500,7 @@ function getAjaxData(offset)
                 for (var m=0; m < countimg; m++) 
                 {
                   html+='<div class="col-md-6 pt-3">';
-                  html+='<a class="" href="<?=base_url()?>Post/viewPost/'+res.data[i].post_id+'"><img class="img img-fluid d-block ext_img rounded"  src="<?=base_url()?>assets/uploads/images/'+postimages[m]+'"></a>';
+                  html+='<a class="" href="<?=base_url()?>Post/viewPost/'+res.data[i].post_id+'" target="blank"><img class="img img-fluid d-block ext_img rounded"  src="<?=base_url()?>assets/uploads/images/'+postimages[m]+'"></a>';
                   html+='</div>';
                 }
                 html+='</div>';
@@ -2511,12 +2511,12 @@ function getAjaxData(offset)
                 for (var m=0; m <3; m++) 
                 {
                   html+='<div class="col-md-6 pt-3">';
-                  html+='<a class="" href="<?=base_url()?>Post/viewPost/'+res.data[i].post_id+'">';
+                  html+='<a class="" href="<?=base_url()?>Post/viewPost/'+res.data[i].post_id+'" target="blank">';
                   html+='<img class="img img-fluid d-block ext_img rounded"  src="<?=base_url()?>assets/uploads/images/'+postimages[m]+'"></a>';
                   html+='</div>';
                 }
                 html+='<div class="col-md-6 p-2 text-center">';
-                html+='<a class="" href="<?=base_url()?>Post/viewPost/'+res.data[i].post_id+'">';
+                html+='<a class="" href="<?=base_url()?>Post/viewPost/'+res.data[i].post_id+'" target="blank">';
                 html+='<img class="img img-fluid d-block  post_image rounded"  src="<?=base_url()?>assets/uploads/images/'+postimages[4]+'"></a>';
                 html+='<div class="position-absolute h-100 w-100 bg-dark " style="left: 0%;top:0px;padding-top: 8rem !important;opacity: 0.5">';
                 html+='</div>';
@@ -2528,7 +2528,7 @@ function getAjaxData(offset)
               {
                 html+='<div class="post_img row">';
                 html+='<div class="col-md p-3">';
-                html+='<a class="d-flex justify-content-center" href="<?=base_url()?>Post/viewPost/'+res.data[i].post_id+'"><img class="img img-fluid d-block rounded" src="<?=base_url()?>assets/uploads/images/'+postimages[0]+'"></a>';
+                html+='<a class="d-flex justify-content-center" href="<?=base_url()?>Post/viewPost/'+res.data[i].post_id+'" target="blank"><img class="img img-fluid d-block rounded" src="<?=base_url()?>assets/uploads/images/'+postimages[0]+'"></a>';
                 html+='</div>';
                 html+='</div>';
               }
@@ -2673,14 +2673,14 @@ function getAjaxData(offset)
                   {
                     var video='<?=base_url()?>assets/uploads/videos/'+postimages[m]+'';
                     html+='<div class="col-md-6 p-3">';
-                      html+='<a class="" href="<?=base_url()?>Post/viewPost/'+res.data[i].post_id+'"><video controls class="w-100"><source src="'+video+'" type="video/mp4">Your browser does not support the video tag.</video></a>';
+                      html+='<a class="" href="<?=base_url()?>Post/viewPost/'+res.data[i].post_id+'" target="blank"><video controls class="w-100"><source src="'+video+'" type="video/mp4">Your browser does not support the video tag.</video></a>';
                     html+='</div>';
                   }
                   else
                   {
                      var image='<?=base_url()?>assets/uploads/images/'+postimages[m]+'';
                     html+='<div class="col-md-6 p-3">';
-                      html+='<a class="" href="<?=base_url()?>Post/viewPost/'+res.data[i].post_id+'"><img class="img img-fluid d-block post_image rounded" src="'+image+'"></a>';
+                      html+='<a class="" href="<?=base_url()?>Post/viewPost/'+res.data[i].post_id+'" target="blank"><img class="img img-fluid d-block post_image rounded" src="'+image+'"></a>';
                      html+='</div>';
                   }
                 }
@@ -2693,14 +2693,14 @@ function getAjaxData(offset)
                   {
                     var video='<?=base_url()?>assets/uploads/videos/'+postimages[0]+'';
                     html+='<div class="col-md-12 p-3">';
-                    html+='<a class="" href="<?=base_url()?>Post/viewPost/'+res.data[i].post_id+'"><video controls class="w-100"><source src="'+video+'" type="video/mp4">Your browser does not support the video tag.</video></a>';
+                    html+='<a class="" href="<?=base_url()?>Post/viewPost/'+res.data[i].post_id+'" target="blank"><video controls class="w-100"><source src="'+video+'" type="video/mp4">Your browser does not support the video tag.</video></a>';
                     html+='</div>';
                   }
                   else
                   {
                     var image='<?=base_url()?>assets/uploads/images/'+postimages[0]+'';
                     html+='<div class="col-md-12 p-3">';
-                     html+='<a class=""href="<?=base_url()?>Post/viewPost/'+res.data[i].post_id+'"><img class="img img-fluid d-block post_image rounded" src="'+image+'"></a>';
+                     html+='<a class=""href="<?=base_url()?>Post/viewPost/'+res.data[i].post_id+'" target="blank"><img class="img img-fluid d-block  rounded" src="'+image+'"></a>';
                     html+='</div>';
                   }
                   for (var m=1; m < countimg; m++) 
@@ -2710,14 +2710,14 @@ function getAjaxData(offset)
                     {
                       var video='<?=base_url()?>assets/uploads/videos/'+postimages[m]+'';
                       html+='<div class="col-md-6 p-3">';
-                        html+='<a class="" href="<?=base_url()?>Post/viewPost/'+res.data[i].post_id+'"><video controls class="w-100"><source src="'+video+'" type="video/mp4">Your browser does not support the video tag.</video></a>';
+                        html+='<a class="" href="<?=base_url()?>Post/viewPost/'+res.data[i].post_id+'" target="blank"><video controls class="w-100"><source src="'+video+'" type="video/mp4">Your browser does not support the video tag.</video></a>';
                       html+='</div>';
                     }
                     else
                     {
                        var image='<?=base_url()?>assets/uploads/images/'+postimages[m]+'';
                       html+='<div class="col-md-6 p-3">';
-                        html+='<a class=""href="<?=base_url()?>Post/viewPost/'+res.data[i].post_id+'"><img class="img img-fluid d-block post_image rounded" src="'+image+'"></a>';
+                        html+='<a class=""href="<?=base_url()?>Post/viewPost/'+res.data[i].post_id+'" target="blank"><img class="img img-fluid d-block post_image rounded" src="'+image+'"></a>';
                        html+='</div>';
                     }
                   }
@@ -2733,14 +2733,14 @@ function getAjaxData(offset)
                   {
                     var video='<?=base_url()?>assets/uploads/videos/'+postimages[m]+'';
                     html+='<div class="col-md-6 p-3">';
-                      html+='<a class="" href="<?=base_url()?>Post/viewPost/'+res.data[i].post_id+'"><video controls class="w-100"><source src="'+video+'" type="video/mp4">Your browser does not support the video tag.</video></a>';
+                      html+='<a class="" href="<?=base_url()?>Post/viewPost/'+res.data[i].post_id+'" target="blank"><video controls class="w-100"><source src="'+video+'" type="video/mp4">Your browser does not support the video tag.</video></a>';
                     html+='</div>';
                   }
                   else
                   {
                      var image='<?=base_url()?>assets/uploads/images/'+postimages[m]+'';
                     html+='<div class="col-md-6 p-3">';
-                      html+='<a class=""href="<?=base_url()?>Post/viewPost/'+res.data[i].post_id+'"><img class="img img-fluid d-block post_image rounded" src="'+image+'"></a>';
+                      html+='<a class=""href="<?=base_url()?>Post/viewPost/'+res.data[i].post_id+'" target="blank"><img class="img img-fluid d-block post_image rounded" src="'+image+'"></a>';
                      html+='</div>';
                   }
                 }
@@ -2756,14 +2756,14 @@ function getAjaxData(offset)
                     {
                       var video='<?=base_url()?>assets/uploads/videos/'+postimages[m]+'';
                       html+='<div class="col-md-6 p-3">';
-                        html+='<a class="" href="<?=base_url()?>Post/viewPost/'+res.data[i].post_id+'"><video controls class="w-100"><source src="'+video+'" type="video/mp4">Your browser does not support the video tag.</video></a>';
+                        html+='<a class="" href="<?=base_url()?>Post/viewPost/'+res.data[i].post_id+'" target="blank"><video controls class="w-100"><source src="'+video+'" type="video/mp4">Your browser does not support the video tag.</video></a>';
                       html+='</div>';
                     }
                     else
                     {
                        var image='<?=base_url()?>assets/uploads/images/'+postimages[m]+'';
                       html+='<div class="col-md-6 p-3">';
-                        html+='<a class=""href="<?=base_url()?>Post/viewPost/'+res.data[i].post_id+'"><img class="img img-fluid d-block post_image rounded" src="'+image+'"></a>';
+                        html+='<a class=""href="<?=base_url()?>Post/viewPost/'+res.data[i].post_id+'" target="blank"><img class="img img-fluid d-block post_image rounded" src="'+image+'"></a>';
                        html+='</div>';
                     }
                 }
@@ -2772,7 +2772,7 @@ function getAjaxData(offset)
                   {
                     var video='<?=base_url()?>assets/uploads/videos/'+postimages[0]+'';
                     html+='<div class="col-md-6 p-2 text-center">';
-                    html+='<a class="" href="<?=base_url()?>Post/viewPost/'+res.data[i].post_id+'"><video controls class="w-100"><source src="'+video+'" type="video/mp4">Your browser does not support the video tag.</video></a>';
+                    html+='<a class="" href="<?=base_url()?>Post/viewPost/'+res.data[i].post_id+'" target="blank"><video controls class="w-100"><source src="'+video+'" type="video/mp4">Your browser does not support the video tag.</video></a>';
                     html+='<div class="position-absolute h-100 w-100 bg-dark " style="left: 0%;top:0px;padding-top: 8rem !important;opacity: 0.5">';
                     html+='</div>';
                     html+='<a class="position-absolute" href="#" style="top:115px"> <h2 class="text-white"><strong>'+((countimg)-4)+'+</strong></h2></a>';
@@ -2783,7 +2783,7 @@ function getAjaxData(offset)
                   {
                     var image='<?=base_url()?>assets/uploads/images/'+postimages[0]+'';
                     html+='<div class="col-md-6 p-2 text-center">';
-                    html+='<a class=""href="<?=base_url()?>Post/viewPost/'+res.data[i].post_id+'"><img class="img img-fluid d-block post_image rounded" src="'+image+'"></a>';
+                    html+='<a class=""href="<?=base_url()?>Post/viewPost/'+res.data[i].post_id+'" target="blank"><img class="img img-fluid d-block post_image rounded" src="'+image+'"></a>';
                     html+='<div class="position-absolute h-100 w-100 bg-dark " style="left: 0%;top:0px;padding-top: 8rem !important;opacity: 0.5">';
                     html+='</div>';
                     html+='<a class="position-absolute" href="#" style="top:115px"> <h2 class="text-white"><strong>'+((countimg)-4)+'+</strong></h2></a>';
@@ -2800,14 +2800,14 @@ function getAjaxData(offset)
                 {
                   var video='<?=base_url()?>assets/uploads/videos/'+postimages[0]+'';
                   html+='<div class="col-md p-2">';
-                    html+='<a class="" href="<?=base_url()?>Post/viewPost/'+res.data[i].post_id+'"><video controls class="w-100"><source src="'+video+'" type="video/mp4">Your browser does not support the video tag.</video></a>';
+                    html+='<a class="" href="<?=base_url()?>Post/viewPost/'+res.data[i].post_id+'" target="blank"><video controls class="w-100"><source src="'+video+'" type="video/mp4">Your browser does not support the video tag.</video></a>';
                   html+='</div>';
                 }
                 else
                 {
                    var image='<?=base_url()?>assets/uploads/images/'+postimages[0]+'';
                   html+='<div class="col-md-6 p-2">';
-                    html+='<a class="d-flex justify-content-center" href="<?=base_url()?>Post/viewPost/'+res.data[i].post_id+'"><img class="img img-fluid d-block post_image rounded" src="'+image+'"></a>';
+                    html+='<a class="d-flex justify-content-center" href="<?=base_url()?>Post/viewPost/'+res.data[i].post_id+'" target="blank"><img class="img img-fluid d-block post_image rounded" src="'+image+'"></a>';
                    html+='</div>';
                 }
                 html+='</div>';
@@ -2937,7 +2937,7 @@ function getAjaxData(offset)
               html+='<div class="card-body">';
               html+='<p>'+res.data[i].post+'</p>';
               html+='<div class="">';
-              html+=' <a class="" href="<?=base_url()?>Post/viewPost/'+res.data[i].post_id+'"><video controls class="w-100">';
+              html+=' <a class="" href="<?=base_url()?>Post/viewPost/'+res.data[i].post_id+'" target="blank"><video controls class="w-100">';
               html+='<source src="<?=base_url()?>assets/uploads/videos/'+res.data[i].post_files+'" type="video/mp4">';
               html+='</video></a>';
               html+='</div>';

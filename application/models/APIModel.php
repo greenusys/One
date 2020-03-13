@@ -159,5 +159,15 @@ function deleteNotification($frnd_id,$my_id){
 		//    return $post;
 		//     //print_r($post);
 		// 	}
+
+
+		public function updateAlbumPost($tablename,$data){
+			$this->db->where('post_id',$data['post_id']);
+			if($this->db->update($tablename,$data)){
+				return true;
+			}else{
+				return false;
+			}
+		}
 	}
 ?>

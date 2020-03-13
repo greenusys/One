@@ -1081,12 +1081,70 @@ public function getPostLikes($post_id){
 	public function addImageToAlbum(){
 		$post_id=$this->input->post('post_id');
 		$res = $this->db->query("select * from post_ where post_id='$post_id'")->result();
-		print_r($res);
-		die();
-		$old_imgs= $res
+		$old_imgs= $res[0]->post_files;
+		if(!empty($_FILES['files']['name'])){
+		    $filesCount = count($_FILES['files']['name']);
+		    for($i = 0; $i < $filesCount; $i++){
+		        $ext = pathinfo($_FILES['files']['name'][$i], PATHINFO_EXTENSION);
+		        $_FILES['file']['name']     = "Album-image-".date("Y-m-d-H-i-s").$i.".".$ext;
+		        $_FILES['file']['type']     = $_FILES['files']['type'][$i];
+		        $_FILES['file']['tmp_name'] = $_FILES['files']['tmp_name'][$i];
+		        $_FILES['file']['error']     = $_FILES['files']['error'][$i];
+		        $_FILES['file']['size']     = $_FILES['files']['size'][$i];
+		        
+		        // File upload configuration
+		        $uploadPath = 'assets/uploads/images/';
+		       
+				$config['upload_path'] = $uploadPath;
+                $config['max_size'] = '*';
+                $config['allowed_types'] = 'jpg|jpeg|png|gif';
+                
+                // Load and initialize upload library
+                $this->load->library('upload', $config);
+                $this->upload->initialize($config);
+                
+                // Upload file to server
+                if($this->upload->do_upload('file')){
+                    // Uploaded file data
+                    $fileData = $this->upload->data();
+                    //$this->resizeImage($_FILES['file']['name'] );
+                    $uploadData[$i]['file_name'] = $fileData['file_name'];
+                    $uploadData[$i]['uploaded_on'] = date("d-m-Y H:i:s");
+                }
+                $this->resizeImage($_FILES['file']['name'] );
+                $images[]=$_FILES['file']['name'];
+
+	            }
+	            $pics=implode(",",$images);
+	            $res_images = $old_imgs.','.$pics;
+	             $data = array(
+		        	    'post_files'=>$res_images,
+		        	    'post_id'=>$post_id,
+			        	);
+	             $tablename='post_';
+	        	$result=$this->APIM->updateAlbumPost($tablename,$data);
+	                if($result)
+	                {	
+	                	 $data2 = array(
+			        	    'images_path'=>$res_images,
+			        	    'post_id'=>$post_id,
+				        	);
+	                	$tablename='album_';
+	        			$re = $this->APIM->updateAlbumPost($tablename,$data2);
+	        			if($res){
+	        				die(json_encode(array('status' =>'1' ,'msg'=>'Album updated Successfully')));
+	        			}else{
+	        				die(json_encode(array('status' =>'0' ,'msg'=>'Error while uploading')));
+	        			}
+					
+					}
+					else
+					{
+						die(json_encode(array('status' =>'0' ,'msg'=>'Error while uploading')));
+					} 
 
 	}
-
+}
 	public function createalbum()
 	{
 

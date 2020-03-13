@@ -229,18 +229,19 @@ img.hover-shadow {
           <div class="card p-3">
            <div class="row m-0">
            <?php
-         
+              // print_r($ProfileImages);
+              //     die;
                 foreach ($ProfileImages as $post) {
-              // print_r($post);
-              //      die;
+         //print_r($post);
                   if($post->profile_path){
                      $gallaryimg=$post->profile_path;
                   }else{
                       $gallaryimg=$post->cover_path;
                   }
                    
-                   
+                
                     ?>
+
                       <div class="col-md-3 mt-2 p-1">
                         <div class="content">
                           <a href="<?=base_url('Post/viewPost/').$post->post_id?>" target="_blank">
