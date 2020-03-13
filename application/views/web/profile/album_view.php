@@ -247,17 +247,17 @@ img.hover-shadow {
                     $imgArr=explode(',',$album->images_path);
                     # code...
                     for($i= 0; $i< count($imgArr); $i++){ ?>
-                      <div class="d-flex mt-2 col-md-4 albums p-2">
+                      <div class="d-flex mt-2 col-md-4 albums px-2">
                         <div class="card_vw bg-white w-100">
-                      <!-- <a href="javascript:void(0)"> -->
+                      <!-- <a href="javascript:void(0)"> -->  
                    <!--      <div class="card-header d-flex mt-1 justify-content-center">
                            
                         </div> -->
 
                         <div class="card-body p-0">
                              <a href="<?=base_url('Post/viewPost/').$album->post_id?>" target="_blank">
-                              <img src="<?=base_url().'assets/uploads/images/'.$imgArr[$i]?>"  class="pointer h_220 img-fluid w-100">
-                             </a> 
+                              <img src="<?=base_url().'assets/uploads/images/'.$imgArr[$i]?>"  class="pointer h_277 img-fluid w-100">
+                             </a>                                                                                                                             
                         </div>
                      <!--    <div class="card-footer p-2 deletealbum ">
                           <h5 class="m-0 p-1 text-capitalize author float-left"><?=$album->album_title?></h5>

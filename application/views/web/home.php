@@ -1148,7 +1148,7 @@
                        {
                         $video=base_url().'assets/uploads/videos/'.$postimages[4];
                         ?>
-                        <div class="col-md-6 p-2 text-center">
+                        <div class="col-md-6 p-3 text-center">
                           <a class="" href="<?=base_url('Post/viewPost/').$p_ost['post_id']?>" target="blank">
                               <video controls class="w-100">
                                <source src="<?= $video?>" type="video/mp4">
@@ -1165,7 +1165,7 @@
                       {
                         $images=base_url().'assets/uploads/images/'.$postimages[4];
                       ?>
-                      <div class="col-md-6 p-2 text-center">
+                      <div class="col-md-6 p-3 text-center">
                         <a class="" href="<?=base_url('Post/viewPost/').$p_ost['post_id']?>" target="blank">
                           <img class="img img-fluid d-block rounded post_image" src="<?=$images?>">
                         </a>
