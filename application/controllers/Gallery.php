@@ -268,8 +268,9 @@ class Gallery extends MY_Controller {
     }
 
     public function imageAlbum($id){
-	  	$this->db->where('album_id',$id);
-   		 return $this->db->get('album_')->result();
+	  	// $this->db->where('album_id',$id);
+   	// 	 return $this->db->get('album_')->result();
+    	return $this->db->query("select * from album_ join post_ on album_.post_id=post_.post_id where album_.album_id='$id'")->result();
     }
 
       public function ProfileAlbum($type,$userId,$uId=null){

@@ -8,7 +8,10 @@
   	top: 50% !important;
   	width: 7% !important;
   }
-
+  .user_prof{
+  	    height: 50px !important;
+    width: 50px !important;
+  }
     .profile-div
     {
 	    height:75px;
@@ -198,11 +201,11 @@
 			    <div class=" view-section bg-light p-3">
 			        <div class="row">
 				        <div class="col-sm-2">
-					       <img src="<?=base_url('assets/img/Profile_Pic/').$Detail[0]['profile_pic']?>" class="m-3 rounded-circle img-fluid ">
+					       <img src="<?=base_url('assets/uploads/images/').$Detail[0]['profile_pic']?>" class="m-3 rounded-circle img-fluid user_prof">
 					    </div>
 					    <div class="col-sm-8">
 					      <h6 class="font-weight-bold mt-3"><?=$Detail[0]['posted_by']?></h6>
-						  <h6 class="font-weight-normal"><?=$Detail[0]['posted_on']?> &nbsp; <i class='fas fa-user-friends'></i></h6>
+						  <small class="font-weight-normal"><?=$Detail[0]['posted_on']?> &nbsp; <i class='fas fa-user-friends'></i></small>
 					    </div>
 					    <div class="col-sm-2">
 					      <div class="float-right d-flex mt-2">
@@ -273,9 +276,9 @@
                             if($sno <= 5){
                              
                               if($sno==1){ ?>
-                                   <li><img class="rounded-circle like_img " src="<?=base_url('assets/img/Profile_Pic/').$likedata->profile_picture?> "></li>
+                                   <li><img class="rounded-circle like_img " src="<?=base_url('assets/uploads/images/').$likedata->profile_picture?> "></li>
                       <?php }else{    ?>
-                            <li><img class="rounded-circle like_img like_img_marg25" src="<?=base_url('assets/img/Profile_Pic/').$likedata->profile_picture?> "></li>
+                            <li><img class="rounded-circle like_img like_img_marg25" src="<?=base_url('assets/uploads/images/').$likedata->profile_picture?> "></li>
                    <?php 
                             }
                          }
@@ -319,7 +322,7 @@
                 <?php for($i=0; $i < count($Detail[0]['total_comments']); $i++){ ?>
               <div class="row mt-2 px-2">
                   <div class="col-md-1">
-                      <span> <img class="rounded-circle like_img" src="<?=base_url()?>assets/img/Profile_Pic/<?=$Detail[0]['total_comments'][$i]->profile_picture?>"></span>  
+                      <span> <img class="rounded-circle like_img" src="<?=base_url()?>assets/uploads/images/<?=$Detail[0]['total_comments'][$i]->profile_picture?>"></span>  
                   </div> 
                   <div class="col-md-10 comnt_text border-bottom">
                       <h6 class="font-weight-bold m-0" > <?=$Detail[0]['total_comments'][$i]->full_name?><small class="ml-3">
@@ -347,7 +350,7 @@
           
 					<div class="p-2 w-90 bottom-sectionshadow-sm">
                  <div class="d-flex m-0">
-                    <span> <img class="rounded-circle like_img" src="<?=base_url()?>assets/img/Profile_Pic/<?=$Detail[0]['profile_pic']?>"></span>
+                    <span> <img class="rounded-circle like_img" src="<?=base_url()?>assets/uploads/images/<?=$Detail[0]['profile_pic']?>"></span>
                     <form method="POST" class="w-100 ad_cmnt" >
                       <div class="pl-2 w-100 _input">
                         <p class="lead emoji-picker-container">

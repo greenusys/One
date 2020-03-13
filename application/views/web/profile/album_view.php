@@ -231,7 +231,7 @@ img.hover-shadow {
                             <div class="card card-block d-table-cell align-middle text-center border upload_block" data-toggle="modal" data-target="#myModal">
                               <div class="card-body">
                                 <h2><i class="fa fa-plus-circle" aria-hidden="true"></i></h2>
-                                <h4>Upload an Image</h4>
+                                <h4>Add More Images</h4>
                                 <p>It only takes a few minutes!</p>
                             </div>
                             </div>
@@ -242,6 +242,7 @@ img.hover-shadow {
                    <?php
                 
                   foreach ($MyAlbum as $album) {
+                    //print_r($album);
                     $album_id=$album->album_id;
                     $imgArr=explode(',',$album->images_path);
                     # code...
@@ -252,8 +253,11 @@ img.hover-shadow {
                    <!--      <div class="card-header d-flex mt-1 justify-content-center">
                            
                         </div> -->
+
                         <div class="card-body p-0">
-                          <img src="<?=base_url().$imgArr[$i]?>"  class="pointer h-100 img-fluid w-100">
+                             <a href="<?=base_url('Post/viewPost/').$album->post_id?>" target="_blank">
+                              <img src="<?=base_url().'assets/uploads/images/'.$imgArr[$i]?>"  class="pointer h_220 img-fluid w-100">
+                             </a> 
                         </div>
                      <!--    <div class="card-footer p-2 deletealbum ">
                           <h5 class="m-0 p-1 text-capitalize author float-left"><?=$album->album_title?></h5>
@@ -405,30 +409,13 @@ $(this).addClass("active");
     <!-- Modal content-->
     <div class="modal-content">
       <div class="modal-header">
-          <h5 class="modal-title">Create an Album</h5>
+          <h5 class="modal-title">Add more images to an Album</h5>
         <button type="button" class="close" data-dismiss="modal">&times;</button>
       
       </div>
       <div class="modal-body">
-        <form method="POST" id="album">
-          <div class="form-group">
-          <!--   <label><strong>Album Title :</strong></label>
-            -->
-            <label for="title" class="inp">
-              <input type="text" name="alb_title" id="alb_title"  class="">
-              <span class="label">Album Title :</span>
-              <span class="border"></span>
-            </label>
-        
-          </div>
-          <div class="form-group">
-            <label for="description" class="inp">
-              <textarea name="alb_desc"  id="alb_desc" placeholder="&nbsp;" class="" rows="2"> </textarea> 
-              <span class="label">Album Description</span>
-            
-            </label>
-
-          </div>
+        <form method="POST" id="addImageToAlbum">
+          <input type="hidden" value="<?=$MyAlbum[0]->post_id?>" name="post_id">
           <div class="form-group">
             <label for="ad_img" class="inp">
               <input type="file" id="ad_img" name="files[]"  class="mt-2" multiple="">
@@ -452,11 +439,11 @@ $(this).addClass("active");
   $('#addPhotos').modal('show');
 
   });
-$("#album").submit(function(e){
+$("#addImageToAlbum").submit(function(e){
       e.preventDefault();
       var formData= new FormData($(this)[0]);
       $.ajax({
-          url:"<?=base_url()?>APIController/createalbum",
+          url:"<?=base_url()?>APIController/addImageToAlbum",
            type:"post",
            data:formData,
            contentType:false,

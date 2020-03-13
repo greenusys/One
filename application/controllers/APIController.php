@@ -1077,6 +1077,16 @@ public function getPostLikes($post_id){
 	  //return destination file
 	  return $destination_url;
 	}
+
+	public function addImageToAlbum(){
+		$post_id=$this->input->post('post_id');
+		$res = $this->db->query("select * from post_ where post_id='$post_id'")->result();
+		print_r($res);
+		die();
+		$old_imgs= $res
+
+	}
+
 	public function createalbum()
 	{
 
@@ -1127,32 +1137,33 @@ public function getPostLikes($post_id){
 	            $uploadDate=date('d-m-Y H:i:s');
 		    if(!empty($uploadData)){
 		        // Insert files data into the database
-				
-		        $data = array(
-		        	'user_id'=>$user_id,
-		        	'images_path'=>$pics,
-		        	'added_on'=>$uploadDate,
-		        	'album_title'=>$album_title,
-		        	'album_desc'=>$album_desc,
-		        	'tag_with'=>'1'
-		        );
-		        $tablename='album_';
-		        $result=$this->APIM->addData($tablename,$data);
-				if($result)
+				$post_text=$album_title;
+				$data = array(
+	                	'tagged_friends'=>0,
+	                	'post'=>$post_text,
+	                	'post_files'=>$pics,
+	                	'owner_id'=>$user_id,
+	                	'post_type'=>3,
+	                	'posted_by'=>$user_id,
+	                	'initially_posted_by'=>$user_id,
+	                	'posted_on'=>$uploadDate
+	                );
+	                $res=$this->APIM->insert_post($data);
+	                $post_id=$res;
+				if($res)
 				{
-					$post_text=$album_title;
-					$data = array(
-		                	'tagged_friends'=>0,
-		                	'post'=>$post_text,
-		                	'post_files'=>$pics,
-		                	'owner_id'=>$user_id,
-		                	'post_type'=>1,
-		                	'posted_by'=>$user_id,
-		                	'initially_posted_by'=>$user_id,
-		                	'posted_on'=>$uploadDate
-		                );
-		                $res=$this->APIM->insert_post($data);
-		                if($res)
+						 $data = array(
+			        	'user_id'=>$user_id,
+			        	'images_path'=>$pics,
+			        	'added_on'=>$uploadDate,
+			        	'album_title'=>$album_title,
+			        	'album_desc'=>$album_desc,
+			        	'post_id'=>$post_id,
+			        	'tag_with'=>'1'
+			        	);
+					   $tablename='album_';
+		        		$result=$this->APIM->addData($tablename,$data);
+		                if($result)
 		                {
 							die(json_encode(array('status' =>'1' ,'msg'=>'Album uploaded Successfully')));
 						}

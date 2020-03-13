@@ -247,7 +247,7 @@ img.hover-shadow {
 
            <?php
                 foreach ($AllPosts as $post) {
-             //print_r($post);
+      
                   if($post['post_type'] ==1){
                     $gallary=$post['post_files'];
                     $gallaryimg=explode(',',$gallary);
