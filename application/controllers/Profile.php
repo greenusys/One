@@ -9,6 +9,7 @@ class Profile extends MY_Controller
 		$this->load->model('FriendsModel','FRND');
 		$this->load->model('APIModel','APIM');
 		$this->load->model('PostModel','POST');
+		$this->load->model('TestModel','Test');
 	}
 	public function index($uId="")	{	
 		$user_id=$_SESSION['logged_in'][0]->user_id;
@@ -71,6 +72,7 @@ class Profile extends MY_Controller
 		$data['FriendsActivity']=$this->FRND->getMyFreActivities($id);
 		$data['FriendRequests']=$this->FRND->getFriendRequests($id);
 		$data['MyFollowers']=$this->FRND->getMyFollowers($id);
+		$data['birthdays']=$this->Test->UpComingBirthdays();
 		// $data['AllPosts']=$this->POST->getMyPosts($id);
 		$data['Trending']=$this->POST->getTrending();
 		$this->load->view('web/template/header',$data);

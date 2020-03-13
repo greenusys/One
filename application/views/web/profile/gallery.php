@@ -351,7 +351,7 @@ img.hover-shadow {
                       <div class="card-body p-0">
 
                         <a href="<?=base_url('Gallery/fetchAlbum/').$album_id?>">
-                          <img src="<?=base_url().$imgArr[0]?>" class="h_220 img-fluid w-100">
+                          <img src="<?=base_url().'assets/uploads/images/'.$imgArr[0]?>" class="h_220 img-fluid w-100">
                         </a>
 
                       </div>

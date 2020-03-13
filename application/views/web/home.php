@@ -71,7 +71,7 @@
          </figure>
         </div>
         <div class="usr_pro"><img class="img img-fluid w-50" src="<?=base_url()?>assets/uploads/images/<?=$MyDetails[0]->profile_picture?>" onerror="this.src='<?=base_url()?>assets/uploads/images/default.png';" style="border-radius: 50%;height: 124px;width: 124px !important;"></div>
-        <h6 class="mt-80 author"> <?=$MyDetails[0]->full_name?></h6>
+        <a href="<?=base_url('Profile')?>" > <h6 class="mt-80 author"> <?=$MyDetails[0]->full_name?></h6></a>
         
         <small class="profile-desc"><?=$user_bio?></small>
         <hr>
@@ -1552,7 +1552,9 @@
     <!-- end center panel -->
     <!--right sidepanel -->
     <div class="col-md-3  pt-3 bgdefault">
-      
+      <?php 
+        if($fetchjobpost){
+      ?>
       <div class="">
         <div class="card mt-2">
           <div class="p-3">
@@ -1609,9 +1611,6 @@
                              
                           }
                           ?>
-                  
-                 
-                  
                 </div>
                 <a class="carousel-control-prev carousel_arrow_set" href="#carouselExampleIndicators" role="button" data-slide="prev">
                   <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -1624,10 +1623,10 @@
               </div>
             </div>
           </div>
-    
         </div>
-        
       </div>
+    <?php } ?>
+
       <div class="card mt-3" id="page_you_may_like">
         <div class="p-3">
           <h4 class="widget-title">Page You May Like</h4>
@@ -1655,11 +1654,11 @@
                  <li class="row mx-0 folow_rw ">
                     <div class="col-md-3 pt-1">
                       <a href="<?=base_url('Profile/').$user['user_id']?>">
-<<<<<<< HEAD
+
                         <img class="rounded-circle " src="<?=base_url()?>assets/uploads/images/<?=$user['upage_profilepic']?>" onerror="this.src='<?=base_url()?>assets/uploads/images/default.png';" width="40px" height="40px">
-=======
-                        <img class="rounded-circle " src="<?=base_url()?>assets/img/Profile_Pic/<?=$user['upage_profilepic']?>" onerror="this.src='<?=base_url()?>assets/img/Profile_Pic/default.png';" width="40px" height="40px">
->>>>>>> ec5de0198070c0773159fa2e31694bbd7414f286
+
+                        <!-- <img class="rounded-circle " src="<?=base_url()?>assets/img/Profile_Pic/<?=$user['upage_profilepic']?>" onerror="this.src='<?=base_url()?>assets/img/Profile_Pic/default.png';" width="40px" height="40px"> -->
+
                       </a>
                     </div>
                     <div class="col-md-7 p-0">
