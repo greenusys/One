@@ -454,7 +454,7 @@
              </div>
             <div>
               <a class="font-weight-bold " href="<?=base_url('Profile/'.$post_user_id)?>">  
-               <?=$p_ost['posted_by']?>
+               <?=$p_ost['full_name']?>
               </a>
               <br>
                 <small>
@@ -636,7 +636,7 @@
              </div>
             <div>
               <a class="font-weight-bold " href="<?=base_url('Profile/'.$post_user_id)?>">  
-               <?=$p_ost['posted_by']?>
+               <?=$p_ost['full_name']?>
               </a>  <span style="color:#616770"><?=$p_ost['post_head']?></span>
               <br>
                 <small>
@@ -918,7 +918,7 @@
              </div>
             <div>
               <a class="font-weight-bold " href="<?=base_url('Profile/'.$post_user_id)?>">  
-               <?=$p_ost['posted_by']?></a>
+               <?=$p_ost['full_name']?></a>
               <br>
                 <small>
                     <?php echo time_elapsed_string($p_ost['posted_on']);?>
@@ -1346,7 +1346,7 @@
              </div>
             <div>
               <a class="font-weight-bold " href="<?=base_url('Profile/'.$post_user_id)?>">  
-                <?=$p_ost['posted_by']?>
+                <?=$p_ost['full_name']?>
               </a>
               <br>
                 <small>
@@ -2316,7 +2316,7 @@ function getAjaxData(offset)
             
             if((res.data[i].post_type)==0)
             {
-              html+='<div class="card mt-4 p-2"><div class="card-header"><div class="d-flex float-left"><div><a class="font-weight-bold" href="<?=base_url()?>Profile/'+res.data[i].posted_by+'"><img class="rounded-circle mr-2" src="<?=base_url()?>assets/uploads/images/'+res.data[i].profile_pic+'" width="40"  height="40"></a></div><div><a class="font-weight-bold " href="#">'+res.data[i].posted_by+'</a><br><small><time class="timeago" datetime="'+res.data[i].posted_on+'"></time></small></div></div>';
+              html+='<div class="card mt-4 p-2"><div class="card-header"><div class="d-flex float-left"><div><a class="font-weight-bold" href="<?=base_url()?>Profile/'+res.data[i].posted_by+'"><img class="rounded-circle mr-2" src="<?=base_url()?>assets/uploads/images/'+res.data[i].profile_pic+'" width="40"  height="40"></a></div><div><a class="font-weight-bold " href="<?=base_url()?>Profile/'+res.data[i].posted_by+'">'+res.data[i].full_name+'</a><br><small><time class="timeago" datetime="'+res.data[i].posted_on+'"></time></small></div></div>';
                 html+='<div class="float-right d-flex mt-2">';
                 html+='<div class="">';
                 var count_fav=(res.data[i].fav).length;
@@ -2396,9 +2396,9 @@ function getAjaxData(offset)
                 {
                   html+='<div class="row mt-2 px-2">';
                   html+='<div class="col-md-1">';
-                  html+='<a href="<?=base_url()?>assets/uploads/images/'+res.data[i].total_comments[k].user_id+'"><img class="rounded-circle like_img" src="<?=base_url()?>assets/uploads/images/'+res.data[i].total_comments[k].profile_picture+'"></a></div>';
+                  html+='<a href="<?=base_url()?>profile/'+res.data[i].total_comments[k].commented_by_+'"><img class="rounded-circle like_img" src="<?=base_url()?>assets/uploads/images/'+res.data[i].total_comments[k].profile_picture+'"></a></div>';
                   html+='<div class="col-md-10 comnt_text border-bottom">';
-                  html+='<h6 class="font-weight-bold m-0" ><a href="<?=base_url()?>assets/uploads/images/'+res.data[i].total_comments[k].user_id+'">'+res.data[i].total_comments[k].full_name+'</a><small class="ml-3">'+res.data[i].total_comments[k].commented_on+'</small></h6>';
+                  html+='<h6 class="font-weight-bold m-0" ><a href="<?=base_url()?>profile/'+res.data[i].total_comments[k].commented_by_+'">'+res.data[i].total_comments[k].full_name+'</a><small class="ml-3">'+res.data[i].total_comments[k].commented_on+'</small></h6>';
                   html+='<p class="">'+res.data[i].total_comments[k].comment+'</p></div>';
                  html+='<div class="col-md-1">';
                   if((user_id==res.data[i].user_id) || (user_id==res.data[i].total_comments[k].commented_by_))
@@ -2433,7 +2433,7 @@ function getAjaxData(offset)
               html+='<div><a class="font-weight-bold" href="<?=base_url()?>Profile/'+res.data[i].posted_by+'">';
               html+='<img class="rounded-circle mr-2" src="<?=base_url()?>assets/uploads/images/'+res.data[i].profile_pic+'" width="40"  height="40">';
               html+='</a></div>';
-              html+='<div><a class="font-weight-bold "  href="#">'+res.data[i].posted_by+'</a><span style="color:#616770">'+res.data[i].post_head+'</span><br><small><time class="timeago" datetime="'+res.data[i].posted_on+'"></time></small></div></div>';
+              html+='<div><a class="font-weight-bold "  href="<?=base_url()?>Profile/'+res.data[i].posted_by+'">'+res.data[i].full_name+'</a><span style="color:#616770"> '+res.data[i].post_head+'</span><br><small><time class="timeago" datetime="'+res.data[i].posted_on+'"></time></small></div></div>';
                 html+='<div class="float-right d-flex mt-2">';
                 html+='<div class="">';
                 var count_fav=(res.data[i].fav).length;
@@ -2588,9 +2588,9 @@ function getAjaxData(offset)
                 {
                   html+='<div class="row mt-2 px-2">';
                   html+='<div class="col-md-1">';
-                  html+='<a href="<?=base_url()?>assets/uploads/images/'+res.data[i].total_comments[k].user_id+'"><img class="rounded-circle like_img" src="<?=base_url()?>assets/uploads/images/'+res.data[i].total_comments[k].profile_picture+'"></a></div>';
+                  html+='<a href="<?=base_url()?>profile/'+res.data[i].total_comments[k].commented_by_+'"><img class="rounded-circle like_img" src="<?=base_url()?>assets/uploads/images/'+res.data[i].total_comments[k].profile_picture+'"></a></div>';
                   html+='<div class="col-md-10 comnt_text border-bottom">';
-                  html+='<h6 class="font-weight-bold m-0" ><a href="<?=base_url()?>assets/uploads/images/'+res.data[i].total_comments[k].user_id+'">'+res.data[i].total_comments[k].full_name+'</a><small class="ml-3">'+res.data[i].total_comments[k].commented_on+'</small></h6>';
+                  html+='<h6 class="font-weight-bold m-0" ><a href="<?=base_url()?>profile/'+res.data[i].total_comments[k].commented_by_+'">'+res.data[i].total_comments[k].full_name+'</a><small class="ml-3">'+res.data[i].total_comments[k].commented_on+'</small></h6>';
                   html+='<p class="">'+res.data[i].total_comments[k].comment+'</p></div>';
                  html+='<div class="col-md-1">';
                   if((user_id==res.data[i].user_id) || (user_id==res.data[i].total_comments[k].commented_by_))
@@ -2626,7 +2626,7 @@ function getAjaxData(offset)
               html+='<a class="font-weight-bold" href="<?=base_url()?>Profile/'+res.data[i].posted_by+'">';
               html+='<img class="rounded-circle mr-2" src="<?=base_url()?>assets/uploads/images/'+res.data[i].profile_pic+'" width="40"  height="40">';
               html+='</a></div><div>';
-              html+='<a class="font-weight-bold "  href="<?=base_url()?>Profile/'+res.data[i].posted_by+'">'+res.data[i].posted_by+'</a><br><small><time class="timeago" datetime="'+res.data[i].posted_on+'"></time></small></div></div>';
+              html+='<a class="font-weight-bold "  href="<?=base_url()?>Profile/'+res.data[i].posted_by+'">'+res.data[i].full_name+'</a><br><small><time class="timeago" datetime="'+res.data[i].posted_on+'"></time></small></div></div>';
                 html+='<div class="float-right d-flex mt-2">';
                 html+='<div class="">';
                 var count_fav=(res.data[i].fav).length;
@@ -2868,9 +2868,9 @@ function getAjaxData(offset)
                 {
                   html+='<div class="row mt-2 px-2">';
                   html+='<div class="col-md-1">';
-                  html+='<a href="<?=base_url()?>assets/uploads/images/'+res.data[i].total_comments[k].user_id+'"><img class="rounded-circle like_img" src="<?=base_url()?>assets/uploads/images/'+res.data[i].total_comments[k].profile_picture+'"></a></div>';
+                  html+='<a href="<?=base_url()?>profile/'+res.data[i].total_comments[k].commented_by_+'"><img class="rounded-circle like_img" src="<?=base_url()?>assets/uploads/images/'+res.data[i].total_comments[k].profile_picture+'"></a></div>';
                   html+='<div class="col-md-10 comnt_text border-bottom">';
-                  html+='<h6 class="font-weight-bold m-0" ><a href="<?=base_url()?>assets/uploads/images/'+res.data[i].total_comments[k].user_id+'">'+res.data[i].total_comments[k].full_name+'</a><small class="ml-3">'+res.data[i].total_comments[k].commented_on+'</small></h6>';
+                  html+='<h6 class="font-weight-bold m-0" ><a href="<?=base_url()?>profile/'+res.data[i].total_comments[k].commented_by_+'">'+res.data[i].total_comments[k].full_name+'</a><small class="ml-3">'+res.data[i].total_comments[k].commented_on+'</small></h6>';
                   html+='<p class="">'+res.data[i].total_comments[k].comment+'</p></div>';
                  html+='<div class="col-md-1">';
                   if((user_id==res.data[i].user_id) || (user_id==res.data[i].total_comments[k].commented_by_))
@@ -2905,7 +2905,7 @@ function getAjaxData(offset)
 
             else
             {                    
-             html+='<div class="card mt-4 p-2"><div class="card-header"><div class="d-flex float-left"><div><a class="font-weight-bold" href="<?=base_url()?>Profile/'+res.data[i].posted_by+'"><img class="rounded-circle mr-2" src="<?=base_url()?>assets/uploads/images/'+res.data[i].profile_pic+'" width="40"  height="40"></a></div><div><a class="font-weight-bold " href="#">'+res.data[i].posted_by+'</a><br><small><time class="timeago" datetime="'+res.data[i].posted_on+'"></time></small></div></div>';
+             html+='<div class="card mt-4 p-2"><div class="card-header"><div class="d-flex float-left"><div><a class="font-weight-bold" href="<?=base_url()?>Profile/'+res.data[i].posted_by+'"><img class="rounded-circle mr-2" src="<?=base_url()?>assets/uploads/images/'+res.data[i].profile_pic+'" width="40"  height="40"></a></div><div><a class="font-weight-bold " href="<?=base_url()?>Profile/'+res.data[i].posted_by+'">'+res.data[i].full_name+'</a><br><small><time class="timeago" datetime="'+res.data[i].posted_on+'"></time></small></div></div>';
                 html+='<div class="float-right d-flex mt-2">';
                 html+='<div class="">';
                 var count_fav=(res.data[i].fav).length;
@@ -2997,11 +2997,11 @@ function getAjaxData(offset)
                 {
                   html+='<div class="row mt-2 px-2">';
                   html+='<div class="col-md-1">';
-                  html+='<a href="<?=base_url()?>assets/uploads/images/'+res.data[i].total_comments[k].user_id+'"><img class="rounded-circle like_img" src="<?=base_url()?>assets/uploads/images/'+res.data[i].total_comments[k].profile_picture+'"></a></div>';
+                  html+='<a href="<?=base_url()?>profile/'+res.data[i].total_comments[k].commented_by_+'"><img class="rounded-circle like_img" src="<?=base_url()?>assets/uploads/images/'+res.data[i].total_comments[k].profile_picture+'"></a></div>';
                   html+='<div class="col-md-10 comnt_text border-bottom">';
-                  html+='<h6 class="font-weight-bold m-0" ><a href="<?=base_url()?>assets/uploads/images/'+res.data[i].total_comments[k].user_id+'">'+res.data[i].total_comments[k].full_name+'</a><small class="ml-3">'+res.data[i].total_comments[k].commented_on+'</small></h6>';
+                  html+='<h6 class="font-weight-bold m-0" ><a href="<?=base_url()?>profile/'+res.data[i].total_comments[k].commented_by_+'">'+res.data[i].total_comments[k].full_name+'</a><small class="ml-3">'+res.data[i].total_comments[k].commented_on+'</small></h6>';
                   html+='<p class="">'+res.data[i].total_comments[k].comment+'</p></div>';
-                 html+='<div class="col-md-1">';
+                 html+='<div class="col-md-1">';  
                   if((user_id==res.data[i].user_id) || (user_id==res.data[i].total_comments[k].commented_by_))
                   {
                     html+='<div class="dropdown"><button class="dropbtn"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></button><div class="dropdown-content bg-white">';    

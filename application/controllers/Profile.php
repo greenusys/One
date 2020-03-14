@@ -40,7 +40,8 @@ class Profile extends MY_Controller
 				$p_Data['post_head']=$value->post_head;
 				$p_Data['post_files']=$value->post_files;
 				$p_Data['post_type']=$value->post_type;
-				$p_Data['posted_by']=$value->full_name;
+				$p_Data['full_name']=$value->full_name;
+		    	$p_Data['posted_by']=$value->posted_by;
 				$p_Data['profile_pic']=$value->profile_picture;
 				$p_Data['initially_posted_by']=$value->initially_posted_by;
 				$p_Data['posted_on']=$value->posted_on;

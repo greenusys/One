@@ -42,7 +42,8 @@ class Home extends MY_Controller {
 				$p_Data['post_files']=$value->post_files;
 				$p_Data['post_head']=$value->post_head;
 				$p_Data['post_type']=$value->post_type;
-				$p_Data['posted_by']=$value->full_name;
+				$p_Data['full_name']=$value->full_name;
+		    	$p_Data['posted_by']=$value->posted_by;
 				$p_Data['profile_pic']=$value->profile_picture;
 				$p_Data['initially_posted_by']=$value->initially_posted_by;
 				$p_Data['posted_on']=$value->posted_on;
@@ -80,7 +81,7 @@ class Home extends MY_Controller {
 		$data['fetchAds']=$this->db->join('users','ads_.added_by= users.user_id')->order_by('rand()')->get('ads_')->result();
 
 		$PageArray=$this->db->query("SELECT * FROM user_page join users on users.user_id=user_page.user_id  WHERE user_page.user_id NOT IN ('$id') order by rand() limit 5")->result();
-		$pageData=array();
+	    $pageData=array();
 		foreach ($PageArray as $PageDetails) {
 		$totalLikes=$this->returnTotalLikesForThisPage($PageDetails->page_id);
 		if($this->checkIfILikeThisPage($PageDetails->page_id)){
@@ -99,6 +100,8 @@ class Home extends MY_Controller {
 						);
 
 		}
+
+		
 			// if(count($result)>0){
 			// 	die(json_encode(array("code"=>1,"data"=>$result)));
 			// }else{
@@ -368,52 +371,57 @@ class Home extends MY_Controller {
 			}
 	}
 
-	public function weatherDetails()
-	{
-        $getdata = http_build_query(
-        array(
-            'app_id' => '84vAQ9EjzfMfNKouKeB1',
-            'app_code' => '6xRmnAWLRtmjmhDusj6Mbw',
-          'product'=>'forecast_hourly',
-        // 'name'=>$_POST['get_city'],
-        'latitude'=>$_POST['lat'],
-        'longitude'=>$_POST['long']
-        
-            // 'jsoncallback'=>'myCallbackFunction'
-         )
-        );
-        // https://weather.cit.api.here.com/weather/1.0/report.json?product=forecast_astronomy&=30.3165&longitude=78.0322&app_id=devportal-demo-20180625&app_code=9v2BkviRwi9Ot26kp2IysQ
-        $opts = array('http' =>
-         array(
-          'header' => "Content-Type: application/x-www-form-urlencoded\r\n".
-                            "Content-Length: ".strlen($getdata)."\r\n".
-                            "User-Agent:MyAgent/1.0\r\n",
-            'method'  => 'GET',
-            'content' => $getdata
-        )
-        );
-        $context  = stream_context_create($opts);    
-        $result = file_get_contents('https://weather.api.here.com/weather/1.0/report.json?'.$getdata, false, $context);
-        $response=json_decode($result);
-        foreach($response as $res)
-        {
-            // ->forecastLocation
-          //  print_r($res);
-            $forecastArray=$res->forecastLocation->forecast;
-            $state=$res->forecastLocation->state;
-            $city=$res->forecastLocation->city;
-            foreach($forecastArray as $forecast)
-            {
-               //print_r($forecast);
-               // die();
-                $today=date('d');
-                $nowHour=date('H');
-                $localTime=$forecast->localTime;
-                // echo '|| Real localtime: '.$localTime='1102112020';
-                $utcTime=$forecast->utcTime;
-                $daylight=$forecast->daylight;
-                $temperature=$forecast->temperature;
-                // if($daylight=='D'){
+public function weatherDetails(){
+
+
+
+$getdata = http_build_query(
+array(
+    'app_id' => '84vAQ9EjzfMfNKouKeB1',
+    'app_code' => '6xRmnAWLRtmjmhDusj6Mbw',
+  'product'=>'forecast_hourly',
+// 'name'=>$_POST['get_city'],
+'latitude'=>$_POST['lat'],
+'longitude'=>$_POST['long']
+
+    // 'jsoncallback'=>'myCallbackFunction'
+ )
+);
+
+
+
+// https://weather.cit.api.here.com/weather/1.0/report.json?product=forecast_astronomy&=30.3165&longitude=78.0322&app_id=devportal-demo-20180625&app_code=9v2BkviRwi9Ot26kp2IysQ
+$opts = array('http' =>
+ array(
+  'header' => "Content-Type: application/x-www-form-urlencoded\r\n".
+                    "Content-Length: ".strlen($getdata)."\r\n".
+                    "User-Agent:MyAgent/1.0\r\n",
+    'method'  => 'GET',
+    'content' => $getdata
+)
+);
+
+$context  = stream_context_create($opts);    
+ $result = file_get_contents('https://weather.api.here.com/weather/1.0/report.json?'.$getdata, false, $context);
+ $response=json_decode($result);
+ 
+    foreach($response as $res){
+        // ->forecastLocation
+      //  print_r($res);
+        $forecastArray=$res->forecastLocation->forecast;
+        $state=$res->forecastLocation->state;
+        $city=$res->forecastLocation->city;
+        foreach($forecastArray as $forecast){
+           //print_r($forecast);
+           // die();
+            $today=date('d');
+            $nowHour=date('H');
+            $localTime=$forecast->localTime;
+            // echo '|| Real localtime: '.$localTime='1102112020';
+            $utcTime=$forecast->utcTime;
+            $daylight=$forecast->daylight;
+            $temperature=$forecast->temperature;
+            // if($daylight=='D'){
                 $skyInfo=$forecast->skyInfo;
                 $description=$forecast->description;
                 $skyDescription=$forecast->skyDescription;
@@ -444,46 +452,67 @@ class Home extends MY_Controller {
                 $min_temp%10000;
                 $time = strtotime($localTime);
                 $dateInLocal = date("Y-m-d", $time);
+                // echo ' Hour : '.$hour=$localTime%10000000000;
+                // echo ', Minute : '.$minute=$localTime%100000000;
+                // echo ', Day : '.$day=$localTime%1000000;
+                // echo ',Year : '.$year=$localTime%10000;
                 // echo $time."<br>";
                 $localTimes=explode('-',$utc);
                 $localTimes=$localTimes[2];
                 $days=substr($localTimes,0,2);
-                if($days == $today)
-                {
-                    $data[]=array(
-                    "daylight"=>$daylight,
-                    "utc"=>$utc,
-                    "time"=>$hour.'.'.$minutes,
-                    "skyInfo"=>$skyInfo,
-                    "description"=>$description,
-                    "skyDescription"=>$skyDescription,
-                    "temperature"=>(int)$temperature,
-                    "temperatureDesc"=>(int)$temperatureDesc,
-                    "comfort"=>$comfort,
-                    "humidity"=>$humidity,
-                    "dewPoint"=>$dewPoint,
-                    "precipitationProbability"=>$precipitationProbability,
-                    "rainFall"=>$rainFall,
-                    "snowFall"=>$snowFall,
-                    "airInfo"=>$airInfo,
-                    "windSpeed"=>$windSpeed,
-                    "visibility"=>$visibility,
-                    "icon"=>$icon,
-                    "iconLink"=>$iconLink,
-                    "state"=>$state,
-                    "city"=>$city,
-                    "weekday"=>$weekday
-            //         // ""=>,
-                    );
-                        
+                if($days == $today){
+                   
+                        $data[]=array(
+                            "daylight"=>$daylight,
+                            "utc"=>$utc,
+                            "time"=>$hour.'.'.$minutes,
+                            "skyInfo"=>$skyInfo,
+                            "description"=>$description,
+                            "skyDescription"=>$skyDescription,
+                            "temperature"=>(int)$temperature,
+                            "temperatureDesc"=>(int)$temperatureDesc,
+                            "comfort"=>$comfort,
+                            "humidity"=>$humidity,
+                            "dewPoint"=>$dewPoint,
+                            "precipitationProbability"=>$precipitationProbability,
+                            "rainFall"=>$rainFall,
+                            "snowFall"=>$snowFall,
+                            "airInfo"=>$airInfo,
+                            "windSpeed"=>$windSpeed,
+                            "visibility"=>$visibility,
+                            "icon"=>$icon,
+                            "iconLink"=>$iconLink,
+                            "state"=>$state,
+                            "city"=>$city,
+                            "weekday"=>$weekday
+                    //         // ""=>,
+                            );
+                    
+                    
+                            
+                    // echo 'Value Of Day: '.$day_.' Value Of Today : '.$today;
+                    // echo ' Date : '.$day.'-'.$min_temp.', Hour : '.$hour.', Minute: '.$minutes.' Temperature: '.$temperature.'</br>';
+                }else{
+                    // echo 'Other Day';
+                    // die( json_encode(array("code"=>0,'data'=>'A')));
                 }
-                else
-                {
-                }
-            }
-            die( json_encode($data));
+                // print_r($data);
+                // die( json_encode(array("code"=>0,'data'=>'A')));
+                
+            // }else{
+            //     // die( json_encode(array("code"=>0,'data'=>'B')));
+            // }
+            
         }
+ die( json_encode($data));
     }
+//  foreach(){
+     
+//  }
+
+
+}
+
 
 
 }

@@ -191,7 +191,7 @@ $(document).ready(function(){
              </div>
             <div>
               <a class="font-weight-bold _use_n" href="<?=base_url('Profile/'.$post_user_id)?>">  
-               <?=$p_ost['posted_by']?>
+               <?=$p_ost['full_name']?>
               </a>
               <br>
                 <small>
@@ -377,7 +377,7 @@ $(document).ready(function(){
              </div>
             <div>
               <a class="font-weight-bold" href="<?=base_url('Profile/'.$post_user_id)?>">  
-               <?=$p_ost['posted_by']?>
+               <?=$p_ost['full_name']?>
               </a><span style="color:#616770"><?=$p_ost['post_head']?></span>
               <br>
                 <small>
@@ -659,7 +659,7 @@ $(document).ready(function(){
              </div>
             <div>
               <a class="font-weight-bold _use_n" href="<?=base_url('Profile/'.$post_user_id)?>">  
-               <?=$p_ost['posted_by']?>
+               <?=$p_ost['full_name']?>
               </a>
               <br>
                 <small>
@@ -1088,7 +1088,7 @@ $(document).ready(function(){
              </div>
             <div>
               <a class="font-weight-bold _use_n" href="<?=base_url('Profile/'.$post_user_id)?>">  
-                <?=$p_ost['posted_by']?>
+                <?=$p_ost['full_name']?>
               </a>
               <br>
                 <small>
@@ -1534,7 +1534,7 @@ function getAjaxData(offset)
             
             if((res.data[i].post_type)==0)
             {
-              html+='<div class="card mt-4 p-2"><div class="card-header"><div class="d-flex float-left"><div><a class="font-weight-bold" href="<?=base_url()?>Profile/'+res.data[i].posted_by+'"><img class="rounded-circle mr-2" src="<?=base_url()?>assets/uploads/images/'+res.data[i].profile_pic+'" width="40"  height="40"></a></div><div><a class="font-weight-bold " href="#">'+res.data[i].posted_by+'</a><br><small><time class="timeago" datetime="'+res.data[i].posted_on+'"></time></small></div></div>';
+              html+='<div class="card mt-4 p-2"><div class="card-header"><div class="d-flex float-left"><div><a class="font-weight-bold" href="<?=base_url()?>Profile/'+res.data[i].posted_by+'"><img class="rounded-circle mr-2" src="<?=base_url()?>assets/uploads/images/'+res.data[i].profile_pic+'" width="40"  height="40"></a></div><div><a class="font-weight-bold " href="<?=base_url()?>Profile/'+res.data[i].posted_by+'">'+res.data[i].full_name+'</a><br><small><time class="timeago" datetime="'+res.data[i].posted_on+'"></time></small></div></div>';
                 html+='<div class="float-right d-flex mt-2">';
                 html+='<div class="">';
                 var count_fav=(res.data[i].fav).length;
@@ -1651,7 +1651,7 @@ function getAjaxData(offset)
               html+='<a class="font-weight-bold" href="<?=base_url()?>Profile/'+res.data[i].posted_by+'">';
               html+='<img class="rounded-circle mr-2" src="<?=base_url()?>assets/uploads/images/'+res.data[i].profile_pic+'" width="40"  height="40">';
               html+='</a></div><div>';
-              html+='<a class="font-weight-bold "  href="#">'+res.data[i].posted_by+'</a><span style="color:#616770">'+res.data[i].post_head+'</span><br><small><time class="timeago" datetime="'+res.data[i].posted_on+'"></time></small></div></div>';
+              html+='<a class="font-weight-bold "  href="<?=base_url()?>Profile/'+res.data[i].posted_by+'">'+res.data[i].full_name+'</a><span style="color:#616770"> '+res.data[i].post_head+'</span><br><small><time class="timeago" datetime="'+res.data[i].posted_on+'"></time></small></div></div>';
                 html+='<div class="float-right d-flex mt-2">';
                 html+='<div class="">';
                 var count_fav=(res.data[i].fav).length;
@@ -1844,7 +1844,7 @@ function getAjaxData(offset)
               html+='<div><a class="font-weight-bold" href="<?=base_url()?>Profile/'+res.data[i].posted_by+'">';
               html+='<img class="rounded-circle mr-2" src="<?=base_url()?>assets/uploads/images/'+res.data[i].profile_pic+'" width="40"  height="40">';
               html+='</a></div><div>';
-              html+='<a class="font-weight-bold "  href="<?=base_url()?>Profile/'+res.data[i].posted_by+'">'+res.data[i].posted_by+'</a><br><small><time class="timeago" datetime="'+res.data[i].posted_on+'"></time></small></div></div>';
+              html+='<a class="font-weight-bold "  href="<?=base_url()?>Profile/'+res.data[i].posted_by+'">'+res.data[i].full_name+'</a><br><small><time class="timeago" datetime="'+res.data[i].posted_on+'"></time></small></div></div>';
                 html+='<div class="float-right d-flex mt-2">';
                 html+='<div class="">';
                 var count_fav=(res.data[i].fav).length;
@@ -2123,7 +2123,7 @@ function getAjaxData(offset)
 
             else
             {                    
-             html+='<div class="card mt-4 p-2"><div class="card-header"><div class="d-flex float-left"><div><a class="font-weight-bold" href="<?=base_url()?>Profile/'+res.data[i].posted_by+'"><img class="rounded-circle mr-2" src="<?=base_url()?>assets/uploads/images/'+res.data[i].profile_pic+'" width="40"  height="40"></a></div><div><a class="font-weight-bold " href="#">'+res.data[i].posted_by+'</a><br><small><time class="timeago" datetime="'+res.data[i].posted_on+'"></time></small></div></div>';
+             html+='<div class="card mt-4 p-2"><div class="card-header"><div class="d-flex float-left"><div><a class="font-weight-bold" href="<?=base_url()?>Profile/'+res.data[i].posted_by+'"><img class="rounded-circle mr-2" src="<?=base_url()?>assets/uploads/images/'+res.data[i].profile_pic+'" width="40"  height="40"></a></div><div><a class="font-weight-bold " href="<?=base_url()?>Profile/'+res.data[i].posted_by+'">'+res.data[i].full_name+'</a><br><small><time class="timeago" datetime="'+res.data[i].posted_on+'"></time></small></div></div>';
                 html+='<div class="float-right d-flex mt-2">';
                 html+='<div class="">';
                 var count_fav=(res.data[i].fav).length;
