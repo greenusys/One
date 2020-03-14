@@ -306,7 +306,6 @@ $(document).ready(function(){
             </div>
            
           </div>
-          <hr>
            <div class=" comments_list border-top">
                 <?php 
                 if(count($p_ost['total_comments'])>0){
@@ -1450,7 +1449,7 @@ $(document).ready(function(){
     </div>
     <!-------------activity end---->
     </div>
-	</div>
+  </div>
 </section>
 
 <style type="text/css">
@@ -1460,17 +1459,18 @@ $(document).ready(function(){
 $(document).ready(function(){
   // var offset =5;
   // var limit=0;   
-  var offset = 5;
+  var incr = 1;
   $(window).scroll(function() 
   {
     //console.log($(document).height() - $(window).height());
     if($(window).scrollTop() +1 >= $(document).height() - $(window).height()) {
       // limit=limit+5;
       // offset = limit + offset;
-     
-      getAjaxData(offset);
-       offset = offset + 5;
+        offset = incr * 5;
+        getAjaxData(offset);
+        incr=incr+1;
       }
+       
       // getAjaxData(offset);
       //  offset = offset + 5;
   });
@@ -1513,7 +1513,7 @@ function getAjaxData(offset)
  // console.log(offset);
   limit=5;
   $.ajax({
-    url:"<?=base_url('APIController/scrollfetchpost')?>",
+    url:"<?=base_url('APIController/scrollfetchtimelinepost')?>",
     type:"post",
     data:{offset:offset,limit:limit},
     success:function(res)

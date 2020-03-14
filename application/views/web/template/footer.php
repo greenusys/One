@@ -1016,8 +1016,6 @@ var keyCode = e.keyCode || e.which;
 	                            //   echo '<span class="online_icon" style="font-size:10px; color:red">offline</span>';
 	                            // }
                           ?> 
-
-
                         	 </span>
                         <span class="ml-2 author onln_usname dis_name">   <?=$frnd->full_name?></span>
                     </a>

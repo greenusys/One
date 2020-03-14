@@ -163,7 +163,9 @@ class Profile extends MY_Controller
 	}
 	public function addBio(){
 		$this->db->where('user_id',$_SESSION['logged_in'][0]->user_id);
-		if($this->db->update('users',array("bio_graphy"=>$this->input->post('bio_graphy')))){
+		$bio=$this->input->post('bio_graphy');
+		$_SESSION['logged_in'][0]->bio_graphy=$bio;
+		if($this->db->update('users',array("bio_graphy"=>$bio))){
 			die(json_encode(array("code"=>1,"msg"=>"User Bio Added Successfully.")));
 		}else{
 			die(json_encode(array("code"=>0,"msg"=>"Failed To Add Bio.")));
