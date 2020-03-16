@@ -472,10 +472,10 @@
               $re=$this->db->get('user_fav_section')->result();
               if(count($re)==0){
               ?>
-                  <span class="favrt" post_id="<?=$p_ost['post_id']?>" title="favourite"><i class="far fa-star"></i></span>
+                  <span class="favrt" fav_id="<?=$p_ost['user_id']?>" post_id="<?=$p_ost['post_id']?>" title="favourite"><i class="far fa-star"></i></span>
               <?php
               }else{?>
-                  <span class="favrt star" post_id="<?=$p_ost['post_id']?>" title="favourite"><i class="fas fa-star text-gold"></i></span>
+                  <span class="favrt star" fav_id="<?=$p_ost['user_id']?>" post_id="<?=$p_ost['post_id']?>" title="favourite"><i class="fas fa-star text-gold"></i></span>
               <?php }
               ?>
               <!-- <span><i class="fas fa-star"></i></span> -->
@@ -541,7 +541,24 @@
                     ?>
                    <?php 
                      if(count($p_ost['likes_data']) > 0){ ?>
-                         <li><div class=" like_cont likeValue rounded-circle like_img_marg25"> <?=$p_ost['total_likes']?></div></li>
+                           <li  class="dropdown" ><div class="dropbtn like_cont likeValue rounded-circle like_img_marg25"> <?=$p_ost['total_likes']?></div>
+                            <div class="dropdown-content like_lst_">
+                              <?php 
+                                if(count($p_ost['likes_data']) < 5 ){
+                                  for($i=0;$i < count($p_ost['likes_data']) ;$i++){
+                              ?>
+                              <a href="<?=base_url('Profile/').$p_ost['likes_data'][$i]->user_id?>"><?=$p_ost['likes_data'][$i]->full_name?></a>
+                             
+                             <?php } 
+                                }else{ 
+                                    for($i=0;$i < 5 ;$i++){  ?>
+                                      <a href="<?=base_url('Profile/').$p_ost['likes_data'][$i]->user_id?>"><?=$p_ost['likes_data'][$i]->full_name?></a>
+                                       
+                                <?php }
+                                 }
+                                ?>
+                            </div>
+                         </li>
                     <?php  
                         }else{ ?>
                             <li><div class=" like_cont likeValue rounded-circle "> <?=$p_ost['total_likes']?></div></li> 
@@ -654,10 +671,10 @@
                         $re=$this->db->get('user_fav_section')->result();
                         if(count($re)==0){
                         ?>
-                        <span class="favrt" post_id="<?=$p_ost['post_id']?>" title="favourite"><i class="far fa-star"></i></span>
+                        <span class="favrt" fav_id="<?=$p_ost['user_id']?>" post_id="<?=$p_ost['post_id']?>" title="favourite"><i class="far fa-star"></i></span>
                         <?php
                         }else{?>
-                        <span class="favrt star" post_id="<?=$p_ost['post_id']?>" title="favourite"><i class="fas fa-star text-gold"></i></span>
+                        <span class="favrt star" fav_id="<?=$p_ost['user_id']?>" post_id="<?=$p_ost['post_id']?>" title="favourite"><i class="fas fa-star text-gold"></i></span>
                         <?php }
                         ?>
                       </div>
@@ -820,7 +837,24 @@
                     ?>
                     <?php 
                      if(count($p_ost['likes_data']) > 0){ ?>
-                         <li><div class=" like_cont likeValue rounded-circle like_img_marg25"> <?=$p_ost['total_likes']?></div></li>
+                          <li  class="dropdown" ><div class="dropbtn like_cont likeValue rounded-circle like_img_marg25"> <?=$p_ost['total_likes']?></div>
+                            <div class="dropdown-content like_lst_">
+                              <?php 
+                                if(count($p_ost['likes_data']) < 5 ){
+                                  for($i=0;$i < count($p_ost['likes_data']) ;$i++){
+                              ?>
+                              <a href="<?=base_url('Profile/').$p_ost['likes_data'][$i]->user_id?>"><?=$p_ost['likes_data'][$i]->full_name?></a>
+                             
+                             <?php } 
+                                }else{ 
+                                    for($i=0;$i < 5 ;$i++){  ?>
+                                      <a href="<?=base_url('Profile/').$p_ost['likes_data'][$i]->user_id?>"><?=$p_ost['likes_data'][$i]->full_name?></a>
+                                       
+                                <?php }
+                                 }
+                                ?>
+                            </div>
+                         </li>
                     <?php  
                         }else{ ?>
                             <li><div class=" like_cont likeValue rounded-circle "> <?=$p_ost['total_likes']?></div></li> 
@@ -935,10 +969,10 @@
                     $re=$this->db->get('user_fav_section')->result();
                     if(count($re)==0){
                       ?>
-                         <span class="favrt" post_id="<?=$p_ost['post_id']?>" title="favourite"><i class="far fa-star"></i></span>
+                         <span class="favrt" fav_id="<?=$p_ost['user_id']?>" post_id="<?=$p_ost['post_id']?>" title="favourite"><i class="far fa-star"></i></span>
                       <?php
                       }else{?>
-                         <span class="favrt star" post_id="<?=$p_ost['post_id']?>" title="favourite"><i class="fas fa-star text-gold"></i></span>
+                         <span class="favrt star" fav_id="<?=$p_ost['user_id']?>" post_id="<?=$p_ost['post_id']?>" title="favourite"><i class="fas fa-star text-gold"></i></span>
                     <?php }
                     ?>
                   </div>
@@ -1260,7 +1294,24 @@
                     ?>
                     <?php 
                      if(count($p_ost['likes_data']) > 0){ ?>
-                         <li><div class=" like_cont likeValue rounded-circle like_img_marg25"> <?=$p_ost['total_likes']?></div></li>
+                         <li  class="dropdown" ><div class="dropbtn like_cont likeValue rounded-circle like_img_marg25"> <?=$p_ost['total_likes']?></div>
+                            <div class="dropdown-content like_lst_">
+                              <?php 
+                                if(count($p_ost['likes_data']) < 5 ){
+                                  for($i=0;$i < count($p_ost['likes_data']) ;$i++){
+                              ?>
+                              <a href="<?=base_url('Profile/').$p_ost['likes_data'][$i]->user_id?>"><?=$p_ost['likes_data'][$i]->full_name?></a>
+                             
+                             <?php } 
+                                }else{ 
+                                    for($i=0;$i < 5 ;$i++){  ?>
+                                      <a href="<?=base_url('Profile/').$p_ost['likes_data'][$i]->user_id?>"><?=$p_ost['likes_data'][$i]->full_name?></a>
+                                       
+                                <?php }
+                                 }
+                                ?>
+                            </div>
+                         </li>
                     <?php  
                         }else{ ?>
                             <li><div class=" like_cont likeValue rounded-circle "> <?=$p_ost['total_likes']?></div></li> 
@@ -1367,10 +1418,10 @@
                         $re=$this->db->get('user_fav_section')->result();
                         if(count($re)==0){
                         ?>
-                        <span class="favrt" post_id="<?=$p_ost['post_id']?>" title="favourite"><i class="far fa-star"></i></span>
+                        <span class="favrt" fav_id="<?=$p_ost['user_id']?>" post_id="<?=$p_ost['post_id']?>" title="favourite"><i class="far fa-star"></i></span>
                         <?php
                         }else{?>
-                        <span class="favrt star" post_id="<?=$p_ost['post_id']?>" title="favourite"><i class="fas fa-star text-gold"></i></span>
+                        <span class="favrt star" fav_id="<?=$p_ost['user_id']?>" post_id="<?=$p_ost['post_id']?>" title="favourite"><i class="fas fa-star text-gold"></i></span>
                         <?php }
                         ?>
                       </div>
@@ -1454,7 +1505,24 @@
                       ?>
                       <?php 
                      if(count($p_ost['likes_data']) > 0){ ?>
-                         <li><div class=" like_cont likeValue rounded-circle like_img_marg25"> <?=$p_ost['total_likes']?></div></li>
+                           <li  class="dropdown" ><div class="dropbtn like_cont likeValue rounded-circle like_img_marg25"> <?=$p_ost['total_likes']?></div>
+                            <div class="dropdown-content like_lst_">
+                              <?php 
+                                if(count($p_ost['likes_data']) < 5 ){
+                                  for($i=0;$i < count($p_ost['likes_data']) ;$i++){
+                              ?>
+                              <a href="<?=base_url('Profile/').$p_ost['likes_data'][$i]->user_id?>"><?=$p_ost['likes_data'][$i]->full_name?></a>
+                             
+                             <?php } 
+                                }else{ 
+                                    for($i=0;$i < 5 ;$i++){  ?>
+                                      <a href="<?=base_url('Profile/').$p_ost['likes_data'][$i]->user_id?>"><?=$p_ost['likes_data'][$i]->full_name?></a>
+                                       
+                                <?php }
+                                 }
+                                ?>
+                            </div>
+                         </li>
                     <?php  
                         }else{ ?>
                             <li><div class=" like_cont likeValue rounded-circle "> <?=$p_ost['total_likes']?></div></li> 
@@ -2322,11 +2390,11 @@ function getAjaxData(offset)
                 var count_fav=(res.data[i].fav).length;
                 if(count_fav==0)
                 {
-                  html+='<span class="favrt" post_id="'+res.data[i].post_id+'" title="favourite"><i class="far fa-star"></i></span>';
+                  html+='<span class="favrt" fav_id="'+res.data[i].user_id+'" post_id="'+res.data[i].post_id+'" title="favourite"><i class="far fa-star"></i></span>';
                 }
                 else
                 {
-                  html+='<span class="favrt star" post_id="'+res.data[i].post_id+'" title="favourite"><i class="fas fa-star text-gold"></i></span>';
+                  html+='<span class="favrt star" fav_id="'+res.data[i].user_id+'" post_id="'+res.data[i].post_id+'" title="favourite"><i class="fas fa-star text-gold"></i></span>';
                 } 
                 html+='</div>';
                 if(user_id==res.data[i].user_id)
@@ -2439,11 +2507,11 @@ function getAjaxData(offset)
                 var count_fav=(res.data[i].fav).length;
                 if(count_fav==0)
                 {
-                  html+='<span class="favrt" post_id="'+res.data[i].post_id+'" title="favourite"><i class="far fa-star"></i></span>';
+                  html+='<span class="favrt" fav_id="'+res.data[i].user_id+'" post_id="'+res.data[i].post_id+'" title="favourite"><i class="far fa-star"></i></span>';
                 }
                 else
                 {
-                  html+='<span class="favrt star" post_id="'+res.data[i].post_id+'" title="favourite"><i class="fas fa-star text-gold"></i></span>';
+                  html+='<span class="favrt star" fav_id="'+res.data[i].user_id+'" post_id="'+res.data[i].post_id+'" title="favourite"><i class="fas fa-star text-gold"></i></span>';
                 } 
                 html+='</div>';
                 if(user_id==res.data[i].user_id)
@@ -2632,11 +2700,11 @@ function getAjaxData(offset)
                 var count_fav=(res.data[i].fav).length;
                 if(count_fav==0)
                 {
-                  html+='<span class="favrt" post_id="'+res.data[i].post_id+'" title="favourite"><i class="far fa-star"></i></span>';
+                  html+='<span class="favrt" fav_id="'+res.data[i].user_id+'" post_id="'+res.data[i].post_id+'" title="favourite"><i class="far fa-star"></i></span>';
                 }
                 else
                 {
-                  html+='<span class="favrt star" post_id="'+res.data[i].post_id+'" title="favourite"><i class="fas fa-star text-gold"></i></span>';
+                  html+='<span class="favrt star" fav_id="'+res.data[i].user_id+'" post_id="'+res.data[i].post_id+'" title="favourite"><i class="fas fa-star text-gold"></i></span>';
                 } 
                 html+='</div>';
                 if(user_id==res.data[i].user_id)
@@ -2911,11 +2979,11 @@ function getAjaxData(offset)
                 var count_fav=(res.data[i].fav).length;
                 if(count_fav==0)
                 {
-                  html+='<span class="favrt" post_id="'+res.data[i].post_id+'" title="favourite"><i class="far fa-star"></i></span>';
+                  html+='<span class="favrt"  fav_id="'+res.data[i].user_id+'" post_id="'+res.data[i].post_id+'" title="favourite"><i class="far fa-star"></i></span>';
                 }
                 else
                 {
-                  html+='<span class="favrt star" post_id="'+res.data[i].post_id+'" title="favourite"><i class="fas fa-star text-gold"></i></span>';
+                  html+='<span class="favrt star" fav_id="'+res.data[i].user_id+'" post_id="'+res.data[i].post_id+'" title="favourite"><i class="fas fa-star text-gold"></i></span>';
                 } 
                 html+='</div>';
                 if(user_id==res.data[i].user_id)

@@ -943,9 +943,9 @@ public function getPostLikes($post_id){
 	public function addComment(){
 		
 		if(isset($_POST['android'])){
-			$data=array("post_id"=>$this->input->post('post_id'),"commented_by_"=>$this->input->post('commented_by_'),"comment"=>$this->input->post('comment'),"commented_on"=>date('Y-m-d'));
+			$data=array("post_id"=>$this->input->post('post_id'),"commented_by_"=>$this->input->post('commented_by_'),"comment"=>$this->input->post('comment'));
 		}else{
-			$data=array("post_id"=>$this->input->post('post_id'),"commented_by_"=>$user_id=$_SESSION['logged_in'][0]->user_id,"comment"=>$this->input->post('comment'),"commented_on"=>date('d-m-Y h:i:s'));
+			$data=array("post_id"=>$this->input->post('post_id'),"commented_by_"=>$user_id=$_SESSION['logged_in'][0]->user_id,"comment"=>$this->input->post('comment'));
 		}
 		if(!empty($this->input->post('comment')) && !empty($this->input->post('post_id'))){
 			$result=$this->APIM->addData('post_comments_',$data);

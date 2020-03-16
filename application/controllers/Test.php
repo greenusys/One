@@ -478,6 +478,9 @@ public function get_States()
 	}
 
 	public function group(){
+		$session=$this->session->userdata('logged_in');
+		$user_Id=$session[0]->user_id;
+		$data['MyFriends']=$this->FRND->getMyFriends($user_Id);
 		$this->load->view('web/template/header');
 		$data['allGroups']=$this->db->get('user_groups')->result();
 		$this->load->view('web/groupPage',$data);
@@ -489,7 +492,7 @@ public function get_States()
 		$data['MyFriends']=$this->FRND->getMyFriends($user_Id);
 		$this->load->view('web/template/header');
 		$data['allGroups']=$this->db->get('user_groups')->result();
-		$this->db->join('users','users.user_id=user_fav_section.user_id');
+		$this->db->join('users','users.user_id=user_fav_section.fav_user_id');
 		$this->db->join('post_','post_.post_id=user_fav_section.post_id');
 		$data['favpost']=$this->db->get('user_fav_section')->result();
 		$data['favphoto']=$this->Test->favphoto();
@@ -498,15 +501,21 @@ public function get_States()
 		$this->load->view('web/template/footer');
 	}
 	public function favposts(){
+    	$session=$this->session->userdata('logged_in');
+		$user_Id=$session[0]->user_id;
+		$data['MyFriends']=$this->FRND->getMyFriends($user_Id);
 		$this->load->view('web/template/header');
 		$data['allGroups']=$this->db->get('user_groups')->result();
-		$this->db->join('users','users.user_id=user_fav_section.user_id');
+		$this->db->join('users','users.user_id=user_fav_section.fav_user_id');
 		$this->db->join('post_','post_.post_id=user_fav_section.post_id');
 		$data['favpost']=$this->db->get('user_fav_section')->result();
 		$this->load->view('web/favpost',$data);
 		$this->load->view('web/template/footer');
 	}
 	public function favphotos(){
+    	$session=$this->session->userdata('logged_in');
+		$user_Id=$session[0]->user_id;
+		$data['MyFriends']=$this->FRND->getMyFriends($user_Id);
 		$this->load->view('web/template/header');
 		$data['allGroups']=$this->db->get('user_groups')->result();
 		$data['favphoto']=$this->Test->favphoto();
@@ -514,6 +523,9 @@ public function get_States()
 		$this->load->view('web/template/footer');
 	}
 	public function favchat(){
+    	$session=$this->session->userdata('logged_in');
+		$user_Id=$session[0]->user_id;
+		$data['MyFriends']=$this->FRND->getMyFriends($user_Id);
 		$this->load->view('web/template/header');
 		$data['allGroups']=$this->db->get('user_groups')->result();
 		$data['favchat']=$this->Test->favchat();
@@ -522,6 +534,9 @@ public function get_States()
 	}
 	
 	public function page(){
+		$session=$this->session->userdata('logged_in');
+		$user_Id=$session[0]->user_id;
+		$data['MyFriends']=$this->FRND->getMyFriends($user_Id);
 		$this->load->view('web/template/header');
 		$this->load->view('web/createPage');
 		$this->load->view('web/template/footer');
@@ -623,6 +638,7 @@ public function get_States()
         {
 			$session=$this->session->userdata('logged_in');
 			$user_Id=$session[0]->user_id;
+			$fav_user_id=$this->input->post('fav_id');
            	if(isset($_POST['fvrt'])==1)
 			{
 				$post=1;
@@ -649,8 +665,8 @@ public function get_States()
 			}
 			if($post==1)
 			{
-			    $data=array('post_id'=>$this->input->post('post_id'),
-		            'user_id'=>$user_Id,
+			     $data=array('post_id'=>$this->input->post('post_id'),
+		            'user_id'=>$user_Id,'fav_user_id'=>$fav_user_id,
 		            'contentType'=>$post);
 		      $results=$this->Test->makefvrtData($data);
 		      switch($results) 
@@ -669,7 +685,7 @@ public function get_States()
 			elseif($photos==2)
 			{
 			     $data=array('album_id'=>$this->input->post('album_id'),
-		                     'user_id'=>$this->input->post('user_id'),
+		                     'user_id'=>$this->input->post('user_id'),'fav_user_id'=>$fav_user_id,
 		                      'contentType'=>$photos);
 		      $results=$this->Test->makefvrtData($data);
 		      switch($results) 
@@ -688,7 +704,7 @@ public function get_States()
 			else
 			{
 			     $data=array('conversation_id'=>$this->input->post('conversation_id'),
-		                     'user_id'=>$this->input->post('user_id'),
+		                     'user_id'=>$this->input->post('user_id'),'fav_user_id'=>$fav_user_id,
 		                      'contentType'=>$chat);
 		      $results=$this->Test->makefvrtData($data);
 		      switch($results) 

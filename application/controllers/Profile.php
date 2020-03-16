@@ -70,6 +70,8 @@ class Profile extends MY_Controller
 		$data['RandomPeople']=$this->FRND->getRandomUser($id);
 		$data['MyFriends']=$this->FRND->getMyFriends($id);
 		$data['MyDetails']=$this->Profile->getMyDetails($id);
+		$data['Mycoverpic']=$this->Profile->getcoverphoto($id);
+		$data['Myprofilepic']=$this->Profile->getprofilephoto($id);
 		$data['FriendsActivity']=$this->FRND->getMyFreActivities($id);
 		$data['FriendRequests']=$this->FRND->getFriendRequests($id);
 		$data['MyFollowers']=$this->FRND->getMyFollowers($id);
