@@ -8,6 +8,7 @@ class APIController extends MY_Controller
 		$this->load->model('APIModel','APIM');
 		$this->load->model('PostModel','POST');
 		$this->load->model('FriendsModel','FRND');
+		
 	}
 
 	//compredddss Image
@@ -1082,6 +1083,10 @@ public function getPostLikes($post_id){
 	public function addImageToAlbum(){
 		$post_id=$this->input->post('post_id');
 		$res = $this->db->query("select * from post_ where post_id='$post_id'")->result();
+<<<<<<< HEAD
+
+=======
+>>>>>>> 6ba536c8aeabf6cfddaa0788f8c11b8a6dc5e346
 		$old_imgs= $res[0]->post_files;
 		if(!empty($_FILES['files']['name'])){
 		    $filesCount = count($_FILES['files']['name']);
@@ -1114,6 +1119,14 @@ public function getPostLikes($post_id){
                 }
                 $this->resizeImage($_FILES['file']['name'] );
                 $images[]=$_FILES['file']['name'];
+<<<<<<< HEAD
+
+		// print_r($res);
+		// $old_imgs= $res;
+
+
+=======
+>>>>>>> 6ba536c8aeabf6cfddaa0788f8c11b8a6dc5e346
 	            }
 	            $pics=implode(",",$images);
 	            $res_images = $old_imgs.','.$pics;
