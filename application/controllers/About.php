@@ -3,7 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class About extends MY_Controller 
 {
-<<<<<<< HEAD
+
 	public function __construct(){	
 		parent::__construct();
 		$this->load->model('ProfileModel','Profile');
@@ -31,34 +31,7 @@ class About extends MY_Controller
 		}else{
 			$data['myId']=1;
 		}
-=======
-    public function __construct(){  
-        parent::__construct();
-        $this->load->model('ProfileModel','Profile');
-        $this->load->model('FriendsModel','FRND');
-        $this->load->model('APIModel','APIM');
-        $this->load->model('PostModel','POST');
-    }
-    public function index($uId="")  {   
-        $user_id=$_SESSION['logged_in'][0]->user_id;
-        if($uId!=""){
-            $id=$uId;
-        }else{
-            $id=$user_id;
-        }
-        if($id!=$user_id){
-            $res=$this->FRND->checkForExistingFriendship($uId,$user_id);
-            // print_r($res);
-            if(count($res)>0){
-                $data['cancelFriend']=1;
-            }else{
-                $data['cancelFriend']=0;
-            }
-            $data['myId']=0;
-        }else{
-            $data['myId']=1;
-        }
->>>>>>> 6ba536c8aeabf6cfddaa0788f8c11b8a6dc5e346
+
         if(count($pstDoat=$this->POST->getAllPost($this->getAllMyPost(),$id))>0){
             foreach ($pstDoat as $key => $value) {
                 $p_Data['post_id']=$value->post_id;
@@ -104,24 +77,18 @@ class About extends MY_Controller
         $data['SkillDetails']=$this->getMySkillsDetails($id);
         $data['UniversityDetails']=$this->getMyUniversityDetails($id);
         $data['SchoolDetails']=$this->getMySchoolDetails($id);
-<<<<<<< HEAD
+
         $data['phoneNumbers']=$this->fetchPhoneNumbers($id);
         $data['address']=$this->fetchAddress($id);
        // $data['address']=$this->fetchInterestedIn($id);
        
 
-		$this->load->view('web/template/header',$data);
-		$this->load->view('web/template/profileCover');
-		$this->load->view('web/template/sideSection');
-		$this->load->view('web/profile/about');
-		$this->load->view('web/template/footer');
-=======
         $this->load->view('web/template/header',$data);
         $this->load->view('web/template/profileCover');
         $this->load->view('web/template/sideSection');
         $this->load->view('web/profile/about');
         $this->load->view('web/template/footer');
->>>>>>> 6ba536c8aeabf6cfddaa0788f8c11b8a6dc5e346
+
     }
 
 // public function fetchInterestedIn($id){
