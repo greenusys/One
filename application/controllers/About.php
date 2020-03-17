@@ -103,11 +103,11 @@ class About extends MY_Controller
 // }
     public function fetchAddress($id){
         
-          $this->db->where("user_id",$id);
-        $res = $this->db->get('user_details')->row();
-      if(count($res)>0){
-       $usd = $res->usd_address;
-        return $usd_phone=array('usd_address'=> explode("///", $usd),'usd_address_privacy'=>$res->usd_address_privacy);
+        $this->db->where("user_id",$id);
+        $res = $this->db->get('user_details')->result_array();
+        if(count($res)>0){
+        $usd = $res[0]['usd_address'];
+        return $usd_phone=array('usd_address'=> explode("///", $usd),'usd_address_privacy'=>$res[0]['usd_address_privacy']);
     
         }else{
             return $usd_phone=array();
@@ -117,9 +117,9 @@ class About extends MY_Controller
 
     public function fetchPhoneNumbers($id){
         $this->db->where("user_id",$id);
-        $res = $this->db->get('user_details')->row();
+        $res = $this->db->get('user_details')->result_array();
       if(count($res)>0){
-       $usd = $res->usd_phone;
+       $usd = $res[0]['usd_phone'];
        return $usd_phone = explode(",", $usd);
         }else{
             return $usd_phone=array();
