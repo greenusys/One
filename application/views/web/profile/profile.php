@@ -91,7 +91,7 @@ $(document).ready(function(){
         
           </ul>
           </div>
-           <div id="divOutside" class="divOutside emoji-btn"></div>
+        <div id="divOutside" class="divOutside emoji-btn">
          </div>
             <div class="row mx-0 my-2 withs" style="display: none">
               <div class="col-md-2 pr-0 text-center bgdefault">  
@@ -99,20 +99,21 @@ $(document).ready(function(){
               </div>
               <div class="col-md-10 px-0">
                <!--  <input class="form-control" type="text" name="tag" id="tags"> -->
-                <select class="js-example-basic-multiple" name="friends[]" multiple="multiple">
-                  <option value="Deepak">Deepak Nouliya</option>
-                  <option value="Rahul">Rahul</option>
-                  <option value="Ravish">Ravish</option>
-                  <option value="Shivam">Shivam</option>
-                  <option value="Shubham">Shubham</option>
-                  <option value="Kaif">Kaif</option>
+                <select class="js-example-basic-multiple" id="Tag_friends" name="friends[]" multiple="multiple">
+                  <?php
+                  foreach ($MyFriends as $frnds) {
+                  ?>
+                  <option value="<?=$frnds->user_id?>"><?=ucwords($frnds->full_name)?></option>
+                <?php } ?>
                 </select>
               </div>
+            </div>
+          
             </div>
             <!-- <div id="divOutside" class="divOutside">
             </div> -->
           <hr>
-            <style>
+          <style>
             .tag_pht{
                 font-size: 16px;
                 padding: 4px;

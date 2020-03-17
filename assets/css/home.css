@@ -58,11 +58,7 @@ small {
     z-index: 1;
     text-align: left;
     font-size: 10px;
-<<<<<<< HEAD
-    height: 30px;
-=======
     height: 60px !important;
->>>>>>> 6ba536c8aeabf6cfddaa0788f8c11b8a6dc5e346
     max-height: 130px;
 }
 

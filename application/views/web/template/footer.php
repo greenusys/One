@@ -1025,12 +1025,12 @@ var keyCode = e.keyCode || e.which;
                     </a>
                 </li>
             <?php } ?>
-                <li>
+             <!--    <li>
                     <a href="#">
                         <span><img class="img slid_img rounded-circle" src="<?=base_url()?>assets/uploads/images/profile2.jpg?>" ><span class="online_icon"></span> </span>
                         <span class="ml-2 author onln_usname dis_name">Portfolio</span>
                     </a>
-                </li>
+                </li> -->
         
             </ul>
 
