@@ -43,11 +43,7 @@
   $(document).ready(function() {
     $('.home').addClass('active');
   });
-  $(document).on('click','.follow_user_',function(){
-      var full_name=$(this).attr('d-name');
-      swal("Good job!", "Now you follow "+full_name, "success");
-      $("#folllw").load(" #folllw > *");
-  });
+
 </script>
 <script type="text/javascript" src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
     <script src="https://files.codepedia.info/files/uploads/iScripts/html2canvas.js"></script>
@@ -70,7 +66,7 @@
             <!-- <img src="<?=base_url()?>assets/uploads/images/<?=$MyDetails[0]->cover_photo?>"  class="w-100 "> -->
          </figure>
         </div>
-        <div class="usr_pro"><img class="img img-fluid w-50" src="<?=base_url()?>assets/uploads/images/<?=$MyDetails[0]->profile_picture?>" onerror="this.src='<?=base_url()?>assets/uploads/images/default.png';" style="border-radius: 50%;height: 124px;width: 124px !important;"></div>
+        <div class="usr_pro"> <a href="<?=base_url('Profile')?>" ><img class="img img-fluid w-50" src="<?=base_url()?>assets/uploads/images/<?=$MyDetails[0]->profile_picture?>" onerror="this.src='<?=base_url()?>assets/uploads/images/default.png';" style="border-radius: 50%;height: 124px;width: 124px !important;"> </a></div>
         <a href="<?=base_url('Profile')?>" > <h6 class="mt-80 author"> <?=$MyDetails[0]->full_name?></h6></a>
         
         <small class="profile-desc"><?=$user_bio?></small>
@@ -216,7 +212,7 @@
                     <div class="col-md-9 p-0">
                       <span class=" author"><?=$user->full_name?></span>
                       <div class="">
-                        <a href="javascript:void(0)" d-id="<?=$user->user_id?>" d-name="<?=$user->full_name?>" class="follow_user_"><label class="randflow"><small class="text-white">Follow</small></label></a> 
+                        <a href="javascript:void(0)" d-id="<?=$user->user_id?>" d-name="<?=$user->full_name?>" class="follow_user_"><label class="randflow text-white">Follow</label></a> 
                         
                       </div>
                     </div>
@@ -541,11 +537,9 @@
                     ?>
                    <?php 
                      if(count($p_ost['likes_data']) > 0){ ?>
-<<<<<<< HEAD
+
                          <li  class="dropdown" ><div class="dropbtn like_cont likeValue rounded-circle like_img_marg25"> <?=$p_ost['total_likes']?></div>
-=======
-                           <li  class="dropdown" ><div class="dropbtn like_cont likeValue rounded-circle like_img_marg25"> <?=$p_ost['total_likes']?></div>
->>>>>>> 6ba536c8aeabf6cfddaa0788f8c11b8a6dc5e346
+
                             <div class="dropdown-content like_lst_">
                               <?php 
                                 if(count($p_ost['likes_data']) < 5 ){
@@ -1800,6 +1794,8 @@
         </div>
       </div>
     <?php endif;?>
+
+    <?php if($fetchAds){ ?>
       <div class="card mt-3" id="">
         <div class="p-3 d-flex">
           <h4 class="widget-title">Advertisement</h4>
@@ -1857,6 +1853,7 @@
               </div>
         </div>
       </div>
+    <?php } ?>
     </div>
     <!--End right sidepanel -->
   </div>

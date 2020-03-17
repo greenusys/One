@@ -544,11 +544,12 @@ public function get_States()
 		$this->load->view('web/template/footer');
 	}
 	public function createPage(){
-		// print_r($_POST);
+		 // print_r($_POST);
+		 // die()
 		$session=$this->session->userdata('logged_in');
 		$user_Id=$session[0]->user_id;
 		$data=array(
-				'page_name'=>$this->input->post('page_name'),
+				'upage_name'=>$this->input->post('page_name'),
 				'category'=>$this->input->post('category'),
 				'user_id'=>$user_Id
 		);
