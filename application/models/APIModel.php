@@ -43,10 +43,7 @@ function deleteNotification($frnd_id,$my_id){
 				return false;
 			}
 		}
-<<<<<<< HEAD
-=======
 
->>>>>>> a372d4c36d88f92df7ce01cd1609bdb3ec5f0aac
 		public function getAllPostDetails( $condition=""){
                 $this->db->select("users.user_id,users.full_name,users.profile_picture,post_.*");
                 $this->db->order_by('post_id','Desc');

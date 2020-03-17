@@ -1115,12 +1115,9 @@ public function getPostLikes($post_id){
                 }
                 $this->resizeImage($_FILES['file']['name'] );
                 $images[]=$_FILES['file']['name'];
-<<<<<<< HEAD
 
-=======
 		// print_r($res);
 		// $old_imgs= $res;
->>>>>>> a372d4c36d88f92df7ce01cd1609bdb3ec5f0aac
 	            }
 	            $pics=implode(",",$images);
 	            $res_images = $old_imgs.','.$pics;

@@ -226,7 +226,6 @@ $(document).ready(function(){
                             <div class="dropdown-content bg-white">
                               <a href="javascript:void(0)"  class="edit_post" p_d="<?=$p_ost['post_id']?>">Edit</a>
                               <a href="javascript:void(0)" class="dlt_post_" p_d="<?=$p_ost['post_id']?>" >Delete</a>
-                              
                             </div>
                           </div>
                           <?php } ?>
