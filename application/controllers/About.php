@@ -13,6 +13,7 @@ class About extends MY_Controller
         $this->load->model('AboutModel','About');
 	}
 	public function index($uId="")	{	
+   
 		$user_id=$_SESSION['logged_in'][0]->user_id;
 		if($uId!=""){
 			$id=$uId;

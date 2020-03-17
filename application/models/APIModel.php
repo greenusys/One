@@ -43,13 +43,7 @@ function deleteNotification($frnd_id,$my_id){
 				return false;
 			}
 		}
-<<<<<<< HEAD
 
-
-=======
-
-
->>>>>>> 3bde1ede01084af3d3db85c900f1736798283e1e
 		public function getAllPostDetails( $condition=""){
                 $this->db->select("users.user_id,users.full_name,users.profile_picture,post_.*");
                 $this->db->order_by('post_id','Desc');
@@ -88,11 +82,8 @@ function deleteNotification($frnd_id,$my_id){
 								  'status_'=>'0');
 					$this->db->insert('notifications_',$notify);
 				}
-<<<<<<< HEAD
-			    return true;
-=======
 			    return $insert;
->>>>>>> 3bde1ede01084af3d3db85c900f1736798283e1e
+
 			}else {
 			    return false;
 			}

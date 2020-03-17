@@ -817,7 +817,12 @@ $(document).on("click",".delt_bn",function(){
             <div class="col-md-8 ">
                 <div class="sh-edt">
                     <ul class="m-0 list-unstyled"><?php
-                        foreach ($phoneNumbers as $phone) { ?>
+                
+                        foreach ($phoneNumbers as $phone) { 
+                              if(!$phone){ ?>
+                                    <li class="about_wt">Add phone number</li>
+                           <?php  }
+                            ?>
                             <li class="about_wt"><?=$phone?></li>
                         <?php  }
                         ?>
