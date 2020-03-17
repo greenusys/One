@@ -42,7 +42,9 @@
 <section class="container-fluid mt-5" id="action_area">
   <div class="feature-photo">
   <div class="row">
-    <img src="<?=base_url()?>assets/uploads/images/<?=$MyDetails[0]->cover_photo?>" onerror="this.src='<?=base_url()?>assets/uploads/images/default.jpg';" alt="cover image" class="cover-pic img-fluid w-100" style="height: 350px">
+     <a class="w-100" target="_blank" href="<?=base_url('Post/viewPost/').$Mycoverpic[0]->post_id?>" target="blank">
+         <img src="<?=base_url()?>assets/uploads/images/<?=$MyDetails[0]->cover_photo?>" onerror="this.src='<?=base_url()?>assets/uploads/images/default.jpg';" alt="cover image" class="cover-pic img-fluid w-100" style="height: 350px">
+    </a>
   </div>
  
       <div class="add-btn " >
@@ -153,7 +155,9 @@
   <div class="row">
     <div class="col-md-3 pr-0">
       <div class="mar_t110 usr_proImg">
-        <img src="<?=base_url()?>assets/uploads/images/<?=$MyDetails[0]->profile_picture?>" alt="profile image" onerror="this.src='<?=base_url()?>assets/uploads/images/default.png';" class="profile-pic img-fluid">
+        <a class="" target="_blank" href="<?=base_url('Post/viewPost/').$Myprofilepic[0]->post_id?>" target="blank">
+            <img src="<?=base_url()?>assets/uploads/images/<?=$MyDetails[0]->profile_picture?>" alt="profile image" onerror="this.src='<?=base_url()?>assets/uploads/images/default.png';" class="profile-pic img-fluid">
+        </a>
       </div>
       <?php
         if($myId==1){

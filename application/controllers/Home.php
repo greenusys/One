@@ -42,7 +42,8 @@ class Home extends MY_Controller {
 				$p_Data['post_files']=$value->post_files;
 				$p_Data['post_head']=$value->post_head;
 				$p_Data['post_type']=$value->post_type;
-				$p_Data['posted_by']=$value->full_name;
+				$p_Data['full_name']=$value->full_name;
+		    	$p_Data['posted_by']=$value->posted_by;
 				$p_Data['profile_pic']=$value->profile_picture;
 				$p_Data['initially_posted_by']=$value->initially_posted_by;
 				$p_Data['posted_on']=$value->posted_on;
@@ -80,31 +81,26 @@ class Home extends MY_Controller {
 		$data['fetchAds']=$this->db->join('users','ads_.added_by= users.user_id')->order_by('rand()')->get('ads_')->result();
 
 		$PageArray=$this->db->query("SELECT * FROM user_page join users on users.user_id=user_page.user_id  WHERE user_page.user_id NOT IN ('$id') order by rand() limit 5")->result();
-		if(!empty($PageArray))
-		{
-			foreach ($PageArray as $PageDetails) {
-			$totalLikes=$this->returnTotalLikesForThisPage($PageDetails->page_id);
-			if($this->checkIfILikeThisPage($PageDetails->page_id)){
-				$like=1;
-			}else{
-				$like=0;
-			}
-			$pageData[]=array(
-								"page_id"=>$PageDetails->page_id,
-								"user_id"=>$PageDetails->user_id,
-								"upage_profilepic"=>$PageDetails->upage_profilepic,
-								"full_name"=>$PageDetails->upage_name,
-								"category"=>$PageDetails->category,
-								'like'=>$like,
-								"total_likes"=>$totalLikes
-							);
+	    $pageData=array();
+		foreach ($PageArray as $PageDetails) {
+		$totalLikes=$this->returnTotalLikesForThisPage($PageDetails->page_id);
+		if($this->checkIfILikeThisPage($PageDetails->page_id)){
+			$like=1;
+		}else{
+			$like=0;
+		}
+		$pageData[]=array(
+							"page_id"=>$PageDetails->page_id,
+							"user_id"=>$PageDetails->user_id,
+							"upage_profilepic"=>$PageDetails->upage_profilepic,
+							"full_name"=>$PageDetails->upage_name,
+							"category"=>$PageDetails->category,
+							'like'=>$like,
+							"total_likes"=>$totalLikes
+						);
 
-			}
 		}
-		else
-		{
-			$pageData[]=array();
-		}
+
 		
 			// if(count($result)>0){
 			// 	die(json_encode(array("code"=>1,"data"=>$result)));

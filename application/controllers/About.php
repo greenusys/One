@@ -3,6 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class About extends MY_Controller 
 {
+<<<<<<< HEAD
 	public function __construct(){	
 		parent::__construct();
 		$this->load->model('ProfileModel','Profile');
@@ -30,6 +31,34 @@ class About extends MY_Controller
 		}else{
 			$data['myId']=1;
 		}
+=======
+    public function __construct(){  
+        parent::__construct();
+        $this->load->model('ProfileModel','Profile');
+        $this->load->model('FriendsModel','FRND');
+        $this->load->model('APIModel','APIM');
+        $this->load->model('PostModel','POST');
+    }
+    public function index($uId="")  {   
+        $user_id=$_SESSION['logged_in'][0]->user_id;
+        if($uId!=""){
+            $id=$uId;
+        }else{
+            $id=$user_id;
+        }
+        if($id!=$user_id){
+            $res=$this->FRND->checkForExistingFriendship($uId,$user_id);
+            // print_r($res);
+            if(count($res)>0){
+                $data['cancelFriend']=1;
+            }else{
+                $data['cancelFriend']=0;
+            }
+            $data['myId']=0;
+        }else{
+            $data['myId']=1;
+        }
+>>>>>>> 6ba536c8aeabf6cfddaa0788f8c11b8a6dc5e346
         if(count($pstDoat=$this->POST->getAllPost($this->getAllMyPost(),$id))>0){
             foreach ($pstDoat as $key => $value) {
                 $p_Data['post_id']=$value->post_id;
@@ -59,20 +88,23 @@ class About extends MY_Controller
         else{
             $data['AllPosts']=array();
         }
-		$data['user_id']=$id;
-		$data['ReqStatus']=$this->FRND->checkFriendRequestStatus($id);
-		$data['RandomPeople']=$this->FRND->getRandomUser($id);
-		$data['MyFriends']=$this->FRND->getMyFriends($id);
-		$data['MyDetails']=$this->Profile->getMyDetails($id);
-		$data['FriendsActivity']=$this->FRND->getMyFreActivities($id);
-		$data['FriendRequests']=$this->FRND->getFriendRequests($id);
-		$data['MyFollowers']=$this->FRND->getMyFollowers($id);
-		$data['MyPosts']=$this->POST->getMyPosts($id);
+        $data['user_id']=$id;
+        $data['ReqStatus']=$this->FRND->checkFriendRequestStatus($id);
+        $data['RandomPeople']=$this->FRND->getRandomUser($id);
+        $data['MyFriends']=$this->FRND->getMyFriends($id);
+        $data['MyDetails']=$this->Profile->getMyDetails($id);
+        $data['Mycoverpic']=$this->Profile->getcoverphoto($id);
+        $data['Myprofilepic']=$this->Profile->getprofilephoto($id);
+        $data['FriendsActivity']=$this->FRND->getMyFreActivities($id);
+        $data['FriendRequests']=$this->FRND->getFriendRequests($id);
+        $data['MyFollowers']=$this->FRND->getMyFollowers($id);
+        $data['MyPosts']=$this->POST->getMyPosts($id);
         $data['Trending']=$this->POST->getTrending();
         $data['WorkDetails']=$this->getMyWorkDetails($id);
         $data['SkillDetails']=$this->getMySkillsDetails($id);
         $data['UniversityDetails']=$this->getMyUniversityDetails($id);
         $data['SchoolDetails']=$this->getMySchoolDetails($id);
+<<<<<<< HEAD
         $data['phoneNumbers']=$this->fetchPhoneNumbers($id);
         $data['address']=$this->fetchAddress($id);
        // $data['address']=$this->fetchInterestedIn($id);
@@ -83,6 +115,13 @@ class About extends MY_Controller
 		$this->load->view('web/template/sideSection');
 		$this->load->view('web/profile/about');
 		$this->load->view('web/template/footer');
+=======
+        $this->load->view('web/template/header',$data);
+        $this->load->view('web/template/profileCover');
+        $this->load->view('web/template/sideSection');
+        $this->load->view('web/profile/about');
+        $this->load->view('web/template/footer');
+>>>>>>> 6ba536c8aeabf6cfddaa0788f8c11b8a6dc5e346
     }
 
 // public function fetchInterestedIn($id){
@@ -230,56 +269,56 @@ class About extends MY_Controller
         $this->db->where('user_id',$id);
         return $this->db->get('user_university_details')->result();
     }
-	public function getMyPosts($my_id){
-		$condition=array("posted_by"=>$my_id);
-		if(count($data=$this->APIM->getAllDetails('post_',$condition))>0){
+    public function getMyPosts($my_id){
+        $condition=array("posted_by"=>$my_id);
+        if(count($data=$this->APIM->getAllDetails('post_',$condition))>0){
 
-			foreach ($data as $key => $value) {
-				$p_Data['post_id']=$value->post_id;
-				$p_Data['post']=$value->post;
-				$p_Data['post_files']=$value->post_files;
-				$p_Data['post_type']=$value->post_type;
-				$p_Data['posted_by']=$value->posted_by;
-				$p_Data['initially_posted_by']=$value->initially_posted_by;
-				$p_Data['posted_on']=$value->posted_on;
-				$p_Data['total_likes']=$this->getLikeCount($value->post_id);
-				$p_Data['total_dislikes']=$this->getDislikeCount($value->post_id);
-				$p_Data['total_comments']=count($this->getComment($value->post_id));
-				$p_Data['total_share']=$this->getShareCount($value->post_id);
-				$posts[]=$p_Data;
-			}	
-			return $posts;
-		}else{
-			return false;
-		}
-	}
-	public function getLikeCount($post_id){
-		$condition=array("post_id"=>$post_id,"like_or_dislike"=>1);
-		// print_r($condition);
-		if($data=count($this->APIM->getAllDetails('like_or_dislike', $condition))){
-			return $data;
-		}else{
-			return false;
-		}
-	}
-	public function getDislikeCount($post_id){
-		$condition=array("post_id"=>$post_id,"like_or_dislike"=>2);
-		// print_r($condition);
-		if($data=count($this->APIM->getAllDetails('like_or_dislike', $condition))){
-			return $data;
-		}else{
-			return false;
-		}
-	}
-	public function getComment($post_id){
-		return $this->APIM->getAllDetails('post_comments_', $condition=array("post_id"=>$post_id));
-		
-	}
-	public function getShareCount($post_id){
-		$condition=array("initial_post_id"=>$post_id);
-		return count($this->APIM->getAllDetails('post_', $condition));
-		
-	}
+            foreach ($data as $key => $value) {
+                $p_Data['post_id']=$value->post_id;
+                $p_Data['post']=$value->post;
+                $p_Data['post_files']=$value->post_files;
+                $p_Data['post_type']=$value->post_type;
+                $p_Data['posted_by']=$value->posted_by;
+                $p_Data['initially_posted_by']=$value->initially_posted_by;
+                $p_Data['posted_on']=$value->posted_on;
+                $p_Data['total_likes']=$this->getLikeCount($value->post_id);
+                $p_Data['total_dislikes']=$this->getDislikeCount($value->post_id);
+                $p_Data['total_comments']=count($this->getComment($value->post_id));
+                $p_Data['total_share']=$this->getShareCount($value->post_id);
+                $posts[]=$p_Data;
+            }   
+            return $posts;
+        }else{
+            return false;
+        }
+    }
+    public function getLikeCount($post_id){
+        $condition=array("post_id"=>$post_id,"like_or_dislike"=>1);
+        // print_r($condition);
+        if($data=count($this->APIM->getAllDetails('like_or_dislike', $condition))){
+            return $data;
+        }else{
+            return false;
+        }
+    }
+    public function getDislikeCount($post_id){
+        $condition=array("post_id"=>$post_id,"like_or_dislike"=>2);
+        // print_r($condition);
+        if($data=count($this->APIM->getAllDetails('like_or_dislike', $condition))){
+            return $data;
+        }else{
+            return false;
+        }
+    }
+    public function getComment($post_id){
+        return $this->APIM->getAllDetails('post_comments_', $condition=array("post_id"=>$post_id));
+        
+    }
+    public function getShareCount($post_id){
+        $condition=array("initial_post_id"=>$post_id);
+        return count($this->APIM->getAllDetails('post_', $condition));
+        
+    }
 
     public function addPhone(){
           $data=array(

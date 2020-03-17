@@ -35,11 +35,11 @@
             ?>
             <div class="row mt-1">
                 <div class="col-sm-2">
-                   <img src="<?=base_url('assets/img/Profile_Pic/'.$fav->profile_picture)?>" class="rounded-circle img-fluid image-post h-5">
+                   <img src="<?=base_url('assets/uploads/images/'.$fav->profile_picture)?>" class="rounded-circle img-fluid image-post h-5">
                 </div>
                 <div class="col-sm-5">
                     <a href="#"><h6 class="mt-2"><span class="font-weight-bold text-info mt-4"><?=$fav->full_name?></span></a> </h6>
-                    <h6 class="font-weight-normal">Friend</h6>
+                    <!--<h6 class="font-weight-normal">Friend</h6>-->
                     <h6 class="mt-2"><span><?=$posted_on?></span> &nbsp; <i class='fas fa-user-friends'></i>  &nbsp; <span><?=$fav->full_name?> added a new photo</span></h6>
                 </div>
                 <?php
@@ -161,11 +161,11 @@
          ?>
         <div class="row mt-1">
             <div class="col-sm-2">
-               <img src="<?=base_url('assets/img/Profile_Pic/'.$favconv->profile_picture)?>" class="rounded-circle img-fluid image-post">
+               <img src="<?=base_url('assets/uploads/images/'.$favconv->profile_picture)?>" class="rounded-circle img-fluid image-post">
             </div>
             <div class="col-sm-8">
                 <a href="#"><h6 class="mt-2"><span class="font-weight-bold text-info mt-4"><?= $favconv->full_name?> </span></a> </h6>
-                <h6 class="font-weight-normal">Friend</h6>
+                <!--<h6 class="font-weight-normal">Friend</h6>-->
             </div>
         </div>
         <div class="row">

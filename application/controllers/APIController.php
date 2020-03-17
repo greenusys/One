@@ -578,7 +578,8 @@ class APIController extends MY_Controller
 				$p_Data['post']=$value->post;
 				$p_Data['post_files']=$value->post_files;
 				$p_Data['post_type']=$value->post_type;
-				$p_Data['posted_by']=$value->full_name;
+				$p_Data['posted_by']=$value->posted_by;
+				$p_Data['full_name']=$value->full_name;
 				$p_Data['profile_pic']=$value->profile_picture;
 				$p_Data['initially_posted_by']=$value->initially_posted_by;
 				$p_Data['posted_on']=$value->posted_on;
@@ -943,9 +944,9 @@ public function getPostLikes($post_id){
 	public function addComment(){
 		
 		if(isset($_POST['android'])){
-			$data=array("post_id"=>$this->input->post('post_id'),"commented_by_"=>$this->input->post('commented_by_'),"comment"=>$this->input->post('comment'),"commented_on"=>date('Y-m-d'));
+			$data=array("post_id"=>$this->input->post('post_id'),"commented_by_"=>$this->input->post('commented_by_'),"comment"=>$this->input->post('comment'));
 		}else{
-			$data=array("post_id"=>$this->input->post('post_id'),"commented_by_"=>$user_id=$_SESSION['logged_in'][0]->user_id,"comment"=>$this->input->post('comment'),"commented_on"=>date('d-m-Y h:i:s'));
+			$data=array("post_id"=>$this->input->post('post_id'),"commented_by_"=>$user_id=$_SESSION['logged_in'][0]->user_id,"comment"=>$this->input->post('comment'));
 		}
 		if(!empty($this->input->post('comment')) && !empty($this->input->post('post_id'))){
 			$result=$this->APIM->addData('post_comments_',$data);
@@ -1082,7 +1083,10 @@ public function getPostLikes($post_id){
 	public function addImageToAlbum(){
 		$post_id=$this->input->post('post_id');
 		$res = $this->db->query("select * from post_ where post_id='$post_id'")->result();
+<<<<<<< HEAD
 
+=======
+>>>>>>> 6ba536c8aeabf6cfddaa0788f8c11b8a6dc5e346
 		$old_imgs= $res[0]->post_files;
 		if(!empty($_FILES['files']['name'])){
 		    $filesCount = count($_FILES['files']['name']);
@@ -1115,11 +1119,14 @@ public function getPostLikes($post_id){
                 }
                 $this->resizeImage($_FILES['file']['name'] );
                 $images[]=$_FILES['file']['name'];
+<<<<<<< HEAD
 
 		// print_r($res);
 		// $old_imgs= $res;
 
 
+=======
+>>>>>>> 6ba536c8aeabf6cfddaa0788f8c11b8a6dc5e346
 	            }
 	            $pics=implode(",",$images);
 	            $res_images = $old_imgs.','.$pics;
@@ -1209,8 +1216,7 @@ public function getPostLikes($post_id){
 	                	'owner_id'=>$user_id,
 	                	'post_type'=>3,
 	                	'posted_by'=>$user_id,
-	                	'initially_posted_by'=>$user_id,
-	                	'posted_on'=>$uploadDate
+	                	'initially_posted_by'=>$user_id
 	                );
 	                $res=$this->APIM->insert_post($data);
 	                $post_id=$res;
@@ -1219,7 +1225,6 @@ public function getPostLikes($post_id){
 						 $data = array(
 			        	'user_id'=>$user_id,
 			        	'images_path'=>$pics,
-			        	'added_on'=>$uploadDate,
 			        	'album_title'=>$album_title,
 			        	'album_desc'=>$album_desc,
 			        	'post_id'=>$post_id,
@@ -1246,12 +1251,12 @@ public function getPostLikes($post_id){
 	}
 	public function deletealbum(){
 		$album_id=$this->input->post('album_id');
-			$this->db->where('album_id',$album_id);
-			if($this->db->delete('album_')){
-    			die(json_encode(array("code"=>1,"msg"=>"Album Deleted Successfully.")));
-    		}else{
-    			die(json_encode(array("code"=>0,"msg"=>"Failed To Delete Album.")));
-    		}
+		$this->db->where('album_id',$album_id);
+		if($this->db->delete('album_')){
+			die(json_encode(array("code"=>1,"msg"=>"Album Deleted Successfully.")));
+		}else{
+			die(json_encode(array("code"=>0,"msg"=>"Failed To Delete Album.")));
+		}
 	}
 	public function insertvideo()
 	{
@@ -1376,6 +1381,7 @@ public function getPostLikes($post_id){
 	         	$post_id=$results;
 		        $newdata=array('user_id	'=>$user_id,'cover_path'=>$images,'status'=>2,'post_id'=>$post_id);
 		        $newresult=$this->APIM->addData('user_profile_cover',$newdata);
+		        $_SESSION['logged_in'][0]->cover_photo=$images;
 		        if($newresult)
 		        {
 				    die(json_encode(array('status' =>'1' ,'msg'=>'Cover pic uploaded Successfully','pic'=>$images)));
@@ -1453,6 +1459,7 @@ public function getPostLikes($post_id){
 	                );
 		        $results=$this->APIM->insert_post($datas);
 		        $post_id=$results;
+		        $_SESSION['logged_in'][0]->profile_picture=$images;
 		        $newdata=array('user_id	'=>$user_id,'profile_path'=>$images,'status'=>1,'post_id'=>$post_id);
 		        $newresult=$this->APIM->addData('user_profile_cover',$newdata);
 		        if($newresult)
@@ -1506,7 +1513,8 @@ public function getPostLikes($post_id){
 			$p_Data['post_files']=$value->post_files;
 			$p_Data['post_head']=$value->post_head;
 			$p_Data['post_type']=$value->post_type;
-			$p_Data['posted_by']=$value->full_name;
+			$p_Data['full_name']=$value->full_name;
+			$p_Data['posted_by']=$value->posted_by;
 			$p_Data['profile_pic']=$value->profile_picture;
 			$p_Data['initially_posted_by']=$value->initially_posted_by;
 			$p_Data['posted_on']=$value->posted_on;
@@ -1533,7 +1541,56 @@ public function getPostLikes($post_id){
 			die(json_encode(array("code"=>0,"data"=>"No Data Found.")));
 		}
 	}
-
+	
+	public function scrollfetchtimelinepost(){
+	$offset=$this->input->post('offset');
+	$limit=$this->input->post('limit');
+	if(isset($_POST['android']))
+	{
+		$user_id=$this->input->post('user_id');
+	}
+	else
+	{
+		$user_id=$_SESSION['logged_in'][0]->user_id;
+	}
+	//$my_friends=$this->FRND->getMyFriends($user_id);	
+	if($data=$this->POST->getAlltimelinePost($user_id,$offset,$limit))
+	{
+		foreach ($data as $key => $value) {
+			$p_Data['post_id']=$value->post_id;
+			$p_Data['user_id']=$value->user_id;
+			$p_Data['post']=$value->post;
+			$p_Data['post_files']=$value->post_files;
+			$p_Data['post_head']=$value->post_head;
+			$p_Data['post_type']=$value->post_type;
+			$p_Data['full_name']=$value->full_name;
+			$p_Data['posted_by']=$value->posted_by;
+			$p_Data['profile_pic']=$value->profile_picture;
+			$p_Data['initially_posted_by']=$value->initially_posted_by;
+			$p_Data['posted_on']=$value->posted_on;
+			if(($likes_data= $this->getPostLikes($value->post_id))!=false)
+			{
+				 $p_Data['likes_data']=$likes_data;
+			}
+			else
+			{
+				 $p_Data['likes_data']=array();
+			}
+			// $p_Data['']=;
+			$p_Data['total_likes']=$this->getLikeCount($value->post_id);
+			$p_Data['total_dislikes']=$this->getDislikeCount($value->post_id);
+			$p_Data['total_comments']=$this->getModifyComment($value->post_id);
+			$p_Data['total_share']=$this->getShareCount($value->post_id);
+			$p_Data['fav']=$this->favrouite($value->post_id);   
+			$posts[]=$p_Data;
+		}	
+		die(json_encode(array("code"=>1,"data"=>$posts)));
+		}
+		else
+		{
+			die(json_encode(array("code"=>0,"data"=>"No Data Found.")));
+		}
+	}
 	public function favrouite($post_id)
     {
         $user_id=$_SESSION['logged_in'][0]->user_id;
@@ -1543,7 +1600,8 @@ public function getPostLikes($post_id){
     }
 
 	
-	function UnFriend(){
+	function UnFriend()
+	{
 		$frnd_id = $this->input->Post('sent_to');
 		$my_id =$_SESSION['logged_in'][0]->user_id;
 		if($this->APIM->unfriend($frnd_id,$my_id)){

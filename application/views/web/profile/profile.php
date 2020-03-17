@@ -191,7 +191,7 @@ $(document).ready(function(){
              </div>
             <div>
               <a class="font-weight-bold _use_n" href="<?=base_url('Profile/'.$post_user_id)?>">  
-               <?=$p_ost['posted_by']?>
+               <?=$p_ost['full_name']?>
               </a>
               <br>
                 <small>
@@ -211,10 +211,10 @@ $(document).ready(function(){
                         $re=$this->db->get('user_fav_section')->result();
                         if(count($re)==0){
                         ?>
-                            <span class="favrt" post_id="<?=$p_ost['post_id']?>" title="favourite"><i class="far fa-star"></i></span>
+                            <span class="favrt" fav_id="<?=$p_ost['user_id']?>" post_id="<?=$p_ost['post_id']?>" title="favourite"><i class="far fa-star"></i></span>
                         <?php
                         }else{?>
-                            <span class="favrt star" post_id="<?=$p_ost['post_id']?>" title="favourite"><i class="fas fa-star text-gold"></i></span>
+                            <span class="favrt star" fav_id="<?=$p_ost['user_id']?>" post_id="<?=$p_ost['post_id']?>" title="favourite"><i class="fas fa-star text-gold"></i></span>
                         <?php }
                         ?>
                         <!-- <span><i class="fas fa-star"></i></span> -->
@@ -282,7 +282,24 @@ $(document).ready(function(){
                     ?>
                    <?php 
                      if(count($p_ost['likes_data']) > 0){ ?>
-                         <li><div class=" like_cont likeValue rounded-circle like_img_marg25"> <?=$p_ost['total_likes']?></div></li>
+                         <li  class="dropdown" ><div class="dropbtn like_cont likeValue rounded-circle like_img_marg25"> <?=$p_ost['total_likes']?></div>
+                            <div class="dropdown-content like_lst_">
+                              <?php 
+                                if(count($p_ost['likes_data']) < 5 ){
+                                  for($i=0;$i < count($p_ost['likes_data']) ;$i++){
+                              ?>
+                              <a href="<?=base_url('Profile/').$p_ost['likes_data'][$i]->user_id?>"><?=$p_ost['likes_data'][$i]->full_name?></a>
+                             
+                             <?php } 
+                                }else{ 
+                                    for($i=0;$i < 5 ;$i++){  ?>
+                                      <a href="<?=base_url('Profile/').$p_ost['likes_data'][$i]->user_id?>"><?=$p_ost['likes_data'][$i]->full_name?></a>
+                                       
+                                <?php }
+                                 }
+                                ?>
+                            </div>
+                         </li>
                     <?php  
                         }else{ ?>
                             <li><div class=" like_cont likeValue rounded-circle "> <?=$p_ost['total_likes']?></div></li> 
@@ -306,7 +323,6 @@ $(document).ready(function(){
             </div>
            
           </div>
-          <hr>
            <div class=" comments_list border-top">
                 <?php 
                 if(count($p_ost['total_comments'])>0){
@@ -378,7 +394,7 @@ $(document).ready(function(){
              </div>
             <div>
               <a class="font-weight-bold" href="<?=base_url('Profile/'.$post_user_id)?>">  
-               <?=$p_ost['posted_by']?>
+               <?=$p_ost['full_name']?>
               </a><span style="color:#616770"><?=$p_ost['post_head']?></span>
               <br>
                 <small>
@@ -396,10 +412,10 @@ $(document).ready(function(){
                         $re=$this->db->get('user_fav_section')->result();
                         if(count($re)==0){
                         ?>
-                        <span class="favrt" post_id="<?=$p_ost['post_id']?>" title="favourite"><i class="far fa-star"></i></span>
+                        <span class="favrt" fav_id="<?=$p_ost['user_id']?>" post_id="<?=$p_ost['post_id']?>" title="favourite"><i class="far fa-star"></i></span>
                         <?php
                         }else{?>
-                        <span class="favrt star" post_id="<?=$p_ost['post_id']?>" title="favourite"><i class="fas fa-star text-gold"></i></span>
+                        <span class="favrt star" fav_id="<?=$p_ost['user_id']?>" post_id="<?=$p_ost['post_id']?>" title="favourite"><i class="fas fa-star text-gold"></i></span>
                         <?php }
                         ?>
                       </div>
@@ -562,7 +578,24 @@ $(document).ready(function(){
                     ?>
                     <?php 
                      if(count($p_ost['likes_data']) > 0){ ?>
-                         <li><div class=" like_cont likeValue rounded-circle like_img_marg25"> <?=$p_ost['total_likes']?></div></li>
+                         <li  class="dropdown" ><div class="dropbtn like_cont likeValue rounded-circle like_img_marg25"> <?=$p_ost['total_likes']?></div>
+                            <div class="dropdown-content like_lst_">
+                              <?php 
+                                if(count($p_ost['likes_data']) < 5 ){
+                                  for($i=0;$i < count($p_ost['likes_data']) ;$i++){
+                              ?>
+                              <a href="<?=base_url('Profile/').$p_ost['likes_data'][$i]->user_id?>"><?=$p_ost['likes_data'][$i]->full_name?></a>
+                             
+                             <?php } 
+                                }else{ 
+                                    for($i=0;$i < 5 ;$i++){  ?>
+                                      <a href="<?=base_url('Profile/').$p_ost['likes_data'][$i]->user_id?>"><?=$p_ost['likes_data'][$i]->full_name?></a>
+                                       
+                                <?php }
+                                 }
+                                ?>
+                            </div>
+                         </li>
                     <?php  
                         }else{ ?>
                             <li><div class=" like_cont likeValue rounded-circle "> <?=$p_ost['total_likes']?></div></li> 
@@ -660,7 +693,7 @@ $(document).ready(function(){
              </div>
             <div>
               <a class="font-weight-bold _use_n" href="<?=base_url('Profile/'.$post_user_id)?>">  
-               <?=$p_ost['posted_by']?>
+               <?=$p_ost['full_name']?>
               </a>
               <br>
                 <small>
@@ -678,10 +711,10 @@ $(document).ready(function(){
                     $re=$this->db->get('user_fav_section')->result();
                     if(count($re)==0){
                       ?>
-                         <span class="favrt" post_id="<?=$p_ost['post_id']?>" title="favourite"><i class="far fa-star"></i></span>
+                         <span class="favrt" fav_id="<?=$p_ost['user_id']?>" post_id="<?=$p_ost['post_id']?>" title="favourite"><i class="far fa-star"></i></span>
                       <?php
                       }else{?>
-                         <span class="favrt star" post_id="<?=$p_ost['post_id']?>" title="favourite"><i class="fas fa-star text-gold"></i></span>
+                         <span class="favrt star" fav_id="<?=$p_ost['user_id']?>" post_id="<?=$p_ost['post_id']?>" title="favourite"><i class="fas fa-star text-gold"></i></span>
                     <?php }
                     ?>
                   </div>
@@ -1003,7 +1036,24 @@ $(document).ready(function(){
                     ?>
                     <?php 
                      if(count($p_ost['likes_data']) > 0){ ?>
-                         <li><div class=" like_cont likeValue rounded-circle like_img_marg25"> <?=$p_ost['total_likes']?></div></li>
+                          <li  class="dropdown" ><div class="dropbtn like_cont likeValue rounded-circle like_img_marg25"> <?=$p_ost['total_likes']?></div>
+                            <div class="dropdown-content like_lst_">
+                              <?php 
+                                if(count($p_ost['likes_data']) < 5 ){
+                                  for($i=0;$i < count($p_ost['likes_data']) ;$i++){
+                              ?>
+                              <a href="<?=base_url('Profile/').$p_ost['likes_data'][$i]->user_id?>"><?=$p_ost['likes_data'][$i]->full_name?></a>
+                             
+                             <?php } 
+                                }else{ 
+                                    for($i=0;$i < 5 ;$i++){  ?>
+                                      <a href="<?=base_url('Profile/').$p_ost['likes_data'][$i]->user_id?>"><?=$p_ost['likes_data'][$i]->full_name?></a>
+                                       
+                                <?php }
+                                 }
+                                ?>
+                            </div>
+                         </li>
                     <?php  
                         }else{ ?>
                             <li><div class=" like_cont likeValue rounded-circle "> <?=$p_ost['total_likes']?></div></li> 
@@ -1089,7 +1139,7 @@ $(document).ready(function(){
              </div>
             <div>
               <a class="font-weight-bold _use_n" href="<?=base_url('Profile/'.$post_user_id)?>">  
-                <?=$p_ost['posted_by']?>
+                <?=$p_ost['full_name']?>
               </a>
               <br>
                 <small>
@@ -1110,10 +1160,10 @@ $(document).ready(function(){
                         $re=$this->db->get('user_fav_section')->result();
                         if(count($re)==0){
                         ?>
-                        <span class="favrt" post_id="<?=$p_ost['post_id']?>" title="favourite"><i class="far fa-star"></i></span>
+                        <span class="favrt" fav_id="<?=$p_ost['user_id']?>" post_id="<?=$p_ost['post_id']?>" title="favourite"><i class="far fa-star"></i></span>
                         <?php
                         }else{?>
-                        <span class="favrt star" post_id="<?=$p_ost['post_id']?>" title="favourite"><i class="fas fa-star text-gold"></i></span>
+                        <span class="favrt star" fav_id="<?=$p_ost['user_id']?>" post_id="<?=$p_ost['post_id']?>" title="favourite"><i class="fas fa-star text-gold"></i></span>
                         <?php }
                         ?>
                       </div>
@@ -1197,7 +1247,24 @@ $(document).ready(function(){
                       ?>
                       <?php 
                      if(count($p_ost['likes_data']) > 0){ ?>
-                         <li><div class=" like_cont likeValue rounded-circle like_img_marg25"> <?=$p_ost['total_likes']?></div></li>
+                          <li  class="dropdown" ><div class="dropbtn like_cont likeValue rounded-circle like_img_marg25"> <?=$p_ost['total_likes']?></div>
+                            <div class="dropdown-content like_lst_">
+                              <?php 
+                                if(count($p_ost['likes_data']) < 5 ){
+                                  for($i=0;$i < count($p_ost['likes_data']) ;$i++){
+                              ?>
+                              <a href="<?=base_url('Profile/').$p_ost['likes_data'][$i]->user_id?>"><?=$p_ost['likes_data'][$i]->full_name?></a>
+                             
+                             <?php } 
+                                }else{ 
+                                    for($i=0;$i < 5 ;$i++){  ?>
+                                      <a href="<?=base_url('Profile/').$p_ost['likes_data'][$i]->user_id?>"><?=$p_ost['likes_data'][$i]->full_name?></a>
+                                       
+                                <?php }
+                                 }
+                                ?>
+                            </div>
+                         </li>
                     <?php  
                         }else{ ?>
                             <li><div class=" like_cont likeValue rounded-circle "> <?=$p_ost['total_likes']?></div></li> 
@@ -1450,7 +1517,7 @@ $(document).ready(function(){
     </div>
     <!-------------activity end---->
     </div>
-	</div>
+  </div>
 </section>
 
 <style type="text/css">
@@ -1460,17 +1527,18 @@ $(document).ready(function(){
 $(document).ready(function(){
   // var offset =5;
   // var limit=0;   
-  var offset = 5;
+  var incr = 1;
   $(window).scroll(function() 
   {
     //console.log($(document).height() - $(window).height());
     if($(window).scrollTop() +1 >= $(document).height() - $(window).height()) {
       // limit=limit+5;
       // offset = limit + offset;
-     
-      getAjaxData(offset);
-       offset = offset + 5;
+        offset = incr * 5;
+        getAjaxData(offset);
+        incr=incr+1;
       }
+       
       // getAjaxData(offset);
       //  offset = offset + 5;
   });
@@ -1513,7 +1581,7 @@ function getAjaxData(offset)
  // console.log(offset);
   limit=5;
   $.ajax({
-    url:"<?=base_url('APIController/scrollfetchpost')?>",
+    url:"<?=base_url('APIController/scrollfetchtimelinepost')?>",
     type:"post",
     data:{offset:offset,limit:limit},
     success:function(res)
@@ -1534,17 +1602,17 @@ function getAjaxData(offset)
             
             if((res.data[i].post_type)==0)
             {
-              html+='<div class="card mt-4 p-2"><div class="card-header"><div class="d-flex float-left"><div><a class="font-weight-bold" href="<?=base_url()?>Profile/'+res.data[i].posted_by+'"><img class="rounded-circle mr-2" src="<?=base_url()?>assets/uploads/images/'+res.data[i].profile_pic+'" width="40"  height="40"></a></div><div><a class="font-weight-bold " href="#">'+res.data[i].posted_by+'</a><br><small><time class="timeago" datetime="'+res.data[i].posted_on+'"></time></small></div></div>';
+              html+='<div class="card mt-4 p-2"><div class="card-header"><div class="d-flex float-left"><div><a class="font-weight-bold" href="<?=base_url()?>Profile/'+res.data[i].posted_by+'"><img class="rounded-circle mr-2" src="<?=base_url()?>assets/uploads/images/'+res.data[i].profile_pic+'" width="40"  height="40"></a></div><div><a class="font-weight-bold " href="<?=base_url()?>Profile/'+res.data[i].posted_by+'">'+res.data[i].full_name+'</a><br><small><time class="timeago" datetime="'+res.data[i].posted_on+'"></time></small></div></div>';
                 html+='<div class="float-right d-flex mt-2">';
                 html+='<div class="">';
                 var count_fav=(res.data[i].fav).length;
                 if(count_fav==0)
                 {
-                  html+='<span class="favrt" post_id="'+res.data[i].post_id+'" title="favourite"><i class="far fa-star"></i></span>';
+                  html+='<span class="favrt" fav_id="'+res.data[i].user_id+'" post_id="'+res.data[i].post_id+'" title="favourite"><i class="far fa-star"></i></span>';
                 }
                 else
                 {
-                  html+='<span class="favrt star" post_id="'+res.data[i].post_id+'" title="favourite"><i class="fas fa-star text-gold"></i></span>';
+                  html+='<span class="favrt star" fav_id="'+res.data[i].user_id+'" post_id="'+res.data[i].post_id+'" title="favourite"><i class="fas fa-star text-gold"></i></span>';
                 } 
                 html+='</div>';
                 if(user_id==res.data[i].user_id)
@@ -1614,9 +1682,9 @@ function getAjaxData(offset)
                 {
                   html+='<div class="row mt-2 px-2">';
                   html+='<div class="col-md-1">';
-                  html+='<a href="<?=base_url()?>assets/uploads/images/'+res.data[i].total_comments[k].user_id+'"><img class="rounded-circle like_img" src="<?=base_url()?>assets/uploads/images/'+res.data[i].total_comments[k].profile_picture+'"></a></div>';
+                  html+='<a href="<?=base_url()?>Profile/'+res.data[i].total_comments[k].commented_by_+'"><img class="rounded-circle like_img" src="<?=base_url()?>assets/uploads/images/'+res.data[i].total_comments[k].profile_picture+'"></a></div>';
                   html+='<div class="col-md-10 comnt_text border-bottom">';
-                  html+='<h6 class="font-weight-bold m-0" ><a href="<?=base_url()?>assets/uploads/images/'+res.data[i].total_comments[k].user_id+'">'+res.data[i].total_comments[k].full_name+'</a><small class="ml-3">'+res.data[i].total_comments[k].commented_on+'</small></h6>';
+                  html+='<h6 class="font-weight-bold m-0" ><a href="<?=base_url()?>Profile/'+res.data[i].total_comments[k].commented_by_+'">'+res.data[i].total_comments[k].full_name+'</a><small class="ml-3">'+res.data[i].total_comments[k].commented_on+'</small></h6>';
                   html+='<p class="">'+res.data[i].total_comments[k].comment+'</p></div>';
                  html+='<div class="col-md-1">';
                   if((user_id==res.data[i].user_id) || (user_id==res.data[i].total_comments[k].commented_by_))
@@ -1651,17 +1719,17 @@ function getAjaxData(offset)
               html+='<a class="font-weight-bold" href="<?=base_url()?>Profile/'+res.data[i].posted_by+'">';
               html+='<img class="rounded-circle mr-2" src="<?=base_url()?>assets/uploads/images/'+res.data[i].profile_pic+'" width="40"  height="40">';
               html+='</a></div><div>';
-              html+='<a class="font-weight-bold "  href="#">'+res.data[i].posted_by+'</a><span style="color:#616770">'+res.data[i].post_head+'</span><br><small><time class="timeago" datetime="'+res.data[i].posted_on+'"></time></small></div></div>';
+              html+='<a class="font-weight-bold "  href="<?=base_url()?>Profile/'+res.data[i].posted_by+'">'+res.data[i].full_name+'</a><span style="color:#616770"> '+res.data[i].post_head+'</span><br><small><time class="timeago" datetime="'+res.data[i].posted_on+'"></time></small></div></div>';
                 html+='<div class="float-right d-flex mt-2">';
                 html+='<div class="">';
                 var count_fav=(res.data[i].fav).length;
                 if(count_fav==0)
                 {
-                  html+='<span class="favrt" post_id="'+res.data[i].post_id+'" title="favourite"><i class="far fa-star"></i></span>';
+                  html+='<span class="favrt" fav_id="'+res.data[i].user_id+'" post_id="'+res.data[i].post_id+'" title="favourite"><i class="far fa-star"></i></span>';
                 }
                 else
                 {
-                  html+='<span class="favrt star" post_id="'+res.data[i].post_id+'" title="favourite"><i class="fas fa-star text-gold"></i></span>';
+                  html+='<span class="favrt star" fav_id="'+res.data[i].user_id+'" post_id="'+res.data[i].post_id+'" title="favourite"><i class="fas fa-star text-gold"></i></span>';
                 } 
                 html+='</div>';
                 if(user_id==res.data[i].user_id)
@@ -1806,9 +1874,9 @@ function getAjaxData(offset)
                 {
                   html+='<div class="row mt-2 px-2">';
                   html+='<div class="col-md-1">';
-                  html+='<a href="<?=base_url()?>assets/uploads/images/'+res.data[i].total_comments[k].user_id+'"><img class="rounded-circle like_img" src="<?=base_url()?>assets/uploads/images/'+res.data[i].total_comments[k].profile_picture+'"></a></div>';
+                  html+='<a href="<?=base_url()?>Profile/'+res.data[i].total_comments[k].commented_by_+'"><img class="rounded-circle like_img" src="<?=base_url()?>assets/uploads/images/'+res.data[i].total_comments[k].profile_picture+'"></a></div>';
                   html+='<div class="col-md-10 comnt_text border-bottom">';
-                  html+='<h6 class="font-weight-bold m-0" ><a href="<?=base_url()?>assets/uploads/images/'+res.data[i].total_comments[k].user_id+'">'+res.data[i].total_comments[k].full_name+'</a><small class="ml-3">'+res.data[i].total_comments[k].commented_on+'</small></h6>';
+                  html+='<h6 class="font-weight-bold m-0" ><a href="<?=base_url()?>Profile/'+res.data[i].total_comments[k].commented_by_+'">'+res.data[i].total_comments[k].full_name+'</a><small class="ml-3">'+res.data[i].total_comments[k].commented_on+'</small></h6>';
                   html+='<p class="">'+res.data[i].total_comments[k].comment+'</p></div>';
                  html+='<div class="col-md-1">';
                   if((user_id==res.data[i].user_id) || (user_id==res.data[i].total_comments[k].commented_by_))
@@ -1844,17 +1912,17 @@ function getAjaxData(offset)
               html+='<div><a class="font-weight-bold" href="<?=base_url()?>Profile/'+res.data[i].posted_by+'">';
               html+='<img class="rounded-circle mr-2" src="<?=base_url()?>assets/uploads/images/'+res.data[i].profile_pic+'" width="40"  height="40">';
               html+='</a></div><div>';
-              html+='<a class="font-weight-bold "  href="<?=base_url()?>Profile/'+res.data[i].posted_by+'">'+res.data[i].posted_by+'</a><br><small><time class="timeago" datetime="'+res.data[i].posted_on+'"></time></small></div></div>';
+              html+='<a class="font-weight-bold "  href="<?=base_url()?>Profile/'+res.data[i].posted_by+'">'+res.data[i].full_name+'</a><br><small><time class="timeago" datetime="'+res.data[i].posted_on+'"></time></small></div></div>';
                 html+='<div class="float-right d-flex mt-2">';
                 html+='<div class="">';
                 var count_fav=(res.data[i].fav).length;
                 if(count_fav==0)
                 {
-                  html+='<span class="favrt" post_id="'+res.data[i].post_id+'" title="favourite"><i class="far fa-star"></i></span>';
+                  html+='<span class="favrt" fav_id="'+res.data[i].user_id+'" post_id="'+res.data[i].post_id+'" title="favourite"><i class="far fa-star"></i></span>';
                 }
                 else
                 {
-                  html+='<span class="favrt star" post_id="'+res.data[i].post_id+'" title="favourite"><i class="fas fa-star text-gold"></i></span>';
+                  html+='<span class="favrt star" fav_id="'+res.data[i].user_id+'" post_id="'+res.data[i].post_id+'" title="favourite"><i class="fas fa-star text-gold"></i></span>';
                 } 
                 html+='</div>';
                 if(user_id==res.data[i].user_id)
@@ -2086,9 +2154,9 @@ function getAjaxData(offset)
                 {
                   html+='<div class="row mt-2 px-2">';
                   html+='<div class="col-md-1">';
-                  html+='<a href="<?=base_url()?>assets/uploads/images/'+res.data[i].total_comments[k].user_id+'"><img class="rounded-circle like_img" src="<?=base_url()?>assets/uploads/images/'+res.data[i].total_comments[k].profile_picture+'"></a></div>';
+                  html+='<a href="<?=base_url()?>Profile/'+res.data[i].total_comments[k].commented_by_+'"><img class="rounded-circle like_img" src="<?=base_url()?>assets/uploads/images/'+res.data[i].total_comments[k].profile_picture+'"></a></div>';
                   html+='<div class="col-md-10 comnt_text border-bottom">';
-                  html+='<h6 class="font-weight-bold m-0" ><a href="<?=base_url()?>assets/uploads/images/'+res.data[i].total_comments[k].user_id+'">'+res.data[i].total_comments[k].full_name+'</a><small class="ml-3">'+res.data[i].total_comments[k].commented_on+'</small></h6>';
+                  html+='<h6 class="font-weight-bold m-0" ><a href="<?=base_url()?>Profile/'+res.data[i].total_comments[k].commented_by_+'">'+res.data[i].total_comments[k].full_name+'</a><small class="ml-3">'+res.data[i].total_comments[k].commented_on+'</small></h6>';
                   html+='<p class="">'+res.data[i].total_comments[k].comment+'</p></div>';
                  html+='<div class="col-md-1">';
                   if((user_id==res.data[i].user_id) || (user_id==res.data[i].total_comments[k].commented_by_))
@@ -2123,17 +2191,17 @@ function getAjaxData(offset)
 
             else
             {                    
-             html+='<div class="card mt-4 p-2"><div class="card-header"><div class="d-flex float-left"><div><a class="font-weight-bold" href="<?=base_url()?>Profile/'+res.data[i].posted_by+'"><img class="rounded-circle mr-2" src="<?=base_url()?>assets/uploads/images/'+res.data[i].profile_pic+'" width="40"  height="40"></a></div><div><a class="font-weight-bold " href="#">'+res.data[i].posted_by+'</a><br><small><time class="timeago" datetime="'+res.data[i].posted_on+'"></time></small></div></div>';
+             html+='<div class="card mt-4 p-2"><div class="card-header"><div class="d-flex float-left"><div><a class="font-weight-bold" href="<?=base_url()?>Profile/'+res.data[i].posted_by+'"><img class="rounded-circle mr-2" src="<?=base_url()?>assets/uploads/images/'+res.data[i].profile_pic+'" width="40"  height="40"></a></div><div><a class="font-weight-bold " href="<?=base_url()?>Profile/'+res.data[i].posted_by+'">'+res.data[i].full_name+'</a><br><small><time class="timeago" datetime="'+res.data[i].posted_on+'"></time></small></div></div>';
                 html+='<div class="float-right d-flex mt-2">';
                 html+='<div class="">';
                 var count_fav=(res.data[i].fav).length;
                 if(count_fav==0)
                 {
-                  html+='<span class="favrt" post_id="'+res.data[i].post_id+'" title="favourite"><i class="far fa-star"></i></span>';
+                  html+='<span class="favrt" fav_id="'+res.data[i].user_id+'" post_id="'+res.data[i].post_id+'" title="favourite"><i class="far fa-star"></i></span>';
                 }
                 else
                 {
-                  html+='<span class="favrt star" post_id="'+res.data[i].post_id+'" title="favourite"><i class="fas fa-star text-gold"></i></span>';
+                  html+='<span class="favrt star" fav_id="'+res.data[i].user_id+'" post_id="'+res.data[i].post_id+'" title="favourite"><i class="fas fa-star text-gold"></i></span>';
                 } 
                 html+='</div>';
                 if(user_id==res.data[i].user_id)
@@ -2215,9 +2283,9 @@ function getAjaxData(offset)
                 {
                   html+='<div class="row mt-2 px-2">';
                   html+='<div class="col-md-1">';
-                  html+='<a href="<?=base_url()?>assets/uploads/images/'+res.data[i].total_comments[k].user_id+'"><img class="rounded-circle like_img" src="<?=base_url()?>assets/uploads/images/'+res.data[i].total_comments[k].profile_picture+'"></a></div>';
+                  html+='<a href="<?=base_url()?>Profile/'+res.data[i].total_comments[k].commented_by_+'"><img class="rounded-circle like_img" src="<?=base_url()?>assets/uploads/images/'+res.data[i].total_comments[k].profile_picture+'"></a></div>';
                   html+='<div class="col-md-10 comnt_text border-bottom">';
-                  html+='<h6 class="font-weight-bold m-0" ><a href="<?=base_url()?>assets/uploads/images/'+res.data[i].total_comments[k].user_id+'">'+res.data[i].total_comments[k].full_name+'</a><small class="ml-3">'+res.data[i].total_comments[k].commented_on+'</small></h6>';
+                  html+='<h6 class="font-weight-bold m-0" ><a href="<?=base_url()?>Profile/'+res.data[i].total_comments[k].commented_by_+'">'+res.data[i].total_comments[k].full_name+'</a><small class="ml-3">'+res.data[i].total_comments[k].commented_on+'</small></h6>';
                   html+='<p class="">'+res.data[i].total_comments[k].comment+'</p></div>';
                  html+='<div class="col-md-1">';
                   if((user_id==res.data[i].user_id) || (user_id==res.data[i].total_comments[k].commented_by_))
