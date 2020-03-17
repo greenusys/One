@@ -29,7 +29,7 @@
     	 ?>
         <div class="row mt-1">
     		<div class="col-sm-2">
-    		   <img src="<?=base_url('assets/img/Profile_Pic/'.$favconv->profile_picture)?>" class="rounded-circle img-fluid image-post">
+    		   <img src="<?=base_url('assets/uploads/images/'.$favconv->profile_picture)?>" class="rounded-circle img-fluid image-post">
     		</div>
     		<div class="col-sm-8">
     			<a href="#"><h6 class="mt-2"><span class="font-weight-bold text-info mt-4"><?= $favconv->full_name?> </span></a> </h6>

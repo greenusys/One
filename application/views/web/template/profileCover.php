@@ -17,7 +17,7 @@
     right: 22px;
     color: #666666;
     transition: all .3s cubic-bezier(.175, .885, .32, 1.275);
-    z-index: 22;
+    z-index: 1;
     font-size: 17px;
 
 }
@@ -42,7 +42,9 @@
 <section class="container-fluid mt-5" id="action_area">
   <div class="feature-photo">
   <div class="row">
-    <img src="<?=base_url()?>assets/img/Cover_Photo/<?=$MyDetails[0]->cover_photo?>" onerror="this.src='<?=base_url()?>assets/img/Cover_Photo/default.jpg';" alt="cover image" class="cover-pic img-fluid w-100" style="height: 350px">
+     <a class="w-100" target="_blank" href="<?=base_url('Post/viewPost/').$Mycoverpic[0]->post_id?>" target="blank">
+         <img src="<?=base_url()?>assets/uploads/images/<?=$MyDetails[0]->cover_photo?>" onerror="this.src='<?=base_url()?>assets/uploads/images/default.jpg';" alt="cover image" class="cover-pic img-fluid w-100" style="height: 350px">
+    </a>
   </div>
  
       <div class="add-btn " >
@@ -135,9 +137,9 @@
       <?php
         if($myId==1){
           ?>
-            <form class="edit-phto">
+            <form class="edit-phto pointer">
               <i class="fa fa-camera-retro upload-button"></i>
-              <label class="fileContainer">
+              <label class="fileContainer pointer">
                 Edit Cover Photo
               <input type="file" class="file-upload d-none" name="" >
               </label>
@@ -153,12 +155,14 @@
   <div class="row">
     <div class="col-md-3 pr-0">
       <div class="mar_t110 usr_proImg">
-        <img src="<?=base_url()?>assets/img/Profile_Pic/<?=$MyDetails[0]->profile_picture?>" alt="profile image" onerror="this.src='<?=base_url()?>assets/img/Profile_Pic/default.png';" class="profile-pic img-fluid">
+        <a class="" target="_blank" href="<?=base_url('Post/viewPost/').$Myprofilepic[0]->post_id?>" target="blank">
+            <img src="<?=base_url()?>assets/uploads/images/<?=$MyDetails[0]->profile_picture?>" alt="profile image" onerror="this.src='<?=base_url()?>assets/uploads/images/default.png';" class="profile-pic img-fluid">
+        </a>
       </div>
       <?php
         if($myId==1){
           ?>
-            <div class="p-image">
+            <div class="p-image pointer">
               <i class="fa fa-camera upload-buttons"></i>
                 <input class="profile-upload" type="file" accept="image/*"/>
             </div>
@@ -231,6 +235,7 @@
               response=JSON.parse(response);
               if(response.status==1){
                 //alert(response.msg);
+                location.reload();
                }
             }
           });
@@ -267,10 +272,11 @@
               contentType: false,
               processData: false,
               data : myFormData,
-              success: function(response){
+              success: function(response){ 
               response=JSON.parse(response);
               if(response.status==1){
                 //alert(response.msg);
+                 location.reload();
                }
             }
           });

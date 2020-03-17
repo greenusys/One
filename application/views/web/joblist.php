@@ -1,3 +1,5 @@
+
+
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <style type="text/css">
    .top
@@ -41,13 +43,22 @@
 </style>
 
     <div class="container top">
+    	<?php 
+// 	print_r($fetchjobpost);
+// die();
+?>
 	    <div class="row">
+
+	<?php foreach ($fetchjobpost as $jobs) {
+	//print_r($jobs);
+	 ?>
+	
 	    	<div class="col-sm-6">
 	    		<div class="card bg-white p-4 line">
-	    			<a href="http://greenusys.com/" class="text-dark"><h5 class="font-weight-bold">Software Developer</h5></a>
-	    			<h6  data-toggle="modal" data-target="#exampleModal" id="comp">Greenusys Technology</h6>
-	    			<a href="http://greenusys.com/" class="text-dark"><h6>Noida , Delhi NCR</h6></a>
-	    			<a href="#" class="text-dark"><h6 class="font-weight-bold mt-2">&#8377; 10,00,000 - &#8377; 14,00,000 a Year</h6></a>
+	    			<a href="http://greenusys.com/" class="text-dark"><h5 class="font-weight-bold"><?= $jobs->jobpost_title?></h5></a>
+	    			<h6  id="comp"><?= $jobs->jobpost_company?></h6>
+	    			<a href="http://greenusys.com/" class="text-dark"><h6><?= $jobs->name?></h6></a>
+	    			<h6 class="font-weight-bold mt-2">&#8377;<?= $jobs->jobpost_salary?> / <?= ucwords($jobs->jobpost_salarytype)?></h6>
 	    			<div class="row mt-2">
                         <div class="col-md-7 col-7">
                         	<h6 class="text-success">Apply securely with Indeed Resume</h6>
@@ -59,10 +70,10 @@
 	    			<hr>
 	    			<div class="row mt-3">
 	    				<ul>
-	    					<li>We use the leading edge of technology (such as Azure, .net core, and functional languages) to develop new and innovative solutions for multinational…</li>
+	    					<li><?= $jobs->jobpost_description?></li>
 	    				</ul>
 	    			</div>	
-	    			<div class="row p-2">
+	    			<!-- <div class="row p-2">
 	    				<div class="col-md-12">
 	    				    <h6 class="font-weight-bold">Desired Experience:</h6>
 	    				</div>
@@ -75,17 +86,18 @@
 		    					<li class="rounded-lg border border-info p-1  ml-2">Angular Js</li>
 		    				</ul>
 		    			</div>
-	    			</div>
+	    			</div> -->
 	    			<div class="row p-2 d-flex">
 	    				<h6>Job Posted : 5 days ago .</h6> &nbsp; &nbsp; &nbsp; &nbsp;
 	    				<h6 class="text-primary ">Save Job</h6>
 	    			</div>
 	    		</div>
 	    	</div>
-	        <div class="col-sm-6">
+	    <?php } ?>
+	   <!--      <div class="col-sm-6">
 	    		<div class="card bg-white p-4 ">
 	    		</div>
-	    	</div>
+	    	</div> -->
 	    </div>
     </div>
 
@@ -185,6 +197,7 @@
 	        </div>
         </div>
       </div>
+
       <!-- <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
         <button type="button" class="btn btn-primary">Save changes</button>
@@ -280,9 +293,8 @@
 <script>
 	$(document).ready(function(){
 		$("#apply").click(function(){
-			$("#form").show();
+		$("#form").show();
 		$("#require").hide();
-		
 		$('#exampleModal').modal('show');
 	 });
   });

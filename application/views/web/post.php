@@ -1,14 +1,29 @@
 <script type="text/javascript" src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
-    <script src="https://files.codepedia.info/files/uploads/iScripts/html2canvas.js"></script>
+<script src="https://files.codepedia.info/files/uploads/iScripts/html2canvas.js"></script>
 
 
   <style>
   .carousel-control-next, .carousel-control-prev{
-    	height: 20px;
-  	top: 50% !important;
-  	width: 7% !important;
+    height: 40px;
+    top: 50% !important;
+    width: 40px !important;
+    background: black;
+    border-radius: 50%;
   }
-
+  .carousel-control-prev {
+    left: 6px;
+}
+.carousel-control-next {
+    right: 6px;
+}
+  .user_prof{
+  	    height: 50px !important;
+    width: 50px !important;
+  }
+  .midl_img{
+  	    top: 7%;
+    bottom: 7%;
+  }
     .profile-div
     {
 	    height:75px;
@@ -51,6 +66,9 @@
         top: -20px;
         left: -95px;
         transform: translate3d(9px, 44px, 0px)
+	}
+	.Pst_vw_{
+		max-height: 500px;
 	}
 	.emoji
 	{
@@ -139,7 +157,7 @@
 				if($Detail[0]['post_type']){
 					$imgArry=explode(',',$Detail[0]['post_files']);
 					?>
-						<div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+						<div id="carouselExampleControls" class="carousel slide midl_img" data-ride="carousel">
 							<div class="carousel-inner">
 								<?php
 								$i=1;
@@ -153,7 +171,7 @@
 										if($ext!='mp4'){
 										?>
 											<div class="carousel-item <?=$active?>">
-												<img src="<?=base_url('assets/uploads/images/').$img?>" class="d-block w-100" alt="...">
+												<img src="<?=base_url('assets/uploads/images/').$img?>" class="d-block w-100 Pst_vw_" alt="...">
 											</div>
 										<?php
 											}else{ ?>
@@ -198,11 +216,11 @@
 			    <div class=" view-section bg-light p-3">
 			        <div class="row">
 				        <div class="col-sm-2">
-					       <img src="<?=base_url('assets/img/Profile_Pic/').$Detail[0]['profile_pic']?>" class="m-3 rounded-circle img-fluid ">
+					       <img src="<?=base_url('assets/uploads/images/').$Detail[0]['profile_pic']?>" class="m-3 rounded-circle img-fluid user_prof">
 					    </div>
 					    <div class="col-sm-8">
 					      <h6 class="font-weight-bold mt-3"><?=$Detail[0]['posted_by']?></h6>
-						  <h6 class="font-weight-normal"><?=$Detail[0]['posted_on']?> &nbsp; <i class='fas fa-user-friends'></i></h6>
+						  <small class="font-weight-normal"><?=$Detail[0]['posted_on']?> &nbsp; <i class='fas fa-user-friends'></i></small>
 					    </div>
 					    <div class="col-sm-2">
 					      <div class="float-right d-flex mt-2">
@@ -243,7 +261,7 @@
 				
 					
 					
-					   <div class="row mt-4">
+		<div class="row mt-4">
             <div class="col-md-4 manage ">
               <div class="text-center px-3 py-1">
                 <div class="btn-like d-flex" ><a href="javascript:void(0)" class="text-danger likePost" d-Post="<?=$Detail[0]['post_id']?>">
@@ -273,9 +291,9 @@
                             if($sno <= 5){
                              
                               if($sno==1){ ?>
-                                   <li><img class="rounded-circle like_img " src="<?=base_url('assets/img/Profile_Pic/').$likedata->profile_picture?> "></li>
+                                   <li><img class="rounded-circle like_img " src="<?=base_url('assets/uploads/images/').$likedata->profile_picture?> "></li>
                       <?php }else{    ?>
-                            <li><img class="rounded-circle like_img like_img_marg25" src="<?=base_url('assets/img/Profile_Pic/').$likedata->profile_picture?> "></li>
+                            <li><img class="rounded-circle like_img like_img_marg25" src="<?=base_url('assets/uploads/images/').$likedata->profile_picture?> "></li>
                    <?php 
                             }
                          }
@@ -319,7 +337,7 @@
                 <?php for($i=0; $i < count($Detail[0]['total_comments']); $i++){ ?>
               <div class="row mt-2 px-2">
                   <div class="col-md-1">
-                      <span> <img class="rounded-circle like_img" src="<?=base_url()?>assets/img/Profile_Pic/<?=$Detail[0]['total_comments'][$i]->profile_picture?>"></span>  
+                      <span> <img class="rounded-circle like_img" src="<?=base_url()?>assets/uploads/images/<?=$Detail[0]['total_comments'][$i]->profile_picture?>"></span>  
                   </div> 
                   <div class="col-md-10 comnt_text border-bottom">
                       <h6 class="font-weight-bold m-0" > <?=$Detail[0]['total_comments'][$i]->full_name?><small class="ml-3">
@@ -347,7 +365,7 @@
           
 					<div class="p-2 w-90 bottom-sectionshadow-sm">
                  <div class="d-flex m-0">
-                    <span> <img class="rounded-circle like_img" src="<?=base_url()?>assets/img/Profile_Pic/<?=$Detail[0]['profile_pic']?>"></span>
+                    <span> <img class="rounded-circle like_img" src="<?=base_url()?>assets/uploads/images/<?=$Detail[0]['profile_pic']?>"></span>
                     <form method="POST" class="w-100 ad_cmnt" >
                       <div class="pl-2 w-100 _input">
                         <p class="lead emoji-picker-container">
@@ -426,347 +444,7 @@ var like = ele.find("i").attr("class");
     })
   });
 </script>
-<!-- Modal -->
-<!-- <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-		<div class="modal-content" id="thumb" style="display:none">
-		    <div class="modal-header border-bottom-0">
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-				  <span aria-hidden="true">&times;</span>
-				</button>
-			</div>
-			<div class="modal-body">
-				<div class="tab">
-					<div class="container">
-						<button class="tablinks border-0" onclick="openCity(event, 'all')">All 104</button>
-						<button class="tablinks border-0" onclick="openCity(event, 'likes')"><i class="fa fa-thumbs-up" style="font-size:21px;color:blue"></i></button>
-						<button class="tablinks border-0" onclick="openCity(event, 'loves')"><i class="fa fa-heart" style="font-size:21px;color:red"></i></button>
-						<button class="tablinks border-0" onclick="openCity(event, 'faces')"><i class='fas fa-surprise' style='font-size:21px;color:orange'></i></button>
-					</div>
-				</div>
-				
-				<hr>
-				<div id='all' class="tabcontent">
-					<?php
-					foreach($Detail[0]['total_comments'] as $cmt){
-						?>
-							<div class="row mt-3">
-								<div class="col-sm-2">
-									<img src="<?=base_url('assets/img/Profile_Pic/').$cmt->profile_picture?>" class="rounded-circle img-fluid comment-profile">
-								</div>
-								<i class="fa fa-thumbs-up icon1"></i>
-								<div class="col-sm-3">
-									<h6 class="font-weight-bold mt-2 fs"><?=$cmt->full_name?></h6>
-								</div>
-								<div class="offset-2 col-sm-4">
-									<button type="button" class="btn btn-secondary"><i class="fa fa-check"></i> Friends</button>							 
-								</div>
-							</div>
-							<hr>
-						<?php
-					}
-					foreach($Detail[0]['total_likes'] as $likes_){
-						?>
-							<div class="row mt-3">
-								<div class="col-sm-2">
-									<img src="<?=base_url('assets/img/Profile_Pic/').$likes_->profile_picture?>" class="rounded-circle img-fluid comment-profile">
-								</div>
-								<i class="fa fa-thumbs-up icon1"></i>
-								<div class="col-sm-3">
-									<h6 class="font-weight-bold mt-2 fs"><?=$likes_->full_name?></h6>
-								</div>
-								<div class="offset-2 col-sm-4">
-									<button type="button" class="btn btn-secondary"><i class="fa fa-check"></i> Friends</button>							 
-								</div>
-							</div>
-							<hr>
-						<?php
-					}
-					//	echo '<li>'.$liked->full_name.'</li> ';
-						?>
-					
-					<div class="row mt-3">
-						<div class="col-sm-2">
-							<img src="image/photo.jpeg" class="rounded-circle img-fluid comment-profile">
-						</div>
-						<i class="fa fa-heart icon2"></i>
-						<div class="col-sm-3">
-							<h6 class="font-weight-bold mt-2 fs">Neha  Mishra</h6>
-						</div>
-						<div class="offset-2 col-sm-4">
-							<button type="button" class="btn btn-secondary"><i class="fa fa-file"></i> Message</button>							 
-						</div>
-					</div>
-					<hr>
-					<div class="row mt-3">
-						<div class="col-sm-2">
-							<img src="image/photo.jpeg" class="rounded-circle img-fluid comment-profile">
-						</div>
-						<i class="fas fa-surprise icon3"></i>
-						<div class="col-sm-3">
-							<h6 class="font-weight-bold mt-2 fs">Sonali Sona</h6>
-						</div>
-						<div class="offset-2 col-sm-4">
-							<button type="button" class="btn btn-secondary"><i class="fa fa-user-plus"></i> Add Friend</button>							 
-						</div>
-					</div>
-					<hr>
-				</div>
-				<hr>	
-				<div id='likes' class="tabcontent">
-					<?php
-					foreach($Detail[0]['total_likes'] as $likes_){
-						?>
-							<div class="row mt-3">
-								<div class="col-sm-2">
-									<img src="<?=base_url('assets/img/Profile_Pic/').$likes_->profile_picture?>" class="rounded-circle img-fluid comment-profile">
-								</div>
-								<i class="fa fa-thumbs-up icon1"></i>
-								<div class="col-sm-3">
-									<h6 class="font-weight-bold mt-2 fs"><?=$likes_->full_name?></h6>
-								</div>
-								<div class="offset-2 col-sm-4">
-									<button type="button" class="btn btn-secondary"><i class="fa fa-check"></i> Friends</button>			 
-								</div>
-							</div>	
-							<hr>
-						<?php
-					}
-					//	echo '<li>'.$liked->full_name.'</li> ';
-					?>
-					
-				</div>
-				<hr>
-				<div id="loves" class="tabcontent">
-					<?php
-						foreach($Detail[0]['total_likes'] as $likes_){
-							?>
-								<div class="row mt-3">
-									<div class="col-sm-2">
-										<img src="image/photo.jpeg" class="rounded-circle img-fluid comment-profile">
-									</div>
-									<i class="fa fa-heart icon2"></i>
-									<div class="col-sm-3">
-										<h6 class="font-weight-bold mt-2 fs">Neha  Mishra</h6>
-									</div>
-									<div class="offset-2 col-sm-4">
-										<button type="button" class="btn btn-secondary"><i class="fa fa-file"></i> Message</button>				 
-									</div>
-								</div>	
-								<hr>
-							<?php
-						}
-						//	echo '<li>'.$liked->full_name.'</li> ';
-						?>
-								
-				</div>
-				<hr>
-				<div id="faces" class="tabcontent">
-					<div class="row mt-3">
-						<div class="col-sm-2">
-							<img src="image/photo.jpeg" class="rounded-circle img-fluid comment-profile">
-						</div>
-						<i class="fas fa-surprise icon3"></i>
-						<div class="col-sm-3">
-							<h6 class="font-weight-bold mt-2 fs">Sonali Sona</h6>
-						</div>
-						<div class="offset-2 col-sm-4">
-							<button type="button" class="btn btn-secondary"><i class="fa fa-user-plus"></i> Add Friend</button>							 
-						</div>
-					</div>				
-				</div>
-			</div>
-		</div> -->
-		
-		<!-- <div class="modal-content" id="heart" style="display:none">
-		    <div class="modal-header border-bottom-0">
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-				  <span aria-hidden="true">&times;</span>
-				</button>
-			</div>
-			<div class="modal-body">
-				<div class="tab">
-					<div class="container">
-						<button class="tablinks all border-0" onclick="openCity(event, 'all1')">All 104</button>
-						<button class="tablinks likes border-0" onclick="openCity(event, 'like1')"><i class="fa fa-thumbs-up" style="font-size:21px;color:blue"></i></button>
-						<button class="tablinks loves border-0" onclick="openCity(event, 'love1')"><i class="fa fa-heart" style="font-size:21px;color:red"></i></button>
-						<button class="tablinks faces border-0" onclick="openCity(event, 'face1')"><i class='fas fa-surprise' style='font-size:21px;color:orange'></i></button>
-					</div>
-				</div>
-				
-				<hr>
-				<div id='all1' class="tabcontent">
-					<div class="row mt-3">
-						<div class="col-sm-2">
-							<img src="image/profile.jpeg" class="rounded-circle img-fluid comment-profile">
-						</div>
-						<i class="fa fa-thumbs-up icon1"></i>
-						<div class="col-sm-3">
-							<h6 class="font-weight-bold mt-2 fs">Sonali Mishra</h6>
-						</div>
-						<div class="offset-2 col-sm-4">
-							<button type="button" class="btn btn-secondary"><i class="fa fa-check"></i> Friends</button>							 
-						</div>
-					</div>
-					<hr>
-					<div class="row mt-3" >
-						<div class="col-sm-2">
-							<img src="image/photo.jpeg" class="rounded-circle img-fluid comment-profile">
-						</div>
-						<i class="fa fa-heart icon2"></i>
-						<div class="col-sm-3">
-							<h6 class="font-weight-bold mt-2 fs">Neha  Mishra</h6>
-						</div>
-						<div class="offset-2 col-sm-4">
-							<button type="button" class="btn btn-secondary"><i class="fa fa-file"></i> Message</button>							 
-						</div>
-					</div>
-					<hr>
-					<div class="row mt-3">
-						<div class="col-sm-2">
-							<img src="image/photo.jpeg" class="rounded-circle img-fluid comment-profile">
-						</div>
-						<i class="fas fa-surprise icon3"></i>
-						<div class="col-sm-3">
-							<h6 class="font-weight-bold mt-2 fs">Sonali Sona</h6>
-						</div>
-						<div class="offset-2 col-sm-4">
-							<button type="button" class="btn btn-secondary"><i class="fa fa-user-plus"></i> Add Friend</button>							 
-						</div>
-					</div>
-					<hr>
-				</div>
-					
-				<div id='like1' class="tabcontent">
-					<div class="row mt-3">
-						<div class="col-sm-2">
-							<img src="image/profile.jpeg" class="rounded-circle img-fluid comment-profile">
-						</div>
-						<i class="fa fa-thumbs-up icon1"></i>
-						<div class="col-sm-3">
-							<h6 class="font-weight-bold mt-2 fs">Sonali Mishra</h6>
-						</div>
-						<div class="offset-2 col-sm-4">
-							<button type="button" class="btn btn-secondary"><i class="fa fa-check"></i> Friends</button>			 
-						</div>
-					</div>	
-					
-				</div>
-				
-				<div id="love1" class="tabcontent">
-					<div class="row mt-3">
-						<div class="col-sm-2">
-							<img src="image/photo.jpeg" class="rounded-circle img-fluid comment-profile">
-						</div>
-						<i class="fa fa-heart icon2"></i>
-						<div class="col-sm-3">
-							<h6 class="font-weight-bold mt-2 fs">Neha  Mishra</h6>
-						</div>
-						<div class="offset-2 col-sm-4">
-							<button type="button" class="btn btn-secondary"><i class="fa fa-file"></i> Message</button>				 
-						</div>
-					</div>				
-				</div>
-				
-				<div id="face1" class="tabcontent">
-					<div class="row mt-3">
-						<div class="col-sm-2">
-							<img src="image/photo.jpeg" class="rounded-circle img-fluid comment-profile">
-						</div>
-						<i class="fas fa-surprise icon3"></i>
-						<div class="col-sm-3">
-							<h6 class="font-weight-bold mt-2 fs">Sonali Sona</h6>
-						</div>
-						<div class="offset-2 col-sm-4">
-							<button type="button" class="btn btn-secondary"><i class="fa fa-user-plus"></i> Add Friend</button>							 
-						</div>
-					</div>				
-				</div>
-			</div>
-		</div> -->
-		
-    <!-- </div>
- </div> -->
-	
- <script>
-     	$(document).ready(function(){
-		  $("#emoji").hover(function(){
-			  $("#gif").toggle();
-		 });
-	 });
- </script>
- 
-  <script>
-     	$(document).ready(function(){
-		  $("#faceemoji").hover(function(){
-			  $("#gif1").toggle();
-		 });
-	 });
- </script>
- 
- <script>
-     	$(document).ready(function(){
-		  $("#textemoji").hover(function(){
-			  $("#gif2").toggle();
-		 });
-	 });
- </script>
-	
- <script>
-		$(document).ready(function(){
-		  $("#option").click(function(){
-			  $("#menu").toggle();
-		 });
-	 });
- </script>
- 
- <script>
-	$(document).ready(function(){
-	  $("#comment").click(function(){
-		  $("#msg").toggle();
-	 });
- });
- </script>
- 
- <script>
-	$(document).ready(function(){
-	  $("#comnt").click(function(){
-		  $("#msg1").toggle();
-	 });
- });
- </script>
- 
- <script>
-	$(document).ready(function(){
-	  $("#like").hover(function(){
-		  $("#likelist").toggle();
-	 });
- });
- </script>
- 
- <script>
-	$(document).ready(function(){
-	  $("#love").hover(function(){
-		  $("#lovelist").toggle();
-	 });
- });
- </script>
- 
- <script>
-	$(document).ready(function(){
-	  $("#review").hover(function(){
-		  $("#reviewlist").toggle();
-	 });
- });
- </script>
- 
- <script>
-		$(document).ready(function(){
-		  $("#review").click(function(){
-			  $("#allcomment").toggle();
-		 });
-	 });
- </script>
+
  
  <script>
     function readURL(input) {

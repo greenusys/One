@@ -1,13 +1,14 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class APIController extends CI_Controller 
+class APIController extends MY_Controller 
 {
 	function __construct(){
 		parent::__construct();
 		$this->load->model('APIModel','APIM');
 		$this->load->model('PostModel','POST');
 		$this->load->model('FriendsModel','FRND');
+		
 	}
 
 	//compredddss Image
@@ -577,7 +578,8 @@ class APIController extends CI_Controller
 				$p_Data['post']=$value->post;
 				$p_Data['post_files']=$value->post_files;
 				$p_Data['post_type']=$value->post_type;
-				$p_Data['posted_by']=$value->full_name;
+				$p_Data['posted_by']=$value->posted_by;
+				$p_Data['full_name']=$value->full_name;
 				$p_Data['profile_pic']=$value->profile_picture;
 				$p_Data['initially_posted_by']=$value->initially_posted_by;
 				$p_Data['posted_on']=$value->posted_on;
@@ -732,7 +734,7 @@ public function getPostLikes($post_id){
 
 }
 
-
+ 
 	public function likeOrdislike(){
 		$post_id=$this->input->post('post_id');
 		$toDo=$this->input->post('to_do');
@@ -942,9 +944,9 @@ public function getPostLikes($post_id){
 	public function addComment(){
 		
 		if(isset($_POST['android'])){
-			$data=array("post_id"=>$this->input->post('post_id'),"commented_by_"=>$this->input->post('commented_by_'),"comment"=>$this->input->post('comment'),"commented_on"=>date('Y-m-d'));
+			$data=array("post_id"=>$this->input->post('post_id'),"commented_by_"=>$this->input->post('commented_by_'),"comment"=>$this->input->post('comment'));
 		}else{
-			$data=array("post_id"=>$this->input->post('post_id'),"commented_by_"=>$user_id=$_SESSION['logged_in'][0]->user_id,"comment"=>$this->input->post('comment'),"commented_on"=>date('d-m-Y h:i:s'));
+			$data=array("post_id"=>$this->input->post('post_id'),"commented_by_"=>$user_id=$_SESSION['logged_in'][0]->user_id,"comment"=>$this->input->post('comment'));
 		}
 		if(!empty($this->input->post('comment')) && !empty($this->input->post('post_id'))){
 			$result=$this->APIM->addData('post_comments_',$data);
@@ -1077,6 +1079,85 @@ public function getPostLikes($post_id){
 	  //return destination file
 	  return $destination_url;
 	}
+
+	public function addImageToAlbum(){
+		$post_id=$this->input->post('post_id');
+		$res = $this->db->query("select * from post_ where post_id='$post_id'")->result();
+<<<<<<< HEAD
+
+=======
+>>>>>>> 6ba536c8aeabf6cfddaa0788f8c11b8a6dc5e346
+		$old_imgs= $res[0]->post_files;
+		if(!empty($_FILES['files']['name'])){
+		    $filesCount = count($_FILES['files']['name']);
+		    for($i = 0; $i < $filesCount; $i++){
+		        $ext = pathinfo($_FILES['files']['name'][$i], PATHINFO_EXTENSION);
+		        $_FILES['file']['name']     = "Album-image-".date("Y-m-d-H-i-s").$i.".".$ext;
+		        $_FILES['file']['type']     = $_FILES['files']['type'][$i];
+		        $_FILES['file']['tmp_name'] = $_FILES['files']['tmp_name'][$i];
+		        $_FILES['file']['error']     = $_FILES['files']['error'][$i];
+		        $_FILES['file']['size']     = $_FILES['files']['size'][$i];
+		        
+		        // File upload configuration
+		        $uploadPath = 'assets/uploads/images/';
+		       
+				$config['upload_path'] = $uploadPath;
+                $config['max_size'] = '*';
+                $config['allowed_types'] = 'jpg|jpeg|png|gif';
+                
+                // Load and initialize upload library
+                $this->load->library('upload', $config);
+                $this->upload->initialize($config);
+                
+                // Upload file to server
+                if($this->upload->do_upload('file')){
+                    // Uploaded file data
+                    $fileData = $this->upload->data();
+                    //$this->resizeImage($_FILES['file']['name'] );
+                    $uploadData[$i]['file_name'] = $fileData['file_name'];
+                    $uploadData[$i]['uploaded_on'] = date("d-m-Y H:i:s");
+                }
+                $this->resizeImage($_FILES['file']['name'] );
+                $images[]=$_FILES['file']['name'];
+<<<<<<< HEAD
+
+		// print_r($res);
+		// $old_imgs= $res;
+
+
+=======
+>>>>>>> 6ba536c8aeabf6cfddaa0788f8c11b8a6dc5e346
+	            }
+	            $pics=implode(",",$images);
+	            $res_images = $old_imgs.','.$pics;
+	             $data = array(
+		        	    'post_files'=>$res_images,
+		        	    'post_id'=>$post_id,
+			        	);
+	             $tablename='post_';
+	        	$result=$this->APIM->updateAlbumPost($tablename,$data);
+	                if($result)
+	                {	
+	                	 $data2 = array(
+			        	    'images_path'=>$res_images,
+			        	    'post_id'=>$post_id,
+				        	);
+	                	$tablename='album_';
+	        			$re = $this->APIM->updateAlbumPost($tablename,$data2);
+	        			if($res){
+	        				die(json_encode(array('status' =>'1' ,'msg'=>'Album updated Successfully')));
+	        			}else{
+	        				die(json_encode(array('status' =>'0' ,'msg'=>'Error while uploading')));
+	        			}
+					
+					}
+					else
+					{
+						die(json_encode(array('status' =>'0' ,'msg'=>'Error while uploading')));
+					} 
+
+	}
+}
 	public function createalbum()
 	{
 
@@ -1101,51 +1182,64 @@ public function getPostLikes($post_id){
 		        $_FILES['file']['size']     = $_FILES['files']['size'][$i];
 		        
 		        // File upload configuration
-		        $uploadPath = 'assets/uploads/album/';
-		        $config['upload_path'] = $uploadPath;
-		        $config['allowed_types'] = 'jpg|jpeg|png|gif';
-		
-		        
-		        // Upload file to server
-		        // if($this->upload->do_upload('file')){
-		        //     // Uploaded file data
-		        //     $fileData = $this->upload->data();
-		        //     //$this->resizeImage($_FILES['file']['name'] );
-		        //     $uploadData[$i]['file_name'] = $fileData['file_name'];
-		        //     $uploadData[$i]['uploaded_on'] = date("Y-m-d H:i:s");
-		        // }
-		        //$this->resizeImage($_FILES['file']['name'] );
-		       // $this->compressImage();
-    	      	// $target_path = $_SERVER['DOCUMENT_ROOT'] . '/BrainT/laneCrowd/assets/uploads/album/';
-    	      	$uploadData['file_name'] = $_FILES['file']['name'];
-		        $uploadDate=date('d-m-Y H:i:s');
-    	      	$target_path='assets/uploads/album/'.$_FILES['file']['name'];
-    	      	if($status_=$this->compressImage($_FILES['file']['tmp_name'], $target_path, 60)){
-    	      		$images[]=$status_;
-    	      	}else{
-    	      		echo 'Failed';
-    	      	}
-		        
-		        // $images[]=$_FILES['file']['name'];
+		        $uploadPath = 'assets/uploads/images/';
+		       
+				$config['upload_path'] = $uploadPath;
+                $config['max_size'] = '*';
+                $config['allowed_types'] = 'jpg|jpeg|png|gif';
+                
+                // Load and initialize upload library
+                $this->load->library('upload', $config);
+                $this->upload->initialize($config);
+                
+                // Upload file to server
+                if($this->upload->do_upload('file')){
+                    // Uploaded file data
+                    $fileData = $this->upload->data();
+                    //$this->resizeImage($_FILES['file']['name'] );
+                    $uploadData[$i]['file_name'] = $fileData['file_name'];
+                    $uploadData[$i]['uploaded_on'] = date("d-m-Y H:i:s");
+                }
+                $this->resizeImage($_FILES['file']['name'] );
+                $images[]=$_FILES['file']['name'];
 
-		    }
-		    $pics=implode(",",$images);
+	            }
+	            $pics=implode(",",$images);
+	            $uploadDate=date('d-m-Y H:i:s');
 		    if(!empty($uploadData)){
 		        // Insert files data into the database
-				
-		        $data = array(
-		        	'user_id'=>$user_id,
-		        	'images_path'=>$pics,
-		        	'added_on'=>$uploadDate,
-		        	'album_title'=>$album_title,
-		        	'album_desc'=>$album_desc,
-		        	'tag_with'=>'1'
-		        );
-		        $tablename='album_';
-		        $result=$this->APIM->addData($tablename,$data);
-				if($result)
+				$post_text=$album_title;
+				$data = array(
+	                	'tagged_friends'=>0,
+	                	'post'=>$post_text,
+	                	'post_files'=>$pics,
+	                	'owner_id'=>$user_id,
+	                	'post_type'=>3,
+	                	'posted_by'=>$user_id,
+	                	'initially_posted_by'=>$user_id
+	                );
+	                $res=$this->APIM->insert_post($data);
+	                $post_id=$res;
+				if($res)
 				{
-					die(json_encode(array('status' =>'1' ,'msg'=>'Album uploaded Successfully')));
+						 $data = array(
+			        	'user_id'=>$user_id,
+			        	'images_path'=>$pics,
+			        	'album_title'=>$album_title,
+			        	'album_desc'=>$album_desc,
+			        	'post_id'=>$post_id,
+			        	'tag_with'=>'1'
+			        	);
+					   $tablename='album_';
+		        		$result=$this->APIM->addData($tablename,$data);
+		                if($result)
+		                {
+							die(json_encode(array('status' =>'1' ,'msg'=>'Album uploaded Successfully')));
+						}
+						else
+						{
+							die(json_encode(array('status' =>'0' ,'msg'=>'Error while uploading')));
+						}
 				}
 				else
 				{
@@ -1157,12 +1251,12 @@ public function getPostLikes($post_id){
 	}
 	public function deletealbum(){
 		$album_id=$this->input->post('album_id');
-			$this->db->where('album_id',$album_id);
-			if($this->db->delete('album_')){
-    			die(json_encode(array("code"=>1,"msg"=>"Album Deleted Successfully.")));
-    		}else{
-    			die(json_encode(array("code"=>0,"msg"=>"Failed To Delete Album.")));
-    		}
+		$this->db->where('album_id',$album_id);
+		if($this->db->delete('album_')){
+			die(json_encode(array("code"=>1,"msg"=>"Album Deleted Successfully.")));
+		}else{
+			die(json_encode(array("code"=>0,"msg"=>"Failed To Delete Album.")));
+		}
 	}
 	public function insertvideo()
 	{
@@ -1218,157 +1312,285 @@ public function getPostLikes($post_id){
 		    }
 		}
 	}
-		public function changecoverpic()
-		{
-		 	if(!empty($_FILES['files']['name']))
-		 	{    
-		 		$user_id=$_SESSION['logged_in'][0]->user_id;
-		        $ext = pathinfo($_FILES['files']['name'], PATHINFO_EXTENSION);
-		        $_FILES['file']['name']     = "cover-image-".date("Y-m-d-H-i-s").".".$ext;
-		        $_FILES['file']['type']     = $_FILES['files']['type'];
-		        $_FILES['file']['tmp_name'] = $_FILES['files']['tmp_name'];
-		        $_FILES['file']['error']     = $_FILES['files']['error'];
-		        $_FILES['file']['size']     = $_FILES['files']['size'];
-	          	$uploadPath = 'assets/img/Cover_Photo/';
-                $config['upload_path'] = $uploadPath;
-                $config['allowed_types'] = 'jpg|jpeg|png|gif';
-                
-                // Load and initialize upload library
-                $this->load->library('upload', $config);
-                $this->upload->initialize($config);
-                
-                // Upload file to server
-                if($this->upload->do_upload('file')){
-                    // Uploaded file data
-                    $fileData = $this->upload->data();
-                    $uploadData['file_name'] = $fileData['file_name'];
-                    $uploadData['uploaded_on'] = date("Y-m-d H:i:s");
-                }
-                $images=$_FILES['file']['name'];     	
-		        $toUpdate = array(	
-		        	'cover_photo'=>$images
-		        );
-		        $condition= array(	
-		        	'user_id'=>$user_id	
-		        );
-    			$result=$this->APIM->updatecoverpic($toUpdate,$condition);
-				if($result)
-				{
-					die(json_encode(array('status' =>'1' ,'msg'=>'Cover pic uploaded Successfully')));
-				}
-				else
-				{
-					die(json_encode(array('status' =>'0' ,'msg'=>'Error while uploading')));
-				}
-			}
-		}
-		public function changeprofilepic()
-		{
-		 	if(!empty($_FILES['files']['name']))
-		 	{    
-		 		$user_id=$_SESSION['logged_in'][0]->user_id;
-		        $ext = pathinfo($_FILES['files']['name'], PATHINFO_EXTENSION);
-		        $_FILES['file']['name']     = "profile-image-".date("Y-m-d-H-i-s").".".$ext;
-		        $_FILES['file']['type']     = $_FILES['files']['type'];
-		        $_FILES['file']['tmp_name'] = $_FILES['files']['tmp_name'];
-		        $_FILES['file']['error']     = $_FILES['files']['error'];
-		        $_FILES['file']['size']     = $_FILES['files']['size'];
-	          	$uploadPath = 'assets/img/Profile_Pic/';
-                $config['upload_path'] = $uploadPath;
-                $config['allowed_types'] = 'jpg|jpeg|png|gif';
-                
-                // Load and initialize upload library
-                $this->load->library('upload', $config);
-                $this->upload->initialize($config);
-                
-                // Upload file to server
-                if($this->upload->do_upload('file')){
-                    // Uploaded file data
-                    $fileData = $this->upload->data();
-                    $uploadData['file_name'] = $fileData['file_name'];
-                    $uploadData['uploaded_on'] = date("Y-m-d H:i:s");
-                }
-                $images=$_FILES['file']['name'];     	
-		        $toUpdate = array(	
-		        	'profile_picture'=>$images
-		        );
-		        $condition= array(	
-		        	'user_id'=>$user_id	
-		        );
-    			$result=$this->APIM->updatecoverpic($toUpdate,$condition);
-				if($result)
-				{
-					die(json_encode(array('status' =>'1' ,'msg'=>'profile pic uploaded Successfully')));
-				}
-				else
-				{
-					die(json_encode(array('status' =>'0' ,'msg'=>'Error while uploading')));
-				}
-			}
-		}
-
-		public function fetch_post_by_id(){
-			$post_id=$_POST['post_id'];
-			$result=$this->APIM->fetch_post_by_id($post_id);
-			die(json_encode(array('status'=>'1','data'=>$result)));
-		}
-		public function scrollfetchpost(){
-
-		$offset=$this->input->post('offset');
-		$limit=$this->input->post('limit');
-		if(isset($_POST['android']))
-		{
+	public function changecoverpic()
+	{
+	    if(isset($_POST['android']))
+	    {
 			$user_id=$this->input->post('user_id');
 		}
 		else
 		{
 			$user_id=$_SESSION['logged_in'][0]->user_id;
 		}
-		$my_friends=$this->FRND->getMyFriends($user_id);	
-		// if(!isset($_POST['android']))
-		// {
-		// 	$condition=array("posted_by"=>$user_id);
-		// }
-		// else
-		// {
-		// 	$condition=array("posted_by"=>$user_id);
-		// }
-		if($data=$this->POST->getAllPost($my_friends,$user_id,$offset,$limit))
+
+
+		$fetchgen=$this->db->query("SELECT * FROM users WHERE user_id=$user_id")->result();
+		foreach($fetchgen as $gend)
 		{
-			foreach ($data as $key => $value) {
-				$p_Data['post_id']=$value->post_id;
-				$p_Data['user_id']=$value->user_id;
-				$p_Data['post']=$value->post;
-				$p_Data['post_files']=$value->post_files;
-				$p_Data['post_type']=$value->post_type;
-				$p_Data['posted_by']=$value->full_name;
-				$p_Data['profile_pic']=$value->profile_picture;
-				$p_Data['initially_posted_by']=$value->initially_posted_by;
-				$p_Data['posted_on']=$value->posted_on;
-				if(($likes_data= $this->getPostLikes($value->post_id))!=false)
+			$gen=$gend->gender;
+		//	print_r($gen);
+			if($gen=='Male')
+			{
+				$post_text='updated his Cover picture.';
+			}
+			else
+			{
+				$post_text='updated her Cover picture.';
+			}
+		}
+	 	if(!empty($_FILES['files']['name']))
+	 	{    
+ 	    	
+ 	    	$timenow = date('Y-m-d H:i:s');
+	        $ext = pathinfo($_FILES['files']['name'], PATHINFO_EXTENSION);
+	        $_FILES['file']['name']= "cover-image-".date("Y-m-d-H-i-s").".".$ext;
+	        $_FILES['file']['type']     = $_FILES['files']['type'];
+	        $_FILES['file']['tmp_name'] = $_FILES['files']['tmp_name'];
+	        $_FILES['file']['error']     = $_FILES['files']['error'];
+	        $_FILES['file']['size']     = $_FILES['files']['size'];
+          	//$uploadPath = 'assets/img/Cover_Photo/';
+          	$uploadPath = 'assets/uploads/images/';
+            $config['upload_path'] = $uploadPath;
+            $config['allowed_types'] = 'jpg|jpeg|png|gif';
+            
+            // Load and initialize upload library
+            $this->load->library('upload', $config);
+            $this->upload->initialize($config);
+            
+            // Upload file to server
+            if($this->upload->do_upload('file'))
+            {
+                // Uploaded file data
+                $fileData = $this->upload->data();
+                $uploadData['file_name'] = $fileData['file_name'];
+                $uploadData['uploaded_on'] = date("Y-m-d H:i:s");
+            }
+            $images=$_FILES['file']['name'];     	
+	        $toUpdate = array(	
+	        	'cover_photo'=>$images
+	        );
+	        $condition= array(	
+	        	'user_id'=>$user_id	
+	        );
+			$result=$this->APIM->updatecoverpic($toUpdate,$condition);
+			if($result)
+			{
+			    $datas = array('post_head'=>$post_text,'post_files'=>$images,'post_type'=>1,'owner_id'=>$user_id,'posted_by'=>$user_id,'initially_posted_by'=>$user_id,'posted_on'=>$timenow,'tagged_friends'=>''
+	                );
+		        $results=$this->APIM->insert_post($datas);
+	         	$post_id=$results;
+		        $newdata=array('user_id	'=>$user_id,'cover_path'=>$images,'status'=>2,'post_id'=>$post_id);
+		        $newresult=$this->APIM->addData('user_profile_cover',$newdata);
+		        $_SESSION['logged_in'][0]->cover_photo=$images;
+		        if($newresult)
+		        {
+				    die(json_encode(array('status' =>'1' ,'msg'=>'Cover pic uploaded Successfully','pic'=>$images)));
+		        }
+		        else
+		        {
+		            die(json_encode(array('status' =>'0' ,'msg'=>'Error while uploading')));
+		        }
+			}
+			else
+			{
+				die(json_encode(array('status' =>'0' ,'msg'=>'Error while uploading')));
+			}
+		}
+	}
+	public function changeprofilepic()
+	{
+	 	if(!empty($_FILES['files']['name']))
+	 	{    
+	 		if(isset($_POST['android']))
+    		{
+    			$user_id=$this->input->post('user_id');
+    		}
+    		else
+    		{
+    			$user_id=$_SESSION['logged_in'][0]->user_id;
+    		}
+    		$fetchgen=$this->db->query("SELECT * FROM users WHERE user_id=$user_id")->result();
+    		foreach($fetchgen as $gend)
+    		{
+				$gen=$gend->gender;
+				//print_r($gen);
+				if($gen=='Male')
 				{
-					 $p_Data['likes_data']=$likes_data;
+					$post_text='updated his profile picture.';
 				}
 				else
 				{
-					 $p_Data['likes_data']=array();
+					$post_text='updated her profile picture.';
 				}
-				// $p_Data['']=;
-				$p_Data['total_likes']=$this->getLikeCount($value->post_id);
-				$p_Data['total_dislikes']=$this->getDislikeCount($value->post_id);
-				$p_Data['total_comments']=$this->getModifyComment($value->post_id);
-				$p_Data['total_share']=$this->getShareCount($value->post_id);
-				$p_Data['fav']=$this->favrouite($value->post_id);   
-				$posts[]=$p_Data;
-			}	
-			die(json_encode(array("code"=>1,"data"=>$posts)));
+			}
+	        $ext = pathinfo($_FILES['files']['name'], PATHINFO_EXTENSION);
+	        $_FILES['file']['name']     = "profile-image-".date("Y-m-d-H-i-s").".".$ext;
+	        $_FILES['file']['type']     = $_FILES['files']['type'];
+	        $_FILES['file']['tmp_name'] = $_FILES['files']['tmp_name'];
+	        $_FILES['file']['error']     = $_FILES['files']['error'];
+	        $_FILES['file']['size']     = $_FILES['files']['size'];
+          	//$uploadPath = 'assets/img/Profile_Pic/';
+          	$uploadPath = 'assets/uploads/images/';
+            $config['upload_path'] = $uploadPath;
+            $config['allowed_types'] = 'jpg|jpeg|png|gif';
+        	$timenow = date('Y-m-d H:i:s');
+            // Load and initialize upload library
+            $this->load->library('upload', $config);
+            $this->upload->initialize($config);
+            
+            // Upload file to server
+            if($this->upload->do_upload('file')){
+                // Uploaded file data
+                $fileData = $this->upload->data();
+                $uploadData['file_name'] = $fileData['file_name'];
+                $uploadData['uploaded_on'] = date("Y-m-d H:i:s");
+            }
+            $images=$_FILES['file']['name'];     	
+	        $toUpdate = array(	
+	        	'profile_picture'=>$images
+	        );
+	        $condition= array(	
+	        	'user_id'=>$user_id	
+	        );
+			$result=$this->APIM->updatecoverpic($toUpdate,$condition);
+			if($result)
+			{
+			    $datas = array('post_head'=>$post_text,'post_files'=>$images,'post_type'=>1,'owner_id'=>$user_id,'posted_by'=>$user_id,'initially_posted_by'=>$user_id,'posted_on'=>$timenow,'tagged_friends'=>''
+	                );
+		        $results=$this->APIM->insert_post($datas);
+		        $post_id=$results;
+		        $_SESSION['logged_in'][0]->profile_picture=$images;
+		        $newdata=array('user_id	'=>$user_id,'profile_path'=>$images,'status'=>1,'post_id'=>$post_id);
+		        $newresult=$this->APIM->addData('user_profile_cover',$newdata);
+		        if($newresult)
+		        {
+				    die(json_encode(array('status' =>'1' ,'msg'=>'profile pic uploaded Successfully','pic'=>$images)));
+		        }
+		        else
+		        {
+		            die(json_encode(array('status' =>'0' ,'msg'=>'Error while uploading')));
+		        }
+			}
+			else
+			{
+				die(json_encode(array('status' =>'0' ,'msg'=>'Error while uploading')));
+			}
+		}
+	}
+
+	public function fetch_post_by_id(){
+		$post_id=$_POST['post_id'];
+		$result=$this->APIM->fetch_post_by_id($post_id);
+		die(json_encode(array('status'=>'1','data'=>$result)));
+	}
+	public function scrollfetchpost(){
+
+	$offset=$this->input->post('offset');
+	$limit=$this->input->post('limit');
+	if(isset($_POST['android']))
+	{
+		$user_id=$this->input->post('user_id');
+	}
+	else
+	{
+		$user_id=$_SESSION['logged_in'][0]->user_id;
+	}
+	$my_friends=$this->FRND->getMyFriends($user_id);	
+	// if(!isset($_POST['android']))
+	// {
+	// 	$condition=array("posted_by"=>$user_id);
+	// }
+	// else
+	// {
+	// 	$condition=array("posted_by"=>$user_id);
+	// }
+	if($data=$this->POST->getAllPost($my_friends,$user_id,$offset,$limit))
+	{
+		foreach ($data as $key => $value) {
+			$p_Data['post_id']=$value->post_id;
+			$p_Data['user_id']=$value->user_id;
+			$p_Data['post']=$value->post;
+			$p_Data['post_files']=$value->post_files;
+			$p_Data['post_head']=$value->post_head;
+			$p_Data['post_type']=$value->post_type;
+			$p_Data['full_name']=$value->full_name;
+			$p_Data['posted_by']=$value->posted_by;
+			$p_Data['profile_pic']=$value->profile_picture;
+			$p_Data['initially_posted_by']=$value->initially_posted_by;
+			$p_Data['posted_on']=$value->posted_on;
+			if(($likes_data= $this->getPostLikes($value->post_id))!=false)
+			{
+				 $p_Data['likes_data']=$likes_data;
+			}
+			else
+			{
+				 $p_Data['likes_data']=array();
+			}
+			// $p_Data['']=;
+			$p_Data['total_likes']=$this->getLikeCount($value->post_id);
+			$p_Data['total_dislikes']=$this->getDislikeCount($value->post_id);
+			$p_Data['total_comments']=$this->getModifyComment($value->post_id);
+			$p_Data['total_share']=$this->getShareCount($value->post_id);
+			$p_Data['fav']=$this->favrouite($value->post_id);   
+			$posts[]=$p_Data;
+		}	
+		die(json_encode(array("code"=>1,"data"=>$posts)));
 		}
 		else
 		{
 			die(json_encode(array("code"=>0,"data"=>"No Data Found.")));
 		}
 	}
-
+	
+	public function scrollfetchtimelinepost(){
+	$offset=$this->input->post('offset');
+	$limit=$this->input->post('limit');
+	if(isset($_POST['android']))
+	{
+		$user_id=$this->input->post('user_id');
+	}
+	else
+	{
+		$user_id=$_SESSION['logged_in'][0]->user_id;
+	}
+	//$my_friends=$this->FRND->getMyFriends($user_id);	
+	if($data=$this->POST->getAlltimelinePost($user_id,$offset,$limit))
+	{
+		foreach ($data as $key => $value) {
+			$p_Data['post_id']=$value->post_id;
+			$p_Data['user_id']=$value->user_id;
+			$p_Data['post']=$value->post;
+			$p_Data['post_files']=$value->post_files;
+			$p_Data['post_head']=$value->post_head;
+			$p_Data['post_type']=$value->post_type;
+			$p_Data['full_name']=$value->full_name;
+			$p_Data['posted_by']=$value->posted_by;
+			$p_Data['profile_pic']=$value->profile_picture;
+			$p_Data['initially_posted_by']=$value->initially_posted_by;
+			$p_Data['posted_on']=$value->posted_on;
+			if(($likes_data= $this->getPostLikes($value->post_id))!=false)
+			{
+				 $p_Data['likes_data']=$likes_data;
+			}
+			else
+			{
+				 $p_Data['likes_data']=array();
+			}
+			// $p_Data['']=;
+			$p_Data['total_likes']=$this->getLikeCount($value->post_id);
+			$p_Data['total_dislikes']=$this->getDislikeCount($value->post_id);
+			$p_Data['total_comments']=$this->getModifyComment($value->post_id);
+			$p_Data['total_share']=$this->getShareCount($value->post_id);
+			$p_Data['fav']=$this->favrouite($value->post_id);   
+			$posts[]=$p_Data;
+		}	
+		die(json_encode(array("code"=>1,"data"=>$posts)));
+		}
+		else
+		{
+			die(json_encode(array("code"=>0,"data"=>"No Data Found.")));
+		}
+	}
 	public function favrouite($post_id)
     {
         $user_id=$_SESSION['logged_in'][0]->user_id;
@@ -1378,7 +1600,8 @@ public function getPostLikes($post_id){
     }
 
 	
-	function UnFriend(){
+	function UnFriend()
+	{
 		$frnd_id = $this->input->Post('sent_to');
 		$my_id =$_SESSION['logged_in'][0]->user_id;
 		if($this->APIM->unfriend($frnd_id,$my_id)){

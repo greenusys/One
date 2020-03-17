@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Home extends CI_Controller {
+class Home extends MY_Controller {
 
 	public function __construct(){	
 		parent::__construct();
@@ -10,8 +10,13 @@ class Home extends CI_Controller {
 		$this->load->model('FriendsModel','FRND');
 		$this->load->model('APIModel','APIM');
 		$this->load->model('PostModel','POST');
-			$this->load->model('TestModel','Test');
+		$this->load->model('TestModel','Test');
+
 	}
+
+
+	// $this->fetchNotification();
+	// die();
 	public function getAllMyPost(){
 		$my_Id_=$_SESSION['logged_in'][0]->user_id;
 		$condition=array("posted_by"=>$my_Id_);
@@ -23,10 +28,9 @@ class Home extends CI_Controller {
 
 	}
 	public function index()
-	{	
-
+	{
 		//$this->getAllPostLikes();
-       
+      
 		$id=$_SESSION['logged_in'][0]->user_id;
 		$offset=0;
 		$limit=5;
@@ -36,8 +40,10 @@ class Home extends CI_Controller {
 				$p_Data['user_id']=$value->user_id;
 				$p_Data['post']=$value->post;
 				$p_Data['post_files']=$value->post_files;
+				$p_Data['post_head']=$value->post_head;
 				$p_Data['post_type']=$value->post_type;
-				$p_Data['posted_by']=$value->full_name;
+				$p_Data['full_name']=$value->full_name;
+		    	$p_Data['posted_by']=$value->posted_by;
 				$p_Data['profile_pic']=$value->profile_picture;
 				$p_Data['initially_posted_by']=$value->initially_posted_by;
 				$p_Data['posted_on']=$value->posted_on;
@@ -71,14 +77,57 @@ class Home extends CI_Controller {
 		$data['MyDetails']=$this->Profile->getMyDetails($id);
 		$data['notify']=$this->Home->fetchnofication($id);
 		$data['birthdays']=$this->Test->UpComingBirthdays();
+		$data['adsCategory']=$this->db->get('ads_category')->result();
+		$data['fetchAds']=$this->db->join('users','ads_.added_by= users.user_id')->order_by('rand()')->get('ads_')->result();
+
+		$PageArray=$this->db->query("SELECT * FROM user_page join users on users.user_id=user_page.user_id  WHERE user_page.user_id NOT IN ('$id') order by rand() limit 5")->result();
+	    $pageData=array();
+		foreach ($PageArray as $PageDetails) {
+		$totalLikes=$this->returnTotalLikesForThisPage($PageDetails->page_id);
+		if($this->checkIfILikeThisPage($PageDetails->page_id)){
+			$like=1;
+		}else{
+			$like=0;
+		}
+		$pageData[]=array(
+							"page_id"=>$PageDetails->page_id,
+							"user_id"=>$PageDetails->user_id,
+							"upage_profilepic"=>$PageDetails->upage_profilepic,
+							"full_name"=>$PageDetails->upage_name,
+							"category"=>$PageDetails->category,
+							'like'=>$like,
+							"total_likes"=>$totalLikes
+						);
+
+		}
+
+		
 			// if(count($result)>0){
 			// 	die(json_encode(array("code"=>1,"data"=>$result)));
 			// }else{
 			// 	die(json_encode(array("code"=>0,"data"=>"No Data Found.")));
 			// }
+		$data['fetchPages']=$pageData;
 		$this->load->view('web/template/header');
 		$this->load->view('web/home',$data);
 		$this->load->view('web/template/footer');
+	}
+	public function checkIfILikeThisPage($page_id){
+		$id=$_SESSION['logged_in'][0]->user_id;
+		$condition=array("page_id"=>$page_id,"liked_by"=>$id);
+		$this->db->where($condition);
+		if (count($this->db->get('user_page_like_dislike')->result())>0) {
+			return true;
+		}else{
+			return false;
+		}
+		// return $this->db->get('user_page_like_dislike')->result();
+	}
+	public function returnTotalLikesForThisPage($page_id){
+		$condition=array("page_id"=>$page_id);
+		$this->db->where($condition);
+		return count($this->db->get('user_page_like_dislike')->result());
+	
 	}
 	public function getComment($post_id){
 		$this->db->where($condition=array("post_id"=>$post_id));
