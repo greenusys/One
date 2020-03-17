@@ -9,7 +9,16 @@
 			return $this->db->delete($table_name);
 		}
 
-
+function unfriend($frnd_id,$my_id){
+	if($this->db->query("delete from friend_request where (sent_by='$my_id' and sent_to='$frnd_id') OR (sent_by='$frnd_id' and sent_to='$my_id')")){
+		return $this->db->query("delete from friends_ where (friend_id='$my_id' and user_id='$frnd_id') OR (friend_id='$frnd_id' and user_id='$my_id')");
+	}
+	
+}
+function deleteNotification($frnd_id,$my_id){
+	return $this->db->query("delete from notifications_ where (notify_by='$my_id' and notify_to='$frnd_id') OR (notify_to='$frnd_id' and notify_to='$my_id')");
+	
+}
 		public function getAllDetails($table_name, $condition=""){
 			if($condition!=""){
 				$this->db->where($condition);	
@@ -34,8 +43,13 @@
 				return false;
 			}
 		}
+<<<<<<< HEAD
 
 
+=======
+
+
+>>>>>>> 3bde1ede01084af3d3db85c900f1736798283e1e
 		public function getAllPostDetails( $condition=""){
                 $this->db->select("users.user_id,users.full_name,users.profile_picture,post_.*");
                 $this->db->order_by('post_id','Desc');
@@ -74,7 +88,11 @@
 								  'status_'=>'0');
 					$this->db->insert('notifications_',$notify);
 				}
+<<<<<<< HEAD
 			    return true;
+=======
+			    return $insert;
+>>>>>>> 3bde1ede01084af3d3db85c900f1736798283e1e
 			}else {
 			    return false;
 			}
@@ -150,5 +168,15 @@
 		//    return $post;
 		//     //print_r($post);
 		// 	}
+
+
+		public function updateAlbumPost($tablename,$data){
+			$this->db->where('post_id',$data['post_id']);
+			if($this->db->update($tablename,$data)){
+				return true;
+			}else{
+				return false;
+			}
+		}
 	}
 ?>

@@ -1,6 +1,12 @@
 <link rel="stylesheet" type="text/css" href="<?=base_url('assets/css/friends.css')?>">
 <link rel="stylesheet" type="text/css" href="<?=base_url('assets/css/gallery.css')?>">
 <link rel="stylesheet" type="text/css" href="<?=base_url('assets/css/profile.css')?>">
+
+<?php 
+  $session=$this->session->userdata('logged_in');
+      $userID=$session[0]->user_id;
+
+?>
 <style type="text/css">
   .profile-upload {
     display: none;
@@ -11,7 +17,7 @@
     right: 22px;
     color: #666666;
     transition: all .3s cubic-bezier(.175, .885, .32, 1.275);
-    z-index: 22;
+    z-index: 1;
     font-size: 17px;
 
 }
@@ -36,7 +42,9 @@
 <section class="container-fluid mt-5" id="action_area">
   <div class="feature-photo">
   <div class="row">
-    <img src="<?=base_url()?>assets/img/Cover_Photo/<?=$MyDetails[0]->cover_photo?>" onerror="this.src='<?=base_url()?>assets/img/Cover_Photo/default.jpg';" alt="cover image" class="cover-pic img-fluid w-100" style="height: 350px">
+     <a class="w-100" target="_blank" href="<?=base_url('Post/viewPost/').$Mycoverpic[0]->post_id?>" target="blank">
+         <img src="<?=base_url()?>assets/uploads/images/<?=$MyDetails[0]->cover_photo?>" onerror="this.src='<?=base_url()?>assets/uploads/images/default.jpg';" alt="cover image" class="cover-pic img-fluid w-100" style="height: 350px">
+    </a>
   </div>
  
       <div class="add-btn " >
@@ -44,12 +52,12 @@
         <?php
         // echo 'My Id: '.$myId.' | Cancel Friend : '.$cancelFriend;
           if($myId==0 && $cancelFriend == 1){
-            echo '<a href="#" title="" class="ml-2 " style="padding:10px !important" data-ripple="">Cancel Friend</a>';
+            echo '<a href="#" title="" class="ml-2 " style="padding:10px !important" data-ripple="" id="unfriend" d-fnd="'.$user_id.'"> Unfriend</a>';
             
           }else if($myId==0 && $cancelFriend == 0){
             if(count($ReqStatus)>0){
             //  print_r($ReqStatus[0]['req_id']);
-             echo '<a href="javascript:void(0)" title="" style="padding:10px !important" class=" btn btn-success" id="deleteReq" data-ripple="" d-act="'.$ReqStatus[0]['req_id'].'">Friend Request Sent</a>';
+             echo '<a href="javascript:void(0)" title="" style="padding:10px !important" class=" sendFriendRequest" id="deleteReq" d-frnd="'.$user_id.'" data-ripple="" d-act="'.$ReqStatus[0]['req_id'].'">Cancel Request</a>';
             }else{
               echo '<a href="javascript:void(0)" title="" style="padding:10px !important" class="sendFriendRequest" data-ripple="" id="sendReq" d-fnd="'.$user_id.'">Add Friend</a>';
             }
@@ -62,6 +70,28 @@
       </div>
  
       <script>
+          $(document).on('click','#unfriend',function(){
+          var sent_by=<?=$_SESSION['logged_in'][0]->user_id;?>;
+          var sent_to=$(this).attr('d-fnd');
+          var elem=$(this);
+         // alert(sent_to);
+          //swal("Friend Id: "+sent_to);
+          // var sent_to=<?=$this->uri->segment(2);?>;
+          $.ajax({
+            url:'<?=base_url('APIController/UnFriend')?>',
+          type:"post",
+          data:{sent_by:sent_by,sent_to:sent_to},
+          success:function(response){
+            response=JSON.parse(response);
+              if(response.code==1){
+                swal("UnFriend ");
+               // $('#action_area').load(document.URL +  ' #action_area');
+                //elem.text('Friend Request Sent');
+              }
+            }
+          });
+        });
+
         $(document).on('click','#sendReq',function(){
           var sent_by=<?=$_SESSION['logged_in'][0]->user_id;?>;
           var sent_to=$(this).attr('d-fnd');
@@ -85,13 +115,14 @@
         $(document).on('click','#deleteReq',function(){
           // var sent_by=<?=$_SESSION['logged_in'][0]->user_id;?>;
           var req=$(this).attr('d-act');
+            var sent_to=$(this).attr('d-frnd');
           var elem=$(this);
           //swal("Friend Id: "+sent_to);
           // var sent_to=<?=$this->uri->segment(2);?>;
           $.ajax({
             url:'<?=base_url('APIController/deleteRequest')?>',
           type:"post",
-          data:{req:req},
+          data:{req:req,sent_to:sent_to},
           success:function(response){
             response=JSON.parse(response);
               if(response.code==1){
@@ -106,9 +137,9 @@
       <?php
         if($myId==1){
           ?>
-            <form class="edit-phto">
+            <form class="edit-phto pointer">
               <i class="fa fa-camera-retro upload-button"></i>
-              <label class="fileContainer">
+              <label class="fileContainer pointer">
                 Edit Cover Photo
               <input type="file" class="file-upload d-none" name="" >
               </label>
@@ -124,12 +155,14 @@
   <div class="row">
     <div class="col-md-3 pr-0">
       <div class="mar_t110 usr_proImg">
-        <img src="<?=base_url()?>assets/img/Profile_Pic/<?=$MyDetails[0]->profile_picture?>" alt="profile image" onerror="this.src='<?=base_url()?>assets/img/Profile_Pic/default.png';" class="profile-pic img-fluid">
+        <a class="" target="_blank" href="<?=base_url('Post/viewPost/').$Myprofilepic[0]->post_id?>" target="blank">
+            <img src="<?=base_url()?>assets/uploads/images/<?=$MyDetails[0]->profile_picture?>" alt="profile image" onerror="this.src='<?=base_url()?>assets/uploads/images/default.png';" class="profile-pic img-fluid">
+        </a>
       </div>
       <?php
         if($myId==1){
           ?>
-            <div class="p-image">
+            <div class="p-image pointer">
               <i class="fa fa-camera upload-buttons"></i>
                 <input class="profile-upload" type="file" accept="image/*"/>
             </div>
@@ -202,6 +235,7 @@
               response=JSON.parse(response);
               if(response.status==1){
                 //alert(response.msg);
+                location.reload();
                }
             }
           });
@@ -238,10 +272,11 @@
               contentType: false,
               processData: false,
               data : myFormData,
-              success: function(response){
+              success: function(response){ 
               response=JSON.parse(response);
               if(response.status==1){
                 //alert(response.msg);
+                 location.reload();
                }
             }
           });

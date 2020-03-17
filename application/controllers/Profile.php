@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Profile extends CI_Controller 
+class Profile extends MY_Controller 
 {
 	public function __construct(){	
 		parent::__construct();
@@ -9,6 +9,7 @@ class Profile extends CI_Controller
 		$this->load->model('FriendsModel','FRND');
 		$this->load->model('APIModel','APIM');
 		$this->load->model('PostModel','POST');
+		$this->load->model('TestModel','Test');
 	}
 	public function index($uId="")	{	
 		$user_id=$_SESSION['logged_in'][0]->user_id;
@@ -36,9 +37,11 @@ class Profile extends CI_Controller
 				$p_Data['post_id']=$value->post_id;
 				$p_Data['user_id']=$value->user_id;
 				$p_Data['post']=$value->post;
+				$p_Data['post_head']=$value->post_head;
 				$p_Data['post_files']=$value->post_files;
 				$p_Data['post_type']=$value->post_type;
-				$p_Data['posted_by']=$value->full_name;
+				$p_Data['full_name']=$value->full_name;
+		    	$p_Data['posted_by']=$value->posted_by;
 				$p_Data['profile_pic']=$value->profile_picture;
 				$p_Data['initially_posted_by']=$value->initially_posted_by;
 				$p_Data['posted_on']=$value->posted_on;
@@ -67,9 +70,12 @@ class Profile extends CI_Controller
 		$data['RandomPeople']=$this->FRND->getRandomUser($id);
 		$data['MyFriends']=$this->FRND->getMyFriends($id);
 		$data['MyDetails']=$this->Profile->getMyDetails($id);
+		$data['Mycoverpic']=$this->Profile->getcoverphoto($id);
+		$data['Myprofilepic']=$this->Profile->getprofilephoto($id);
 		$data['FriendsActivity']=$this->FRND->getMyFreActivities($id);
 		$data['FriendRequests']=$this->FRND->getFriendRequests($id);
 		$data['MyFollowers']=$this->FRND->getMyFollowers($id);
+		$data['birthdays']=$this->Test->UpComingBirthdays();
 		// $data['AllPosts']=$this->POST->getMyPosts($id);
 		$data['Trending']=$this->POST->getTrending();
 		$this->load->view('web/template/header',$data);
@@ -160,7 +166,9 @@ class Profile extends CI_Controller
 	}
 	public function addBio(){
 		$this->db->where('user_id',$_SESSION['logged_in'][0]->user_id);
-		if($this->db->update('users',array("bio_graphy"=>$this->input->post('bio_graphy')))){
+		$bio=$this->input->post('bio_graphy');
+		$_SESSION['logged_in'][0]->bio_graphy=$bio;
+		if($this->db->update('users',array("bio_graphy"=>$bio))){
 			die(json_encode(array("code"=>1,"msg"=>"User Bio Added Successfully.")));
 		}else{
 			die(json_encode(array("code"=>0,"msg"=>"Failed To Add Bio.")));

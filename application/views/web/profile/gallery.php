@@ -247,7 +247,7 @@ img.hover-shadow {
 
            <?php
                 foreach ($AllPosts as $post) {
-                  // print_r($post);
+      
                   if($post['post_type'] ==1){
                     $gallary=$post['post_files'];
                     $gallaryimg=explode(',',$gallary);
@@ -283,7 +283,7 @@ img.hover-shadow {
                     if($myId==1){
                       ?>
                         <div class="mt-2 col-md-4 d-table ">
-                            <div class="card card-block d-table-cell align-middle text-center border p-3" data-toggle="modal" data-target="#myModal">
+                            <div class="card card-block d-table-cell align-middle text-center border upload_block" data-toggle="modal" data-target="#myModal">
                               <div class="card-body">
                                 <h2><i class="fa fa-plus-circle" aria-hidden="true"></i></h2>
                                 <h4>Create an Album</h4>
@@ -294,6 +294,49 @@ img.hover-shadow {
                       <?php
                     }
                   ?>
+
+                  <?php if($ProfileImgs){ ?>
+                    <div class="card mt-2 col-md-4 albums p-2">
+                    <!-- <a href="javascript:void(0)"> -->
+                 <!--      <div class="card-header d-flex mt-1 justify-content-center">
+                         onclick="openModal(<?=$album->album_id?>);currentSlide(<?=$i?>)"
+                      </div> -->
+                      <div class="card-body p-0">
+                        <a href="<?=base_url('Gallery/ProfileAlbum/profile/').$user_id?>">
+                          <img src="<?=base_url().'assets/uploads/images/'.$ProfileImgs[0]->profile_path?>" class="h_220 img-fluid w-100">
+                        </a>
+                      </div>
+                      <div class="card-footer p-2 deletealbum ">
+                        <a href="<?=base_url('Gallery/ProfileAlbum/profile/').$user_id?>">
+                          <h5 class="m-0 p-1 text-capitalize author float-left">Profile Pictures</h5>
+                        </a>
+                        <!-- <span val="" class=" float-right delt_img text-danger"><i class="fas fa-trash-alt"></i></span> -->
+                      </div>
+                    
+                    <!-- </a> -->
+                    </div>
+                  <?php } ?>
+                   <?php if($CoverImgs){ ?>
+                     <div class="card mt-2 col-md-4 albums p-2">
+                    <!-- <a href="javascript:void(0)"> -->
+                 <!--      <div class="card-header d-flex mt-1 justify-content-center">
+                         onclick="openModal(<?=$album->album_id?>);currentSlide(<?=$i?>)"
+                      </div> -->
+                      <div class="card-body p-0">
+                        <a href="<?=base_url('Gallery/ProfileAlbum/cover/').$user_id?>">
+                          <img src="<?=base_url().'assets/uploads/images/'.$CoverImgs[0]->cover_path?>" class="h_220 img-fluid w-100">
+                        </a>
+                      </div>
+                      <div class="card-footer p-2 deletealbum ">
+                        <a href="<?=base_url('Gallery/ProfileAlbum/cover/').$user_id?>">
+                          <h5 class="m-0 p-1 text-capitalize author float-left">Cover Pictures</h5>
+                        </a>
+                        <!-- <span val="" class=" float-right delt_img text-danger"><i class="fas fa-trash-alt"></i></span> -->
+                      </div>
+                    
+                    <!-- </a> -->
+                    </div>
+                  <?php } ?>
                    <?php
                 $i=1;
                   foreach ($MyAlbum as $album) {
@@ -303,13 +346,17 @@ img.hover-shadow {
                     <div class="card mt-2 col-md-4 albums p-2">
                     <!-- <a href="javascript:void(0)"> -->
                  <!--      <div class="card-header d-flex mt-1 justify-content-center">
-                         
+                         onclick="openModal(<?=$album->album_id?>);currentSlide(<?=$i?>)"
                       </div> -->
                       <div class="card-body p-0">
-                        <img src="<?=base_url().$imgArr[0]?>" onclick="openModal(<?=$album->album_id?>);currentSlide(<?=$i?>)" class="h-100 img-fluid w-100">
+                        <a href="<?=base_url('Gallery/fetchAlbum/').$album_id?>">
+                          <img src="<?=base_url().'assets/uploads/images/'.$imgArr[0]?>" class="h_220 img-fluid w-100">
+                        </a>
                       </div>
                       <div class="card-footer p-2 deletealbum ">
-                        <h5 class="m-0 p-1 text-capitalize author float-left"><?=$album->album_title?></h5>
+                        <a href="<?=base_url('Gallery/fetchAlbum/').$album_id?>">
+                          <h5 class="m-0 p-1 text-capitalize author float-left"><?=$album->album_title?></h5>
+                        </a>
                         <span val="<?=$album_id?>" class=" float-right delt_img text-danger"><i class="fas fa-trash-alt"></i></span>
                       </div>
                     
@@ -662,7 +709,7 @@ $("#videos").submit(function(e){
    /* outline-offset: -10px;*/
     -webkit-transition: outline-offset .15s ease-in-out, background-color .15s linear;
     transition: outline-offset .15s ease-in-out, background-color .15s linear;
- padding: 43px 0px 83px 8%;
+ padding: 70px 0px 83px 8%;
     text-align: center !important;
     margin: 0;
     width: 100% !important;
@@ -674,7 +721,7 @@ $("#videos").submit(function(e){
 .files{ position:relative}
 .files:after {  pointer-events: none;
     position: absolute;
-    top: 22px;
+    top: 42px;
     left: 0;
     width: 30px;
     right: 0;
@@ -954,13 +1001,13 @@ $.ajax({
 
             di+='<div class="mySlides">';
             di+='    <div class="numbertext2">'+i+' / '+response.album.length+'</div>';
-            di+='    <img src="<?=base_url()?>'+response.album[i]+'" style="width:680px">';
+            di+='    <img src="<?=base_url()?>assets/uploads/images/'+response.album[i]+'" style="width:680px">';
             di+='</div>';
 
 
             var di_='';
             di_+='<div class="column2">';
-            di_+='<img class="demo2" src="<?=base_url()?>'+response.album[i]+'" onclick="currentSlide('+i+')" alt="Nature">';
+            di_+='<img class="demo2" src="<?=base_url()?>assets/uploads/images/'+response.album[i]+'" onclick="currentSlide('+i+')" alt="album">';
             di_+='</div>';
             $('#sli_').append(di);
             $('#img__').append(di_);

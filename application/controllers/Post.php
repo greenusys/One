@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Post extends CI_Controller {
+class Post extends MY_Controller {
 	function __construct(){
 		parent::__construct();
 		$this->load->model('PostModel','POST');
@@ -37,6 +37,7 @@ class Post extends CI_Controller {
 
 	}
 	public function viewPost($post_id){
+		$my_Id_=$_SESSION['logged_in'][0]->user_id;
 		$value=$this->POST->getPostDetail($post_id);
 		//print_r($value);
 		$p_Data['post_id']=$value[0]->post_id;
@@ -60,6 +61,7 @@ class Post extends CI_Controller {
 		$p_Data['total_share']=$this->getShareCount($value[0]->post_id);
 		$post[]=$p_Data;
 		$data['Detail']=$post;
+		$data['MyFriends']=$this->FRND->getMyFriends($my_Id_);
 		$this->load->view('web/template/header');
 		$this->load->view('web/post',$data);
 		$this->load->view('web/template/footer');
@@ -190,6 +192,8 @@ class Post extends CI_Controller {
 	// 	return count($this->APIM->getAllDetails('post_', $condition));
 		
 	// }
-	
+	public function AddAds(){
+		print_r($_POST);
+	}
 }
 ?>

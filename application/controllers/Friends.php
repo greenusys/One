@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Friends extends CI_Controller {
+class Friends extends MY_Controller {
 
 
 	public function __construct(){	
@@ -101,10 +101,17 @@ class Friends extends CI_Controller {
 		$data['MyFriends']=$this->FRND->getMyFriends($id);
 		$data['FriendsActivity']=$this->FRND->getMyFreActivities($id);
 		$data['MyDetails']=$this->Profile->getMyDetails($id);
+		$data['Mycoverpic']=$this->Profile->getcoverphoto($id);
+		$data['Myprofilepic']=$this->Profile->getprofilephoto($id);
 		$data['FriendRequests']=$this->FRND->getFriendRequests($id);
 		$data['MyFollowers']=$this->FRND->getMyFollowers($id);
 		$data['MyPosts']=$this->POST->getMyPosts($id);
-	
+	 	$data['Trending']=$this->POST->getTrending();
+        $data['WorkDetails']=$this->getMyWorkDetails($id);
+        $data['SkillDetails']=$this->getMySkillsDetails($id);
+        $data['UniversityDetails']=$this->getMyUniversityDetails($id);
+        $data['SchoolDetails']=$this->getMySchoolDetails($id);
+
 		
 		$this->load->view('web/template/header',$data);
 		$this->load->view('web/template/profileCover');
@@ -145,5 +152,23 @@ class Friends extends CI_Controller {
 		$this->load->view('web/profile/fron_frnd');
 		$this->load->view('web/template/footer');
 	}
+
+    public function getMyWorkDetails($id){
+        $this->db->where('user_id',$id);
+        return $this->db->get('user_work_details')->result();
+    }
+    public function getMySchoolDetails($id){
+        $this->db->where('user_id',$id);
+        return $this->db->get('user_school_details')->result();
+    }
+    public function getMySkillsDetails($id){
+        $this->db->where('user_id',$id);
+        return $this->db->get('user_skills')->result();
+    }
+
+    public function getMyUniversityDetails($id){
+        $this->db->where('user_id',$id);
+        return $this->db->get('user_university_details')->result();
+    }
 
 }

@@ -16,7 +16,8 @@
 			 	$limit = 5;
 			 }
 			
-				if(count($friendList)>0) {
+				if(count($friendList)>0) 
+				{
 					foreach ($friendList as $each) {
 						$friends[]=$each->user_id;
 					}
@@ -32,10 +33,27 @@
 		
 		}
 		
+		public function getAlltimelinePost($myId,$offset="",$limit="")
+		{
+
+			 if(($limit=="") && ($offset=="")){
+			 	$offset =0;
+			 	$limit = 5;
+			 }
+			$sql = "SELECT * FROM post_  join users on users.user_id=post_.posted_by WHERE posted_by  IN ('$myId') OR tagged_friends IN ('$myId') order by post_.post_id desc limit $offset,$limit";
+				
+				/*$this->db->where('post_id',$post_id);
+				return $this->db->get('post_')->result();*/
+			return $this->db->query($sql)->result();
+		
+		}
+		
 		public function getMyTimeLinePost($id){
 			// echo $id;
-			$this->db->where('owner_id',$id);
+			$where = "owner_id=$id OR tagged_friends=$id";
+			$this->db->where($where);
 			$this->db->join('users','users.user_id=post_.posted_by');
+			$this->db->order_by('post_.post_id','desc');
 			return $this->db->get('post_')->result();
 		}
 		public function getTrending()

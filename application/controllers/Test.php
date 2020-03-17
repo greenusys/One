@@ -329,7 +329,34 @@ class Test extends MY_Controller {
 			}
 		}
 	}
-
+public function get_States()
+    {
+        $data=$this->Test->fetchState_Byid($this->input->post('countryid'));
+        
+        // print_r($data);
+        if(count($data)>0)
+        {
+            die(json_encode(array('code'=>1,"data"=>$data)));
+        }
+        else
+        {
+             die(json_encode(array('code'=>0,"data"=>"No data Found ")));
+        }
+    }
+     public function get_Cities()
+    {
+        $data=$this->Test->fetchCities_Byid($this->input->post('stateId'));
+        
+        // print_r($data);
+        if(count($data)>0)
+        {
+            die(json_encode(array('code'=>1,"data"=>$data)));
+        }
+        else
+        {
+             die(json_encode(array('code'=>0,"data"=>"No data Found ")));
+        }
+    }
 	public function changeCoverPhoto(){
 		if(isset($_POST['android'])){
 			$user_id=$this->input->post('user_id');
@@ -451,6 +478,9 @@ class Test extends MY_Controller {
 	}
 
 	public function group(){
+		$session=$this->session->userdata('logged_in');
+		$user_Id=$session[0]->user_id;
+		$data['MyFriends']=$this->FRND->getMyFriends($user_Id);
 		$this->load->view('web/template/header');
 		$data['allGroups']=$this->db->get('user_groups')->result();
 		$this->load->view('web/groupPage',$data);
@@ -462,7 +492,7 @@ class Test extends MY_Controller {
 		$data['MyFriends']=$this->FRND->getMyFriends($user_Id);
 		$this->load->view('web/template/header');
 		$data['allGroups']=$this->db->get('user_groups')->result();
-		$this->db->join('users','users.user_id=user_fav_section.user_id');
+		$this->db->join('users','users.user_id=user_fav_section.fav_user_id');
 		$this->db->join('post_','post_.post_id=user_fav_section.post_id');
 		$data['favpost']=$this->db->get('user_fav_section')->result();
 		$data['favphoto']=$this->Test->favphoto();
@@ -471,15 +501,21 @@ class Test extends MY_Controller {
 		$this->load->view('web/template/footer');
 	}
 	public function favposts(){
+    	$session=$this->session->userdata('logged_in');
+		$user_Id=$session[0]->user_id;
+		$data['MyFriends']=$this->FRND->getMyFriends($user_Id);
 		$this->load->view('web/template/header');
 		$data['allGroups']=$this->db->get('user_groups')->result();
-		$this->db->join('users','users.user_id=user_fav_section.user_id');
+		$this->db->join('users','users.user_id=user_fav_section.fav_user_id');
 		$this->db->join('post_','post_.post_id=user_fav_section.post_id');
 		$data['favpost']=$this->db->get('user_fav_section')->result();
 		$this->load->view('web/favpost',$data);
 		$this->load->view('web/template/footer');
 	}
 	public function favphotos(){
+    	$session=$this->session->userdata('logged_in');
+		$user_Id=$session[0]->user_id;
+		$data['MyFriends']=$this->FRND->getMyFriends($user_Id);
 		$this->load->view('web/template/header');
 		$data['allGroups']=$this->db->get('user_groups')->result();
 		$data['favphoto']=$this->Test->favphoto();
@@ -487,6 +523,9 @@ class Test extends MY_Controller {
 		$this->load->view('web/template/footer');
 	}
 	public function favchat(){
+    	$session=$this->session->userdata('logged_in');
+		$user_Id=$session[0]->user_id;
+		$data['MyFriends']=$this->FRND->getMyFriends($user_Id);
 		$this->load->view('web/template/header');
 		$data['allGroups']=$this->db->get('user_groups')->result();
 		$data['favchat']=$this->Test->favchat();
@@ -495,6 +534,9 @@ class Test extends MY_Controller {
 	}
 	
 	public function page(){
+		$session=$this->session->userdata('logged_in');
+		$user_Id=$session[0]->user_id;
+		$data['MyFriends']=$this->FRND->getMyFriends($user_Id);
 		$this->load->view('web/template/header');
 		$this->load->view('web/createPage');
 		$this->load->view('web/template/footer');
@@ -558,6 +600,8 @@ class Test extends MY_Controller {
 				 		    "jobpost_salary"=>$this->input->post('jobpost_salary'),
 				 		    "jobpost_salarytype"=>$this->input->post('jobpost_salarytype'),
 				 		    "jobpost_jobtype"=>$this->input->post('jobpost_jobtype'),
+				 		    "jobpost_company"=>$this->input->post('jobpost_company'),
+				 		    "jobpost_time"=>date('d-m-Y h:i:s'),
 				 		    "jobpost_image"=>$jobpostpicture,);
 
         	    $results=$this->Test->insert_JobPostData($data);
@@ -594,6 +638,7 @@ class Test extends MY_Controller {
         {
 			$session=$this->session->userdata('logged_in');
 			$user_Id=$session[0]->user_id;
+			$fav_user_id=$this->input->post('fav_id');
            	if(isset($_POST['fvrt'])==1)
 			{
 				$post=1;
@@ -620,8 +665,8 @@ class Test extends MY_Controller {
 			}
 			if($post==1)
 			{
-			    $data=array('post_id'=>$this->input->post('post_id'),
-		            'user_id'=>$user_Id,
+			     $data=array('post_id'=>$this->input->post('post_id'),
+		            'user_id'=>$user_Id,'fav_user_id'=>$fav_user_id,
 		            'contentType'=>$post);
 		      $results=$this->Test->makefvrtData($data);
 		      switch($results) 
@@ -640,7 +685,7 @@ class Test extends MY_Controller {
 			elseif($photos==2)
 			{
 			     $data=array('album_id'=>$this->input->post('album_id'),
-		                     'user_id'=>$this->input->post('user_id'),
+		                     'user_id'=>$this->input->post('user_id'),'fav_user_id'=>$fav_user_id,
 		                      'contentType'=>$photos);
 		      $results=$this->Test->makefvrtData($data);
 		      switch($results) 
@@ -659,7 +704,7 @@ class Test extends MY_Controller {
 			else
 			{
 			     $data=array('conversation_id'=>$this->input->post('conversation_id'),
-		                     'user_id'=>$this->input->post('user_id'),
+		                     'user_id'=>$this->input->post('user_id'),'fav_user_id'=>$fav_user_id,
 		                      'contentType'=>$chat);
 		      $results=$this->Test->makefvrtData($data);
 		      switch($results) 
@@ -677,6 +722,7 @@ class Test extends MY_Controller {
 			}
 	    
         }
+       
 	
 }
 ?>
