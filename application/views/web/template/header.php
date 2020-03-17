@@ -1,50 +1,50 @@
   <!DOCTYPE html>
 <html lang="en">
 <head>
-  	<title>Lanecrowd</title>
-  	<meta charset="utf-8">
-  	<meta name="viewport" content="width=device-width, initial-scale=1">
-  	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-  	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <title>Lanecrowd</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 
-  	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
-  	<!-- Toggle cdn https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css-->
+    <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
+    <!-- Toggle cdn //stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css-->
 
-  	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css">
-  	<link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-sweetalert/1.0.1/sweetalert.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-sweetalert/1.0.1/sweetalert.min.js"></script>
-  	<!-- Toggle cdn -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
-  	<link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css" rel="stylesheet">
-	<script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>
-	<script type="text/javascript" src="<?=base_url('assets/js/crousel.js')?>"></script>
-	<!-- Toggle cdn -->
+    <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css">
+    <link rel="stylesheet" type="text/css" href="//stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-sweetalert/1.0.1/sweetalert.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-sweetalert/1.0.1/sweetalert.min.js"></script>
+    <!-- Toggle cdn -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
+    <link href="//cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css" rel="stylesheet">
+  <script src="//cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>
+  <script type="text/javascript" src="<?=base_url('assets/js/crousel.js')?>"></script>
+  <!-- Toggle cdn -->
    <!-- emoji link -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/emojionearea/3.4.1/emojionearea.min.js"></script>
-  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/emojionearea/3.4.1/emojionearea.css">
+  <script src="//cdnjs.cloudflare.com/ajax/libs/emojionearea/3.4.1/emojionearea.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/emojionearea/3.4.1/emojionearea.css">
   <!-- end emoji link -->      
   <!-- Multiple select link -->  
-  <link href="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/css/select2.min.css" rel="stylesheet" />
-  <script src="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/js/select2.min.js"></script>
+  <link href="//cdn.jsdelivr.net/npm/select2@4.0.12/dist/css/select2.min.css" rel="stylesheet" />
+  <script src="//cdn.jsdelivr.net/npm/select2@4.0.12/dist/js/select2.min.js"></script>
        <!-- end Multiple select link -->  
    <link rel="stylesheet" type="text/css" href="<?=base_url('assets/css/home.css')?>">
-    <link rel="stylesheet" type="text/css" href="https://onesignal.github.io/emoji-picker/lib/css/emoji.css">
-    <script src="https://onesignal.github.io/emoji-picker/lib/js/config.js"></script>
-    <script src="https://onesignal.github.io/emoji-picker/lib/js/util.js"></script>
-    <script src="https://onesignal.github.io/emoji-picker/lib/js/jquery.emojiarea.js"></script>
-   <script src="https://onesignal.github.io/emoji-picker/lib/js/emoji-picker.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-circle-progress/1.2.2/circle-progress.min.js"></script>
-   <link href="https://fonts.googleapis.com/css?family=Crimson+Text&display=swap" rel="stylesheet"> 
-     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-timeago/0.11.4/jquery.timeago.js"></script>
+    <link rel="stylesheet" type="text/css" href="//onesignal.github.io/emoji-picker/lib/css/emoji.css">
+    <script src="//onesignal.github.io/emoji-picker/lib/js/config.js"></script>
+    <script src="//onesignal.github.io/emoji-picker/lib/js/util.js"></script>
+    <script src="//onesignal.github.io/emoji-picker/lib/js/jquery.emojiarea.js"></script>
+   <script src="//onesignal.github.io/emoji-picker/lib/js/emoji-picker.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-circle-progress/1.2.2/circle-progress.min.js"></script>
+   <link href="//fonts.googleapis.com/css?family=Crimson+Text&display=swap" rel="stylesheet"> 
+     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-timeago/0.11.4/jquery.timeago.js"></script>
 <script src="//geodata.solutions/includes/countrystatecity.js"></script>
- <!-- <script type="text/javascript" src="https://html2canvas.hertzen.com/dist/html2canvas.js"></script> -->
+ <!-- <script type="text/javascript" src="//html2canvas.hertzen.com/dist/html2canvas.js"></script> -->
     
 </head>
 <body>
-	<style type="text/css">
+  <style type="text/css">
 body {
     color: #444444 !important;
     line-height: 1.7;
@@ -112,7 +112,7 @@ body {
   a:hover{
     text-decoration: none !important;
   }
-	.bgb
+  .bgb
     {
       background:#231F20;
       /*#ff441a*/
@@ -133,7 +133,7 @@ input::-webkit-search-cancel-button {
 
 
 input[type=search] {
-  background: #ededed url(https://static.tumblr.com/ftv85bp/MIXmud4tx/search-icon.png) no-repeat 9px center;
+  background: #ededed url(//static.tumblr.com/ftv85bp/MIXmud4tx/search-icon.png) no-repeat 9px center;
   border: solid 1px #ccc;
   padding: 3px 6px 5px 34px;
   width: 100px;
@@ -381,7 +381,7 @@ position: absolute;
     .post_ht{
       height: 345px ;
     }
-	</style>
+  </style>
 <style type="text/css">
 /*  .fa-address-card
   {
@@ -492,7 +492,7 @@ a:hover {
             if(res.code==1 && res.data.length!=0){
               for(let i=0; i<res.data.length; i++){
                 var li='';
-                li+='<li ><a class="d-flex" href="<?=base_url('Profile/')?>'+res.data[i].user_id+'"><figure class="m-0"><img style="border-radius:50%" src="<?=base_url('assets/img/Profile_Pic/')?>'+res.data[i].profile_picture +'" width="35px" height="35px"></figure><span class="author ml-1 my-auto"> '+res.data[i].full_name+' </span></a></li>';
+                li+='<li ><a class="d-flex" href="<?=base_url('Profile/')?>'+res.data[i].user_id+'"><figure class="m-0"><img style="border-radius:50%" src="<?=base_url('assets/uploads/images/')?>'+res.data[i].profile_picture +'" width="35px" height="35px"></figure><span class="author ml-1 my-auto"> '+res.data[i].full_name+' </span></a></li>';
                 $('#srchFndLs').append(li);
               }
             }
@@ -514,14 +514,14 @@ a:hover {
     </div> -->
 <section class="container-fluid bg-white fixed-top">
     <nav class="navbar navbar-expand-md navbar-light  container" >
-      	<a class="navbar-brand" href=<?=base_url('Home')?>><img src="<?=base_url()?>assets/img/logo.png" ></a>
-      	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
-        	<span class="navbar-toggler-icon"></span>
-      	</button>
-      	<div class="collapse navbar-collapse" id="navbarTogglerDemo02">
-    	    <form class="form-inline my-2 my-lg-0" method="POST" action="<?=base_url()?>Test/searchResults"> 
-    	        <input type="search" placeholder="Search" name="search-tag" id="search-frnd">
-    	    </form>
+        <a class="navbar-brand" href=<?=base_url('Home')?>><img src="<?=base_url()?>assets/img/logo.png" ></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+          <form class="form-inline my-2 my-lg-0" method="POST" action="<?=base_url()?>Test/searchResults"> 
+              <input type="search" placeholder="Search" name="search-tag" id="search-frnd">
+          </form>
           <div class="row hintDiv " style="display:none">
             <div class="col">
                 <ul id="srchFndLs" >
@@ -532,23 +532,23 @@ a:hover {
           <!-- test -->
         
           <!-- test end -->
-    	    <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+          <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
            
-      	    	<li class="nav-item home mr-3">
-      				<a class="nav-link p-1 text-center " href="<?=base_url('Home')?>"><span><i class="fa fa-home" aria-hidden="true"></i></span><div class="mt-n2">Home</div></a>
-      			</li>
-          		<li class="nav-item profile mr-3">
-    	        	<a class="nav-link p-1 text-center " href="<?=base_url('Profile')?>"><span><i class="fa fa-user" aria-hidden="true"></i></span><div class="mt-n2">Profile</div></a>
-          		</li>
-          	<!-- 	<li class="nav-item trending">
-    	        	<a class="nav-link p-1 text-center " href="<?=base_url('Post/trenDingPosts')?>"><span><i class="fa fa-bolt" aria-hidden="true"></i> -->
+              <li class="nav-item home mr-3">
+              <a class="nav-link p-1 text-center " href="<?=base_url('Home')?>"><span><i class="fa fa-home" aria-hidden="true"></i></span><div class="mt-n2">Home</div></a>
+            </li>
+              <li class="nav-item profile mr-3">
+                <a class="nav-link p-1 text-center " href="<?=base_url('Profile')?>"><span><i class="fa fa-user" aria-hidden="true"></i></span><div class="mt-n2">Profile</div></a>
+              </li>
+            <!--  <li class="nav-item trending">
+                <a class="nav-link p-1 text-center " href="<?=base_url('Post/trenDingPosts')?>"><span><i class="fa fa-bolt" aria-hidden="true"></i> -->
                   <!-- <span class="badge badge_rt"><?=count($trending)?></span>
                 </span> -->
                <!--    <div class="mt-n2"> Trending</div></a>
-          		</li> -->
-    			<li class="nav-item messenger mr-3">
-    				<a class="nav-link p-1 text-center " id="openMessage" href="javascript:void(0)"><span><i class="fa fa-comments-o" aria-hidden="true" title="Message"></i><span class="badge badge_rt_notify"><?=count($myMessages)?></span></span><div class="mt-n2">Messages</div></a>
-    			  <ul class="dropdown-menu notify-drop p-3 message_box" style="width: 348px; height:348px; overflow-y:scroll">
+              </li> -->
+          <li class="nav-item messenger mr-3">
+            <a class="nav-link p-1 text-center " id="openMessage" href="javascript:void(0)"><span><i class="fa fa-comments-o" aria-hidden="true" title="Message"></i><span class="badge badge_rt_notify"><?=count($myMessages)?></span></span><div class="mt-n2">Messages</div></a>
+            <ul class="dropdown-menu notify-drop p-3 message_box" style="width: 348px; height:348px; overflow-y:scroll">
              <!--  <div class="notify-drop-title">
                 <div class="row">
                   <div class="col-md-6 col-sm-6 col-xs-6"><a href="<?=base_url('Message')?>">Messages (<b><?=count($myMessages)?></b>)</a></div>
@@ -567,7 +567,7 @@ a:hover {
                           <div class="row p-1">
                       
                               <div class="col-md-2 pt-1">
-                                <img src="<?=base_url()?>assets/img/Profile_Pic/<?=$msgs->profile_picture?>" onerror="this.src='<?=base_url()?>assets/img/Profile_Pic/default.png';" alt=""  class="notify_img rounded-circle" >
+                                <img src="<?=base_url()?>assets/img/Profile_Pic/<?=$msgs->profile_picture?>" onerror="this.src='<?=base_url()?>assets/uploads/images/default.png';" alt=""  class="notify_img rounded-circle" >
                               </div>
                               <div class="col-md-10">
                                 <p class="notfication_text"><span><strong><?=$msgs->full_name?></strong> : </span><?=$msgs->message_?> <span class="time float-right">1 Seconds Ago</span></p>
@@ -580,10 +580,10 @@ a:hover {
                 ?>
               <!-- </div> -->
               <div class="notify-drop-footer notify_read text-center">
-                <a href=""><i class="fa fa-eye"></i> Read More</a>
+                <a href="<?=base_url('Message')?>"><i class="fa fa-eye"></i> Read More</a>
               </div>
             </ul>
-          </li>		
+          </li>   
       
            <li class="nav-item notification mr-3">
             <a class="nav-link p-1 text-center"  id="notific" href="javascript:void(0)"><span><i class="fa fa-bell-o" aria-hidden="true" title="Notification"></i><span class="badge badge_rt_notify"><?=count($myNotifications)?></span></span><div class="mt-n2">Notification</div></a>
@@ -660,11 +660,11 @@ a:hover {
          <!--  <li class="nav-item messenger">
               <a class="nav-link" href="<?=base_url('Message')?>"><span><i class="fa fa-bolt" aria-hidden="true"></i></span><div class="mt-n2">Notification</div></a>
           </li>  -->
-    			<li class="nav-item">
-    				<a class="nav-link p-1 text-center" href="<?=base_url('Login/logout')?>"><span><i class="fa fa-power-off" aria-hidden="true"></i></span><div class="mt-n2">Logout</div></a>
-    			</li>
-    	    </ul>
-      	</div>
+          <li class="nav-item">
+            <a class="nav-link p-1 text-center" href="<?=base_url('Login/logout')?>"><span><i class="fa fa-power-off" aria-hidden="true"></i></span><div class="mt-n2">Logout</div></a>
+          </li>
+          </ul>
+        </div>
     </nav>
 </section>
 <style>
