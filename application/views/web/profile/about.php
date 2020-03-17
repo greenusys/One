@@ -806,6 +806,50 @@ $(document).on("click",".delt_bn",function(){
         $(".edt-bt").hide();
       })
   </script>
+  <script>
+  $(document).on('click','.total_num',function(){
+    var el=$(this);
+    var namer=el.attr('namer');
+    var phone=el.html();
+    var id = el.attr('id');
+    $('#number_id').val(phone);
+    $('#locator').val(namer);
+    $('.canceler').attr('prev_id');
+    el.hide();
+    $('.shw_phone_bl').show();
+  })    
+
+  $(document).on('click','.canceler',function(){
+    $('.shw_phone_bl').hide();
+    $('.total_num').show();
+  })
+
+  $(document).on("submit","#update_num",function(e){
+
+    e.preventDefault();
+    //alert('Working');
+    var formData=new FormData($(this)[0]);
+    $.ajax({
+        url:"<?=base_url('About/updateNum')?>",
+        type:"post",
+        cache:false,
+        contentType:false,
+        processData:false,
+        data:formData,
+        success:function(response){
+            console.log(response);
+            response=JSON.parse(response);
+            if(response.status==1){
+                swal("Good job!", "Number Updated Successfully.", "success");
+                location.reload();
+            }else{
+                 swal("Oop!", response.msg, "info");
+            }
+        }
+    });
+});
+
+  </script>
   <div class="tab-pane fade card show active" id="contact" role="tabpanel" aria-labelledby="contact-tab">
     <div class="col-md-12">
         <h6 class="text-secondary pb-2 author mt-3 mb-0">CONTACT INFORMATION</h6>
@@ -816,15 +860,24 @@ $(document).on("click",".delt_bn",function(){
             </div>
             <div class="col-md-8 ">
                 <div class="sh-edt">
+                <div class="shw_phone_bl" style="display: none">
+                    <form id="update_num">
+                      <input type="text" maxlength="20" minlength="9" name="updated_num" id="number_id" class="ml-1 add_int form-control">
+                      <input type="hidden" name="location" id="locator" value="">
+                      <div class="text-right"><label class="btn p-1 btn-primary bio_btn  m-0 mr-2 ranUse canceler">Cancel</label><button class="mr-2 btn btn-success p-1 bio_btn ranUse">Save</button></div>
+                    </form>
+                  </div>
                     <ul class="m-0 list-unstyled"><?php
-                
+                            if($phoneNumbers[0]=="" || $phoneNumbers[0]==NULL){
+                                echo "<li class='about_wt'>Add phone number</li>";
+                            }
+                            $count=0;
                         foreach ($phoneNumbers as $phone) { 
-                              if(!$phone){ ?>
-                                    <li class="about_wt">Add phone number</li>
-                           <?php  }
+                            
                             ?>
-                            <li class="about_wt"><?=$phone?></li>
-                        <?php  }
+                            <li class="about_wt total_num" namer="<?=$count?>"><?=$phone?></li>
+                        <?php  $count++;
+                            }
                         ?>
                     </ul>
                     <?php 
@@ -855,13 +908,19 @@ $(document).on("click",".delt_bn",function(){
         <script>
           
               $(document).on("click",".ant_nm",function(){
+                var check_length = $('.total_num').length;
+                if (check_length>=2) {
+                    swal("Sorry","Maximum Two Contact Numbers Are allowed","warning");
+                }
+                else{
                 var html='<div class="d-flex mb-1"> '+
-                            '<select class="form-control add_int w-50" name="country_code">'+
+                            '<select class="form-control add_int w-50" name="country_code[]">'+
                                 '<option selected="" value="+91">India +91</option>'+
                             '</select>'+
-                            '<input type="tel" maxlength="10" minlength="9" name="usd_phone" class="ml-1 add_int form-control">'+
+                            '<input type="tel" maxlength="10" minlength="9" name="usd_phone[]" class="ml-1 add_int form-control">'+
                         '</div>';
-                $("#ad_num").append(html);            
+                $("#ad_num").append(html);     
+                }       
             })
 
 

@@ -103,7 +103,6 @@ class About extends MY_Controller
 //         }    
 // }
     public function fetchAddress($id){
-        
         $this->db->where("user_id",$id);
         $res = $this->db->get('user_details')->result_array();
         if(count($res)>0){
@@ -113,6 +112,27 @@ class About extends MY_Controller
         }else{
             return $usd_phone=array();
         }    
+    }
+
+    public function updateNum(){
+        $updated_num = $_POST['updated_num'];
+        $location = $_POST['location'];
+        $user_id=$_SESSION['logged_in'][0]->user_id;
+        $this->db->where("user_id",$user_id);
+        $res = $this->db->get('user_details')->result_array();
+        $numbers=$res[0]['usd_phone'];
+        $exploder=explode(",",$numbers);
+        $exploder[$location]=$updated_num;
+        $final_string=implode(",",$exploder);
+        $data=array('user_id'=>$user_id,
+                    'usd_num'=>$final_string);
+        $result=$this->About->phoneUpdate($data);
+        if ($result) {
+            die(json_encode(array('status'=>'1')));
+        }
+        else{
+            die(json_encode(array('status'=>'0')));
+        }
     }
 
 
@@ -289,9 +309,18 @@ class About extends MY_Controller
     }
 
     public function addPhone(){
+        $country_code=$_POST['country_code'];
+        $usd_phone=$_POST['usd_phone'];
+        $usd_phone_privacy=$_POST['usd_phone_privacy'];
+        for ($i=0; $i <count($country_code) ; $i++) { 
+            $nums=$country_code[$i]."-".$usd_phone[$i];
+            $final_nums[]=$nums;
+        }
+        $user_nums=implode(",",$final_nums);
+
           $data=array(
             "user_id"=>$_SESSION['logged_in'][0]->user_id,
-            "usd_phone"=>$this->input->post('country_code').'-'.$this->input->post('usd_phone'),
+            "usd_phone"=>$user_nums,
             "usd_phone_privacy"=>$this->input->post('usd_phone_privacy')
         ); 
         if($this->About->addPhoneNo($data)){

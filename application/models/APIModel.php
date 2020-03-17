@@ -83,10 +83,6 @@ function deleteNotification($frnd_id,$my_id){
 					$this->db->insert('notifications_',$notify);
 				}
 			    return $insert;
-<<<<<<< HEAD
-
-=======
->>>>>>> 7e710001b872cafcbccf1cad898cabd05d9c689b
 			}else {
 			    return false;
 			}

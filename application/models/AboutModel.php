@@ -1,5 +1,15 @@
 <?php
 	class AboutModel extends CI_Model{
+
+	function phoneUpdate($data){
+	 $this->db->where('user_id',$data['user_id']);
+	 if($this->db->update('user_details',array('usd_phone'=>$data['usd_num']))){
+	 	return true;
+		}else{
+			return false;
+		}
+	}
+
 	function addPhoneNo($condition){
 		$this->db->where('user_id',$condition['user_id']);
 		$res = $this->db->get('user_details')->result();
@@ -10,16 +20,36 @@
 				return false;
 			}
 		}else{
-			//print_r($res);
-			$usd_phone = $res[0]->usd_phone.','.$condition['usd_phone'];
-			$rsarry= array('usd_phone'=>$usd_phone,'usd_phone_privacy'=>$condition['usd_phone_privacy']);
+			$older_num=$res[0]->usd_phone;
+			if ($older_num!="" || $older_num!=NULL) {
+				$exploder=explode(",",$older_num);
+					if (count($exploder)>=2) {
+					return false;
+			    }
+				else{
+					$newer_num=explode(",",$condition['usd_phone']);
+					$final_nums=array_merge($exploder,$newer_num);
+					$final_string=implode(",",$final_nums);
+					//print_r($final_nums);
+					//$usd_phone = $res[0]->usd_phone.','.$condition['usd_phone'];
+					$rsarry= array('usd_phone'=>$final_string,'usd_phone_privacy'=>$condition['usd_phone_privacy']);
+					 $this->db->where('user_id',$condition['user_id']);
+					 if($this->db->update('user_details',$rsarry)){
+					 	return true;
+						}else{
+							return false;
+						}
+				}
+			}
+			else{
+			$rsarry= array('usd_phone'=>$condition['usd_phone'],'usd_phone_privacy'=>$condition['usd_phone_privacy']);
 			 $this->db->where('user_id',$condition['user_id']);
 			 if($this->db->update('user_details',$rsarry)){
 			 	return true;
 				}else{
 					return false;
 				}
-
+			}
 		}
 	}
   function addUserAddress($condition){
