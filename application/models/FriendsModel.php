@@ -51,13 +51,12 @@
 			// $this->checkForExistingFriendship($uId,$myId);
 		}
 		public function getMyFriends($myId){
-
-			
 			$result=$this->db->query("select * from friends_ join users on users.user_id=friends_.user_id where friends_.friend_id='$myId'")->result(); 
     		$result_=$this->db->query("select * from friends_ join users on users.user_id=friends_.friend_id where friends_.user_id='$myId'")->result();
     		$myFriends=array_merge($result_,$result);
 			return $myFriends;
 		}
+		
 		public function getMyFriendsByName($myId,$key){
 			$this->db->like('users.full_name', $key, 'after'); 
 			$this->db->join('users','users.user_id=friends_.user_id');
