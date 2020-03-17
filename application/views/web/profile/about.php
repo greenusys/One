@@ -18,7 +18,10 @@
     text-transform: capitalize;
 }
 </style>
-
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.0-beta/css/bootstrap-select.min.css">
+<link rel="stylesheet" type="text/css" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css">
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.2/js/bootstrap-select.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.0-beta/js/bootstrap-select.min.js"></script>
 <script>
 $( document ).ready(function(e) {
   $('.profile').addClass('active');
@@ -32,14 +35,36 @@ $(document).ready(function(){
 <script type="text/javascript" src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
     <script src="https://files.codepedia.info/files/uploads/iScripts/html2canvas.js"></script>
  <!-- center panel -->
-<div class="col-md-9">
+<div class="col-md-9  ">
+  <div class="row mt-5 p-2">
+    <div class="col-md-4">
+        <div class="card p-3"> 
+            <ul class="nav nav-pills flex-column" id="myTab" role="tablist">
+              <li class="nav-item">
+                <a class="nav-link active" id="home-tab" data-toggle="tab" href="#work" role="tab" aria-controls="home" aria-selected="true">Work and education</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Places you've lived</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Contact and basic info</a>
+              </li>
+            </ul>
+        </div>
+    </div>
+    <!-- /.col-md-4 -->
+    <div class="col-md-8">
+  <div class="tab-content" id="myTabContent">
+  <div class="tab-pane fade " id="work" role="tabpanel" aria-labelledby="home-tab">
+<!-- <h2>work and Education</h2> -->
+      
 <?php
     $myAccount=0;
     if($user_id == $_SESSION['logged_in'][0]->user_id){
         $myAccount=1;
     }
 ?>
-    <div class="border border-2 mt-4 bg-white rounded p-2">
+    <div class=" card rounded ">
         <div class="" id="work">
             <div class="col-md-12">
                 <h6 class="text-secondary pb-2  author mt-3 mb-0">WORK</h6>
@@ -715,8 +740,821 @@ $(document).on("click",".delt_bn",function(){
             </div>
         </div>
     </div>
-      
+  </div>
+  <div class="tab-pane fade card" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+    <div class="col-md-12">
+        <h6 class="text-secondary pb-2 author mt-3 mb-0">OTHER PLACES LIVED</h6>
+         <?php
+            if($myAccount==1){
+                echo '<h6 class="text-info mt-0 fy"><a href="javascript:void(0)"  id="place_places">Add a place &nbsp; <span class="text-primary"> <i class="fas fa-arrow-alt-circle-down" style="font-size:18px"></i></span></a></h6> 
+                <hr>';
+            }
+        ?>
+    </div>
+  </div>
+  <style>
+.edt-bt{
+    display: none;
+}
+.lt_blok button{
+    font-size: 11px;
+}
+.add_int{
+        padding: 2px;
+    font-size: 12px;
+    height: 20px;
+}
+.lt_blok{
+    display: none;
+}
+.bootstrap-select>.dropdown-toggle {
+    position: relative;
+    width: 16%;
+    padding-right: 25px;
+    z-index: 1;
+}
+.bootstrap-select .dropdown-menu {
+    min-width: 40%;
+}
+.add_int .dropdown-menu{
+        font-size: 10px !important;
+}
+.bootstrap-select:not([class*=col-]):not([class*=form-control]):not(.input-group-btn){
+    width:unset !important;
+}
+.about_wt{
+        font-size: 12px;
+    font-weight: bold;
+}
+.foo_select .dropdown-toggle{
+    width: 55% !important;
+       color: #495057 !important;
+    background-color: #fff !important;
+    background-clip: padding-box !important;
+    border: 1px solid #ced4da !important;
+    border-radius: .25rem !important;
+}
+</style>
+  <script type="text/javascript">
+      $(document).on("mouseover",".sh-edt",function(){
+        $(this).find(".edt-bt").show();
+      })
+       $(document).on("mouseleave",".sh-edt",function(){
+        $(".edt-bt").hide();
+      })
+       $(document).on("click",".edt-bt",function(){
+        $(".edt-bt").hide();
+      })
+  </script>
+  <div class="tab-pane fade card show active" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+    <div class="col-md-12">
+        <h6 class="text-secondary pb-2 author mt-3 mb-0">CONTACT INFORMATION</h6>
+        <hr class="mt-0">
+        <div class="row">
+            <div class="col-md-4">
+                <span class="author">Mobile Phones</span>
+            </div>
+            <div class="col-md-8 ">
+                <div class="sh-edt">
+                    <ul class="m-0 list-unstyled"><?php
+                        foreach ($phoneNumbers as $phone) { ?>
+                            <li class="about_wt"><?=$phone?></li>
+                        <?php  }
+                        ?>
+                    </ul>
+                    <?php 
+                        if($user_id == $_SESSION['logged_in'][0]->user_id){ ?>
+                                <div class="float-right edt-bt" ><span class="text-primary pointer edit_shbtn">Edit</span></div>
+                      <?php  } ?>  
+                </div>
+                <div class="lt_blok">
+                    <form class="" id="add_phone">
+                        <div class="aad_nmb" id="ad_num">
+                            
+                        </div>
+                        <small class="text-primary pointer ant_nm"> + Another phone number</small>
+                        <div class="">
+                            <select id="mySelect" data-show-content="true" name="usd_phone_privacy" class="mySelect add_int">
+                                
+                                <option value="1" selected=""  data-content="<i class='fas fa-globe-asia'></i> Public"></option>
+                                <option value="2" data-content="<i class='fas fa-user-friends'></i> Friends"></option>
+                                <option value="3" data-content="<i class='fas fa-lock'></i> Onlyme"></option>
+                            </select>
+
+                          <button class="btn btn-primary py-1 px-2 ">Save Changes</button> <button type="button" class="can_btn btn border ml-2">Cancel</button></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <script>
+          
+              $(document).on("click",".ant_nm",function(){
+                var html='<div class="d-flex mb-1"> '+
+                            '<select class="form-control add_int w-50" name="country_code">'+
+                                '<option selected="" value="+91">India +91</option>'+
+                            '</select>'+
+                            '<input type="tel" maxlength="10" minlength="9" name="usd_phone" class="ml-1 add_int form-control">'+
+                        '</div>';
+                $("#ad_num").append(html);            
+            })
+
+
+            $(document).on("submit","#add_phone",function(e){
+
+                e.preventDefault();
+                //alert('Working');
+                var formData=new FormData($(this)[0]);
+                $.ajax({
+                    url:"<?=base_url('About/addPhone')?>",
+                    type:"post",
+                    cache:false,
+                    contentType:false,
+                    processData:false,
+                    data:formData,
+                    success:function(response){
+                        console.log(response);
+                        response=JSON.parse(response);
+                        if(response.code==1){
+                            swal("Good job!", "Number Added Successfully.", "success");
+                        }else{
+                             swal("Oop!", response.msg, "info");
+                        }
+                    }
+                });
+            });
+
+            $(document).on("click",".edit_shbtn",function(){
+                $(this).parent().parent().parent().find("#ad_num").empty();
+                $(".lt_blok").hide();
+                $(this).hide();
+                 $(this).parent().parent().parent().parent().find(".det_shw").hide();
+                $(this).parent().parent().parent().find(".lt_blok").show();
+            })
+              $(document).on("click",".can_btn",function(){
+                 $(".det_shw").show();
+                $(this).parent().parent().parent().hide();
+                $(this).parent().parent().parent().parent().find(".edit_shbtn").show();
+            })
+          
+        </script>
+        <div class="row">
+            <div class="col-md-4">
+                <span class="author ">Address</span>
+            </div>
+            <div class="col-md-8">
+                <div class="sh-edt">
+                    <?php 
+                   // print_r($address['usd_address'][0]);
+                    ?>
+                    <span class="det_shw"> <?= $address['usd_address'][0].', '.$address['usd_address'][1].', '. $address['usd_address'][2].', '. $address['usd_address'][3]?></span>
+                    <div class="float-right edt-bt" ><span class="text-primary pointer edit_shbtn">Edit</span></div>
+                </div>
+                <div class="lt_blok ">
+                    <form id="add_address" >
+                        <div class="aad_nmb">
+                            <div class="row">
+                                <label class="col-md-4 about_wt">Address</label>
+                                <div class="col-md-8">
+                                    <input type="text" name="address" value="<?= $address['usd_address'][0]?>" class="form-control w-75 add_int">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-md-4 about_wt">Town/City</label>
+                                <div class="col-md-8">
+                                    <input type="text" name="town"  value="<?= $address['usd_address'][1]?>" class="form-control w-75 add_int">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-md-4 about_wt">Zipcode</label>
+                                <div class="col-md-8">
+                                    <input type="text" name="zip"  value="<?= $address['usd_address'][2]?>" class="form-control w-75 add_int">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-md-4 about_wt">Neighbourhood</label>
+                                <div class="col-md-8">
+                                    <input type="text" name="ntbr"  value="<?= $address['usd_address'][3]?>" class="form-control w-75 add_int">
+                                </div>
+                            </div>
+                        </div>
+                      
+                        <div>
+                            <select id="addressSelect" data-show-content="true" name="usd_phone_privacy" class="mySelect add_int">
+                             
+                                <option value="1" selected=""  data-content="<i class='fas fa-globe-asia'></i> Public"></option>
+                                <option value="2" data-content="<i class='fas fa-user-friends'></i> Friends"></option>
+                                <option value="3" data-content="<i class='fas fa-lock'></i> Onlyme"></option>
+                            </select>
+                            <button class="btn btn-primary py-1 px-2 ">Save Changes</button> <button type="button" class="can_btn btn border ml-2">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <script type="text/javascript">
+                $(document).on("submit","#add_address",function(e){
+
+                e.preventDefault();
+                //alert('Working');
+                var formData=new FormData($(this)[0]);
+                $.ajax({
+                    url:"<?=base_url('About/addAddress')?>",
+                    type:"post",
+                    cache:false,
+                    contentType:false,
+                    processData:false,
+                    data:formData,
+                    success:function(response){
+                        console.log(response);
+                        response=JSON.parse(response);
+                        if(response.code==1){
+                            swal("Good job!", "Address Added Successfully.", "success");
+                        }else{
+                             swal("Oop!", response.msg, "info");
+                        }
+                    }
+                });
+            });
+        </script>
+        <div class="row">
+            <div class="col-md-4">
+                <span class="author">Email</span>
+            </div>
+            <div class="col-md-8">
+                <span>1 email address hidden from timeline</span>
+            </div>
+        </div>
+
+         <h6 class="text-secondary pb-2 author mt-3 mb-0">WEBSITES AND SOCIAL LINKS</h6>
+          <hr class="mt-0">
+        <div class="row">
+            <div class="col-md-4">
+                <span class="author">Websites</span>
+            </div>
+            <div class="col-md-8">
+                <div class="sh-edt">
+                    <span class="det_shw"> https:</span>
+                    <div class="float-right edt-bt" ><span class="text-primary pointer edit_shbtn">Edit</span></div>
+                </div>
+                 <div class="lt_blok ">
+                    <form id="add_website">
+                        <div class="aad_nmb mb-1" id="web_lst">
+                            <input type="text" class="form-control add_int w-50" name="usd_website[]" required="">
+                        </div>
+                            <small class="text-primary pointer" id="ant_web"> + Another website</small>
+                        <div>
+                            <select id="websiteSelect" data-show-content="true" name="usd_website_privacy" class="mySelect add_int">
+                               
+                                <option value="1" selected="" data-content="<i class='fas fa-globe-asia'></i> Public"></option>
+                                <option value="2" data-content="<i class='fas fa-user-friends'></i> Friends"></option>
+                                <option value="3" data-content="<i class='fas fa-lock'></i> Onlyme"></option>
+                            </select>
+                            <button class="btn btn-primary py-1 px-2 ">Save Changes</button> <button type="button" class="can_btn btn border ml-2">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <hr>
+         <script type="text/javascript">
+                $(document).on("submit","#add_website",function(e){
+
+                e.preventDefault();
+                //alert('Working');
+                var formData=new FormData($(this)[0]);
+                $.ajax({
+                    url:"<?=base_url('About/addWebsites')?>",
+                    type:"post",
+                    cache:false,
+                    contentType:false,
+                    processData:false,
+                    data:formData,
+                    success:function(response){
+                        console.log(response);
+                        response=JSON.parse(response);
+                        if(response.code==1){
+                            swal("Good job!", "Website Added Successfully.", "success");
+                        }else{
+                             swal("Oop!", response.msg, "info");
+                        }
+                    }
+                });
+            });
+        </script>
+        <div class="row">
+            <div class="col-md-4">
+                <span class="author">Social links</span>
+            </div>
+            <div class="col-md-8">
+                <div class="sh-edt">
+                    <span class="det_shw"> https:</span>
+                    <div class="float-right edt-bt" ><span class="text-primary pointer edit_shbtn">Edit</span></div>
+                </div>
+                <div class="lt_blok ">
+                    <form id="add_social">
+                        <div class="aad_nmb mb-1" id="social_lst" > 
+                            <div class="d-flex">   
+                                <input type="text" class="form-control add_int w-50" name="social_links[]" required="">
+                                <select class="form-control w-25 add_int" name="social_type[]" required="">
+                                    <option  disabled="">Select</option>
+                                    <option value="Instagram">Instagram</option>
+                                    <option value="Twitter">Twitter</option>
+                                </select> 
+                             
+                            </div>
+                        </div>
+                            <small class="text-primary pointer" id="ant_social"> + Add another social link</small>
+                        <div>
+                            <select id="socialSelect" data-show-content="true" name="usd_social_privacy" class="mySelect add_int">
+                                <option value="1" selected="" data-content="<i class='fas fa-globe-asia'></i> Public"></option>
+                                <option value="2" data-content="<i class='fas fa-user-friends'></i> Friends"></option>
+                                <option value="3" data-content="<i class='fas fa-lock'></i> Onlyme"></option>
+                            </select>
+                            <button class="btn btn-primary py-1 px-2 ">Save Changes</button> <button type="button" class="can_btn btn border ml-2">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <script type="text/javascript">
+               $(document).on("submit","#add_social",function(e){
+
+                    e.preventDefault();
+                    //alert('Working');
+                    var formData=new FormData($(this)[0]);
+                    $.ajax({
+                        url:"<?=base_url('About/addSocial')?>",
+                        type:"post",
+                        cache:false,
+                        contentType:false,
+                        processData:false,
+                        data:formData,
+                        success:function(response){
+                            console.log(response);
+                            response=JSON.parse(response);
+                            if(response.code==1){
+                                swal("Good job!", "Social Links Added Successfully.", "success");
+                            }else{
+                                 swal("Oop!", response.msg, "info");
+                            }
+                        }
+                    });
+                });
+
+
+            $(document).on("click",".close_c",function(){
+                $(this).parent().remove();
+            })
+
+              $(document).on("click","#ant_social",function(){
+                var html='<div class="d-flex">'+   
+                                '<input type="text" class="form-control add_int w-50" name="social_links[]">'+
+                                '<select class="form-control w-25 add_int" name="social_type[]">'+
+                                    '<option selected="" disabled="">Select</option>'+
+                                    '<option value="Instagram">Instagram</option>'+
+                                    '<option value="Twitter">Twitter</option>'+
+                                '</select> '+
+                                '<span class="ml-2 close_c"><i class="fas fa-times"></i></span>'+
+                            '</div>';
+                $("#social_lst").append(html);            
+            })
+                $(document).on("click","#ant_web",function(){
+                var html='<input type="text" class="form-control mt-1 add_int w-50" name="usd_website[]">';
+                $("#web_lst").append(html);            
+            })
+        </script>
+        <h6 class="text-secondary pb-2 author mt-3 mb-0">WEBSITES AND SOCIAL LINKS</h6>
+          <hr class="mt-0">
+
+        <div class="row">
+            <div class="col-md-5">
+                <span class="author">Date of birth</span>
+            </div>
+            <div class="col-md-7">
+                <div class="sh-edt">
+         <!-- <?php print_r($MyDetails[0]->date_of_birth);?>  -->
+                    <span class="det_shw"><?=$MyDetails[0]->date_of_birth?></span>
+                    <div class="float-right edt-bt" ><span class="text-primary pointer edit_shbtn">Edit</span></div>
+                </div>
+                <div class="lt_blok ">
+                    <form id="add_dob">
+                        <div class="aad_nmb mb-1" id="social_lst" > 
+                            <div class="d-flex">   
+                               
+                                <select class="form-control w-25 add_int" required="" name="day">
+                                    <option selected="" disabled="">- Day -</option>
+                                    <option value="01">1</option>
+                                    <option value="02">2</option>
+                                    <option value="03">3</option>
+                                    <option value="04">4</option>
+                                    <option value="05">5</option>
+                                    <option value="06">6</option>
+                                    <option value="07">7</option>
+                                    <option value="08">8</option>
+                                    <option value="09">9</option>
+                                    <option value="10">10</option>
+                                    <option value="11">11</option>
+                                    <option value="12">12</option>
+                                    <option value="13">13</option>
+                                    <option value="14">14</option>
+                                    <option value="15">15</option>
+                                    <option value="16">16</option>
+                                    <option value="17">17</option>
+                                    <option value="18">18</option>
+                                    <option value="19">19</option>
+                                    <option value="20">20</option>
+                                    <option value="21">21</option>
+                                    <option value="22">22</option>
+                                    <option value="23">23</option>
+                                    <option value="24">24</option>
+                                    <option value="25">25</option>
+                                    <option value="26">26</option>
+                                    <option value="27">27</option>
+                                    <option value="28">28</option>
+                                    <option value="29">29</option>
+                                    <option value="30">30</option>
+                                    <option value="31">31</option>
+                                </select>
+                                <select class="form-control ml-2 w-25 add_int" required="" name="month">
+                                    <option selected="" disabled="">- Month -</option>
+                                    <option value="01">January</option>
+                                    <option value="02">Febuary</option>
+                                    <option value="03">March</option>
+                                    <option value="04">April</option>
+                                    <option value="05">May</option>
+                                    <option value="06">June</option>
+                                    <option value="07">July</option>
+                                    <option value="08">August</option>
+                                    <option value="09">September</option>
+                                    <option value="10">October</option>
+                                    <option value="11">November</option>
+                                    <option value="12">December</option>
+                                </select> 
+                                <select class="form-control ml-2 w-25 add_int" required=" " name="year">
+                                    <option selected="" disabled="">- Year -</option>
+                                    <option value="2020">2020</option>
+                                    <option value="2019">2019</option>
+                                    <option value="2018">2018</option>
+                                    <option value="2017">2017</option>
+                                    <option value="2016">2016</option>
+                                    <option value="2015">2015</option>
+                                    <option value="2014">2014</option>
+                                    <option value="2013">2013</option>
+                                    <option value="2012">2012</option>
+                                    <option value="2011">2011</option>
+                                    <option value="2010">2010</option>
+                                    <option value="2009">2009</option>
+                                    <option value="2008">2008</option>
+                                    <option value="2007">2007</option>
+                                    <option value="2006">2006</option>
+                                    <option value="2005">2005</option>
+                                    <option value="2004">2004</option>
+                                    <option value="2003">2003</option>
+                                    <option value="2002">2002</option>
+                                    <option value="2001">2001</option>
+                                    <option value="2000">2000</option>
+                                    <option value="1999">1999</option>
+                                    <option value="1998">1998</option>
+                                    <option value="1997">1997</option>
+                                    <option value="1996">1996</option>
+                                    <option value="1995">1995</option>
+                                    <option value="1994">1994</option>
+                                    <option value="1993">1993</option>
+                                    <option value="1992">1992</option>
+                                    <option value="1991">1991</option>
+                                    <option value="1990">1990</option>
+                                    <option value="1989">1989</option>
+                                    <option value="1988">1988</option>
+                                    <option value="1987">1987</option>
+                                    <option value="1986">1986</option>
+                                    <option value="1985">1985</option>
+                                    <option value="1984">1984</option>
+                                    <option value="1983">1983</option>
+                                    <option value="1982">1982</option>
+                                    <option value="1981">1981</option>
+                                    <option value="1980">1980</option>
+                                    <option value="1979">1979</option>
+                                    <option value="1978">1978</option>
+                                    <option value="1977">1977</option>
+                                    <option value="1976">1976</option>
+                                    <option value="1975">1975</option>
+                                    <option value="1974">1974</option>
+                                    <option value="1973">1973</option>
+                                    <option value="1972">1972</option>
+                                    <option value="1971">1971</option>
+                                </select> 
+                                
+                            </div>
+                        </div>
+                           
+                        <div>
+                            <select id="dobSelect" data-show-content="true" name="dob_privacy" class="mySelect add_int" title="Privacy">
+                                <option value="1" selected="" data-content="<i class='fas fa-globe-asia'></i> Public"></option>
+                                <option value="2" data-content="<i class='fas fa-user-friends'></i> Friends"></option>
+                                <option value="3" data-content="<i class='fas fa-lock'></i> Onlyme"></option>
+                            </select>
+                            <button class="btn btn-primary py-1 px-2 ">Save Changes</button> <button type="button" class="can_btn btn border ml-2">Cancel</button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <script type="text/javascript">
+              $(document).on("submit","#add_dob",function(e){
+
+                    e.preventDefault();
+                    //alert('Working');
+                    var formData=new FormData($(this)[0]);
+                    $.ajax({
+                        url:"<?=base_url('About/addDateOfBirth')?>",
+                        type:"post",
+                        cache:false,
+                        contentType:false,
+                        processData:false,
+                        data:formData,
+                        success:function(response){
+                            console.log(response);
+                            response=JSON.parse(response);
+                            if(response.code==1){
+                                swal("Good job!", "Date of Birth Added Successfully.", "success");
+                            }else{
+                                 swal("Oop!", response.msg, "info");
+                            }
+                        }
+                    });
+                });
+        </script>
+        <!--   <div class="row">
+            <div class="col-md-5">
+                <span class="author">Year of birth</span>
+            </div>
+            <div class="col-md-7">
+                <span>gres.com</span>
+            </div>
+        </div> -->
+        <div class="row">
+            <div class="col-md-5">
+                <span class="author">Gender</span>
+            </div>
+            <div class="col-md-7">
+                <div class="sh-edt">
+                    <span class="det_shw"> <?=$MyDetails[0]->gender?></span>
+                    <div class="float-right edt-bt" ><span class="text-primary pointer edit_shbtn">Edit</span></div>
+                </div>
+                <div class="lt_blok ">
+                    <form id="add_gender">
+                        <div class="aad_nmb mb-1" id="social_lst" > 
+                            <div class="d-flex">   
+                               
+                                <select class="form-control w-25 add_int" name="gender" required="">
+                                    <option class="Male">Male</option>
+                                    <option class="Female">Female</option>
+                                    <option class="Others">Others</option>
+                                </select> 
+                            
+                            </div>
+                        </div>
+                         
+                        <div><button class="btn btn-primary py-1 px-2 ">Save Changes</button> <button type="button" class="can_btn btn border ml-2">Cancel</button></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <hr>
+         <script type="text/javascript">
+              $(document).on("submit","#add_gender",function(e){
+
+                    e.preventDefault();
+                    //alert('Working');
+                    var formData=new FormData($(this)[0]);
+                    $.ajax({
+                        url:"<?=base_url('About/addGender')?>",
+                        type:"post",
+                        cache:false,
+                        contentType:false,
+                        processData:false,
+                        data:formData,
+                        success:function(response){
+                            console.log(response);
+                            response=JSON.parse(response);
+                            if(response.code==1){
+                                swal("Good job!", "Date of Birth Added Successfully.", "success");
+                            }else{
+                                 swal("Oop!", response.msg, "info");
+                            }
+                        }
+                    });
+                });
+        </script>
+        <div class="row">
+            <div class="col-md-5">
+                <span class="author">Interested in</span>
+            </div>
+            <div class="col-md-7">
+                <div class="sh-edt">
+                    <span class="det_shw"> Women</span>
+                    <div class="float-right edt-bt" ><span class="text-primary pointer edit_shbtn">Edit</span></div>
+                </div>
+                <div class="lt_blok ">
+                    <form id="add_interest">
+                        <div class="aad_nmb mb-1" id="social_lst" > 
+                            <div class="d-flex">   
+                                <label> <input type="checkbox" value="Women" class="int_check" name="interested[]"> Women</label>
+                                
+                                <label class="ml-2"> <input value="Men"  type="checkbox" class=""  name="interested[]"> Men</label>
+                            </div>
+                        </div>
+                         
+                        <div><button class="btn btn-primary py-1 px-2 ">Save Changes</button> <button type="button" class="can_btn btn border ml-2">Cancel</button></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <hr>
+         <script type="text/javascript">
+              $(document).on("submit","#add_interest",function(e){
+                e.preventDefault();
+                    var val = [];
+                    $('.int_check').each(function(i){
+                      val[i] = $(this).val();
+                    });
+ 
+             alert(val);
+                    var formData=new FormData($(this)[0]);
+                    $.ajax({
+                        url:"<?=base_url('About/addInterested')?>",
+                        type:"post",
+                        cache:false,
+                        contentType:false,
+                        processData:false,
+                        data:formData,
+                        success:function(response){
+                            console.log(response);
+                            response=JSON.parse(response);
+                            if(response.code==1){
+                                swal("Good job!", "Interested In Added Successfully.", "success");
+                            }else{
+                                 swal("Oop!", response.msg, "info");
+                            }
+                        }
+                    });
+                });
+
+              
+        </script>
+        <div class="row">
+            <div class="col-md-5">
+                <span class="author">Languages</span>
+            </div>
+            <div class="col-md-7">
+                <div class="sh-edt">
+                    <span class="det_shw"> Hindi</span>
+                    <div class="float-right edt-bt" ><span class="text-primary pointer edit_shbtn">Edit</span></div>
+                </div>
+                <div class="lt_blok ">
+                    <form id="add_languages">
+                        <div class="aad_nmb mb-1" id="social_lst" > 
+                            <input type="hidden" name="languages" class="foo_data" >
+                          <select class="form-control add_int foo_select selectpicker" id="foo" name="foo" name="" multiple required="">
+                              <option value="Hindi" >Hindi</option>
+                              <option value="English">English</option>
+                            
+                            </select>
+                        </div>
+                         
+                        <div><button class="btn btn-primary py-1 px-2 ">Save Changes</button> <button type="button" class="can_btn btn border ml-2">Cancel</button></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <hr>
+         <script type="text/javascript">
+          
+              $(document).on("submit","#add_languages",function(e){
+                     e.preventDefault();
+                    //alert('Working');
+                  
+                    var formData=new FormData($(this)[0]);
+                  $.ajax({
+                        url:"<?=base_url('About/addLanguages')?>",
+                        type:"post",
+                        cache:false,
+                        contentType:false,
+                        processData:false,
+                        data:formData,
+                        success:function(response){
+                            console.log(response);
+                            response=JSON.parse(response);
+                            if(response.code==1){
+                                swal("Good job!", "Languages Added Successfully.", "success");
+                            }else{
+                                 swal("Oop!", response.msg, "info");
+                            }
+                        }
+                    });
+                });
+        </script>
+        <script type="text/javascript">
+            $(function(){
+              
+                $("#foo").selectpicker();  
+              
+                let arr;
+              
+                $("#foo").on("change", function(event){
+                  arr = []; 
+                  $(this).find("option").each(function(){
+                    if($(this).is(":selected")) {
+                      let value = $(this).attr("value");
+                      arr.push(value);
+                    }
+                  });
+                 
+                  $(".foo_data").val(arr);
+                });
+            });
+        </script>
+       <!--  <div class="row">
+            <div class="col-md-5">
+                <span class="author">Religious views</span>
+            </div>
+            <div class="col-md-7">
+                <div class="sh-edt">
+                    <span class="det_shw"> Hindi</span>
+                    <div class="float-right edt-bt" ><span class="text-primary pointer edit_shbtn">Edit</span></div>
+                </div>
+                <div class="lt_blok ">
+                    <form class="">
+                        <div class="aad_nmb mb-1" id="social_lst" > 
+                          <select class="form-control add_int selectpicker" id="foo" name="foo" multiple>
+                              <option value="Hindi">Hindi</option>
+                              <option value="English">English</option>
+                            
+                            </select>
+                        </div>
+                         
+                        <div><button class="btn btn-primary py-1 px-2 ">Save Changes</button> <button type="button" class="can_btn btn border ml-2">Cancel</button></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-5">
+                <span class="author">Political views</span>
+            </div>
+            <div class="col-md-7">
+                <span>not interested</span>
+            </div>
+        </div> -->
+       
+    </div>
+  </div>
 </div>
+    </div>
+    <!-- /.col-md-8 -->
+  </div>
+  
+
+<!-- /.container -->
+    <script type="text/javascript">
+          $('#mySelect').selectpicker();
+            $('#addressSelect').selectpicker();
+ $('#websiteSelect').selectpicker();
+ $('#socialSelect').selectpicker();
+  $('#dobSelect').selectpicker();
+
+    </script>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+ </div>
     <!-- end center panel -->
 
 </section>
@@ -738,23 +1576,23 @@ $(document).on("click",".delt_bn",function(){
               console.log(response);
               response=JSON.parse(response);
               if(response.code==1){
-				  console.log("Inside If Loop :" +response.data.length);
+                  console.log("Inside If Loop :" +response.data.length);
                 for(let i=0; i<response.data.length; i++){
-					console.log("Inside For Loop");
+                    console.log("Inside For Loop");
                   if(response.data[i].post_id < lastId || initial==0 ){
                     initial=1;
-					console.log("Post Type: "+response.data[i].post_type);
+                    console.log("Post Type: "+response.data[i].post_type);
                     if(response.data[i].post_type == 0){
-						console.log("Text Post");
+                        console.log("Text Post");
                     var post='<div class="card mt-4">'+
                           '<div class="card-header">'+
                           '<a class="font-weight-bold" href="<?=base_url('Profile/')?>'+response.data[i].user_id+'"><img class="rounded-circle postProfile-pic" src="<?=base_url()?>assets/img/Profile_Pic/'+response.data[i].profile_pic+'" width="30">'+response.data[i].posted_by+'</a>'+
                           '<a class="" href="#"><img class="img-fluid float-right pt-3" src="assets/webimg/dots.png"></a>'+
                           
                           '</div>'+
-						              '<div class="card-body text-justify">'+
-						              '<p>'+response.data[i].post+'</p>'+
-							             '</div>'+
+                                      '<div class="card-body text-justify">'+
+                                      '<p>'+response.data[i].post+'</p>'+
+                                         '</div>'+
                           '<div class="total row px-2 text-right">'+
                         '</div>'+
                         '<div class="card-footer">'+
@@ -772,7 +1610,7 @@ $(document).on("click",".delt_bn",function(){
                         '</div>'+
                       '</div>';
                   }else if(response.data[i].post_type==1){
-					  console.log("Image Post");
+                      console.log("Image Post");
                     var post='<div class="card mt-4">'+
                           '<div class="card-header">'+
                           '<a class="font-weight-bold" href="<?=base_url('Profile/')?>'+response.data[i].user_id+'"><img class="rounded-circle  postProfile-pic" src="<?=base_url()?>assets/img/Profile_Pic/'+response.data[i].profile_pic+'" >'+response.data[i].posted_by+'</a>'+
@@ -780,7 +1618,7 @@ $(document).on("click",".delt_bn",function(){
                          
                           '</div>'+
                           '<div class="card-body text-center">'+
-						              '<p>'+response.data[i].post+'</p>'+
+                                      '<p>'+response.data[i].post+'</p>'+
                           '<div class="post_img"><a class="" href="#"><img class="img img-fluid d-block" src="<?=base_url('assets/uploads/images/')?>'+response.data[i].post_files+'"></a>'+
                           '</div>'+
                           '</div>'+
@@ -801,7 +1639,7 @@ $(document).on("click",".delt_bn",function(){
                         '</div>'+
                       '</div>';
                   }else{
-					  console.log("Video Post");
+                      console.log("Video Post");
                     var post='<div class="card mt-4">'+
                           '<div class="card-header">'+
                           '<a class="font-weight-bold" href="<?=base_url('Profile/')?>'+response.data[i].user_id+'"><img class="rounded-circle postProfile-pic" src="<?=base_url()?>assets/img/Profile_Pic/'+response.data[i].profile_pic+'" >'+response.data[i].posted_by+'</a>'+
@@ -809,7 +1647,7 @@ $(document).on("click",".delt_bn",function(){
                           
                           '</div>'+
                           '<div class="card-body">'+
-						              '<p>'+response.data[i].post+'</p>'+
+                                      '<p>'+response.data[i].post+'</p>'+
                           '<video controls class="w-100">'+
                           '<source src="<?=base_url()?>assets/uploads/videos/'+response.data[i].post_files+'" type="video/mp4">'+
                           'Your browser does not support the video tag.'+
@@ -996,84 +1834,84 @@ var like = ele.find("i").attr("class");
 </script>
 <script>
    $(document).ready(function(){
-	  $("#add").click(function(){
-		 $("#form1").toggle();
-	 });
+      $("#add").click(function(){
+         $("#form1").toggle();
+     });
  });
-</script>	
+</script>   
 
 <script>
    $(document).ready(function(){
-	  $("#cancel1").click(function(){
-		 $("#work").show();
-		 $("#form1").hide();
-	 });
+      $("#cancel1").click(function(){
+         $("#work").show();
+         $("#form1").hide();
+     });
  });
 </script>
 
 <script>
    $(document).ready(function(){
-	  $("#skill").click(function(){
-		 $("#form2").toggle();
-	 });
+      $("#skill").click(function(){
+         $("#form2").toggle();
+     });
  });
-</script>	
+</script>   
 
 <script>
    $(document).ready(function(){
-	  $("#cancel2").click(function(){
-		 $("#skills").show();
-		 $("#form2").hide();
-	 });
+      $("#cancel2").click(function(){
+         $("#skills").show();
+         $("#form2").hide();
+     });
  });
 </script>
 
 <script>
    $(document).ready(function(){
-	  $("#univ").click(function(){
-		 $("#form3").toggle();
-	 });
+      $("#univ").click(function(){
+         $("#form3").toggle();
+     });
  });
-</script>	
+</script>   
 
 <script>
    $(document).ready(function(){
-	  $("#cancel3").click(function(){
-		 $("#university").show();
-		 $("#form3").hide();
-	 });
+      $("#cancel3").click(function(){
+         $("#university").show();
+         $("#form3").hide();
+     });
  });
 </script>
 
 <script>
    $(document).ready(function(){
-	  $("#high").click(function(){
-		 $("#form4").toggle();
-	 });
+      $("#high").click(function(){
+         $("#form4").toggle();
+     });
  });
-</script>	
+</script>   
 
 <script>
    $(document).ready(function(){
-	  $("#cancel4").click(function(){
-		 $("#school").show();
-		 $("#form4").hide();
-	 });
+      $("#cancel4").click(function(){
+         $("#school").show();
+         $("#form4").hide();
+     });
  });
 </script>
 
 <script>
    $(document).ready(function(){
-	  $("#chk").click(function(){
-		 $("#degree").show();
-	 });
+      $("#chk").click(function(){
+         $("#degree").show();
+     });
  });
-</script>	
+</script>   
 
 <script>
    $(document).ready(function(){
-	  $("#post").click(function(){
-		 $("#degree").hide();
-	 });
+      $("#post").click(function(){
+         $("#degree").hide();
+     });
  });
-</script>	
+</script>   

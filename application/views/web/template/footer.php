@@ -1372,6 +1372,19 @@ a.article:hover {
   console.log("Browser doesn't support geolocation!");
 }
     })
+
+// $(document).ready(function(){
+//   $(".like_cont").hover(function(){
+//      $(this).parent().parent().parent().parent().find(".like_lst_").show();
+//     }, function(){
+//     $(this).parent().parent().parent().parent().find(".like_lst_").hide();
+//   });
+//   $(".like_lst_").hover(function(){
+//      $(this).show();
+//     }, function(){
+//     $(this).hide();
+//   });
+// });
   </script>
 </body>
 </html>

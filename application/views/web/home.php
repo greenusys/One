@@ -541,13 +541,34 @@
                     ?>
                    <?php 
                      if(count($p_ost['likes_data']) > 0){ ?>
-                         <li><div class=" like_cont likeValue rounded-circle like_img_marg25"> <?=$p_ost['total_likes']?></div></li>
+                         <li  class="dropdown" ><div class="dropbtn like_cont likeValue rounded-circle like_img_marg25"> <?=$p_ost['total_likes']?></div>
+                            <div class="dropdown-content like_lst_">
+                              <?php 
+                                if(count($p_ost['likes_data']) < 5 ){
+                                  for($i=0;$i < count($p_ost['likes_data']) ;$i++){
+                              ?>
+                              <a href="<?=base_url('Profile/').$p_ost['likes_data'][$i]->user_id?>"><?=$p_ost['likes_data'][$i]->full_name?></a>
+                             
+                             <?php } 
+                                }else{ 
+                                    for($i=0;$i < 5 ;$i++){  ?>
+                                      <a href="<?=base_url('Profile/').$p_ost['likes_data'][$i]->user_id?>"><?=$p_ost['likes_data'][$i]->full_name?></a>
+                                       
+                                <?php }
+                                 }
+                                ?>
+                            </div>
+                         </li>
                     <?php  
                         }else{ ?>
-                            <li><div class=" like_cont likeValue rounded-circle "> <?=$p_ost['total_likes']?></div></li> 
+                            <li ><div class=" like_cont likeValue rounded-circle "> <?=$p_ost['total_likes']?></div>
+                               
+                            </li> 
                    <?php } ?>
                   </ul>
                 </div> 
+               
+               
               </div>
             </div>
             <div class="col-md-4 manage px-3 py-1">
@@ -821,7 +842,24 @@
                     ?>
                     <?php 
                      if(count($p_ost['likes_data']) > 0){ ?>
-                         <li><div class=" like_cont likeValue rounded-circle like_img_marg25"> <?=$p_ost['total_likes']?></div></li>
+                          <li  class="dropdown" ><div class="dropbtn like_cont likeValue rounded-circle like_img_marg25"> <?=$p_ost['total_likes']?></div>
+                            <div class="dropdown-content like_lst_">
+                              <?php 
+                                if(count($p_ost['likes_data']) < 5 ){
+                                  for($i=0;$i < count($p_ost['likes_data']) ;$i++){
+                              ?>
+                              <a href="<?=base_url('Profile/').$p_ost['likes_data'][$i]->user_id?>"><?=$p_ost['likes_data'][$i]->full_name?></a>
+                             
+                             <?php } 
+                                }else{ 
+                                    for($i=0;$i < 5 ;$i++){  ?>
+                                      <a href="<?=base_url('Profile/').$p_ost['likes_data'][$i]->user_id?>"><?=$p_ost['likes_data'][$i]->full_name?></a>
+                                       
+                                <?php }
+                                 }
+                                ?>
+                            </div>
+                         </li>
                     <?php  
                         }else{ ?>
                             <li><div class=" like_cont likeValue rounded-circle "> <?=$p_ost['total_likes']?></div></li> 
@@ -1261,7 +1299,24 @@
                     ?>
                     <?php 
                      if(count($p_ost['likes_data']) > 0){ ?>
-                         <li><div class=" like_cont likeValue rounded-circle like_img_marg25"> <?=$p_ost['total_likes']?></div></li>
+                          <li  class="dropdown" ><div class="dropbtn like_cont likeValue rounded-circle like_img_marg25"> <?=$p_ost['total_likes']?></div>
+                            <div class="dropdown-content like_lst_">
+                              <?php 
+                                if(count($p_ost['likes_data']) < 5 ){
+                                  for($i=0;$i < count($p_ost['likes_data']) ;$i++){
+                              ?>
+                              <a href="<?=base_url('Profile/').$p_ost['likes_data'][$i]->user_id?>"><?=$p_ost['likes_data'][$i]->full_name?></a>
+                             
+                             <?php } 
+                                }else{ 
+                                    for($i=0;$i < 5 ;$i++){  ?>
+                                      <a href="<?=base_url('Profile/').$p_ost['likes_data'][$i]->user_id?>"><?=$p_ost['likes_data'][$i]->full_name?></a>
+                                       
+                                <?php }
+                                 }
+                                ?>
+                            </div>
+                         </li>
                     <?php  
                         }else{ ?>
                             <li><div class=" like_cont likeValue rounded-circle "> <?=$p_ost['total_likes']?></div></li> 
@@ -1455,7 +1510,24 @@
                       ?>
                       <?php 
                      if(count($p_ost['likes_data']) > 0){ ?>
-                         <li><div class=" like_cont likeValue rounded-circle like_img_marg25"> <?=$p_ost['total_likes']?></div></li>
+                          <li  class="dropdown" ><div class="dropbtn like_cont likeValue rounded-circle like_img_marg25"> <?=$p_ost['total_likes']?></div>
+                            <div class="dropdown-content like_lst_">
+                              <?php 
+                                if(count($p_ost['likes_data']) < 5 ){
+                                  for($i=0;$i < count($p_ost['likes_data']) ;$i++){
+                              ?>
+                              <a href="<?=base_url('Profile/').$p_ost['likes_data'][$i]->user_id?>"><?=$p_ost['likes_data'][$i]->full_name?></a>
+                             
+                             <?php } 
+                                }else{ 
+                                    for($i=0;$i < 5 ;$i++){  ?>
+                                      <a href="<?=base_url('Profile/').$p_ost['likes_data'][$i]->user_id?>"><?=$p_ost['likes_data'][$i]->full_name?></a>
+                                       
+                                <?php }
+                                 }
+                                ?>
+                            </div>
+                         </li>
                     <?php  
                         }else{ ?>
                             <li><div class=" like_cont likeValue rounded-circle "> <?=$p_ost['total_likes']?></div></li> 
@@ -1510,10 +1582,10 @@
                         <?php } ?>
                       </div>
                   </div>
-             <?php 
-              }
-
-          }?>
+              <?php 
+                  }
+                } 
+              ?>
               <div class="p-2">
                  <div class="d-flex m-0">
                     <span> <img class="rounded-circle like_img" src="<?=base_url()?>assets/uploads/images/<?=$MyDetails[0]->profile_picture?>"></span>
@@ -1762,9 +1834,6 @@
                              
                           }
                           ?>
-                  
-                 
-                  
                 </div>
                 <a class="carousel-control-prev carousel_arrow_set" href="#carouselExampleIndicators2" role="button" data-slide="prev" style="background: blue;padding: 11px;">
                   <span class="carousel-control-prev-icon" aria-hidden="true"></span>

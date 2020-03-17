@@ -9,6 +9,7 @@ class About extends MY_Controller
 		$this->load->model('FriendsModel','FRND');
 		$this->load->model('APIModel','APIM');
 		$this->load->model('PostModel','POST');
+        $this->load->model('AboutModel','About');
 	}
 	public function index($uId="")	{	
 		$user_id=$_SESSION['logged_in'][0]->user_id;
@@ -72,12 +73,53 @@ class About extends MY_Controller
         $data['SkillDetails']=$this->getMySkillsDetails($id);
         $data['UniversityDetails']=$this->getMyUniversityDetails($id);
         $data['SchoolDetails']=$this->getMySchoolDetails($id);
+        $data['phoneNumbers']=$this->fetchPhoneNumbers($id);
+        $data['address']=$this->fetchAddress($id);
+       // $data['address']=$this->fetchInterestedIn($id);
+       
+
 		$this->load->view('web/template/header',$data);
 		$this->load->view('web/template/profileCover');
 		$this->load->view('web/template/sideSection');
 		$this->load->view('web/profile/about');
 		$this->load->view('web/template/footer');
     }
+
+// public function fetchInterestedIn($id){
+//      $this->db->where("user_id",$id);
+//         $res = $this->db->get('user_details')->row();
+//       if(count($res)>0){
+//        $usd = $res->usd_interested_in;
+//        return $usd_phone = explode(",", $usd);
+//         }else{
+//             return $usd_phone=array();
+//         }    
+// }
+    public function fetchAddress($id){
+        
+          $this->db->where("user_id",$id);
+        $res = $this->db->get('user_details')->row();
+      if(count($res)>0){
+       $usd = $res->usd_address;
+        return $usd_phone=array('usd_address'=> explode("///", $usd),'usd_address_privacy'=>$res->usd_address_privacy);
+    
+        }else{
+            return $usd_phone=array();
+        }    
+    }
+
+
+    public function fetchPhoneNumbers($id){
+        $this->db->where("user_id",$id);
+        $res = $this->db->get('user_details')->row();
+      if(count($res)>0){
+       $usd = $res->usd_phone;
+       return $usd_phone = explode(",", $usd);
+        }else{
+            return $usd_phone=array();
+        }    
+    }
+
     public function addSchool(){
         $data=array(
             "user_id"=>$_SESSION['logged_in'][0]->user_id,
@@ -239,4 +281,121 @@ class About extends MY_Controller
 		
 	}
 
+    public function addPhone(){
+          $data=array(
+            "user_id"=>$_SESSION['logged_in'][0]->user_id,
+            "usd_phone"=>$this->input->post('country_code').'-'.$this->input->post('usd_phone'),
+            "usd_phone_privacy"=>$this->input->post('usd_phone_privacy')
+        ); 
+        if($this->About->addPhoneNo($data)){
+                die(json_encode(array('code' =>'1' ,'msg'=>' Added Successfully')));
+            }
+            else{
+                die(json_encode(array('code' =>'0' ,'msg'=>'Error')));
+            }
+    }
+
+    public function addAddress(){
+        $data=array(
+            "user_id"=>$_SESSION['logged_in'][0]->user_id,
+            "usd_address"=>$this->input->post('address').'///'.$this->input->post('town').'///'.$this->input->post('zip').'///'.$this->input->post('ntbr'),
+            "usd_address_privacy"=>$this->input->post('usd_address_privacy')
+        ); 
+        if($this->About->addUserAddress($data)){
+                die(json_encode(array('code' =>'1' ,'msg'=>' Added Successfully')));
+            }
+            else{
+                die(json_encode(array('code' =>'0' ,'msg'=>'Error')));
+            }
+    }
+    public function addWebsites(){
+        $data=array(
+            "user_id"=>$_SESSION['logged_in'][0]->user_id,
+            "usd_website"=>implode('///', $this->input->post('usd_website')),
+            "usd_website_privacy"=>$this->input->post('usd_website_privacy')
+        ); 
+
+        if($this->About->addUserWebsite($data)){
+                die(json_encode(array('code' =>'1' ,'msg'=>' Added Successfully')));
+            }
+            else{
+                die(json_encode(array('code' =>'0' ,'msg'=>'Error')));
+            }
+    }
+     public function addSocial(){
+        $data=array(
+            "user_id"=>$_SESSION['logged_in'][0]->user_id,
+            "us_social_link"=>$this->input->post('social_links'),
+            "us_social_type"=>$this->input->post('social_type'),
+            "us_social_privacy"=>$this->input->post('usd_social_privacy')
+        ); 
+        // print_r($data);
+        // die();
+        if($this->About->addUserSocial($data)){
+                die(json_encode(array('code' =>'1' ,'msg'=>' Added Successfully')));
+            }
+            else{
+                die(json_encode(array('code' =>'0' ,'msg'=>'Error')));
+            }
+    }
+
+       public function addDateOfBirth(){
+        $data=array(
+            "user_id"=>$_SESSION['logged_in'][0]->user_id,
+            "date_of_birth"=>$this->input->post('day').'-'.$this->input->post('month').'-'.$this->input->post('year'),
+            "date_of_birth_privacy"=>$this->input->post('dob_privacy')
+        ); 
+        if($this->About->updateUserdob($data)){
+                die(json_encode(array('code' =>'1' ,'msg'=>' Added Successfully')));
+            }
+            else{
+                die(json_encode(array('code' =>'0' ,'msg'=>'Error')));
+            }
+    }
+
+
+    public function addGender(){
+        $data=array(
+            "user_id"=>$_SESSION['logged_in'][0]->user_id,
+
+            "gender"=>$this->input->post('gender')
+        ); 
+        if($this->About->updateUserGender($data)){
+                die(json_encode(array('code' =>'1' ,'msg'=>' Added Successfully')));
+            }
+            else{
+                die(json_encode(array('code' =>'0' ,'msg'=>'Error')));
+            }
+    }
+
+    public function addLanguages(){
+        $data=array(
+            "user_id"=>$_SESSION['logged_in'][0]->user_id,
+            "usd_languages"=> $this->input->post('languages')
+          
+        ); 
+        
+        if($this->About->addUserLanguages($data)){
+                die(json_encode(array('code' =>'1' ,'msg'=>' Added Successfully')));
+            }
+            else{
+                die(json_encode(array('code' =>'0' ,'msg'=>'Error')));
+            }
+    }
+     public function addInterested(){
+        $data=array(
+            "user_id"=>$_SESSION['logged_in'][0]->user_id,
+            "usd_interested_in"=> implode('///', $this->input->post('interested'))
+          
+        ); 
+        print_r($data);
+        die();
+        
+        if($this->About->addUserInterested($data)){
+                die(json_encode(array('code' =>'1' ,'msg'=>' Added Successfully')));
+            }
+            else{
+                die(json_encode(array('code' =>'0' ,'msg'=>'Error')));
+            }
+    }
 }
