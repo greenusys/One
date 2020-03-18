@@ -1096,7 +1096,7 @@ $(document).on("click",".delt_bn",function(){
                     processData:false,
                     data:formData,
                     success:function(response){
-                        console.log(response);
+                        //console.log(response);
                         response=JSON.parse(response);
                         if(response.code==1){
                             swal("Good job!", "Website Added Successfully.", "success");
@@ -1107,13 +1107,79 @@ $(document).on("click",".delt_bn",function(){
                 });
             });
         </script>
+
+  <script>
+  $(document).on('click','.total_links',function(){
+    var el=$(this);
+    var namer=el.attr('namer');
+    var link=el.attr('link');
+    var type=el.attr('typer');
+    $('#link_id').val(link);
+    $('#type_id').val(type);
+    $('#locator_links').val(namer);
+    el.hide();
+    $('.shw_social_bl').show();
+  })    
+
+  $(document).on('click','.canceler_links',function(){
+    $('.shw_social_bl').hide();
+    $('.total_links').show();
+  })
+
+  $(document).on("submit","#update_social",function(e){
+
+    e.preventDefault();
+    //alert('Working');
+    var formData=new FormData($(this)[0]);
+    $.ajax({
+        url:"<?=base_url('About/updateSocial')?>",
+        type:"post",
+        cache:false,
+        contentType:false,
+        processData:false,
+        data:formData,
+        success:function(response){
+            //console.log(response);
+            response=JSON.parse(response);
+            if(response.status==1){
+                swal("Good job!", "Links Updated Successfully.", "success");
+                location.reload();
+            }else{
+                 swal("Oop!", response.msg, "info");
+            }
+        }
+    });
+});
+
+  </script>
         <div class="row">
             <div class="col-md-4">
                 <span class="author">Social links</span>
             </div>
+                    <div class="shw_social_bl" style="display: none">
+                    <form id="update_social">
+                      <input type="text" name="updated_link" id="link_id" class="ml-1 add_int form-control">
+                      <input type="text" name="update_type" id="type_id" class="ml-1 add_int form-control">
+                      <input type="hidden" name="location" id="locator_links" value="">
+                      <div class="text-right"><label class="btn p-1 btn-primary bio_btn  m-0 mr-2 ranUse canceler_links">Cancel</label><button class="mr-2 btn btn-success p-1 bio_btn ranUse">Save</button></div>
+                    </form>
+                  </div>
             <div class="col-md-8">
+                        <ul class="m-0 list-unstyled"><?php
+                            if($social_links['usd_social_link'][0]=="" || $social_links['usd_social_link'][0]==NULL){
+                                echo "<li class='about_wt'>Add Social Links</li>";
+                            }
+                            $count=0;
+                        for($i=0;$i<count($social_links['usd_social_link']);$i++) { 
+                            
+                            ?>
+                            <li class="about_wt total_links" link="<?=$social_links['usd_social_link'][$i]?>" typer="<?=$social_links['usd_social_type'][$i]?>" namer="<?=$count?>"><?=$social_links['usd_social_type'][$i].":  ".$social_links['usd_social_link'][$i]?></li>
+                        <?php  $count++;
+                            }
+                        ?>
+                    </ul>
                 <div class="sh-edt">
-                    <span class="det_shw"> https:</span>
+                    <span class="det_shw">Add More: </span>
                     <div class="float-right edt-bt" ><span class="text-primary pointer edit_shbtn">Edit</span></div>
                 </div>
                 <div class="lt_blok ">
@@ -1156,9 +1222,8 @@ $(document).on("click",".delt_bn",function(){
                         processData:false,
                         data:formData,
                         success:function(response){
-                            console.log(response);
                             response=JSON.parse(response);
-                            if(response.code==1){
+                            if(response.status==1){
                                 swal("Good job!", "Social Links Added Successfully.", "success");
                             }else{
                                  swal("Oop!", response.msg, "info");
@@ -1496,7 +1561,76 @@ $(document).on("click",".delt_bn",function(){
             </div>
         </div>
         <hr>
+        <div class="row">
+            <div class="col-md-4">
+                <span class="author">Relationship Status</span>
+            </div>
+                    <div class="shw_social_bl" style="display: none">
+                    <form id="update_social">
+                      <input type="text" name="updated_link" id="link_id" class="ml-1 add_int form-control">
+                      <input type="text" name="update_type" id="type_id" class="ml-1 add_int form-control">
+                      <input type="hidden" name="location" id="locator_links" value="">
+                      <div class="text-right"><label class="btn p-1 btn-primary bio_btn  m-0 mr-2 ranUse canceler_links">Cancel</label><button class="mr-2 btn btn-success p-1 bio_btn ranUse">Save</button></div>
+                    </form>
+                  </div>
+            <div class="col-md-8 sh-edt">
+                        <ul class="m-0 list-unstyled"><?=$relationshp['rel_status']?></ul>
+                <div class="sh-edt">
+<!--                     <span class="det_shw">Update</span> -->
+                    <div class="float-right edt-bt" ><span class="text-primary pointer edit_shbtn">Update</span></div>
+                </div>
+                <div class="lt_blok ">
+                    <form id="update_relationship">
+                        <div class="aad_nmb mb-1"> 
+                            <div class="d-flex">   
+                                <select class="form-control w-50 add_int" name="rel_status" required="">
+                                    <option value="Single">Single</option>
+                                    <option value="In a relationshp">In a relationshp</option>
+                                    <option value="Engaged">Engaged</option>
+                                    <option value="Married">Married</option>
+                                    <option value="In a civil union">In a civil union</option>
+                                    <option value="In a domestic partnership">In a domestic partnership</option>
+                                    <option value="In an open relationship">In an open relationship</option>
+                                    <option value="It's complicated">It's complicated</option>
+                                    <option value="Separated">Separated</option>
+                                    <option value="Divorced">Divorced</option>
+                                    <option value="Widowed">Widowed</option>
+                                </select> 
+                             
+                            </div>
+                            <button class="btn btn-primary py-1 px-2 ">Save Changes</button> <button type="button" class="can_btn btn border ml-2">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <hr>
          <script type="text/javascript">
+
+                $(document).on("submit","#update_relationship",function(e){
+                     e.preventDefault();
+                    //alert('Working');
+                  
+                    var formData=new FormData($(this)[0]);
+                  $.ajax({
+                        url:"<?=base_url('About/update_relationship')?>",
+                        type:"post",
+                        cache:false,
+                        contentType:false,
+                        processData:false,
+                        data:formData,
+                        success:function(response){
+                            //console.log(response);
+                            response=JSON.parse(response);
+                            if(response.status==1){
+                                swal("Good job!", "Status Added Successfully.", "success");
+                                location.reload();
+                            }else{
+                                 swal("Oop!", response.msg, "info");
+                            }
+                        }
+                    });
+                });
           
               $(document).on("submit","#add_languages",function(e){
                      e.preventDefault();

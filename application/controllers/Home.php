@@ -35,7 +35,7 @@ class Home extends MY_Controller {
 		$offset=0;
 		$limit=5;
 		if(count($pstDoat=$this->POST->getAllPost($this->getAllMyPost(),$id,$offset,$limit))>0){
-			print_r($pstDoat);
+			//print_r($pstDoat);
 			foreach ($pstDoat as $key => $value) {
 				$p_Data['post_id']=$value->post_id;
 				$p_Data['user_id']=$value->user_id;

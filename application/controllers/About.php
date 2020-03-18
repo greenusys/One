@@ -81,6 +81,8 @@ class About extends MY_Controller
 
         $data['phoneNumbers']=$this->fetchPhoneNumbers($id);
         $data['address']=$this->fetchAddress($id);
+        $data['social_links']=$this->fetchSocialLinks($id);
+        $data['relationshp']=$this->fetchRelationshipStatus($id);
        // $data['address']=$this->fetchInterestedIn($id);
        
 
@@ -90,6 +92,56 @@ class About extends MY_Controller
         $this->load->view('web/profile/about');
         $this->load->view('web/template/footer');
 
+    }
+
+    public function update_relationship(){
+        $rel_status=$_POST['rel_status'];
+        $user_id=$_SESSION['logged_in'][0]->user_id;
+        $checkUser=$this->About->checkUser($user_id);
+        if ($checkUser) {
+            $data=array('relationship_status'=>$rel_status,
+                        'user_id'=>$user_id);
+            $result=$this->About->InsertSocial($data);
+            if ($result) {
+                die(json_encode(array('status'=>'1','msg'=>'Added')));
+            }
+            else{
+                die(json_encode(array('status'=>'0','msg'=>'Error')));
+            }
+        }
+        else{
+            $result=$this->About->UpdateRelStatus($rel_status,$user_id);
+            if ($result) {
+                die(json_encode(array('status'=>'1','msg'=>'Added')));
+            }
+            else{
+                die(json_encode(array('status'=>'0','msg'=>'Error')));
+            }
+        }
+    }
+
+    public function fetchRelationshipStatus($id){
+        $this->db->where("user_id",$id);
+        $res = $this->db->get('user_details')->result_array();
+        if(count($res)>0){
+        return $usd_phone=array('rel_status'=>$res[0]['relationship_status']);
+    
+        }else{
+            return $usd_phone=array();
+        }    
+    }
+
+    public function fetchSocialLinks($id){
+        $this->db->where("user_id",$id);
+        $res = $this->db->get('user_details')->result_array();
+        if(count($res)>0){
+        $usd_social_links = $res[0]['usd_social_link'];
+        $usd_social_type = $res[0]['usd_social_type'];
+        return $usd_phone=array('usd_social_link'=> explode("///", $usd_social_links),'usd_social_type'=> explode("///", $usd_social_type),'usd_social_privacy'=>$res[0]['usd_social_privacy']);
+    
+        }else{
+            return $usd_phone=array();
+        }    
     }
 
 // public function fetchInterestedIn($id){
@@ -127,6 +179,33 @@ class About extends MY_Controller
         $data=array('user_id'=>$user_id,
                     'usd_num'=>$final_string);
         $result=$this->About->phoneUpdate($data);
+        if ($result) {
+            die(json_encode(array('status'=>'1')));
+        }
+        else{
+            die(json_encode(array('status'=>'0')));
+        }
+    }
+
+    public function updateSocial(){
+        $updated_link = $_POST['updated_link'];
+        $update_type = $_POST['update_type'];
+        $location = $_POST['location'];
+        $user_id=$_SESSION['logged_in'][0]->user_id;
+        $this->db->where("user_id",$user_id);
+        $res = $this->db->get('user_details')->result_array();
+        $links=$res[0]['usd_social_link'];
+        $types=$res[0]['usd_social_type'];
+        $exploder_links=explode("///",$links);
+        $exploder_type=explode("///",$types);
+        $exploder_links[$location]=$updated_link;
+        $exploder_type[$location]=$update_type;
+        $final_string_link=implode("///",$exploder_links);
+        $final_string_type=implode("///",$exploder_type);
+        $data=array('user_id'=>$user_id,
+                    'usd_social_link'=>$final_string_link,
+                    'usd_social_type'=>$final_string_type);
+        $result=$this->About->socialLinkUpdate($data);
         if ($result) {
             die(json_encode(array('status'=>'1')));
         }
@@ -359,20 +438,64 @@ class About extends MY_Controller
             }
     }
      public function addSocial(){
+        $social_links=implode("///",$_POST['social_links']);
+        $social_type=implode("///",$_POST['social_type']);
+        $id=$_SESSION['logged_in'][0]->user_id;
         $data=array(
-            "user_id"=>$_SESSION['logged_in'][0]->user_id,
-            "us_social_link"=>$this->input->post('social_links'),
-            "us_social_type"=>$this->input->post('social_type'),
-            "us_social_privacy"=>$this->input->post('usd_social_privacy')
+            "user_id"=>$id,
+            "usd_social_link"=>$social_links,
+            "usd_social_type"=>$social_type,
+            "usd_social_privacy"=>$this->input->post('usd_social_privacy')
         ); 
-        // print_r($data);
-        // die();
-        if($this->About->addUserSocial($data)){
-                die(json_encode(array('code' =>'1' ,'msg'=>' Added Successfully')));
+        $checkUser=$this->About->checkUser($id);
+        if($checkUser){
+            $result=$this->About->InsertSocial($data);
+            if ($result) {
+                die(json_encode(array('status'=>'1','msg'=>'Added')));
             }
             else{
-                die(json_encode(array('code' =>'0' ,'msg'=>'Error')));
+                die(json_encode(array('status'=>'0','msg'=>'Error')));
             }
+        }
+        else{
+            $main_data=$this->About->FetchData($id);
+            $old_social_link=$main_data[0]['usd_social_link'];
+            $old_social_type=$main_data[0]['usd_social_type'];
+            if ($old_social_link=="" || $old_social_link==NULL) {
+                $new_data=array(
+                    "usd_social_link"=>$social_links,
+                    "usd_social_type"=>$social_type,
+                    "usd_social_privacy"=>$this->input->post('usd_social_privacy')
+                ); 
+                $update1=$this->About->UpdateSocial($new_data,$id);
+                if ($update1) {
+                     die(json_encode(array('status'=>'1','msg'=>'Added')));
+                }
+                else{
+                    die(json_encode(array('status'=>'0','msg'=>'Error')));
+                }
+            }
+            else{
+                $explode_old_link=explode("///",$old_social_link);
+                $explode_old_type=explode("///",$old_social_type);
+                $new_social_links=array_merge($explode_old_link,$_POST['social_links']);
+                $new_social_type=array_merge($explode_old_type,$_POST['social_type']);
+                $implode_social_link=implode("///",$new_social_links);
+                $implode_social_type=implode("///",$new_social_type);
+                $new_data_1=array(
+                    "usd_social_link"=>$implode_social_link,
+                    "usd_social_type"=>$implode_social_type,
+                    "usd_social_privacy"=>$this->input->post('usd_social_privacy')
+                ); 
+                $update2=$this->About->UpdateSocial($new_data_1,$id);
+                if ($update2) {
+                     die(json_encode(array('status'=>'1','msg'=>'Added')));
+                }
+                else{
+                    die(json_encode(array('status'=>'0','msg'=>'Error')));
+                }
+            }
+        }
     }
 
        public function addDateOfBirth(){
