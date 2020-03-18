@@ -33,10 +33,10 @@
   color: #999;
 }
 .flw_btn_cover{
-      background: #ff441a;
-    padding: 10px;
-    border-radius: 5px;
-    font-weight: 600;
+      background: #ff441a !important;
+    padding: 10px !important;
+    border-radius: 5px !important;
+    font-weight: 600 !important;
 }
 
 .add-btn .accptFriendRequest:hover {
@@ -70,11 +70,24 @@
       ?>
   
   </div>
-    <?php// print_r($ReqStatus);
+    <?php 
+    print_r($checkFollowings);
+    //print_r($MyDetails);
    // echo $myId;
     ?>
       <div class="add-btn " >
-        <span class="flw_btn_cover "><?=count($MyFollowers)?> Followers</span>
+        <!-- <span class="flw_btn_cover "><?=count($MyFollowers)?> Followers</span> -->
+         <?php 
+
+             if($MyDetails[0]->user_id != $userID){
+                if($checkFollowings){
+                 echo'<a href="javascript:void(0)" d-id="'.$MyDetails[0]->user_id.'" d-name="'.$MyDetails[0]->full_name.'" class="unfollow_user_ flw_btn_cover"><label class="text-white">Unfollow</label></a>';
+                }else{
+                   echo'<a href="javascript:void(0)" d-id="'.$MyDetails[0]->user_id.'" d-name="'.$MyDetails[0]->full_name.'" class="follow_user_ flw_btn_cover"><label class="text-white">Follow</label></a>';
+                }
+             }
+         ?>
+        
         <?php
         // echo 'My Id: '.$myId.' | Cancel Friend : '.$cancelFriend;
           if($myId==0 && $cancelFriend == 1){
@@ -95,11 +108,53 @@
           }
 
         ?>
-        
-        
       </div>
- 
       <script>
+          $(document).on('click','.follow_user_',function(){
+              var uId=$(this).attr('d-id');
+              var name=$(this).attr('d-name');
+              var ele = $(this);
+              //console.log(' Action : '+toAct+' | '+reqId);
+              $.ajax({
+                url:"<?=base_url('APIController/FollowUser')?>",
+                type:"post",
+                data:{name:name,uId:uId,myid:'<?=$_SESSION['logged_in'][0]->user_id?>'},
+                success:function(response){
+                          response=JSON.parse(response);
+                          if(response.code==1){
+                            swal("Success!", response.data, "success");
+                            ele.find("label").html("Unfollow");
+                            ele.attr("class","unfollow_user_ flw_btn_cover");
+                          }else{
+                            swal("Oops!", response.data, "warning");
+                          }
+                          // console.log(response);
+                        }
+              });
+          });
+
+            $(document).on('click','.unfollow_user_',function(){
+              var uId=$(this).attr('d-id');
+              var name=$(this).attr('d-name');
+              var ele = $(this);
+              $.ajax({
+                url:"<?=base_url('APIController/unFollowUser')?>",
+                type:"post",
+                data:{name:name,uId:uId,myid:'<?=$_SESSION['logged_in'][0]->user_id?>'},
+                success:function(response){
+                          response=JSON.parse(response);
+                          if(response.code==1){
+                            swal("Success!", response.data, "success");
+                            ele.find("label").html("Follow");
+                            ele.attr("class","follow_user_ flw_btn_cover");
+                          }else{
+                            swal("Oops!", response.data, "warning");
+                          }
+                          // console.log(response);
+                        }
+              });
+          });
+
             $(document).on('click','.accept-request',function(){
               var toAct=$(this).attr('action');
               var reqId=$(this).attr('req');
@@ -185,6 +240,9 @@
             }
           });
         });
+
+
+        
       </script>
       <?php
         if($myId==1){

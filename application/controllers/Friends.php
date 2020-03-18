@@ -111,9 +111,9 @@ class Friends extends MY_Controller {
         $data['SkillDetails']=$this->getMySkillsDetails($id);
         $data['UniversityDetails']=$this->getMyUniversityDetails($id);
         $data['SchoolDetails']=$this->getMySchoolDetails($id);
-        $data['MyFollowers']=$this->FRND->getMyFollowers($id);
-		$data['MyFollowings']=$this->FRND->getMyFollowings($id);
-		
+        $data['MyFollowers']=$this->FRND->getFollowers($id);
+		$data['MyFollowings']=$this->FRND->getFollowings($id);
+		$data['checkFollowings']=$this->FRND->getMyFollowings($user_id);
 		$this->load->view('web/template/header',$data);
 		$this->load->view('web/template/profileCover');
 		$this->load->view('web/template/sideSection');

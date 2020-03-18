@@ -678,6 +678,17 @@ class APIController extends MY_Controller
 				die(json_encode(array("code"=>0,"data"=>"Failed To Accept Request.")));
 			}
 	}
+	public function unFollowUser(){
+		 $my_Id=$this->input->post('myid');
+		 $uId=$this->input->post('uId');
+		  $name=$this->input->post('name');
+		 	if($this->FRND->deleteFollowUser($my_Id,$uId)){
+				die(json_encode(array("code"=>1,"data"=>"Now You are unfollow " .$name.".")));
+			}else{
+				die(json_encode(array("code"=>0,"data"=>"Failed To Accept Request.")));
+			}
+	}
+
 	//To Cancel Request
 	public function actionRequest(){
 		$req_Id=$this->input->post('reqId');

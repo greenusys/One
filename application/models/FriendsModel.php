@@ -107,7 +107,7 @@
 				return false;
 			}
 		}
-		public function unFollowRequest($frnd_id,$my_id){
+		public function deleteFollowUser($frnd_id,$my_id){
 			$cond1=array("follow_by"=>$frnd_id,"follow_to"=>$my_id);
 			$this->db->where($cond1);
 			if($this->db->delete('follow_user')){
@@ -119,13 +119,17 @@
 				return false;
 			}
 		}
-		public function getMyFollowers($myId){
+		public function getFollowers($myId){
 				return $result=$this->db->query("select * from follow_user join users on users.user_id=follow_user.follow_by where follow_user.follow_to='$myId'")->result(); 
 
 		}
 
-		public function getMyFollowings($myId){
+		public function getFollowings($myId){
 			return  $result=$this->db->query("select * from follow_user join users on users.user_id=follow_user.follow_to where follow_user.follow_by='$myId'")->result(); 
+
+		}
+		public function getMyFollowings($userId,$myId){
+			return  $result=$this->db->query("select * from follow_user where follow_by='$myId' and follow_to='$userId'")->result(); 
 
 		}
 

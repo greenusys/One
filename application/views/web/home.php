@@ -43,31 +43,7 @@
   $(document).ready(function() {
     $('.home').addClass('active');
   });
-  $(document).on('click','.follow_user_',function(){
 
-              var uId=$(this).attr('d-id');
-              var name=$(this).attr('d-name');
-              //console.log(' Action : '+toAct+' | '+reqId);
-              $.ajax({
-                url:"<?=base_url('APIController/FollowUser')?>",
-                type:"post",
-                data:{name:name,uId:uId,myid:'<?=$_SESSION['logged_in'][0]->user_id?>'},
-                success:function(response){
-                          response=JSON.parse(response);
-                          if(response.code==1){
-                            swal("Success!", response.data, "success");
-                            
-                          }else{
-                            swal("Oops!", response.data, "warning");
-                          }
-                          // console.log(response);
-                        }
-              });
-
-      // var full_name=$(this).attr('d-name');
-      // swal("Good job!", "Now you follow "+full_name, "success");
-      // $("#folllw").load(" #folllw > *");
-  });
 </script>
 <script type="text/javascript" src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
     <script src="https://files.codepedia.info/files/uploads/iScripts/html2canvas.js"></script>
