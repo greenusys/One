@@ -71,7 +71,7 @@
   
   </div>
     <?php 
-    print_r($checkFollowings);
+    //print_r($checkFollowings);
     //print_r($MyDetails);
    // echo $myId;
     ?>
