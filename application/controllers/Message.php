@@ -30,7 +30,16 @@ class Message extends MY_Controller {
 		$Conversation=$this->Message->getConversationDetails($con_id);
 		die(json_encode(array("code"=>1,"msgs"=>$Conversation)));
 	}
+	public function getUnreadMessage(){
+		$con_id=$this->input->post('conv_id');
+		$Conversation=$this->Message->getUnreadMessage($con_id);
+		die(json_encode(array("code"=>1,"msgs"=>$Conversation)));
+	}
 
+	public function getRecentChat(){
+		$Conversation=$this->Message->getRecentChat();
+		die(json_encode(array("code"=>1,"msgs"=>$Conversation)));
+	}
 	public function sendFile(){
 		$config['upload_path'] = './assets/uploads/chats/';
         $config['allowed_types'] = '*';
@@ -88,7 +97,7 @@ class Message extends MY_Controller {
 					// "sent_on"=>date('D M d Y H:i:s O')
 					// "sent_on"=>date('d/m/Y H:i:s'),
 					);
-		print_r($data);
+		// print_r($data);
 		if($this->Message->sendMessage($data)){
 			die(json_encode(array("code"=>1,"data"=>"Message Sent.")));
 		}else{
