@@ -494,6 +494,7 @@ public function get_States()
 		$data['allGroups']=$this->db->get('user_groups')->result();
 		$this->db->join('users','users.user_id=user_fav_section.fav_user_id');
 		$this->db->join('post_','post_.post_id=user_fav_section.post_id');
+		$this->db->where('user_fav_section.user_id',$user_Id);
 		$data['favpost']=$this->db->get('user_fav_section')->result();
 		$data['favphoto']=$this->Test->favphoto();
 		$data['favchat']=$this->Test->favchat();
@@ -508,6 +509,7 @@ public function get_States()
 		$data['allGroups']=$this->db->get('user_groups')->result();
 		$this->db->join('users','users.user_id=user_fav_section.fav_user_id');
 		$this->db->join('post_','post_.post_id=user_fav_section.post_id');
+		$this->db->where('user_fav_section.user_id',$user_Id);
 		$data['favpost']=$this->db->get('user_fav_section')->result();
 		$this->load->view('web/favpost',$data);
 		$this->load->view('web/template/footer');

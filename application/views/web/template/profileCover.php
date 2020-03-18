@@ -53,9 +53,22 @@
 <section class="container-fluid mt-5" id="action_area">
   <div class="feature-photo">
   <div class="row">
-     <a class="w-100" target="_blank" href="<?=base_url('Post/viewPost/').$Mycoverpic[0]->post_id?>" target="blank">
+      <?php
+        if(empty($Mycoverpic))
+      {
+        ?>
          <img src="<?=base_url()?>assets/uploads/images/<?=$MyDetails[0]->cover_photo?>" onerror="this.src='<?=base_url()?>assets/uploads/images/default.jpg';" alt="cover image" class="cover-pic img-fluid w-100" style="height: 350px">
-    </a>
+     <?php
+     }
+      else
+      {?>
+        <a class="w-100" target="_blank" href="<?=base_url('Post/viewPost/').$Mycoverpic[0]->post_id?>" target="blank">
+            <img src="<?=base_url()?>assets/uploads/images/<?=$MyDetails[0]->cover_photo?>" onerror="this.src='<?=base_url()?>assets/uploads/images/default.jpg';" alt="cover image" class="cover-pic img-fluid w-100" style="height: 350px">
+        </a>
+     <?php
+     }
+      ?>
+  
   </div>
     <?php// print_r($ReqStatus);
    // echo $myId;
@@ -194,9 +207,22 @@
   <div class="row">
     <div class="col-md-3 pr-0">
       <div class="mar_t110 usr_proImg">
+    <?php
+    if(empty($Myprofilepic))
+      {
+        ?>
+         <img src="<?=base_url()?>assets/uploads/images/<?=$MyDetails[0]->profile_picture?>" alt="profile image" onerror="this.src='<?=base_url()?>assets/uploads/images/default.png';" class="profile-pic img-fluid">
+     <?php
+     }
+      else
+      {?>
         <a class="" target="_blank" href="<?=base_url('Post/viewPost/').$Myprofilepic[0]->post_id?>" target="blank">
             <img src="<?=base_url()?>assets/uploads/images/<?=$MyDetails[0]->profile_picture?>" alt="profile image" onerror="this.src='<?=base_url()?>assets/uploads/images/default.png';" class="profile-pic img-fluid">
         </a>
+     <?php
+     }
+      ?>
+       
       </div>
       <?php
         if($myId==1){

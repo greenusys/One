@@ -1136,6 +1136,7 @@ public function getPostLikes($post_id){
                 }
                 $this->resizeImage($_FILES['file']['name'] );
                 $images[]=$_FILES['file']['name'];
+
 		// print_r($res);
 		// $old_imgs= $res;
 	            }
