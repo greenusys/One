@@ -212,7 +212,7 @@
                     <div class="col-md-9 p-0">
                       <span class=" author"><?=$user->full_name?></span>
                       <div class="">
-                        <a href="javascript:void(0)" d-id="<?=$user->user_id?>" d-name="<?=$user->full_name?>" class="follow_user_"><label class="randflow"><small class="text-white">Follow</small></label></a> 
+                        <a href="javascript:void(0)" d-id="<?=$user->user_id?>" d-name="<?=$user->full_name?>" class="follow_user_"><label class="randflow text-white">Follow</label></a> 
                         
                       </div>
                     </div>

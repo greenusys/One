@@ -108,7 +108,7 @@
 							<div class="row form-group">
 								<div class="col-md-6">
 									<label class="w-100">Page Name
-										<input type="text" class="form-control" name="page_name" aria-describedby="emailHelp" placeholder="Name Your Page">
+										<input type="text" class="form-control" name="upage_name" aria-describedby="emailHelp" placeholder="Name Your Page">
 									</label>
 								</div>
 								<div class="col-md-6">
@@ -137,17 +137,26 @@
 									</label>
 								</div>
 							</div>
-							
+							<div class="form-group">
+								<div class="row">
+									<div class="col-md-6">
+										<label >Website
+											<input type="text" class="form-control" name="upage_website" placeholder="Enter Mobile">
+										</label>
+									</div>
+								
+								</div>
+							</div>
 							<div class="form-group">
 								<div class="row">
 									<div class="col-md-6">
 										<label >Mobile
-											<input type="text" class="form-control" name="" placeholder="Enter Mobile">
+											<input type="text" class="form-control" name="upage_contact" placeholder="Enter Mobile">
 										</label>
 									</div>
 									<div class="col-md-6">
 										<label >Zipcode
-											<input type="text" class="form-control" name="" placeholder="Enter Address">
+											<input type="text" class="form-control" name="upage_pincode" placeholder="Enter Address">
 										</label>
 									</div>
 								</div>
@@ -156,12 +165,12 @@
 								<div class="row">
 									<div class="col-md-6">
 										<label >Page Image
-											<input type="file" class="form-control" name="">
+											<input type="file" class="form-control" name="upage_profilepic">
 										</label>
 									</div>
 									<div class="col-md-6">
 										<label >Page Cover Image
-											<input type="file" class="form-control" name="">
+											<input type="file" class="form-control" name="upage_coverpic">
 										</label>
 									</div>
 								</div>
