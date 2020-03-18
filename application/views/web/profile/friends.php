@@ -114,12 +114,12 @@
                 ?>
                   <div class="col-md-4 ">
                     <div class="">
-                      <img src="<?=base_url()?>assets/img/Cover_Photo/<?=$Friend->cover_photo?>" class="height65 img-fluid w-100" onerror="this.src='<?=base_url()?>assets/img/Cover_Photo/default.jpg';">
+                      <img src="<?=base_url()?>assets/uploads/images/<?=$Friend->cover_photo?>" class="height65 img-fluid w-100" onerror="this.src='<?=base_url()?>assets/uploads/images/default.jpg';">
                     </div>
                
                       <div class="d-flex height65">
                         <div class="col-md-4 pr-0 mt-n4">
-                          <img src="<?=base_url()?>assets/img/Profile_Pic/<?=$Friend->profile_picture?>" onerror="this.src='<?=base_url()?>assets/img/Profile_Pic/default.png';" class="img_bordr rounded-circle img-fluid">
+                          <img src="<?=base_url()?>assets/uploads/images/<?=$Friend->profile_picture?>" onerror="this.src='<?=base_url()?>assets/uploads/images/default.png';" class="img_bordr rounded-circle img-fluid">
                         </div>
                         <div class="col-md-8 p-1">
                             <a href="<?=base_url('Profile/').$Friend->user_id?>"><h6><?=$Friend->full_name?></h6></a>
@@ -140,12 +140,12 @@
                   ?>
                     <div class="col-md-4">
                       <div class="">
-                        <img src="<?=base_url()?>assets/img/Cover_Photo/<?=$reqFr->cover_photo?>" class="height65 img-fluid w-100" onerror="this.src='<?=base_url()?>assets/img/Cover_Photo/default.jpg';">
+                        <img src="<?=base_url()?>assets/uploads/images/<?=$reqFr->cover_photo?>" class="height65 img-fluid w-100" onerror="this.src='<?=base_url()?>assets/img/Cover_Photo/default.jpg';">
                       </div>
                  
                         <div class="d-flex ">
                           <div class="col-md-4 pr-0 mt-n4">
-                            <img src="<?=base_url()?>assets/img/Profile_Pic/<?=$reqFr->profile_picture?>" class="img_bordr rounded-circle img-fluid" onerror="this.src='<?=base_url()?>assets/img/Cover_Photo/default.jpg';">
+                            <img src="<?=base_url()?>assets/uploads/images/<?=$reqFr->profile_picture?>" class="img_bordr rounded-circle img-fluid" onerror="this.src='<?=base_url()?>assets/img/Cover_Photo/default.jpg';">
                           </div>
                           <div class="col-md-8 p-1">
                               <a href=""><h6><?=$reqFr->full_name?></h6></a>

@@ -806,6 +806,50 @@ $(document).on("click",".delt_bn",function(){
         $(".edt-bt").hide();
       })
   </script>
+  <script>
+  $(document).on('click','.total_num',function(){
+    var el=$(this);
+    var namer=el.attr('namer');
+    var phone=el.html();
+    var id = el.attr('id');
+    $('#number_id').val(phone);
+    $('#locator').val(namer);
+    $('.canceler').attr('prev_id');
+    el.hide();
+    $('.shw_phone_bl').show();
+  })    
+
+  $(document).on('click','.canceler',function(){
+    $('.shw_phone_bl').hide();
+    $('.total_num').show();
+  })
+
+  $(document).on("submit","#update_num",function(e){
+
+    e.preventDefault();
+    //alert('Working');
+    var formData=new FormData($(this)[0]);
+    $.ajax({
+        url:"<?=base_url('About/updateNum')?>",
+        type:"post",
+        cache:false,
+        contentType:false,
+        processData:false,
+        data:formData,
+        success:function(response){
+            console.log(response);
+            response=JSON.parse(response);
+            if(response.status==1){
+                swal("Good job!", "Number Updated Successfully.", "success");
+                location.reload();
+            }else{
+                 swal("Oop!", response.msg, "info");
+            }
+        }
+    });
+});
+
+  </script>
   <div class="tab-pane fade card show active" id="contact" role="tabpanel" aria-labelledby="contact-tab">
     <div class="col-md-12">
         <h6 class="text-secondary pb-2 author mt-3 mb-0">CONTACT INFORMATION</h6>
@@ -816,10 +860,24 @@ $(document).on("click",".delt_bn",function(){
             </div>
             <div class="col-md-8 ">
                 <div class="sh-edt">
+                <div class="shw_phone_bl" style="display: none">
+                    <form id="update_num">
+                      <input type="text" maxlength="20" minlength="9" name="updated_num" id="number_id" class="ml-1 add_int form-control">
+                      <input type="hidden" name="location" id="locator" value="">
+                      <div class="text-right"><label class="btn p-1 btn-primary bio_btn  m-0 mr-2 ranUse canceler">Cancel</label><button class="mr-2 btn btn-success p-1 bio_btn ranUse">Save</button></div>
+                    </form>
+                  </div>
                     <ul class="m-0 list-unstyled"><?php
-                        foreach ($phoneNumbers as $phone) { ?>
-                            <li class="about_wt"><?=$phone?></li>
-                        <?php  }
+                            if($phoneNumbers[0]=="" || $phoneNumbers[0]==NULL){
+                                echo "<li class='about_wt'>Add phone number</li>";
+                            }
+                            $count=0;
+                        foreach ($phoneNumbers as $phone) { 
+                            
+                            ?>
+                            <li class="about_wt total_num" namer="<?=$count?>"><?=$phone?></li>
+                        <?php  $count++;
+                            }
                         ?>
                     </ul>
                     <?php 
@@ -850,13 +908,19 @@ $(document).on("click",".delt_bn",function(){
         <script>
           
               $(document).on("click",".ant_nm",function(){
+                var check_length = $('.total_num').length;
+                if (check_length>=2) {
+                    swal("Sorry","Maximum Two Contact Numbers Are allowed","warning");
+                }
+                else{
                 var html='<div class="d-flex mb-1"> '+
-                            '<select class="form-control add_int w-50" name="country_code">'+
+                            '<select class="form-control add_int w-50" name="country_code[]">'+
                                 '<option selected="" value="+91">India +91</option>'+
                             '</select>'+
-                            '<input type="tel" maxlength="10" minlength="9" name="usd_phone" class="ml-1 add_int form-control">'+
+                            '<input type="tel" maxlength="10" minlength="9" name="usd_phone[]" class="ml-1 add_int form-control">'+
                         '</div>';
-                $("#ad_num").append(html);            
+                $("#ad_num").append(html);     
+                }       
             })
 
 
@@ -1032,7 +1096,7 @@ $(document).on("click",".delt_bn",function(){
                     processData:false,
                     data:formData,
                     success:function(response){
-                        console.log(response);
+                        //console.log(response);
                         response=JSON.parse(response);
                         if(response.code==1){
                             swal("Good job!", "Website Added Successfully.", "success");
@@ -1043,13 +1107,79 @@ $(document).on("click",".delt_bn",function(){
                 });
             });
         </script>
+
+  <script>
+  $(document).on('click','.total_links',function(){
+    var el=$(this);
+    var namer=el.attr('namer');
+    var link=el.attr('link');
+    var type=el.attr('typer');
+    $('#link_id').val(link);
+    $('#type_id').val(type);
+    $('#locator_links').val(namer);
+    el.hide();
+    $('.shw_social_bl').show();
+  })    
+
+  $(document).on('click','.canceler_links',function(){
+    $('.shw_social_bl').hide();
+    $('.total_links').show();
+  })
+
+  $(document).on("submit","#update_social",function(e){
+
+    e.preventDefault();
+    //alert('Working');
+    var formData=new FormData($(this)[0]);
+    $.ajax({
+        url:"<?=base_url('About/updateSocial')?>",
+        type:"post",
+        cache:false,
+        contentType:false,
+        processData:false,
+        data:formData,
+        success:function(response){
+            //console.log(response);
+            response=JSON.parse(response);
+            if(response.status==1){
+                swal("Good job!", "Links Updated Successfully.", "success");
+                location.reload();
+            }else{
+                 swal("Oop!", response.msg, "info");
+            }
+        }
+    });
+});
+
+  </script>
         <div class="row">
             <div class="col-md-4">
                 <span class="author">Social links</span>
             </div>
+                    <div class="shw_social_bl" style="display: none">
+                    <form id="update_social">
+                      <input type="text" name="updated_link" id="link_id" class="ml-1 add_int form-control">
+                      <input type="text" name="update_type" id="type_id" class="ml-1 add_int form-control">
+                      <input type="hidden" name="location" id="locator_links" value="">
+                      <div class="text-right"><label class="btn p-1 btn-primary bio_btn  m-0 mr-2 ranUse canceler_links">Cancel</label><button class="mr-2 btn btn-success p-1 bio_btn ranUse">Save</button></div>
+                    </form>
+                  </div>
             <div class="col-md-8">
+                        <ul class="m-0 list-unstyled"><?php
+                            if($social_links['usd_social_link'][0]=="" || $social_links['usd_social_link'][0]==NULL){
+                                echo "<li class='about_wt'>Add Social Links</li>";
+                            }
+                            $count=0;
+                        for($i=0;$i<count($social_links['usd_social_link']);$i++) { 
+                            
+                            ?>
+                            <li class="about_wt total_links" link="<?=$social_links['usd_social_link'][$i]?>" typer="<?=$social_links['usd_social_type'][$i]?>" namer="<?=$count?>"><?=$social_links['usd_social_type'][$i].":  ".$social_links['usd_social_link'][$i]?></li>
+                        <?php  $count++;
+                            }
+                        ?>
+                    </ul>
                 <div class="sh-edt">
-                    <span class="det_shw"> https:</span>
+                    <span class="det_shw">Add More: </span>
                     <div class="float-right edt-bt" ><span class="text-primary pointer edit_shbtn">Edit</span></div>
                 </div>
                 <div class="lt_blok ">
@@ -1092,9 +1222,8 @@ $(document).on("click",".delt_bn",function(){
                         processData:false,
                         data:formData,
                         success:function(response){
-                            console.log(response);
                             response=JSON.parse(response);
-                            if(response.code==1){
+                            if(response.status==1){
                                 swal("Good job!", "Social Links Added Successfully.", "success");
                             }else{
                                  swal("Oop!", response.msg, "info");
@@ -1432,7 +1561,76 @@ $(document).on("click",".delt_bn",function(){
             </div>
         </div>
         <hr>
+        <div class="row">
+            <div class="col-md-4">
+                <span class="author">Relationship Status</span>
+            </div>
+                    <div class="shw_social_bl" style="display: none">
+                    <form id="update_social">
+                      <input type="text" name="updated_link" id="link_id" class="ml-1 add_int form-control">
+                      <input type="text" name="update_type" id="type_id" class="ml-1 add_int form-control">
+                      <input type="hidden" name="location" id="locator_links" value="">
+                      <div class="text-right"><label class="btn p-1 btn-primary bio_btn  m-0 mr-2 ranUse canceler_links">Cancel</label><button class="mr-2 btn btn-success p-1 bio_btn ranUse">Save</button></div>
+                    </form>
+                  </div>
+            <div class="col-md-8 sh-edt">
+                        <ul class="m-0 list-unstyled"><?=$relationshp['rel_status']?></ul>
+                <div class="sh-edt">
+<!--                     <span class="det_shw">Update</span> -->
+                    <div class="float-right edt-bt" ><span class="text-primary pointer edit_shbtn">Update</span></div>
+                </div>
+                <div class="lt_blok ">
+                    <form id="update_relationship">
+                        <div class="aad_nmb mb-1"> 
+                            <div class="d-flex">   
+                                <select class="form-control w-50 add_int" name="rel_status" required="">
+                                    <option value="Single">Single</option>
+                                    <option value="In a relationshp">In a relationshp</option>
+                                    <option value="Engaged">Engaged</option>
+                                    <option value="Married">Married</option>
+                                    <option value="In a civil union">In a civil union</option>
+                                    <option value="In a domestic partnership">In a domestic partnership</option>
+                                    <option value="In an open relationship">In an open relationship</option>
+                                    <option value="It's complicated">It's complicated</option>
+                                    <option value="Separated">Separated</option>
+                                    <option value="Divorced">Divorced</option>
+                                    <option value="Widowed">Widowed</option>
+                                </select> 
+                             
+                            </div>
+                            <button class="btn btn-primary py-1 px-2 ">Save Changes</button> <button type="button" class="can_btn btn border ml-2">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <hr>
          <script type="text/javascript">
+
+                $(document).on("submit","#update_relationship",function(e){
+                     e.preventDefault();
+                    //alert('Working');
+                  
+                    var formData=new FormData($(this)[0]);
+                  $.ajax({
+                        url:"<?=base_url('About/update_relationship')?>",
+                        type:"post",
+                        cache:false,
+                        contentType:false,
+                        processData:false,
+                        data:formData,
+                        success:function(response){
+                            //console.log(response);
+                            response=JSON.parse(response);
+                            if(response.status==1){
+                                swal("Good job!", "Status Added Successfully.", "success");
+                                location.reload();
+                            }else{
+                                 swal("Oop!", response.msg, "info");
+                            }
+                        }
+                    });
+                });
           
               $(document).on("submit","#add_languages",function(e){
                      e.preventDefault();
