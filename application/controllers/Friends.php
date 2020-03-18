@@ -104,14 +104,15 @@ class Friends extends MY_Controller {
 		$data['Mycoverpic']=$this->Profile->getcoverphoto($id);
 		$data['Myprofilepic']=$this->Profile->getprofilephoto($id);
 		$data['FriendRequests']=$this->FRND->getFriendRequests($id);
-		$data['MyFollowers']=$this->FRND->getMyFollowers($id);
+		
 		$data['MyPosts']=$this->POST->getMyPosts($id);
 	 	$data['Trending']=$this->POST->getTrending();
         $data['WorkDetails']=$this->getMyWorkDetails($id);
         $data['SkillDetails']=$this->getMySkillsDetails($id);
         $data['UniversityDetails']=$this->getMyUniversityDetails($id);
         $data['SchoolDetails']=$this->getMySchoolDetails($id);
-
+        $data['MyFollowers']=$this->FRND->getMyFollowers($id);
+		$data['MyFollowings']=$this->FRND->getMyFollowings($id);
 		
 		$this->load->view('web/template/header',$data);
 		$this->load->view('web/template/profileCover');

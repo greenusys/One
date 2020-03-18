@@ -38,6 +38,17 @@
     border-radius: 5px;
     font-weight: 600;
 }
+
+.add-btn .accptFriendRequest:hover {
+    color: #fff;
+    background-color: #218838;
+    border-color: #1e7e34;
+}
+.add-btn .accptFriendRequest{
+    color: #fff;
+    background-color: #28a745;
+    border-color: #28a745;
+}
 </style>
 <section class="container-fluid mt-5" id="action_area">
   <div class="feature-photo">
@@ -46,7 +57,9 @@
          <img src="<?=base_url()?>assets/uploads/images/<?=$MyDetails[0]->cover_photo?>" onerror="this.src='<?=base_url()?>assets/uploads/images/default.jpg';" alt="cover image" class="cover-pic img-fluid w-100" style="height: 350px">
     </a>
   </div>
- 
+    <?php// print_r($ReqStatus);
+   // echo $myId;
+    ?>
       <div class="add-btn " >
         <span class="flw_btn_cover "><?=count($MyFollowers)?> Followers</span>
         <?php
@@ -57,7 +70,11 @@
           }else if($myId==0 && $cancelFriend == 0){
             if(count($ReqStatus)>0){
             //  print_r($ReqStatus[0]['req_id']);
-             echo '<a href="javascript:void(0)" title="" style="padding:10px !important" class=" sendFriendRequest" id="deleteReq" d-frnd="'.$user_id.'" data-ripple="" d-act="'.$ReqStatus[0]['req_id'].'">Cancel Request</a>';
+              if($ReqStatus[0]->sent_to== $userID){
+                echo '<a href="javascript:void(0)" title="" style="padding:10px !important" class="accptFriendRequest accept-request"  action="1" req="'.$ReqStatus[0]->req_id.'" data-ripple="" >Accept Request</a>'; 
+              }
+            
+           echo  '<a href="javascript:void(0)" title="" style="padding:10px !important" class="ml-2 sendFriendRequest" id="deleteReq" d-frnd="'.$user_id.'" data-ripple="" d-act="'.$ReqStatus[0]->req_id.'">Cancel Request</a>';
             }else{
               echo '<a href="javascript:void(0)" title="" style="padding:10px !important" class="sendFriendRequest" data-ripple="" id="sendReq" d-fnd="'.$user_id.'">Add Friend</a>';
             }
@@ -70,6 +87,28 @@
       </div>
  
       <script>
+            $(document).on('click','.accept-request',function(){
+              var toAct=$(this).attr('action');
+              var reqId=$(this).attr('req');
+              console.log(' Action : '+toAct+' | '+reqId);
+              $.ajax({
+                url:"<?=base_url('APIController/actionRequest')?>",
+                type:"post",
+                data:{toAct:toAct,reqId:reqId,myid:'<?=$_SESSION['logged_in'][0]->user_id?>'},
+                success:function(response){
+                          response=JSON.parse(response);
+                          if(response.code==1){
+                            swal("Success!", response.data, "success");
+                            
+                          }else{
+                            swal("Oops!", response.data, "warning");
+                          }
+                          // console.log(response);
+                        }
+              });
+            });
+
+
           $(document).on('click','#unfriend',function(){
           var sent_by=<?=$_SESSION['logged_in'][0]->user_id;?>;
           var sent_to=$(this).attr('d-fnd');
