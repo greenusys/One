@@ -83,6 +83,10 @@ class About extends MY_Controller
         $data['address']=$this->fetchAddress($id);
         $data['social_links']=$this->fetchSocialLinks($id);
         $data['relationshp']=$this->fetchRelationshipStatus($id);
+
+        $data['interestedIn']=$this->fetchInterestedIn($id);
+        $data['languages']=$this->fetchlanguages($id);
+
             $data['MyFollowers']=$this->FRND->getFollowers($id);
         $data['MyFollowings']=$this->FRND->getFollowings($id);
         $data['checkFollowings']=$this->FRND->getMyFollowings($id,$user_id);
@@ -147,16 +151,27 @@ class About extends MY_Controller
         }    
     }
 
-// public function fetchInterestedIn($id){
-//      $this->db->where("user_id",$id);
-//         $res = $this->db->get('user_details')->row();
-//       if(count($res)>0){
-//        $usd = $res->usd_interested_in;
-//        return $usd_phone = explode(",", $usd);
-//         }else{
-//             return $usd_phone=array();
-//         }    
-// }
+public function fetchInterestedIn($id){
+     $this->db->where("user_id",$id);
+        $res = $this->db->get('user_details')->result_array();
+      if(count($res)>0){
+       $usd = $res[0]['usd_interested_in'];
+       return $usd;
+        }else{
+            return $usd='';
+        }    
+}
+public function fetchlanguages($id){
+     $this->db->where("user_id",$id);
+        $res = $this->db->get('user_details')->result_array();
+      if(count($res)>0){
+       $usd = $res[0]['usd_languages'];
+       return $usd;
+        }else{
+            return $usd='';
+        }    
+}
+
     public function fetchAddress($id){
         $this->db->where("user_id",$id);
         $res = $this->db->get('user_details')->result_array();
@@ -547,11 +562,9 @@ class About extends MY_Controller
      public function addInterested(){
         $data=array(
             "user_id"=>$_SESSION['logged_in'][0]->user_id,
-            "usd_interested_in"=> implode('///', $this->input->post('interested'))
+            "usd_interested_in"=> implode(',', $this->input->post('interested'))
           
         ); 
-        print_r($data);
-        die();
         
         if($this->About->addUserInterested($data)){
                 die(json_encode(array('code' =>'1' ,'msg'=>' Added Successfully')));

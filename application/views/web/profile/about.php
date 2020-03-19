@@ -55,7 +55,7 @@ $(document).ready(function(){
     <!-- /.col-md-4 -->
     <div class="col-md-8">
   <div class="tab-content" id="myTabContent">
-  <div class="tab-pane fade " id="work" role="tabpanel" aria-labelledby="home-tab">
+  <div class="tab-pane fade show active" id="work" role="tabpanel" aria-labelledby="home-tab">
 <!-- <h2>work and Education</h2> -->
       
 <?php
@@ -850,7 +850,7 @@ $(document).on("click",".delt_bn",function(){
 });
 
   </script>
-  <div class="tab-pane fade card show active" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+  <div class="tab-pane fade card " id="contact" role="tabpanel" aria-labelledby="contact-tab">
     <div class="col-md-12">
         <h6 class="text-secondary pb-2 author mt-3 mb-0">CONTACT INFORMATION</h6>
         <hr class="mt-0">
@@ -860,7 +860,9 @@ $(document).on("click",".delt_bn",function(){
             </div>
             <div class="col-md-8 ">
                 <div class="sh-edt">
-                <div class="shw_phone_bl" style="display: none">
+                   <?php 
+                   if($phoneNumbers){ ?> 
+                  <div class="shw_phone_bl" style="display: none">
                     <form id="update_num">
                       <input type="text" maxlength="20" minlength="9" name="updated_num" id="number_id" class="ml-1 add_int form-control">
                       <input type="hidden" name="location" id="locator" value="">
@@ -880,10 +882,15 @@ $(document).on("click",".delt_bn",function(){
                             }
                         ?>
                     </ul>
+                <?php }else{
+                        echo" Add Phone Number";
+                    }
+                ?>
                     <?php 
                         if($user_id == $_SESSION['logged_in'][0]->user_id){ ?>
                                 <div class="float-right edt-bt" ><span class="text-primary pointer edit_shbtn">Edit</span></div>
                       <?php  } ?>  
+                
                 </div>
                 <div class="lt_blok">
                     <form class="" id="add_phone">
@@ -969,10 +976,28 @@ $(document).on("click",".delt_bn",function(){
             <div class="col-md-8">
                 <div class="sh-edt">
                     <?php 
-                   // print_r($address['usd_address'][0]);
+                  
+                     if($address['usd_address'][0]){ 
+                        $usd_address= $address['usd_address'][0];
+                        $usd_address1= $address['usd_address'][1];
+                        $usd_address2= $address['usd_address'][2];
+                        $usd_address3= $address['usd_address'][3];
+
+                           echo '<span class="det_shw">'.$usd_address.', '.$usd_address1.', '. $usd_address2.', '. $usd_address3.'</span>';
+                    } else{
+                        $usd_address= '';
+                        $usd_address1= '';
+                        $usd_address2= '';
+                        $usd_address3= '';
+                        echo"Add Address";
+                    }
                     ?>
-                    <span class="det_shw"> <?= $address['usd_address'][0].', '.$address['usd_address'][1].', '. $address['usd_address'][2].', '. $address['usd_address'][3]?></span>
-                    <div class="float-right edt-bt" ><span class="text-primary pointer edit_shbtn">Edit</span></div>
+          
+
+                     <?php 
+                        if($user_id == $_SESSION['logged_in'][0]->user_id){ ?>
+                            <div class="float-right edt-bt" ><span class="text-primary pointer edit_shbtn">Edit</span></div>
+                        <?php } ?>
                 </div>
                 <div class="lt_blok ">
                     <form id="add_address" >
@@ -980,25 +1005,25 @@ $(document).on("click",".delt_bn",function(){
                             <div class="row">
                                 <label class="col-md-4 about_wt">Address</label>
                                 <div class="col-md-8">
-                                    <input type="text" name="address" value="<?= $address['usd_address'][0]?>" class="form-control w-75 add_int">
+                                    <input type="text" name="address" value="<?= $usd_address ?>" class="form-control w-75 add_int">
                                 </div>
                             </div>
                             <div class="row">
                                 <label class="col-md-4 about_wt">Town/City</label>
                                 <div class="col-md-8">
-                                    <input type="text" name="town"  value="<?= $address['usd_address'][1]?>" class="form-control w-75 add_int">
+                                    <input type="text" name="town"  value="<?= $usd_address1 ?>" class="form-control w-75 add_int">
                                 </div>
                             </div>
                             <div class="row">
                                 <label class="col-md-4 about_wt">Zipcode</label>
                                 <div class="col-md-8">
-                                    <input type="text" name="zip"  value="<?= $address['usd_address'][2]?>" class="form-control w-75 add_int">
+                                    <input type="text" name="zip"  value="<?= $usd_address2 ?>" class="form-control w-75 add_int">
                                 </div>
                             </div>
                             <div class="row">
                                 <label class="col-md-4 about_wt">Neighbourhood</label>
                                 <div class="col-md-8">
-                                    <input type="text" name="ntbr"  value="<?= $address['usd_address'][3]?>" class="form-control w-75 add_int">
+                                    <input type="text" name="ntbr"  value="<?= $usd_address3 ?>" class="form-control w-75 add_int">
                                 </div>
                             </div>
                         </div>
@@ -1035,6 +1060,7 @@ $(document).on("click",".delt_bn",function(){
                         response=JSON.parse(response);
                         if(response.code==1){
                             swal("Good job!", "Address Added Successfully.", "success");
+                             location.reload();
                         }else{
                              swal("Oop!", response.msg, "info");
                         }
@@ -1060,7 +1086,9 @@ $(document).on("click",".delt_bn",function(){
             <div class="col-md-8">
                 <div class="sh-edt">
                     <span class="det_shw"> https:</span>
-                    <div class="float-right edt-bt" ><span class="text-primary pointer edit_shbtn">Edit</span></div>
+                     <?php if($user_id == $_SESSION['logged_in'][0]->user_id){ ?>
+                        <div class="float-right edt-bt" ><span class="text-primary pointer edit_shbtn">Edit</span></div>
+                    <?php } ?>
                 </div>
                  <div class="lt_blok ">
                     <form id="add_website">
@@ -1100,6 +1128,7 @@ $(document).on("click",".delt_bn",function(){
                         response=JSON.parse(response);
                         if(response.code==1){
                             swal("Good job!", "Website Added Successfully.", "success");
+                             location.reload();
                         }else{
                              swal("Oop!", response.msg, "info");
                         }
@@ -1168,7 +1197,7 @@ $(document).on("click",".delt_bn",function(){
                         <ul class="m-0 list-unstyled"><?php
                             if($social_links['usd_social_link'][0]=="" || $social_links['usd_social_link'][0]==NULL){
                                 echo "<li class='about_wt'>Add Social Links</li>";
-                            }
+                            }else{
                             $count=0;
                         for($i=0;$i<count($social_links['usd_social_link']);$i++) { 
                             
@@ -1176,11 +1205,14 @@ $(document).on("click",".delt_bn",function(){
                             <li class="about_wt total_links" link="<?=$social_links['usd_social_link'][$i]?>" typer="<?=$social_links['usd_social_type'][$i]?>" namer="<?=$count?>"><?=$social_links['usd_social_type'][$i].":  ".$social_links['usd_social_link'][$i]?></li>
                         <?php  $count++;
                             }
+                        }
                         ?>
                     </ul>
                 <div class="sh-edt">
                     <span class="det_shw">Add More: </span>
-                    <div class="float-right edt-bt" ><span class="text-primary pointer edit_shbtn">Edit</span></div>
+                    <?php   if($user_id == $_SESSION['logged_in'][0]->user_id){ ?>
+                        <div class="float-right edt-bt" ><span class="text-primary pointer edit_shbtn">Edit</span></div>
+                    <?php } ?>
                 </div>
                 <div class="lt_blok ">
                     <form id="add_social">
@@ -1225,6 +1257,7 @@ $(document).on("click",".delt_bn",function(){
                             response=JSON.parse(response);
                             if(response.status==1){
                                 swal("Good job!", "Social Links Added Successfully.", "success");
+                                 location.reload();
                             }else{
                                  swal("Oop!", response.msg, "info");
                             }
@@ -1264,8 +1297,14 @@ $(document).on("click",".delt_bn",function(){
             <div class="col-md-7">
                 <div class="sh-edt">
          <!-- <?php print_r($MyDetails[0]->date_of_birth);?>  -->
-                    <span class="det_shw"><?=$MyDetails[0]->date_of_birth?></span>
-                    <div class="float-right edt-bt" ><span class="text-primary pointer edit_shbtn">Edit</span></div>
+                    <?php if($MyDetails[0]->date_of_birth){
+                        echo'<span class="det_shw"><?=$MyDetails[0]->date_of_birth?></span>';
+                     }else{ 
+                        echo "Add Date of Birth";
+                      } ?>
+                        <?php   if($user_id == $_SESSION['logged_in'][0]->user_id){ ?>
+                            <div class="float-right edt-bt" ><span class="text-primary pointer edit_shbtn">Edit</span></div>
+                        <?php } ?>
                 </div>
                 <div class="lt_blok ">
                     <form id="add_dob">
@@ -1410,6 +1449,7 @@ $(document).on("click",".delt_bn",function(){
                             response=JSON.parse(response);
                             if(response.code==1){
                                 swal("Good job!", "Date of Birth Added Successfully.", "success");
+                                 location.reload();
                             }else{
                                  swal("Oop!", response.msg, "info");
                             }
@@ -1472,6 +1512,7 @@ $(document).on("click",".delt_bn",function(){
                             response=JSON.parse(response);
                             if(response.code==1){
                                 swal("Good job!", "Date of Birth Added Successfully.", "success");
+                                 location.reload();
                             }else{
                                  swal("Oop!", response.msg, "info");
                             }
@@ -1485,8 +1526,18 @@ $(document).on("click",".delt_bn",function(){
             </div>
             <div class="col-md-7">
                 <div class="sh-edt">
-                    <span class="det_shw"> Women</span>
-                    <div class="float-right edt-bt" ><span class="text-primary pointer edit_shbtn">Edit</span></div>
+                    <?php 
+
+                        if($interestedIn){
+                            echo '<span class="det_shw"> '.$interestedIn.'</span>';
+                        }else{
+                            echo"Add Interestedin";
+                        }
+                    ?>
+                    
+                     <?php   if($user_id == $_SESSION['logged_in'][0]->user_id){ ?>
+                        <div class="float-right edt-bt" ><span class="text-primary pointer edit_shbtn">Edit</span></div>
+                     <?php   } ?>
                 </div>
                 <div class="lt_blok ">
                     <form id="add_interest">
@@ -1512,7 +1563,7 @@ $(document).on("click",".delt_bn",function(){
                       val[i] = $(this).val();
                     });
  
-             alert(val);
+            // alert(val);
                     var formData=new FormData($(this)[0]);
                     $.ajax({
                         url:"<?=base_url('About/addInterested')?>",
@@ -1526,6 +1577,7 @@ $(document).on("click",".delt_bn",function(){
                             response=JSON.parse(response);
                             if(response.code==1){
                                 swal("Good job!", "Interested In Added Successfully.", "success");
+                                location.reload();
                             }else{
                                  swal("Oop!", response.msg, "info");
                             }
@@ -1541,8 +1593,18 @@ $(document).on("click",".delt_bn",function(){
             </div>
             <div class="col-md-7">
                 <div class="sh-edt">
-                    <span class="det_shw"> Hindi</span>
-                    <div class="float-right edt-bt" ><span class="text-primary pointer edit_shbtn">Edit</span></div>
+                    <?php 
+
+                        if($languages){
+                            echo '<span class="det_shw"> '.$languages.'</span>';
+                        }else{
+                            echo"Add Interestedin";
+                        }
+                    ?>
+                    
+                     <?php   if($user_id == $_SESSION['logged_in'][0]->user_id){ ?>
+                        <div class="float-right edt-bt" ><span class="text-primary pointer edit_shbtn">Edit</span></div>
+                    <?php } ?>
                 </div>
                 <div class="lt_blok ">
                     <form id="add_languages">
@@ -1562,7 +1624,7 @@ $(document).on("click",".delt_bn",function(){
         </div>
         <hr>
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-5">
                 <span class="author">Relationship Status</span>
             </div>
                     <div class="shw_social_bl" style="display: none">
@@ -1573,10 +1635,11 @@ $(document).on("click",".delt_bn",function(){
                       <div class="text-right"><label class="btn p-1 btn-primary bio_btn  m-0 mr-2 ranUse canceler_links">Cancel</label><button class="mr-2 btn btn-success p-1 bio_btn ranUse">Save</button></div>
                     </form>
                   </div>
-            <div class="col-md-8 sh-edt">
+            <div class="col-md-7 sh-edt">
+                 
                         <ul class="m-0 list-unstyled"><?=$relationshp['rel_status']?></ul>
                 <div class="sh-edt">
-<!--                     <span class="det_shw">Update</span> -->
+                   <span class="det_shw">Add Status</span>
                     <div class="float-right edt-bt" ><span class="text-primary pointer edit_shbtn">Update</span></div>
                 </div>
                 <div class="lt_blok ">
@@ -1649,6 +1712,7 @@ $(document).on("click",".delt_bn",function(){
                             response=JSON.parse(response);
                             if(response.code==1){
                                 swal("Good job!", "Languages Added Successfully.", "success");
+                                 location.reload();
                             }else{
                                  swal("Oop!", response.msg, "info");
                             }
