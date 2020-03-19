@@ -83,9 +83,17 @@ class About extends MY_Controller
         $data['address']=$this->fetchAddress($id);
         $data['social_links']=$this->fetchSocialLinks($id);
         $data['relationshp']=$this->fetchRelationshipStatus($id);
+<<<<<<< HEAD
         $data['interestedIn']=$this->fetchInterestedIn($id);
         $data['languages']=$this->fetchlanguages($id);
         $data['MyFollowers']=$this->FRND->getFollowers($id);
+=======
+
+        $data['interestedIn']=$this->fetchInterestedIn($id);
+        $data['languages']=$this->fetchlanguages($id);
+        $data['MyFollowers']=$this->FRND->getFollowers($id);
+
+>>>>>>> 16de2932d351fd70be76695abd679f2730221547
         $data['MyFollowings']=$this->FRND->getFollowings($id);
         $data['checkFollowings']=$this->FRND->getMyFollowings($id,$user_id);
        // $data['address']=$this->fetchInterestedIn($id);
