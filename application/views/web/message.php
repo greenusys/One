@@ -776,22 +776,24 @@ background:transparent;
                         var profile_picture=response.msgs[0].profile_picture;
                         var name=response.msgs[0].full_name;
                         console.log("  ----> "+user_id);
-                        var sent_to=0;
-                        var sent_by=0;
-                        var friendId=0;
-                        if(sent_by==myId){
-                          friendId=response.msgs[0].sent_to;
-                        }else{
-                          friendId=response.msgs[0].sent_by;
-                        }
-                        if(sent_to==myId){
-                          friendId=response.msgs[0].sent_by;
-                        }else{
-                          friendId=response.msgs[0].sent_to;
-                        }
-                        neMess(msg_id,profile_picture,name,friendId);
+                        // var sent_to=0;
+                        // var sent_by=0;
+                        // var friendId=0;
+                        // var sent_by=response.msgs[0].sent_by;
+                        // var sent_to=response.msgs[0].sent_to;
+                        // if(sent_by==myId){
+                        //   friendId=response.msgs[0].sent_to;
+                        // }else{
+                        //   friendId=response.msgs[0].sent_by;
+                        // }
+                        // if(sent_to==myId){
+                        //   friendId=response.msgs[0].sent_by;
+                        // }else{
+                        //   friendId=response.msgs[0].sent_to;
+                        // }
+                        neMess(msg_id,profile_picture,name,user_id);
 
-
+                        // console.log(" ***** My Id: "+myId+" || Sent By: "+sent_by+" || Sent To: "+sent_to );
                       }
                     }
             });
@@ -879,7 +881,8 @@ background:transparent;
           });
         }
         function neMess(msg_id,profile_picture,name,foId){
-          console.log(" Friend Id: "+msg_id);
+          // console.log(" Friend Id: "+msg_id);
+          console.log(" Friend Id: "+foId);
           var user_id ='<?=$user_id?>';
           $.ajax({
             url:"<?=base_url('Message/getMyMessages')?>",
@@ -1073,6 +1076,7 @@ background:transparent;
           if(conversation_id!=""){
             
             $("#_chat").attr('d-store',conversation_id);
+            // $("#_chat").attr('d-store',conversation_id);
             getMessage(conversation_id,element,foId);
             // setInterval(function(){ 
             //   fetchUnreadMessageOn(conversation_id,element,foId);
