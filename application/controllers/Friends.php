@@ -104,7 +104,7 @@ class Friends extends MY_Controller {
 		$data['Mycoverpic']=$this->Profile->getcoverphoto($id);
 		$data['Myprofilepic']=$this->Profile->getprofilephoto($id);
 		$data['FriendRequests']=$this->FRND->getFriendRequests($id);
-		
+		$data['relationshp']=$this->fetchRelationshipStatus($id);
 		$data['MyPosts']=$this->POST->getMyPosts($id);
 	 	$data['Trending']=$this->POST->getTrending();
         $data['WorkDetails']=$this->getMyWorkDetails($id);
@@ -153,6 +153,17 @@ class Friends extends MY_Controller {
 		$this->load->view('web/profile/fron_frnd');
 		$this->load->view('web/template/footer');
 	}
+
+	    public function fetchRelationshipStatus($id){
+        $this->db->where("user_id",$id);
+        $res = $this->db->get('user_details')->result_array();
+        if(count($res)>0){
+        return $usd_phone=array('rel_status'=>$res[0]['relationship_status']);
+    
+        }else{
+            return $usd_phone=array();
+        }    
+    }
 
     public function getMyWorkDetails($id){
         $this->db->where('user_id',$id);

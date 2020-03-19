@@ -87,6 +87,7 @@ class Gallery extends MY_Controller {
         $data['SchoolDetails']=$this->getMySchoolDetails($id);
         $data['ProfileImgs']=$this->profileImageAlbum('profile',$id);
         $data['CoverImgs']=$this->profileImageAlbum('cover',$id);
+        $data['relationshp']=$this->fetchRelationshipStatus($id);
 
 		$this->load->view('web/template/header',$data);
 		$this->load->view('web/template/profileCover');
@@ -94,6 +95,19 @@ class Gallery extends MY_Controller {
 		$this->load->view('web/profile/gallery');
 		$this->load->view('web/template/footer');
 	}
+
+
+	    public function fetchRelationshipStatus($id){
+        $this->db->where("user_id",$id);
+        $res = $this->db->get('user_details')->result_array();
+        if(count($res)>0){
+        return $usd_phone=array('rel_status'=>$res[0]['relationship_status']);
+    
+        }else{
+            return $usd_phone=array();
+        }    
+    }
+    
 	public function showAlbum(){
 		$user_id=$_SESSION['logged_in'][0]->user_id;
 		// if($uId!=""){
