@@ -977,7 +977,7 @@ $(document).on("click",".delt_bn",function(){
                 <div class="sh-edt">
                     <?php 
                   
-                     if($address['usd_address'][0]){ 
+                     if($address){ 
                         $usd_address= $address['usd_address'][0];
                         $usd_address1= $address['usd_address'][1];
                         $usd_address2= $address['usd_address'][2];
@@ -1195,8 +1195,10 @@ $(document).on("click",".delt_bn",function(){
                   </div>
             <div class="col-md-8">
                         <ul class="m-0 list-unstyled"><?php
-                            if($social_links['usd_social_link'][0]=="" || $social_links['usd_social_link'][0]==NULL){
+                          //  if($social_links['usd_social_link'][0]=="" || $social_links['usd_social_link'][0]==NULL){
+                            if(!$social_links){
                                 echo "<li class='about_wt'>Add Social Links</li>";
+                            
                             }else{
                             $count=0;
                         for($i=0;$i<count($social_links['usd_social_link']);$i++) { 
@@ -1636,11 +1638,20 @@ $(document).on("click",".delt_bn",function(){
                     </form>
                   </div>
             <div class="col-md-7 sh-edt">
-                 
-                        <ul class="m-0 list-unstyled"><?=$relationshp['rel_status']?></ul>
+                  
+                        
                 <div class="sh-edt">
-                   <span class="det_shw">Add Status</span>
-                    <div class="float-right edt-bt" ><span class="text-primary pointer edit_shbtn">Update</span></div>
+                          <?php 
+
+                        if($relationshp){
+                            echo '<span class="m-0 list-unstyled">'.$relationshp['rel_status'].'</span>';
+                        }else{
+                            echo'<span class="det_shw">Add Status</span>';
+                        }
+                    ?>
+                    <?php   if($user_id == $_SESSION['logged_in'][0]->user_id){ ?>
+                            <div class="float-right edt-bt" ><span class="text-primary pointer edit_shbtn">Update</span></div>
+                    <?php } ?>
                 </div>
                 <div class="lt_blok ">
                     <form id="update_relationship">
