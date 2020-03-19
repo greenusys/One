@@ -1298,9 +1298,9 @@ $(document).on("click",".delt_bn",function(){
             </div>
             <div class="col-md-7">
                 <div class="sh-edt">
-         <!-- <?php print_r($MyDetails[0]->date_of_birth);?>  -->
+      
                     <?php if($MyDetails[0]->date_of_birth){
-                        echo'<span class="det_shw"><?=$MyDetails[0]->date_of_birth?></span>';
+                        echo'<span class="det_shw">'.$MyDetails[0]->date_of_birth.'</span>';
                      }else{ 
                         echo "Add Date of Birth";
                       } ?>
