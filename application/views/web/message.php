@@ -456,7 +456,7 @@ background:transparent;
                           # code...?>
                           <a href="javascript:void(0)" class="My-Friend" d-Store="<?=$msg->user_id?>" act="<?=$msg->msg_id?>">
                             <li class="clearfix px-2">
-                              <img src="assets/img/Profile_Pic/<?=$msg->profile_picture?>" width="40px" height="40px" alt="avatar" this.src="'assets/img/Profile_Pic/default.png';" style="border-radius: 50%" >
+                              <img src="assets/uploads/images/<?=$msg->profile_picture?>" width="40px" height="40px" alt="avatar" this.src="'assets/uploads/images/default.png';" style="border-radius: 50%" >
                               <div class="about">
                                   <div class="name"><?=$msg->full_name?></div>
                                   <div class="status">
@@ -717,7 +717,7 @@ background:transparent;
             '</div>';
             newMessage+='</div>';
             newMessage+='</div>';
-            newMessage+='<div class="col-md-1 px-3 py-1" ><img src="assets/img/Profile_Pic/'+profile_picture+'"  width="40px" height="40px" alt="avatar" class="rounded-circle" /></div>';
+            newMessage+='<div class="col-md-1 px-3 py-1" ><img src="assets/uploads/images/'+profile_picture+'"  width="40px" height="40px" alt="avatar" class="rounded-circle" /></div>';
             newMessage+='</div>';
             newMessage+='</li>';
 
@@ -776,31 +776,33 @@ background:transparent;
                         var profile_picture=response.msgs[0].profile_picture;
                         var name=response.msgs[0].full_name;
                         console.log("  ----> "+user_id);
-                        var sent_to=0;
-                        var sent_by=0;
-                        var friendId=0;
-                        if(sent_by==myId){
-                          friendId=response.msgs[0].sent_to;
-                        }else{
-                          friendId=response.msgs[0].sent_by;
-                        }
-                        if(sent_to==myId){
-                          friendId=response.msgs[0].sent_by;
-                        }else{
-                          friendId=response.msgs[0].sent_to;
-                        }
-                        neMess(msg_id,profile_picture,name,friendId);
+                        // var sent_to=0;
+                        // var sent_by=0;
+                        // var friendId=0;
+                        // var sent_by=response.msgs[0].sent_by;
+                        // var sent_to=response.msgs[0].sent_to;
+                        // if(sent_by==myId){
+                        //   friendId=response.msgs[0].sent_to;
+                        // }else{
+                        //   friendId=response.msgs[0].sent_by;
+                        // }
+                        // if(sent_to==myId){
+                        //   friendId=response.msgs[0].sent_by;
+                        // }else{
+                        //   friendId=response.msgs[0].sent_to;
+                        // }
+                        neMess(msg_id,profile_picture,name,user_id);
 
-
+                        // console.log(" ***** My Id: "+myId+" || Sent By: "+sent_by+" || Sent To: "+sent_to );
                       }
                     }
             });
         });
         function init(){
-          setInterval(function(){ 
-            fetchUnreadMessage();
-            // neMess(msg_id,profile_picture,name,foId);
-          }, 1000);
+          // setInterval(function(){ 
+          //   fetchUnreadMessage();
+          //   // neMess(msg_id,profile_picture,name,foId);
+          // }, 1000);
         }
         function fetchUnreadMessageOn(conversation_id,element,foId){
           console.log("workgin Fine");
@@ -879,7 +881,8 @@ background:transparent;
           });
         }
         function neMess(msg_id,profile_picture,name,foId){
-          console.log(" Friend Id: "+msg_id);
+          // console.log(" Friend Id: "+msg_id);
+          console.log(" Friend Id: "+foId);
           var user_id ='<?=$user_id?>';
           $.ajax({
             url:"<?=base_url('Message/getMyMessages')?>",
@@ -1073,10 +1076,11 @@ background:transparent;
           if(conversation_id!=""){
             
             $("#_chat").attr('d-store',conversation_id);
+            // $("#_chat").attr('d-store',conversation_id);
             getMessage(conversation_id,element,foId);
-            setInterval(function(){ 
-              fetchUnreadMessageOn(conversation_id,element,foId);
-            }, 1000);
+            // setInterval(function(){ 
+            //   fetchUnreadMessageOn(conversation_id,element,foId);
+            // }, 1000);
             // init(conversation_id,profile_picture,name,foId);
              $('.chat-history').animate({scrollTop: $('.chat-history').prop("scrollHeight")}, 500);
           }

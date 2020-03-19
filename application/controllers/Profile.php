@@ -77,6 +77,7 @@ class Profile extends MY_Controller
 		$data['MyFollowers']=$this->FRND->getFollowers($id);
 		$data['MyFollowings']=$this->FRND->getFollowings($id);
 		$data['checkFollowings']=$this->FRND->getMyFollowings($id,$user_id);
+		$data['relationshp']=$this->fetchRelationshipStatus($id);
 		//die(json_encode($data['MyFollowings']));
 		$data['birthdays']=$this->Test->UpComingBirthdays();
 		// $data['AllPosts']=$this->POST->getMyPosts($id);
@@ -87,6 +88,17 @@ class Profile extends MY_Controller
 		$this->load->view('web/profile/profile');
 		$this->load->view('web/template/footer');
 	}
+
+	    public function fetchRelationshipStatus($id){
+        $this->db->where("user_id",$id);
+        $res = $this->db->get('user_details')->result_array();
+        if(count($res)>0){
+        return $usd_phone=array('rel_status'=>$res[0]['relationship_status']);
+    
+        }else{
+            return $usd_phone=array();
+        }    
+    }
 	
 	public function getUniversityDetails($id){
 		$this->db->where('user_id',$id);

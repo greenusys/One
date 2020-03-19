@@ -159,7 +159,14 @@
                     </li> -->
                     <li class="row">
                       <div class="col-md-1 "><span class="text_ora"><i class="fa fa-heart" aria-hidden="true"></i> </span></div>
-                      <div class="col-md-10 pl-2">Single </div>
+                      <?php
+                      if(count($relationshp)==0){
+                        echo "<div class='col-md-10 pl-2'>Single </div>";
+                      }else{
+                        echo "<div class='col-md-10 pl-2'>".$relationshp['rel_status']."</div>";
+                      }
+                      ?>
+                      <!-- <div class="col-md-10 pl-2">Single </div> -->
                     </li>
 
                     
