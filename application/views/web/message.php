@@ -456,7 +456,7 @@ background:transparent;
                           # code...?>
                           <a href="javascript:void(0)" class="My-Friend" d-Store="<?=$msg->user_id?>" act="<?=$msg->msg_id?>">
                             <li class="clearfix px-2">
-                              <img src="assets/img/Profile_Pic/<?=$msg->profile_picture?>" width="40px" height="40px" alt="avatar" this.src="'assets/img/Profile_Pic/default.png';" style="border-radius: 50%" >
+                              <img src="assets/uploads/images/<?=$msg->profile_picture?>" width="40px" height="40px" alt="avatar" this.src="'assets/uploads/images/default.png';" style="border-radius: 50%" >
                               <div class="about">
                                   <div class="name"><?=$msg->full_name?></div>
                                   <div class="status">
@@ -717,7 +717,7 @@ background:transparent;
             '</div>';
             newMessage+='</div>';
             newMessage+='</div>';
-            newMessage+='<div class="col-md-1 px-3 py-1" ><img src="assets/img/Profile_Pic/'+profile_picture+'"  width="40px" height="40px" alt="avatar" class="rounded-circle" /></div>';
+            newMessage+='<div class="col-md-1 px-3 py-1" ><img src="assets/uploads/images/'+profile_picture+'"  width="40px" height="40px" alt="avatar" class="rounded-circle" /></div>';
             newMessage+='</div>';
             newMessage+='</li>';
 
@@ -797,10 +797,10 @@ background:transparent;
             });
         });
         function init(){
-          setInterval(function(){ 
-            fetchUnreadMessage();
-            // neMess(msg_id,profile_picture,name,foId);
-          }, 1000);
+          // setInterval(function(){ 
+          //   fetchUnreadMessage();
+          //   // neMess(msg_id,profile_picture,name,foId);
+          // }, 1000);
         }
         function fetchUnreadMessageOn(conversation_id,element,foId){
           console.log("workgin Fine");
@@ -1074,9 +1074,9 @@ background:transparent;
             
             $("#_chat").attr('d-store',conversation_id);
             getMessage(conversation_id,element,foId);
-            setInterval(function(){ 
-              fetchUnreadMessageOn(conversation_id,element,foId);
-            }, 1000);
+            // setInterval(function(){ 
+            //   fetchUnreadMessageOn(conversation_id,element,foId);
+            // }, 1000);
             // init(conversation_id,profile_picture,name,foId);
              $('.chat-history').animate({scrollTop: $('.chat-history').prop("scrollHeight")}, 500);
           }
