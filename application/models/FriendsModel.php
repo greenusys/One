@@ -80,14 +80,59 @@
 			$this->db->join('users','users.user_id=friend_request.sent_by');
 			return $this->db->get('friend_request')->result();
 		}
-		public function getMyFollowers($myId){
-			// $this->db->where('follow_status',1);
-			$result=$this->db->query("select * from friends_ join users on users.user_id=friends_.user_id where friends_.friend_id='$myId' and friends_.follow_status=1")->result(); 
-    		$result_=$this->db->query("select * from friends_ join users on users.user_id=friends_.friend_id where friends_.user_id='$myId' and friends_.follow_status=1")->result();
-    		$myFollowers=array_merge($result_,$result);
-			// $this->db->join('users','users.user_id=friends_.sent_by');
-			return $myFollowers;
+		// public function getMyFollowers($myId){
+		// 	// $this->db->where('follow_status',1);
+		// 	$result=$this->db->query("select * from friends_ join users on users.user_id=friends_.user_id where friends_.friend_id='$myId' and friends_.follow_status=1")->result(); 
+  //   		$result_=$this->db->query("select * from friends_ join users on users.user_id=friends_.friend_id where friends_.user_id='$myId' and friends_.follow_status=1")->result();
+  //   		$myFollowers=array_merge($result_,$result);
+		// 	// $this->db->join('users','users.user_id=friends_.sent_by');
+		// 	return $myFollowers;
+		// }
+		public function insertFollows($sentBy,$sentTo){
+			$cond1=array("follow_by"=>$sentBy,"follow_to"=>$sentTo);
+			if($this->db->insert('follow_user',$cond1)){
+				$cond2=array("follow_by"=>$sentTo,"follow_to"=>$sentBy);
+				$this->db->insert('follow_user',$cond2);
+				return true;
+			}else{
+				return false;
+			}
+
 		}
+		public function insertFollowUser($sentBy,$sentTo){
+			$cond1=array("follow_by"=>$sentBy,"follow_to"=>$sentTo);
+			if($this->db->insert('follow_user',$cond1)){
+					return true;
+			}else{
+				return false;
+			}
+		}
+		public function deleteFollowUser($frnd_id,$my_id){
+			$cond1=array("follow_by"=>$frnd_id,"follow_to"=>$my_id);
+			$this->db->where($cond1);
+			if($this->db->delete('follow_user')){
+				$cond2=array("follow_by"=>$my_id,"follow_to"=>$frnd_id);
+				$this->db->where($cond2);
+				$this->db->delete('follow_user');
+				return true;
+			}else{
+				return false;
+			}
+		}
+		public function getFollowers($myId){
+				return $result=$this->db->query("select * from follow_user join users on users.user_id=follow_user.follow_by where follow_user.follow_to='$myId'")->result(); 
+
+		}
+
+		public function getFollowings($myId){
+			return  $result=$this->db->query("select * from follow_user join users on users.user_id=follow_user.follow_to where follow_user.follow_by='$myId'")->result(); 
+
+		}
+		public function getMyFollowings($userId,$myId){
+			return  $result=$this->db->query("select * from follow_user where follow_by='$myId' and follow_to='$userId'")->result(); 
+
+		}
+
 		public function checkForExistingFriendship($uId,$myId){
 			return $this->db->query("select * from friends_ where (user_id='$uId' and friend_id='$myId') or (user_id='$myId' and friend_id='$uId')")->result();
 		}
@@ -167,8 +212,10 @@
 			return $this->db->query($sql)->result();
 		}
 		public function checkFriendRequestStatus($user_id){
-			$this->db->where(array('sent_to'=>$user_id,'sent_by'=>$_SESSION['logged_in'][0]->user_id,'request_status'=>2));
-			return $this->db->get('friend_request')->result_array();
+			$uId= $_SESSION['logged_in'][0]->user_id;
+			// $this->db->where(array('sent_to'=>$user_id,'sent_by'=>$_SESSION['logged_in'][0]->user_id,'request_status'=>2));
+			// return $this->db->get('friend_request')->result_array();
+			return	$this ->db->query("select * from friend_request where (sent_to='$user_id' and sent_by='$uId') OR (sent_to='$uId' and sent_by='$user_id') and request_status=2")->result();
 		}
 	}
 ?>

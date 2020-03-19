@@ -267,7 +267,52 @@ $(document).on('click','.post_img_update',function(){
     </div>
   </div>
 </div>
+<script type="text/javascript">
+      $(document).on('click','.follow_user_',function(){
+          var uId=$(this).attr('d-id');
+          var name=$(this).attr('d-name');
+          var ele = $(this);
+          //console.log(' Action : '+toAct+' | '+reqId);
+          $.ajax({
+            url:"<?=base_url('APIController/FollowUser')?>",
+            type:"post",
+            data:{name:name,uId:uId,myid:'<?=$_SESSION['logged_in'][0]->user_id?>'},
+            success:function(response){
+                      response=JSON.parse(response);
+                      if(response.code==1){
+                        swal("Success!", response.data, "success");
+                        ele.find("label").html("Unfollow");
+                        ele.attr("class","unfollow_user_ flw_btn_cover");
+                      }else{
+                        swal("Oops!", response.data, "warning");
+                      }
+                      // console.log(response);
+                    }
+          });
+      });
 
+      $(document).on('click','.unfollow_user_',function(){
+          var uId=$(this).attr('d-id');
+          var name=$(this).attr('d-name');
+          var ele = $(this);
+          $.ajax({
+            url:"<?=base_url('APIController/unFollowUser')?>",
+            type:"post",
+            data:{name:name,uId:uId,myid:'<?=$_SESSION['logged_in'][0]->user_id?>'},
+            success:function(response){
+                      response=JSON.parse(response);
+                      if(response.code==1){
+                        swal("Success!", response.data, "success");
+                        ele.find("label").html("Follow");
+                        ele.attr("class","follow_user_ flw_btn_cover");
+                      }else{
+                        swal("Oops!", response.data, "warning");
+                      }
+                      // console.log(response);
+                    }
+          });
+      });
+</script>
 <!-------footer ajax-------->
 <script type="text/javascript">
     $(document).on("click",".favrt",function(){

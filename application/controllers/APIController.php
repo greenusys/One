@@ -667,13 +667,40 @@ class APIController extends MY_Controller
 			}
 		}
 	}
+
+	public function FollowUser(){
+		 $my_Id=$this->input->post('myid');
+		 $uId=$this->input->post('uId');
+		  $name=$this->input->post('name');
+		 	if($this->FRND->insertFollowUser($my_Id,$uId)){
+				die(json_encode(array("code"=>1,"data"=>"Now you are following " .$name.".")));
+			}else{
+				die(json_encode(array("code"=>0,"data"=>"Failed To Accept Request.")));
+			}
+	}
+	public function unFollowUser(){
+		 $my_Id=$this->input->post('myid');
+		 $uId=$this->input->post('uId');
+		  $name=$this->input->post('name');
+		 	if($this->FRND->deleteFollowUser($my_Id,$uId)){
+				die(json_encode(array("code"=>1,"data"=>"Now You are unfollow " .$name.".")));
+			}else{
+				die(json_encode(array("code"=>0,"data"=>"Failed To Accept Request.")));
+			}
+	}
+
 	//To Cancel Request
 	public function actionRequest(){
 		$req_Id=$this->input->post('reqId');
 		$condition=array("req_id"=>$req_Id);
-		$my_Id=$this->input->post('myid');
-		$toAct=$this->input->post('toAct');
+		 $my_Id=$this->input->post('myid');
+		 $toAct=$this->input->post('toAct');
+		
 		$friendDetail=$this->getRequestDetail($condition);
+	
+		$sentBy=$friendDetail[0]->sent_by;
+		$sentTo=$friendDetail[0]->sent_to;
+		
     	if($toAct==1){
     		$action=1;
     		$toUpdate=array("request_status"=>1);
@@ -682,7 +709,12 @@ class APIController extends MY_Controller
     			$toInsert=array("friend_id"=>$friendDetail[0]->sent_by,"user_id"=>$my_Id);
     			// print_r($toInsert);
     			if($this->APIM->makeItMyFriend($toInsert)){
-    				die(json_encode(array("code"=>1,"data"=>"Request Accepted.")));
+					
+					if($this->FRND->insertFollows($sentBy,$sentTo)){
+    					die(json_encode(array("code"=>1,"data"=>"Request Accepted.")));
+    				}else{
+    					die(json_encode(array("code"=>0,"data"=>"Failed To Accept Request.")));
+    				}
     			}
     			
     		}else{
@@ -1596,6 +1628,7 @@ public function getPostLikes($post_id){
 		$frnd_id = $this->input->Post('sent_to');
 		$my_id =$_SESSION['logged_in'][0]->user_id;
 		if($this->APIM->unfriend($frnd_id,$my_id)){
+				$this->FRND->unFollowRequest($frnd_id,$my_id);
 				die(json_encode(array("code"=>1)));
 		}
 	}	

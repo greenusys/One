@@ -33,10 +33,21 @@
   color: #999;
 }
 .flw_btn_cover{
-      background: #ff441a;
-    padding: 10px;
-    border-radius: 5px;
-    font-weight: 600;
+      background: #ff441a !important;
+    padding: 10px !important;
+    border-radius: 5px !important;
+    font-weight: 600 !important;
+}
+
+.add-btn .accptFriendRequest:hover {
+    color: #fff;
+    background-color: #218838;
+    border-color: #1e7e34;
+}
+.add-btn .accptFriendRequest{
+    color: #fff;
+    background-color: #28a745;
+    border-color: #28a745;
 }
 </style>
 <section class="container-fluid mt-5" id="action_area">
@@ -59,9 +70,25 @@
       ?>
   
   </div>
- 
+    <?php 
+     //print_r($checkFollowings);
+    //print_r($MyDetails);
+   // echo $myId;
+  
+    ?>
       <div class="add-btn " >
-        <span class="flw_btn_cover "><?=count($MyFollowers)?> Followers</span>
+        <!-- <span class="flw_btn_cover "><?=count($MyFollowers)?> Followers</span> -->
+         <?php 
+
+             if($MyDetails[0]->user_id != $userID){
+                if($checkFollowings){
+                 echo'<a href="javascript:void(0)" d-id="'.$MyDetails[0]->user_id.'" d-name="'.$MyDetails[0]->full_name.'" class="unfollow_user_ flw_btn_cover"><label class="text-white">Unfollow</label></a>';
+                }else{
+                   echo'<a href="javascript:void(0)" d-id="'.$MyDetails[0]->user_id.'" d-name="'.$MyDetails[0]->full_name.'" class="follow_user_ flw_btn_cover"><label class="text-white">Follow</label></a>';
+                }
+             }
+         ?>
+        
         <?php
         // echo 'My Id: '.$myId.' | Cancel Friend : '.$cancelFriend;
           if($myId==0 && $cancelFriend == 1){
@@ -70,7 +97,11 @@
           }else if($myId==0 && $cancelFriend == 0){
             if(count($ReqStatus)>0){
             //  print_r($ReqStatus[0]['req_id']);
-             echo '<a href="javascript:void(0)" title="" style="padding:10px !important" class=" sendFriendRequest" id="deleteReq" d-frnd="'.$user_id.'" data-ripple="" d-act="'.$ReqStatus[0]['req_id'].'">Cancel Request</a>';
+              if($ReqStatus[0]->sent_to== $userID){
+                echo '<a href="javascript:void(0)" title="" style="padding:10px !important" class="accptFriendRequest accept-request"  action="1" req="'.$ReqStatus[0]->req_id.'" data-ripple="" >Accept Request</a>'; 
+              }
+            
+           echo  '<a href="javascript:void(0)" title="" style="padding:10px !important" class="ml-2 sendFriendRequest" id="deleteReq" d-frnd="'.$user_id.'" data-ripple="" d-act="'.$ReqStatus[0]->req_id.'">Cancel Request</a>';
             }else{
               echo '<a href="javascript:void(0)" title="" style="padding:10px !important" class="sendFriendRequest" data-ripple="" id="sendReq" d-fnd="'.$user_id.'">Add Friend</a>';
             }
@@ -78,11 +109,32 @@
           }
 
         ?>
-        
-        
       </div>
- 
       <script>
+      
+
+            $(document).on('click','.accept-request',function(){
+              var toAct=$(this).attr('action');
+              var reqId=$(this).attr('req');
+              console.log(' Action : '+toAct+' | '+reqId);
+              $.ajax({
+                url:"<?=base_url('APIController/actionRequest')?>",
+                type:"post",
+                data:{toAct:toAct,reqId:reqId,myid:'<?=$_SESSION['logged_in'][0]->user_id?>'},
+                success:function(response){
+                          response=JSON.parse(response);
+                          if(response.code==1){
+                            swal("Success!", response.data, "success");
+                            
+                          }else{
+                            swal("Oops!", response.data, "warning");
+                          }
+                          // console.log(response);
+                        }
+              });
+            });
+
+
           $(document).on('click','#unfriend',function(){
           var sent_by=<?=$_SESSION['logged_in'][0]->user_id;?>;
           var sent_to=$(this).attr('d-fnd');
@@ -146,6 +198,9 @@
             }
           });
         });
+
+
+        
       </script>
       <?php
         if($myId==1){

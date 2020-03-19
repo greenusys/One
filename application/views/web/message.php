@@ -38,10 +38,14 @@ body {
   color: #424242;
 }
 .emojionearea, .emojionearea.form-control{
-  height: 35px !important;
+  /*height: 35px !important;*/
+   height: 80px !important;
+    padding: 5px;
 }
 .emojionearea .emojionearea-editor{
-  height: 50px !important;
+  /*height: 50px !important;*/
+  padding: 5px !important;
+    height: 66px !important;
   min-height: unset !important;
   max-height: unset !important;
 }
@@ -154,7 +158,7 @@ body {
   font-size: 16px;
   border-radius: 7px;
 /*  margin-bottom: 30px;*/
-  width: 90%;
+  width: 80%;
   position: relative;
 }
 .chat .chat-history .message:after {
@@ -275,6 +279,7 @@ body {
 }
 .emojionearea{
     width:100% !important;
+
     padding: 3px 43px 3px 7px;
 }
  .search-btn {
@@ -449,7 +454,7 @@ background:transparent;
                       <?php
                         foreach ($MyMessages as $msg) {
                           # code...?>
-                          <a href="javascript:void(0)" class="My-Friend" d-Store="<?=$msg->sent_by?>" act="<?=$msg->msg_id?>">
+                          <a href="javascript:void(0)" class="My-Friend" d-Store="<?=$msg->user_id?>" act="<?=$msg->msg_id?>">
                             <li class="clearfix px-2">
                               <img src="assets/img/Profile_Pic/<?=$msg->profile_picture?>" width="40px" height="40px" alt="avatar" this.src="'assets/img/Profile_Pic/default.png';" style="border-radius: 50%" >
                               <div class="about">
@@ -468,10 +473,32 @@ background:transparent;
                     </ul>
                 </div>
             </div>
+            <style type="text/css">
+              .orange{
+                background: orange;
+              }
+              .padding_16{
+                padding: 16px;
+              }
+              .rounded_{
+                border-radius: 50px;
+              }
+              .sender{
+                background: cornflowerblue;
+                /*background:cadetblue;*/
+              }
+              .receiver{
+                background: yellowgreen;
+
+              }
+              .t_right{
+                text-align: right;
+              }
+            </style>
             <div class="col-md-9 bg-white p-0 border-left">
                 <div class="chat" id="_chat" d-conversation="">
                     <div class="chat-header clearfix border-bottom">
-                        <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/chat_avatar_01_green.jpg" id="f_im" style="border-radius: 50%;" width="50px" height="50px" alt="avatar" />
+                        <img src="" id="f_im" style="border-radius: 50%;" width="50px" height="50px" alt="avatar" />
                         
                         <div class="chat-about">
                         <div class="chat-with" >Chat with <span id="f_id"></span></div>
@@ -490,9 +517,46 @@ background:transparent;
                     </div> <!-- end chat-header -->
                 
                     <div class="chat-history">
-                        <ul id="chPo" class="p-0">
-                           
-                        </ul>
+                      <ul id="chPo" class="p-0">
+                        <!-- <li style="width:80%" class="float-right my-1">
+                          <div class="row text-white">
+                            <div class="col-md-10  " >
+                              <div class="row receiver p-1 rounded_">
+                                <div class="col-md-2 padding_16" style=" font-size: 9px">
+                                  1 Sec Ago
+                                </div>
+                                <div class="col-md-10 padding_16" style="text-align: right" >
+                                  messa
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-md-1 px-3 py-1" ><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/chat_avatar_01_green.jpg"  width="30px" height="30px" alt="avatar" class="rounded-circle" /></div>
+                          </div> 
+                        </li>
+                        <li style="width:80%" class="float-left my-1">
+                          <div class="row text-white">
+                            <div class="col-md-1 px-3 py-1" ><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/chat_avatar_01_green.jpg"  width="30px" height="30px" alt="avatar" class="rounded-circle" /></div>
+                            <div class="col-md-10  " >
+                              <div class="row sender p-1 rounded_">
+                                <div class="col-md-10 padding_16 " >
+                                  messa
+                                </div>
+                                 <div class="col-md-2 padding_16" style=" font-size: 9px">
+                                  1 Sec Ago
+                                </div>
+                              </div>
+                            </div>
+                            
+                          </div> 
+                        </li> -->
+                        <!-- <li style="width:80%" class="float-left my-1">
+                          <div class="row text-white">
+                            <div class="col-md-1 px-3 py-1" ><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/chat_avatar_01_green.jpg"  width="30px" height="30px" alt="avatar" class="rounded-circle" /></div>
+                            <div class="col-md-9 padding_16 orange" >messa</div>
+                            <div class="col-md-2 padding_16 orange" style=" font-size: 9px">1 Sec Ago</div>
+                          </div> 
+                        </li> -->
+                      </ul>
                         
                     </div> <!-- end chat-history -->
                     
@@ -510,7 +574,7 @@ background:transparent;
                           </div> 
                         </div>
                         <div class="col-md-1">
-                          <button id="aad" class="btn btn-success" d-stored="" disabled >Send</button> 
+                          <button id="aad" class="btn btn-success" d-stored=""  >Send</button> 
                          
                         </div>
                         <!-- <textarea name="message-to-send" id="message-to-send" placeholder ="Type your message" rows="3"></textarea> -->
@@ -530,78 +594,76 @@ background:transparent;
      
             
           <script>
+            var friend_id_for_rgl_fetch=0;
+            // function getConversation(friend_id){
+            //   console.log("Get Conversation Called");
+            //   var profile_picture = '<?=$profile_picture?>';
+            //   var user_id ='<?=$user_id?>';
+            //   $.ajax({
+            //     url:"<?=base_url('Message/getMyConversation')?>",
+            //     type:"post",
+            //     data:{friend:friend_id},
+            //     success:function(response)
+            //             {
+            //                 console.log(response);
+            //                 response=JSON.parse(response);
+            //                 if(response.code==1){
+            //                   $('#chPo').empty();
+            //                   for(let i=0; i<response.msgs.length; i++){
+            //                     console.log(response.msgs[i]);
+            //                     console.log(response.msgs[i].message_type);
+            //                     chatBox='';
+            //                       if(response.msgs[i].sent_to!=user_id)
+            //                       {
+            //                         chatBox+='<li style="width:80%" class="float-right my-1">';
+            //                         chatBox+='<div class="row text-white">';
+            //                         chatBox+='<div class="col-md-10  " >';
+            //                         chatBox+='<div class="row sender p-1 rounded_">';
+            //                         chatBox+='<div class="col-md-2 padding_16" style=" font-size: 9px">'+response.msgs[i].sent_on+'</div>';
+            //                         chatBox+='<div class="col-md-10 padding_16 t_right" >';
+            //                         if(response.msgs[i].message_type==2){
+            //                           chatBox+='<a href="'+response.msgs[i].message_+'" download>Download </a>';
+            //                         }else if(response.msgs[i].message_type==1){
+            //                           chatBox+='<img style="height:200px;width:100%" src="'+response.msgs[i].message_+'">';
+            //                         }else{
+            //                           chatBox+=response.msgs[i].message_;
+            //                         }
+            //                         chatBox+='</div>';
+            //                         chatBox+='</div>';
+            //                         chatBox+='</div>';
+            //                         chatBox+='<div class="col-md-1 px-3 py-1" ><img src="assets/uploads/images/'+response.msgs[i].profile_picture+'"  width="40px" height="40px" alt="avatar" class="rounded-circle" /></div>';
+            //                         chatBox+='</div>';
+            //                         chatBox+='</li>';
+            //                     }else{
 
-            function getConversation(friend_id){
-              var profile_picture = '<?=$profile_picture?>';
-              var user_id ='<?=$user_id?>';
-              $.ajax({
-                url:"<?=base_url('Message/getMyConversation')?>",
-                type:"post",
-                data:{friend:friend_id},
-                success:function(response)
-                        {
-                            console.log(response);
-                            response=JSON.parse(response);
-                            if(response.code==1){
-                              
-                              // var friendProfile=element.find('img').attr('src');
-                              // console.log(friendProfile);
-                              
-                              // console.log("Total Messages : "+response.msgs.length);
-                              
-                              $('#chPo').empty();
-                              for(let i=0; i<response.msgs.length; i++){
-                                console.log(response.msgs[i]);
-                                console.log(response.msgs[i].message_type);
-                                chatBox='';
-                                    if(response.msgs[i].sent_to!=user_id){
-                              chatBox+='<li class="message-data">';
-                              chatBox+='<div class=" align-left d-flex">';
-                              chatBox+='';
-                              chatBox+='<div class=""><img src="assets/img/Profile_Pic/'+profile_picture+'" class="pro_img rounded-circle mr-3"></div>';
-                              chatBox+='<div class="message my-message">';
-                                  if(response.msgs[i].message_type==2){
-                                  chatBox+='<a href="'+response.msgs[i].message_+'" download>Download </a>';
-                                  }
-                                  else if(response.msgs[i].message_type==1){
-                                  chatBox+='<img style="height:200px;width:100%" src="'+response.msgs[i].message_+'">';
-                                  }
-                                  else{
-                                  chatBox+=response.msgs[i].message_;
-                                  }
-                              chatBox+='</div></div><div class="mt-1"><span class="message-data-time">'+response.msgs[i].sent_on+'</span></div>';
-                              chatBox+='</li>';
-                            }else{
-                                  chatBox+='<li class="message-data clearfix">';
-                                  chatBox+='<div class="d-flex">';
-                                 // chatBox+='<span class="message-data-time" >'+response.msgs[i].sent_on+'</span> &nbsp; &nbsp;';
-                                   //chatBox+='<div class="" >';
-                                  
-                                  // chatBox+='</div>';
-                                  chatBox+='<div class="message other-message float-right">';
-                                  if(response.msgs[i].message_type==2){
-                                  chatBox+='<a href="'+response.msgs[i].message_+'" download>Download </a>';
-                                  }
-                                  else if(response.msgs[i].message_type==1){
-                                      chatBox+='<img style="height:200px;width:100%" src="'+response.msgs[i].message_+'">';
-                                  }
-                                  else{
-                                  chatBox+=response.msgs[i].message_;
-                                  }
-                                  chatBox+='</div>';
-                                  chatBox+='<div class=""><img src="assets/img/Profile_Pic/'+response.msgs[i].profile_picture+'" class="pro_img rounded-circle ml-3"></div>';
-                                  chatBox+='</div><div class="text-right">'+
-                                            '<span class="message-data-time" >'+response.msgs[i].sent_on+'</span> &nbsp; &nbsp;</div>';
-                                  chatBox+='</li>';
-                                }
-                                var chatDiv=$('.chat-history');
-                              chatDiv.stop().animate({ scrollTop: chatDiv[0].scrollHeight}, 200);
-                              $('#chPo').append(chatBox);
-                              }
-                            }
-                        }
-              });
-            }
+            //                       chatBox+='<li style="width:80%" class="float-left my-1">';
+            //                         chatBox+='<div class="row text-white">';
+            //                         chatBox+='<div class="col-md-1 px-3 py-1" ><img src="assets/uploads/images/'+response.msgs[i].profile_picture+'"  width="40px" height="40px" alt="avatar" class="rounded-circle" /></div>';
+            //                         chatBox+='<div class="col-md-10  " >';
+            //                         chatBox+='<div class="row receiver p-1 rounded_">';
+            //                         chatBox+='<div class="col-md-10 padding_16 " >';
+            //                         if(response.msgs[i].message_type==2){
+            //                           chatBox+='<a href="'+response.msgs[i].message_+'" download>Download </a>';
+            //                         }else if(response.msgs[i].message_type==1){
+            //                           chatBox+='<img style="height:200px;width:100%" src="'+response.msgs[i].message_+'">';
+            //                         }else{
+            //                           chatBox+=response.msgs[i].message_;
+            //                         }
+            //                         chatBox+='</div>';
+            //                         chatBox+='<div class="col-md-2 padding_16" style=" font-size: 9px">1 Sec Ago  </div>';
+            //                         chatBox+='</div>';
+            //                         chatBox+='</div>';
+            //                         chatBox+='</div>';
+            //                         chatBox+='</li>';
+            //                     }
+            //                     var chatDiv=$('.chat-history');
+            //                     chatDiv.stop().animate({ scrollTop: chatDiv[0].scrollHeight}, 200);
+            //                     $('#chPo').append(chatBox);
+            //                   }
+            //                 }
+            //             }
+            //   });
+            // }
 
           $("document").ready(function(){
 
@@ -636,10 +698,29 @@ background:transparent;
           });
 
           $(document).on('click','#aad',function(){
+
             var message=$('#emojionearea1').val();
             var myFd=$(this).attr('d-stored');
             var conversation_id = $('#_chat').attr('d-conversation');
+            // alert(myFd);
             // console.log(message);
+
+
+            var profile_picture = '<?=$profile_picture?>';
+            var newMessage='';
+            newMessage+='<li style="width:80%" class="float-right my-1">';
+            newMessage+='<div class="row text-white">';
+            newMessage+='<div class="col-md-10  " >';
+            newMessage+='<div class="row sender p-1 rounded_">';
+            newMessage+='<div class="col-md-2 padding_16" style=" font-size: 9px">1 Sec Ago    </div>';
+            newMessage+='<div class="col-md-10 padding_16 t_right" >'+message+
+            '</div>';
+            newMessage+='</div>';
+            newMessage+='</div>';
+            newMessage+='<div class="col-md-1 px-3 py-1" ><img src="assets/img/Profile_Pic/'+profile_picture+'"  width="40px" height="40px" alt="avatar" class="rounded-circle" /></div>';
+            newMessage+='</div>';
+            newMessage+='</li>';
+
             $.ajax({
               url:'<?=base_url('Message/sendMyMessages')?>',
               type:"post",
@@ -651,7 +732,10 @@ background:transparent;
                       if(response.code==1){
                         $('#emojionearea1').val("");
                         $('.emojionearea-editor').html("");
-                        getConversation(myFd);
+
+                        $('#chPo').append(newMessage);
+                        $('.chat-history').animate({scrollTop: $('.chat-history').prop("scrollHeight")}, 500);
+                        // getConversation(myFd);
                       }
                     }
             });
@@ -677,20 +761,206 @@ background:transparent;
         </div> <!-- end container -->
 
       <script type="text/javascript">
-        // date format= 16/04/2017 21:09:57
-      
-       
-           // var dateAux;
-           // $(".timeago").each(function(i,item){
-           //     dateAux = moment($(item).html(),'DD-MM-YYYY hh:mm:ss');
-           //     $(item).attr('datetime',dateAux.toISOString());
-           // })  
-           // $("time.timeago").timeago();
+        $(document).ready(function(){
+          var myId='<?=$user_id?>';
+            $.ajax({
+              url:'<?=base_url('Message/getRecentChat')?>',
+              type:"post",
+              success:function(response){
+                      console.log(response);
+                      response=JSON.parse(response);
+                      // console.log("Response: "+response.code);
+                      if(response.code==1){
+                        var msg_id=response.msgs[0].msg_id;
+                        var user_id=response.msgs[0].user_id;
+                        var profile_picture=response.msgs[0].profile_picture;
+                        var name=response.msgs[0].full_name;
+                        console.log("  ----> "+user_id);
+                        var sent_to=0;
+                        var sent_by=0;
+                        var friendId=0;
+                        if(sent_by==myId){
+                          friendId=response.msgs[0].sent_to;
+                        }else{
+                          friendId=response.msgs[0].sent_by;
+                        }
+                        if(sent_to==myId){
+                          friendId=response.msgs[0].sent_by;
+                        }else{
+                          friendId=response.msgs[0].sent_to;
+                        }
+                        neMess(msg_id,profile_picture,name,friendId);
+
+
+                      }
+                    }
+            });
+        });
+        function init(){
+          setInterval(function(){ 
+            fetchUnreadMessage();
+            // neMess(msg_id,profile_picture,name,foId);
+          }, 1000);
+        }
+        function fetchUnreadMessageOn(conversation_id,element,foId){
+          console.log("workgin Fine");
+          var profile_picture = '<?=$profile_picture?>';
+           var user_id ='<?=$user_id?>';
+          $.ajax({
+            url:"<?=base_url('Message/getUnreadMessage')?>",
+            type:"post",
+            data:{conv_id:conversation_id},
+            success:function(response)
+                    {
+                        // console.log(response);
+                        response=JSON.parse(response);
+                        if(response.code==1){
+                          var friendName=element.find('.name').text();
+                          console.log(friendName);
+                          $('#f_id').text(friendName);
+                          $('#aad').attr('d-stored',foId);
+                          var friendProfile=element.find('img').attr('src');
+                          console.log(friendProfile);
+                          $('#f_im').attr('src',friendProfile);
+                          console.log("Total Messages : "+response.msgs.length);
+                          $('#t_ms').text(response.msgs.length);
+                          // $('#chPo').empty();
+                          for(let i=0; i<response.msgs.length; i++){
+                            chatBox='';
+                            if(response.msgs[i].sent_to!=user_id){
+                                
+                               chatBox+='<li style="width:80%" class="float-right my-1">';
+                                    chatBox+='<div class="row text-white">';
+                                    chatBox+='<div class="col-md-10  " >';
+                                    chatBox+='<div class="row sender p-1 rounded_">';
+                                    chatBox+='<div class="col-md-10 padding_16 " >';
+                                    if(response.msgs[i].message_type==2){
+                                      chatBox+='<a href="'+response.msgs[i].message_+'" download>Download </a>';
+                                    }else if(response.msgs[i].message_type==1){
+                                      chatBox+='<img style="height:200px;width:100%" src="'+response.msgs[i].message_+'">';
+                                    }else{
+                                      chatBox+=response.msgs[i].message_;
+                                    }
+                                    chatBox+='</div>';
+                                    chatBox+='<div class="col-md-2 padding_16" style=" font-size: 9px">'+response.msgs[i].sent_on+'</div>';
+                                    
+                                    chatBox+='</div>';
+                                    chatBox+='</div>';
+                                    chatBox+='<div class="col-md-1 px-3 py-1" ><img src="assets/uploads/images/'+response.msgs[i].profile_picture+'"  width="40px" height="40px" alt="avatar" class="rounded-circle" /></div>';
+                                    chatBox+='</div>';
+                                    chatBox+='</li>';
+                            }else{
+
+                                
+                              chatBox+='<li style="width:80%" class="float-left my-1">';
+                                    chatBox+='<div class="row text-white">';
+                                    chatBox+='<div class="col-md-1 px-3 py-1" ><img src="assets/uploads/images/'+response.msgs[i].profile_picture+'"  width="40px" height="40px" alt="avatar" class="rounded-circle" /></div>';
+                                    chatBox+='<div class="col-md-10  " >';
+                                    chatBox+='<div class="row receiver p-1 rounded_">';
+                                    chatBox+='<div class="col-md-10 padding_16 " >';
+                                    if(response.msgs[i].message_type==2){
+                                      chatBox+='<a href="'+response.msgs[i].message_+'" download>Download </a>';
+                                    }else if(response.msgs[i].message_type==1){
+                                      chatBox+='<img style="height:200px;width:100%" src="'+response.msgs[i].message_+'">';
+                                    }else{
+                                      chatBox+=response.msgs[i].message_;
+                                    }
+                                    chatBox+='</div>';
+                                    chatBox+='<div class="col-md-2 padding_16" style=" font-size: 9px">'+response.msgs[i].sent_on+'  </div>';
+                                    chatBox+='</div>';
+                                    chatBox+='</div>';
+                                    chatBox+='</div>';
+                                    chatBox+='</li>';
+                            }
+                          $('#chPo').append(chatBox);
+                          }
+                        }
+                    }
+          });
+        }
+        function neMess(msg_id,profile_picture,name,foId){
+          console.log(" Friend Id: "+msg_id);
+          var user_id ='<?=$user_id?>';
+          $.ajax({
+            url:"<?=base_url('Message/getMyMessages')?>",
+            type:"post",
+            data:{conv_id:msg_id},
+            success:function(response)
+                    {
+                        // console.log(response);
+                        response=JSON.parse(response);
+                        if(response.code==1){
+
+                          var friendName=name;
+                          console.log(friendName);
+                          $('#f_id').text(friendName);
+                          $('#aad').attr('d-stored',foId);
+                          var friendProfile="assets/uploads/images/"+profile_picture;
+                          console.log(friendProfile);
+                          $('#f_im').attr('src',friendProfile);
+                          console.log("Total Messages : "+response.msgs.length);
+                          $('#t_ms').text(response.msgs.length);
+                          $('#chPo').empty();
+                          for(let i=0; i<response.msgs.length; i++){
+                            chatBox='';
+                            if(response.msgs[i].sent_to!=user_id){
+                                
+                              chatBox+='<li style="width:80%" class="float-right my-1">';
+                                    chatBox+='<div class="row text-white">';
+                                    chatBox+='<div class="col-md-10  " >';
+                                    chatBox+='<div class="row sender p-1 rounded_">';
+                                    chatBox+='<div class="col-md-10 padding_16 " >';
+                                    if(response.msgs[i].message_type==2){
+                                      chatBox+='<a href="'+response.msgs[i].message_+'" download>Download </a>';
+                                    }else if(response.msgs[i].message_type==1){
+                                      chatBox+='<img style="height:200px;width:100%" src="'+response.msgs[i].message_+'">';
+                                    }else{
+                                      chatBox+=response.msgs[i].message_;
+                                    }
+                                    chatBox+='</div>';
+                                    chatBox+='<div class="col-md-2 padding_16" style=" font-size: 9px">'+response.msgs[i].sent_on+'</div>';
+                                    
+                                    chatBox+='</div>';
+                                    chatBox+='</div>';
+                                    chatBox+='<div class="col-md-1 px-3 py-1" ><img src="assets/uploads/images/'+response.msgs[i].profile_picture+'"  width="40px" height="40px" alt="avatar" class="rounded-circle" /></div>';
+                                    chatBox+='</div>';
+                                    chatBox+='</li>';
+                            }else{
+
+                                
+                              chatBox+='<li style="width:80%" class="float-left my-1">';
+                                    chatBox+='<div class="row text-white">';
+                                    chatBox+='<div class="col-md-1 px-3 py-1" ><img src="assets/uploads/images/'+response.msgs[i].profile_picture+'"  width="40px" height="40px" alt="avatar" class="rounded-circle" /></div>';
+                                    chatBox+='<div class="col-md-10  " >';
+                                    chatBox+='<div class="row receiver p-1 rounded_">';
+                                    chatBox+='<div class="col-md-10 padding_16 " >';
+                                    if(response.msgs[i].message_type==2){
+                                      chatBox+='<a href="'+response.msgs[i].message_+'" download>Download </a>';
+                                    }else if(response.msgs[i].message_type==1){
+                                      chatBox+='<img style="height:200px;width:100%" src="'+response.msgs[i].message_+'">';
+                                    }else{
+                                      chatBox+=response.msgs[i].message_;
+                                    }
+                                    chatBox+='</div>';
+                                    chatBox+='<div class="col-md-2 padding_16" style=" font-size: 9px">'+response.msgs[i].sent_on+'  </div>';
+                                    chatBox+='</div>';
+                                    chatBox+='</div>';
+                                    chatBox+='</div>';
+                                    chatBox+='</li>';
+                            }
+                          $('#chPo').append(chatBox);
+                          $('.chat-history').animate({scrollTop: $('.chat-history').prop("scrollHeight")}, 100);
+                          }
+                        }
+                    }
+          });
+        }
          
         function getMessage(conversation_id, element="",foId){
           var profile_picture = '<?=$profile_picture?>';
            var user_id ='<?=$user_id?>';
           // setTimeInterval(getConversation(foId), 500);
+
           $.ajax({
             url:"<?=base_url('Message/getMyMessages')?>",
             type:"post",
@@ -720,44 +990,73 @@ background:transparent;
                             // console.log(" **** **** "+dateAux.toISOString() +" *****");
                             chatBox='';
                             if(response.msgs[i].sent_to!=user_id){
-                              chatBox+='<li class="message-data">';
-                              chatBox+='<div class=" align-left d-flex">';
-                              chatBox+='';
-                              chatBox+='<div class=""><img src="assets/img/Profile_Pic/'+profile_picture+'" class="pro_img rounded-circle mr-3"></div>';
-                              chatBox+='<div class="message my-message">';
-                                  if(response.msgs[i].message_type==2){
-                                  chatBox+='<a href="'+response.msgs[i].message_+'" download>Download </a>';
-                                  }
-                                  else if(response.msgs[i].message_type==1){
-                                  chatBox+='<img style="height:200px;width:100%" src="'+response.msgs[i].message_+'">';
-                                  }
-                                  else{
-                                  chatBox+=response.msgs[i].message_;
-                                  }
-                              chatBox+='</div></div><div class="mt-1"><span class="message-data-time">'+response.msgs[i].sent_on+'</span></div>';
-                              chatBox+='</li>';
+                                
+                               chatBox+='<li style="width:80%" class="float-right my-1">';
+                                    chatBox+='<div class="row text-white">';
+                                    chatBox+='<div class="col-md-10  " >';
+                                    chatBox+='<div class="row sender p-1 rounded_">';
+                                    chatBox+='<div class="col-md-10 padding_16 " >';
+                                    if(response.msgs[i].message_type==2){
+                                      chatBox+='<a href="'+response.msgs[i].message_+'" download>Download </a>';
+                                    }else if(response.msgs[i].message_type==1){
+                                      chatBox+='<img style="height:200px;width:100%" src="'+response.msgs[i].message_+'">';
+                                    }else{
+                                      chatBox+=response.msgs[i].message_;
+                                    }
+                                    chatBox+='</div>';
+                                    chatBox+='<div class="col-md-2 padding_16" style=" font-size: 9px">'+response.msgs[i].sent_on+'</div>';
+                                    
+                                    chatBox+='</div>';
+                                    chatBox+='</div>';
+                                    chatBox+='<div class="col-md-1 px-3 py-1" ><img src="assets/uploads/images/'+response.msgs[i].profile_picture+'"  width="40px" height="40px" alt="avatar" class="rounded-circle" /></div>';
+                                    chatBox+='</div>';
+                                    chatBox+='</li>';
                             }else{
-                              chatBox+='<li class="message-data clearfix">';
-                              chatBox+='<div class="d-flex">';
-                             // chatBox+='<span class="message-data-time" >'+response.msgs[i].sent_on+'</span> &nbsp; &nbsp;';
-                               //chatBox+='<div class="" >';
+
+                                
+                              chatBox+='<li style="width:80%" class="float-left my-1">';
+                                    chatBox+='<div class="row text-white">';
+                                    chatBox+='<div class="col-md-1 px-3 py-1" ><img src="assets/uploads/images/'+response.msgs[i].profile_picture+'"  width="40px" height="40px" alt="avatar" class="rounded-circle" /></div>';
+                                    chatBox+='<div class="col-md-10  " >';
+                                    chatBox+='<div class="row receiver p-1 rounded_">';
+                                    chatBox+='<div class="col-md-10 padding_16 " >';
+                                    if(response.msgs[i].message_type==2){
+                                      chatBox+='<a href="'+response.msgs[i].message_+'" download>Download </a>';
+                                    }else if(response.msgs[i].message_type==1){
+                                      chatBox+='<img style="height:200px;width:100%" src="'+response.msgs[i].message_+'">';
+                                    }else{
+                                      chatBox+=response.msgs[i].message_;
+                                    }
+                                    chatBox+='</div>';
+                                    chatBox+='<div class="col-md-2 padding_16" style=" font-size: 9px">'+response.msgs[i].sent_on+'  </div>';
+                                    chatBox+='</div>';
+                                    chatBox+='</div>';
+                                    chatBox+='</div>';
+                                    chatBox+='</li>';
+
+
+
+                             //  chatBox+='<li class="message-data clearfix">';
+                             //  chatBox+='<div class="d-flex">';
+                             // // chatBox+='<span class="message-data-time" >'+response.msgs[i].sent_on+'</span> &nbsp; &nbsp;';
+                             //   //chatBox+='<div class="" >';
                               
-                              // chatBox+='</div>';
-                              chatBox+='<div class="message other-message float-right">';
-                              if(response.msgs[i].message_type==2){
-                              chatBox+='<a href="'+response.msgs[i].message_+'" download>Download </a>';
-                              }
-                              else if(response.msgs[i].message_type==1){
-                                  chatBox+='<img style="height:200px;width:100%" src="'+response.msgs[i].message_+'">';
-                              }
-                              else{
-                              chatBox+=response.msgs[i].message_;
-                              }
-                              chatBox+='</div>';
-                              chatBox+='<div class=""><img src="assets/img/Profile_Pic/'+response.msgs[i].profile_picture+'" class="pro_img rounded-circle ml-3"></div>';
-                              chatBox+='</div><div class="text-right">'+
-                                        '<span class="message-data-time" >'+response.msgs[i].sent_on+'</span> &nbsp; &nbsp;</div>';
-                              chatBox+='</li>';
+                             //  // chatBox+='</div>';
+                             //  chatBox+='<div class="message other-message float-right">';
+                             //  if(response.msgs[i].message_type==2){
+                             //  chatBox+='<a href="'+response.msgs[i].message_+'" download>Download </a>';
+                             //  }
+                             //  else if(response.msgs[i].message_type==1){
+                             //      chatBox+='<img style="height:200px;width:100%" src="'+response.msgs[i].message_+'">';
+                             //  }
+                             //  else{
+                             //  chatBox+=response.msgs[i].message_;
+                             //  }
+                             //  chatBox+='</div>';
+                             //  chatBox+='<div class=""><img src="assets/img/Profile_Pic/'+response.msgs[i].profile_picture+'" class="pro_img rounded-circle ml-3"></div>';
+                             //  chatBox+='</div><div class="text-right">'+
+                             //            '<span class="message-data-time" >'+response.msgs[i].sent_on+'</span> &nbsp; &nbsp;</div>';
+                             //  chatBox+='</li>';
                             }
                           $('#chPo').append(chatBox);
                           }
@@ -775,10 +1074,12 @@ background:transparent;
             
             $("#_chat").attr('d-store',conversation_id);
             getMessage(conversation_id,element,foId);
+            setInterval(function(){ 
+              fetchUnreadMessageOn(conversation_id,element,foId);
+            }, 1000);
+            // init(conversation_id,profile_picture,name,foId);
+             $('.chat-history').animate({scrollTop: $('.chat-history').prop("scrollHeight")}, 500);
           }
-          
-          
-          
         });
         function dateConversion(d_time){
           const d2 = new Date(d_time); 

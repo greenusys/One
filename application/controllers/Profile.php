@@ -74,7 +74,10 @@ class Profile extends MY_Controller
 		$data['Myprofilepic']=$this->Profile->getprofilephoto($id);
 		$data['FriendsActivity']=$this->FRND->getMyFreActivities($id);
 		$data['FriendRequests']=$this->FRND->getFriendRequests($id);
-		$data['MyFollowers']=$this->FRND->getMyFollowers($id);
+		$data['MyFollowers']=$this->FRND->getFollowers($id);
+		$data['MyFollowings']=$this->FRND->getFollowings($id);
+		$data['checkFollowings']=$this->FRND->getMyFollowings($id,$user_id);
+		//die(json_encode($data['MyFollowings']));
 		$data['birthdays']=$this->Test->UpComingBirthdays();
 		// $data['AllPosts']=$this->POST->getMyPosts($id);
 		$data['Trending']=$this->POST->getTrending();

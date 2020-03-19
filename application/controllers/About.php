@@ -71,7 +71,7 @@ class About extends MY_Controller
         $data['Myprofilepic']=$this->Profile->getprofilephoto($id);
         $data['FriendsActivity']=$this->FRND->getMyFreActivities($id);
         $data['FriendRequests']=$this->FRND->getFriendRequests($id);
-        $data['MyFollowers']=$this->FRND->getMyFollowers($id);
+       
         $data['MyPosts']=$this->POST->getMyPosts($id);
         $data['Trending']=$this->POST->getTrending();
         $data['WorkDetails']=$this->getMyWorkDetails($id);
@@ -83,6 +83,9 @@ class About extends MY_Controller
         $data['address']=$this->fetchAddress($id);
         $data['social_links']=$this->fetchSocialLinks($id);
         $data['relationshp']=$this->fetchRelationshipStatus($id);
+            $data['MyFollowers']=$this->FRND->getFollowers($id);
+        $data['MyFollowings']=$this->FRND->getFollowings($id);
+        $data['checkFollowings']=$this->FRND->getMyFollowings($id,$user_id);
        // $data['address']=$this->fetchInterestedIn($id);
        
 
