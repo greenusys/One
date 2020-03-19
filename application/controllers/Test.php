@@ -427,9 +427,11 @@ public function get_States()
 		$this->db->update('notifications_',array("notify_to"=>$user_Id,"status_"=>1));
 	}
 	public function updateMessageStatus(){
+		$sent_by=$this->input->post('sent_by');
 		$session=$this->session->userdata('logged_in');
-		$user_Id=$session[0]->user_id;
-		$this->db->where('sent_to',$user_id);
+		$sent_to=$session[0]->user_id;
+		$where="sent_by=$sent_by AND sent_to=$sent_to";
+		$this->db->where($where);
 		$this->db->update('messages_',array("read_status"=>1));
 	}
 	public function searchFriend(){

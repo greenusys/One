@@ -1077,7 +1077,15 @@ background:transparent;
             
             $("#_chat").attr('d-store',conversation_id);
             // $("#_chat").attr('d-store',conversation_id);
-            getMessage(conversation_id,element,foId);
+            $.ajax({
+              url:"<?=base_url('Test/updateMessageStatus')?>",
+              type:"post",
+              data:{sent_by:foId},
+              success:function(response){
+             getMessage(conversation_id,element,foId);
+            }
+          })
+           
             // setInterval(function(){ 
             //   fetchUnreadMessageOn(conversation_id,element,foId);
             // }, 1000);
@@ -1160,7 +1168,9 @@ background:transparent;
          $(window).on('load',function(){
           $.ajax({
            url:'<?=base_url('Test/updateMessageStatus')?>',
-          success:function(response){}
+          success:function(response){
+
+          }
           })
         })
        </script>

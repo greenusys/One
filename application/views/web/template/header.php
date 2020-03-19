@@ -452,8 +452,6 @@ a:hover {
     $trending=$this->db->query("SELECT DISTINCT(a.post_id) ,a.*, u.*, p.*, SUM(a.like_or_dislike) as most FROM like_or_dislike as a JOIN post_ as p ON p.post_id=a.post_id JOIN users as u ON p.posted_by=u.user_id WHERE a.like_or_dislike=1 && p.post_type=0 GROUP BY a.post_id ORDER BY most DESC LIMIT 10")->result();
   // print_r($tending);
     // $myMessages=
-
-    
   ?>
   <style>
   .notfication_text{
@@ -561,13 +559,13 @@ a:hover {
                
                 <?php
                   foreach($myMessages as $msgs){
-                   // print_r($msgs);
+                   //print_r($msgs);
                       ?>
                         <li>
                           <div class="row p-1">
                       
                               <div class="col-md-2 pt-1">
-                                <img src="<?=base_url()?>assets/img/Profile_Pic/<?=$msgs->profile_picture?>" onerror="this.src='<?=base_url()?>assets/uploads/images/default.png';" alt=""  class="notify_img rounded-circle" >
+                                <img src="<?=base_url()?>assets/uploads/images/<?=$msgs->profile_picture?>" onerror="this.src='<?=base_url()?>assets/uploads/images/default.png';" alt=""  class="notify_img rounded-circle" >
                               </div>
                               <div class="col-md-10">
                                 <p class="notfication_text"><span><strong><?=$msgs->full_name?></strong> : </span><?=$msgs->message_?> <span class="time float-right">1 Seconds Ago</span></p>
@@ -607,7 +605,7 @@ a:hover {
                         <div class="row ">
                     
                             <div class="col-md-2 pt-1">
-                             <a href="<?=base_url('Profile/'.$notifications->user_id)?>"> <img src="<?=base_url('assets/img/Profile_Pic/').$notifications->profile_picture?>" onerror="this.src='<?=base_url()?>assets/img/Profile_Pic/default.png';" alt="" class="notify_img rounded-circle" >
+                             <a href="<?=base_url('Profile/'.$notifications->user_id)?>"> <img src="<?=base_url('assets/uploads/images/').$notifications->profile_picture?>" onerror="this.src='<?=base_url()?>assets/img/Profile_Pic/default.png';" alt="" class="notify_img rounded-circle" >
                              </a>
                             </div>
                             <div class="col-md-10 pl-1  ">
